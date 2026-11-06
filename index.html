@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v11.0</title>
+  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v12.0</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -49,7 +49,6 @@
       pointer-events: none; z-index: 9999;
     }
 
-    /* GÓRNY PASEK HUD GRY */
     header.game-hud {
       background: linear-gradient(90deg, #090d16 0%, #1e1b4b 50%, #090d16 100%);
       border-bottom: 3px solid var(--neon-gold);
@@ -80,7 +79,6 @@
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
     }
 
-    /* KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D */
     .hero-banner { max-width: 1120px; margin: 12px auto; padding: 0 10px; }
     .hero-card {
       background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
@@ -259,11 +257,11 @@
     .btn-gold { background: linear-gradient(135deg, #eab308, #f59e0b); color: #000; }
     .btn-ghost { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
 
-    /* SYSTEM ANIMOWANYCH LUDZIKÓW ANIME/CHIBI W JUDOGACH (BIAŁY TYMON VS NIEBIESKI RYWAL) */
+    /* SYSTEM 4 KAFELKÓW ZE ZBLIŻENIEM KAMERY (ZOOM-IN CAMERA PANELS) */
     .quest-item {
-      background: rgba(15, 23, 42, 0.78); border: 1px solid rgba(0, 240, 255, 0.25);
+      background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.28);
       border-left: 5px solid var(--neon-gold); border-radius: 14px;
-      padding: 14px; margin-bottom: 14px;
+      padding: 14px; margin-bottom: 16px;
     }
     .quest-item.completed { border-left-color: var(--neon-green); opacity: 0.72; }
 
@@ -271,7 +269,7 @@
       display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 7px; margin: 10px 0;
     }
     .cue-pill {
-      background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 9px; padding: 7px 9px; font-size: 0.78rem;
     }
     .cue-pill strong { display: block; font-size: 0.72rem; text-transform: uppercase; margin-bottom: 2px; }
@@ -279,88 +277,87 @@
     .cue-hands strong { color: var(--neon-blue); }
     .cue-speed strong { color: var(--neon-gold); }
 
-    .lego-steps-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0;
+    /* Siatka 4 Kafelków Zbliżeń (1: Stopy, 2: Dłonie & Wychylenie, 3: Głowa & Tułów, 4: Wejście Nogi) */
+    .zoom-4-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0;
     }
-    @media (max-width: 680px) { .lego-steps-grid { grid-template-columns: 1fr; } }
-    .lego-step-card {
-      background: #080c17; border: 1px solid rgba(0, 240, 255, 0.35);
-      border-radius: 12px; padding: 10px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; gap: 7px;
-      box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.06);
+    @media (max-width: 580px) { .zoom-4-grid { grid-template-columns: 1fr; } }
+
+    .zoom-tile-card {
+      background: #070b14; border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 12px; padding: 10px;
+      display: grid; grid-template-columns: 138px minmax(0, 1fr); gap: 10px; align-items: center;
+      box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.05);
     }
-    .lego-step-num {
-      background: linear-gradient(90deg, var(--neon-gold), #fde047); color: #000; font-weight: 900;
-      font-size: 0.74rem; padding: 2px 10px; border-radius: 99px;
+    @media (max-width: 400px) {
+      .zoom-tile-card { grid-template-columns: 1fr; text-align: center; }
     }
-    .lego-step-svg {
-      width: 130px; height: 130px; background: radial-gradient(circle at 50% 60%, #1e293b 0%, #050811 85%);
-      border: 1px solid rgba(250, 204, 21, 0.35);
+    .zoom-svg-frame {
+      width: 138px; height: 126px; margin: 0 auto;
+      background: radial-gradient(circle at 50% 55%, #1e293b 0%, #050811 90%);
+      border: 2px solid rgba(250, 204, 21, 0.45);
       border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
+      overflow: hidden; position: relative;
     }
-    .lego-step-text {
-      font-size: 0.8rem; color: #f1f5f9; line-height: 1.35; font-weight: 600;
+    .zoom-badge {
+      display: inline-block; background: linear-gradient(90deg, var(--neon-gold), #fde047);
+      color: #000; font-weight: 900; font-size: 0.69rem; padding: 2px 8px;
+      border-radius: 99px; margin-bottom: 4px; text-transform: uppercase;
     }
-
-    /* Animacje kończyn ludzika Anime (Noga zielona, Ręka niebieska/złota, Tułów) */
-    .anim-sweep-leg {
-      transform-origin: 48px 66px;
-      animation: chibiSweepLeg var(--chibi-anim-speed) ease-in-out infinite alternate;
-    }
-    @keyframes chibiSweepLeg {
-      0% { transform: rotate(0deg) translateX(0); }
-      100% { transform: rotate(-28deg) translateX(6px); }
+    .zoom-desc {
+      font-size: 0.79rem; color: #f1f5f9; line-height: 1.35; font-weight: 600;
     }
 
-    .anim-uchimata-leg {
-      transform-origin: 48px 60px;
-      animation: chibiUchiLeg var(--chibi-anim-speed) ease-in-out infinite alternate;
+    /* Animacje Ruchu w Zbliżeniach */
+    .anim-foot-step {
+      animation: footZoomStep var(--chibi-anim-speed) ease-in-out infinite alternate;
     }
-    @keyframes chibiUchiLeg {
-      0% { transform: rotate(-10deg); }
-      100% { transform: rotate(-75deg); }
+    @keyframes footZoomStep {
+      0% { transform: translate(0, 12px); }
+      100% { transform: translate(0, -4px); }
     }
-
-    .anim-pull-hand {
-      transform-origin: 45px 46px;
-      animation: chibiPullHand var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .anim-foot-sweep {
+      animation: footZoomSweep var(--chibi-anim-speed) ease-in-out infinite alternate;
     }
-    @keyframes chibiPullHand {
+    @keyframes footZoomSweep {
+      0% { transform: translateX(14px) rotate(8deg); }
+      100% { transform: translateX(-16px) rotate(-14deg); }
+    }
+    .anim-kuzushi-pull {
+      animation: kuzushiPull var(--chibi-anim-speed) ease-in-out infinite alternate;
+    }
+    @keyframes kuzushiPull {
       0% { transform: translate(0, 0); }
-      100% { transform: translate(-8px, -10px); }
+      100% { transform: translate(-8px, -8px); }
     }
-
-    .anim-step-in {
-      animation: chibiStepIn var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .anim-head-dive {
+      transform-origin: 65px 75px;
+      animation: headDive var(--chibi-anim-speed) ease-in-out infinite alternate;
     }
-    @keyframes chibiStepIn {
-      0% { transform: translateY(10px); }
-      100% { transform: translateY(-6px); }
+    @keyframes headDive {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-28deg); }
     }
-
-    .anim-bridge-up {
-      animation: chibiBridge var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .anim-leg-blast {
+      transform-origin: 55px 70px;
+      animation: legBlastUp var(--chibi-anim-speed) ease-in-out infinite alternate;
     }
-    @keyframes chibiBridge {
+    @keyframes legBlastUp {
+      0% { transform: rotate(-10deg); }
+      100% { transform: rotate(-68deg); }
+    }
+    .anim-bridge-lift {
+      animation: bridgeLift var(--chibi-anim-speed) ease-in-out infinite alternate;
+    }
+    @keyframes bridgeLift {
       0% { transform: translateY(6px); }
       100% { transform: translateY(-10px); }
     }
 
-    .anim-wheel-roll {
-      animation: chibiWheelRoll var(--chibi-anim-speed) ease-in-out infinite alternate;
-    }
-    @keyframes chibiWheelRoll {
-      0% { transform: translateX(-14px); }
-      100% { transform: translateX(12px); }
-    }
-
-    .pulse-target {
-      animation: targetPulse 1.1s infinite alternate;
-    }
-    @keyframes targetPulse {
-      0% { r: 5px; opacity: 0.7; }
-      100% { r: 8px; opacity: 1; }
+    .custom-manga-preview {
+      width: 100%; max-height: 320px; object-fit: contain;
+      border-radius: 12px; border: 2px solid var(--neon-gold);
+      margin-top: 8px; background: #000; display: none;
     }
 
     .legend-bar {
@@ -430,7 +427,7 @@
   <div class="card" style="border:2px solid var(--neon-gold);">
     <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
     <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy Tymona z Arkuszem Google – nawet po wyczyszczeniu pamięci iPhone'a nic nie zginie, a postęp widać też na Twoim Pixelu 10!
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy z Arkuszem Google – nawet po wyczyszczeniu pamięci iPhone'a nic nie zginie, a postęp widać też na Twoim Pixelu 10!
     </p>
     <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
@@ -519,45 +516,45 @@
 
 <!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
-  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Ludziki Anime 1-2-3)</button>
-  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Ludziki + Filmy)</button>
+  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (4 Zbliżenia Kamery)</button>
+  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Zbliżenia + Filmy)</button>
   <button onclick="switchTab('pane-belts', this)">🎯 Cele & Pas 3 Kyu</button>
   <button onclick="switchTab('pane-video', this)">🎥 Analiza Walki</button>
-  <button onclick="switchTab('pane-fuel', this)">⚡ Kalkulator Mocy</button>
+  <button onclick="switchTab('pane-fuel', this)">⚡ Kalkulator Mocy & AI Dietetyk</button>
 </nav>
 
 <div class="container">
 
-  <!-- LEGENDA KOLORÓW KOŃCZYN NA LUDZIKU ANIME + PRZEŁĄCZNIK TEMPA RUCHU -->
+  <!-- LEGENDA ZBLIŻEŃ KAMERY + PRZEŁĄCZNIK TEMPA RUCHU -->
   <div class="legend-bar">
-    <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-      <span><strong>🥋 Legenda na Ludziku Tymona:</strong></span>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <span><strong>🔍 4 Kafelki Zbliżeń:</strong></span>
       <span style="color:#fff;">⬜ Biała Judoga = <strong>Tymon</strong></span>
       <span style="color:#60a5fa;">🟦 Niebieska Judoga = <strong>Rywal / Tata</strong></span>
-      <span style="color:var(--neon-green);">🟩 Zielona Noga = <strong>Która noga wchodzi/podcina!</strong></span>
-      <span style="color:var(--neon-blue);">🔵 Niebieski Punkt = <strong>Rękaw (Lewa ręka)</strong></span>
-      <span style="color:var(--neon-gold);">🟡 Złoty Punkt = <strong>Kołnierz (Prawa ręka)</strong></span>
+      <span style="color:var(--neon-green);">🟩 Zielona Noga/Stopa = <strong>Gdzie wchodzi noga!</strong></span>
+      <span style="color:var(--neon-blue);">🔵 Niebieska Strzałka = <strong>Rękaw (Wychylenie!)</strong></span>
+      <span style="color:var(--neon-red);">🔴 Czerwona Strzałka = <strong>Ruch Głowy i Tułowia!</strong></span>
     </div>
     <div style="display:flex; gap:6px;">
-      <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.72rem;" onclick="setChibiSpeed('3.2s')">🐢 Zwolnij ruch ludzików</button>
+      <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.72rem;" onclick="setChibiSpeed('3.2s')">🐢 Zwolnij ruch</button>
       <button class="btn btn-blue" style="padding:4px 9px; font-size:0.72rem;" onclick="setChibiSpeed('0.9s')">⚡ Tempo Bojowe!</button>
     </div>
   </div>
 
-  <!-- ZAKŁADKA 1: TRENING DNIA Z ANIMOWANYMI LUDZIKAMI ANIME KROK PO KROKU -->
+  <!-- ZAKŁADKA 1: TRENING DNIA Z 4 KAFELKAMI ZBLIŻEŃ KAMERY DO KAŻDEGO ĆWICZENIA -->
   <div id="pane-daily" class="tab-pane active">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>📅 Trening Dnia – Pokaz na Ludzikach Anime (1 ➔ 2 ➔ 3)</span>
+          <span>📅 Trening Dnia – 4 Zbliżenia Kamery (Stopy • Ręce • Głowa • Wejście)</span>
           <span style="font-size:0.72rem; color:var(--neon-blue);">Kliknij 🔊 aby telefon przeczytał na głos!</span>
         </h2>
         <select id="daySelect" onchange="renderDailyQuests()">
-          <option value="1">Poniedziałek – Dzień Klubu (Szybkie Stopy + Cel na Randori)</option>
+          <option value="1">Poniedziałek – Dzień Klubu (Szybkie Stopy + Wejście pod Uchi-matę)</option>
           <option value="2">Wtorek – Domowa Kuźnia: Uchi-mata na Gumach + Kółko na Brzuch + Paraletki</option>
           <option value="3">Środa – Dzień Klubu (Uniki + Szybki Żółw po upadku)</option>
           <option value="4">Czwartek – Domowa Kuźnia: Ucieczka z Parteru z Tatą + Gumy Oporowe + Hantelki</option>
-          <option value="5">Piątek – Dzień Klubu (Szybkie Stopy De-ashi-barai & Kouchi-gari przed walkami)</option>
+          <option value="5">Piątek – Dzień Klubu (Kombinacja Szybkie Stopy ➔ Uchi-mata przed walkami)</option>
           <option value="6">Sobota – Boss Fight! (Obwód 3 Stacji + Pokaz przed Tatą)</option>
           <option value="0">Niedziela – Yasumi (Regeneracja Bohatera)</option>
         </select>
@@ -596,21 +593,21 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 2: SZKOŁA KODOKAN (POKAZ NA LUDZIKACH ANIME + DZIAŁAJĄCE FILMY YOUTUBE) -->
+  <!-- ZAKŁADKA 2: SZKOŁA KODOKAN (4 ZBLIŻENIA KAMERY + DZIAŁAJĄCE FILMY YOUTUBE) -->
   <div id="pane-kodokan" class="tab-pane">
     <div class="card">
-      <h2>🥋 Szkoła Kodokan (Tokio) – Pokaz na Ludzikach Anime + Wideo</h2>
+      <h2>🥋 Szkoła Kodokan (Tokio) – 4 Kafelki Zbliżeń Kamery + Wideo</h2>
       <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:10px;">
-        Zobacz na animowanych ludzikach w judogach, gdzie złapać rękoma (🔵 Rękaw / 🟡 Kołnierz), gdzie postawić stopę w trójkącie (▲) i którą nogą (🟩 Zielona Noga) wykonać rzut!
+        Każda technika ma 4 dokładne zbliżenia: 1. Stopy na ziemi i trójkąt (▲), 2. Dłonie i strzałka wychylenia (Kuzushi), 3. Ruch głowy i tułowia, 4. Gdzie dokładnie wchodzi noga!
       </p>
       <div class="grid-2">
         <div>
           <label>1. Co ćwiczymy?</label>
           <select id="techCategorySelect" onchange="populateTechSelector()">
-            <option value="throws">🔥 Rzuty w stójce (Uchi-mata, Szybkie Stopy, Seoi-nage)</option>
-            <option value="pins">🔒 Trzymania w parterze (Jak utrzymać rywala na macie)</option>
+            <option value="throws">🔥 Rzuty w stójce (Uchi-mata, Szybkie Stopy, O-uchi-gari, Seoi-nage)</option>
+            <option value="pins">🔒 Trzymania w parterze (Kesa-gatame, Yoko-shiho-gatame)</option>
             <option value="turnovers">🔄 Atak w parterze (Jak obrócić "żółwia" Taty)</option>
-            <option value="escapes">🛡️ Ucieczki z parteru (Most + Krewetka)</option>
+            <option value="escapes">🛡️ Ucieczki z parteru (Most Upa + Krewetka Ebi)</option>
           </select>
         </div>
         <div>
@@ -622,7 +619,7 @@
     <div id="techDetailContainer" class="card"></div>
   </div>
 
-  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA -->
+  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA Z 4 ZBLIŻENIAMI -->
   <div id="pane-belts" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -635,7 +632,7 @@
       </div>
 
       <div class="card">
-        <h2>🥋 Ćwicz do Pasa (Wymagania Kyu + Wrzucanie do Planu)</h2>
+        <h2>🥋 Ćwicz do Pasa (Wymagania Kyu z Pokazem Zbliżeń)</h2>
         <select id="beltTargetSelect" onchange="renderBeltRequirements()">
           <option value="3kyu">🟢 3 Kyu – Zielony Pas (Główny Cel Tymona!)</option>
           <option value="4kyu">🟠 4 Kyu – Pomarańczowy Pas (Szlif Mistrzowski)</option>
@@ -650,30 +647,19 @@
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>📊 Wnioski z Walki Tymona (Bochnia) – Fundament Planu Naprawczego</h2>
-        <div class="quest-item" style="border-left-color:var(--neon-green);">
-          <strong>✅ MOCNA STRONA (0:57–1:05): Bojowy start i wysoki prawy uchwyt</strong>
-          <p style="font-size:0.81rem; color:var(--text-dim); margin-top:4px;">
-            Tymon od razu po <em>Hajime</em> idzie do przodu, wysoko łapie kołnierz, szuka <em>Uchi-maty</em> i świetnie kontroluje krawędź maty.
-          </p>
-        </div>
-
+        <h2>📊 Wnioski z Walki Tymona (Bochnia) – Zbliżenia Naprawcze</h2>
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z daleka bez wychylenia</strong>
-          <p style="font-size:0.81rem; color:var(--text-dim); margin:4px 0 8px;">
-            Zanim wejdziesz w Uchi-matę, zrób małe podcięcie prawą stopą w piętę rywala (Kouchi-gari) i pociągnij lewą ręką rękaw do swojego ucha!
-          </p>
-          <button class="btn btn-blue" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo – podcięcie w piętę ➔ rękaw do ucha ➔ głowa do kolana i noga w sufit!')">
+          <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z wychyleniem i nurkowaniem głowy</strong>
+          <div id="bochniaFix1Zoom"></div>
+          <button class="btn btn-blue" style="width:100%; margin-top:6px;" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('uchimata', 'Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo – podcięcie w piętę ➔ rękaw do ucha ➔ głowa do kolana i noga między uda!')">
             ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Uchi-maty!)
           </button>
         </div>
 
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 FUNDAMENT NAPRAWCZY #2 (1:25–1:42): Ucieczka z Kesa-gatame</strong>
-          <p style="font-size:0.81rem; color:var(--text-dim); margin:4px 0 8px;">
-            Zamiast pchać rywala prostymi rękami: przyklej łokcie do brzucha, zrób wysoki Most przez lewe ramię i cofnij pupę w tył (Krewetka) wkładając kolano!
-          </p>
-          <button class="btn btn-blue" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Łokcie do brzucha ➔ Wysoki Most ➔ Krewetka i kolano pod brzuch Taty!')">
+          <strong>🔧 FUNDAMENT NAPRAWCZY #2 (1:27): Ucieczka z Kesa-gatame (Most + Krewetka)</strong>
+          <div id="bochniaFix2Zoom"></div>
+          <button class="btn btn-blue" style="width:100%; margin-top:6px;" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('escape', 'Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Łokcie do brzucha ➔ Wysoki Most ➔ Krewetka i zielone kolano pod brzuch Taty!')">
             ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Parteru!)
           </button>
         </div>
@@ -702,15 +688,15 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 5: KALKULATOR MOCY I NAJPOPULARNIEJSZYCH PRODUKTÓW -->
+  <!-- ZAKŁADKA 5: KALKULATOR MOCY + AI DIETETYK (GEMINI API) -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
         <h2>
           <span>⚡ Ładowarka Mocy & Kalkulator Produktów</span>
           <select id="calcProfileMode" onchange="renderMealLog()" style="width:auto; margin:0; font-size:0.75rem;">
-            <option value="tymon">🥋 Tymon (Paliwo Judoki – 2100 kcal)</option>
-            <option value="jerry">🔥 Tryb Redukcji 85kg (2250 kcal / 175g B)</option>
+            <option value="tymon">🥋 Tymon (Paliwo Judoki – 2100 kcal / 85g B)</option>
+            <option value="jerry">🔥 JERRY BYKU: ULTIMATE OS (2250 kcal / 175g B / Cel 85kg)</option>
           </select>
         </h2>
         <label>1. Wybierz produkt z bazy najpopularniejszych produktów:</label>
@@ -730,6 +716,14 @@
         <button class="btn btn-green" style="width:100%; margin-top:4px;" onclick="addMealToLog()">
           ➕ Doładuj Baterię Mocy (+15 EXP)
         </button>
+
+        <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
+        <h3>🤖 Zapytaj AI Dietetyka / Senseia (Gemini API)</h3>
+        <div style="display:flex; gap:6px; margin-top:6px;">
+          <input type="text" id="aiDietInput" placeholder="Np. Co zjeść po treningu judo / Jak wkomponować śledzie w 2250 kcal?" style="margin:0;">
+          <button class="btn btn-blue" onclick="askAiDietitian()">Zapytaj AI</button>
+        </div>
+        <div id="aiDietOutput" style="margin-top:8px; padding:9px; background:var(--bg-panel); border-radius:8px; font-size:0.8rem; white-space:pre-wrap; display:none;"></div>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
         <h3>➕ Dodaj własny produkt</h3>
@@ -792,219 +786,366 @@
 
 <script>
   /*************************************************************************
-   * 1. RUCHOME LUDZIKI ANIME/CHIBI W JUDOGACH (ZAMIAST PATYCZAKÓW Z KRESEK!)
-   *    - Biała Judoga + Złote Włosy Anime + Pomarańczowy Pas = TYMON
-   *    - Niebieska Judoga = RYWAL / TATA
-   *    - Zielona Noga (#10b981) = Pracująca noga Tymona!
-   *    - Niebieski/Złoty Punkt = Gdzie złapać rękaw i kołnierz!
+   * 1. SYSTEM 4 KAFELKÓW ZE ZBLIŻENIEM KAMERY (ZOOM-IN ANATOMICAL PANELS)
+   *    Każdy zestaw ma 4 kadry:
+   *    [0] ZBLIŻENIE NA STOPY I TRÓJKĄT NA MACIE
+   *    [1] ZBLIŻENIE NA DŁONIE I STRZAŁKI WYCHYLENIA (KUZUSHI)
+   *    [2] ZBLIŻENIE NA RUCH GŁOWY I TUŁOWIA Z PROFILU
+   *    [3] ZBLIŻENIE NA WEJŚCIE NOGI / KOLANA (FINAŁ!)
    *************************************************************************/
   function setChibiSpeed(dur) {
     document.documentElement.style.setProperty('--chibi-anim-speed', dur);
   }
 
-  const STEP_ILLUS = {
-    // SZYBKIE STOPY 1: Ludzik Tymona (biała judoga, złote włosy anime) staje przed Trójkątem i 2 klapkami
-    fast_feet_1: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Trójkąt i klapki rywala na macie -->
-        <polygon points="60,72 26,108 94,108" fill="rgba(0,240,255,0.14)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
-        <ellipse cx="34" cy="102" rx="11" ry="5" fill="#ef4444"/><ellipse cx="86" cy="102" rx="11" ry="5" fill="#ef4444"/>
-        <!-- Ludzik Anime Tymona w białej judodze -->
-        <g>
-          <!-- Spodnie judogi i stopy -->
-          <rect x="44" y="64" width="12" height="22" rx="4" fill="#e2e8f0" stroke="#000" stroke-width="1.5"/>
-          <rect x="64" y="64" width="12" height="22" rx="4" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
-          <ellipse cx="50" cy="88" rx="7" ry="4" fill="#fde047"/>
-          <ellipse cx="70" cy="88" rx="7" ry="4" fill="#10b981"/>
-          <!-- Biała góra judogi + pomarańczowy pas -->
-          <path d="M40 36 L80 36 L76 66 L44 66 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <path d="M52 36 L60 52 L68 36" fill="none" stroke="#94a3b8" stroke-width="2"/>
-          <rect x="42" y="56" width="36" height="6" rx="2" fill="#f97316" stroke="#000" stroke-width="1"/>
-          <!-- Głowa i nastroszona złota fryzura Anime -->
-          <circle cx="60" cy="24" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <path d="M45 20 L40 10 L52 14 L56 5 L64 13 L72 6 L70 16 L80 12 L74 22 Z" fill="#facc15" stroke="#000" stroke-width="1.2"/>
-          <circle cx="56" cy="24" r="1.5" fill="#000"/><circle cx="64" cy="24" r="1.5" fill="#000"/>
-        </g>
-        <text x="60" y="117" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Stań przed ▲ (Klapkami)</text>
-      </svg>`,
+  const ZOOM_PANELS = {
+    // ZESTAW 1: UCHI-MATA (4 Zbliżenia Kamery)
+    uchimata: [
+      {
+        badge: "🔍 1. ZBLIŻENIE: STOPY NA ZIEMI",
+        txt: "Patrz na dół: między niebieskimi nogawkami rywala świeci Trójkąt (▲). Twoja PRAWA STOPA (zielona) wskakuje w sam czubek trójkąta, a lewa staje obok!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Nogawki niebieskiej judogi rywala i jego stopy z palcami -->
+          <path d="M14 5 L28 5 L30 42 L12 42 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
+          <path d="M12 42 C10 52, 28 54, 30 42 Z" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
+          <path d="M100 5 L114 5 L116 42 L98 42 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
+          <path d="M98 42 C96 52, 114 54, 116 42 Z" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
+          <!-- Trójkąt na macie -->
+          <polygon points="65,36 24,104 106,104" fill="rgba(0,240,255,0.16)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
+          <!-- Biała nogawka i zielona prawa stopa Tymona wchodząca w czubek trójkąta -->
+          <g class="anim-foot-step">
+            <path d="M54 54 C52 40, 76 40, 74 54 L76 74 L52 74 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
+            <path d="M50 72 L78 72 L80 98 L48 98 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <text x="64" y="62" text-anchor="middle" fill="#000" font-size="8" font-weight="900">PRAWA</text>
+          </g>
+          <!-- Strzałka wejścia stopy -->
+          <path d="M65 112 L65 78" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="65,72 59,82 71,82" fill="#facc15"/>
+        </svg>`
+      },
+      {
+        badge: "🔍 2. DŁONIE & WYCHYLENIE",
+        txt: "Zbliżenie na ręce: Lewa dłoń łapie NIEBIESKI RĘKAW przy łokciu i ciągnie mocno w górę do Twojego ucha (⬆️). Prawa dłoń na ZŁOTYM KOŁNIERZU pcha rywala na palce!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Niebieska góra judogi rywala przechylająca się do przodu (Kuzushi) -->
+          <g class="anim-kuzushi-pull">
+            <path d="M35 28 L98 28 L92 92 L42 92 Z" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
+            <path d="M55 28 L66 56 L77 28" fill="none" stroke="#93c5fd" stroke-width="3"/>
+            <!-- Lewa dłoń Tymona (z palcami) na rękawie rywala + Niebieska strzałka do ucha -->
+            <rect x="20" y="42" width="22" height="14" rx="4" fill="#00f0ff" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="38" cy="49" r="7" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+            <path d="M36 42 L14 14" stroke="#00f0ff" stroke-width="5" stroke-linecap="round"/>
+            <polygon points="10,10 13,22 23,14" fill="#00f0ff"/>
+            <!-- Prawa dłoń Tymona na kołnierzu + Złota strzałka -->
+            <circle cx="76" cy="44" r="7" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+            <path d="M76 44 L54 20" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
+            <polygon points="50,16 53,27 62,20" fill="#facc15"/>
+          </g>
+          <text x="65" y="112" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Ciągnij rękaw do ucha! ↖️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 3. GŁOWA NURKUJE W DÓŁ!",
+        txt: "Widok z boku na obie postacie: po obrocie plecami Twoja GŁOWA (w złotych włosach) nurkuje ostro w dół (⤵️) do Twojego kolana! Nie stój prosto!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Sylwetka Niebieskiego Rywala z tyłu -->
+          <circle cx="82" cy="24" r="10" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <path d="M68 36 L96 36 L92 84 L70 84 Z" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5"/>
+          <!-- Sylwetka Tymona w białej judodze pochylająca głowę w dół -->
+          <rect x="52" y="72" width="13" height="34" rx="4" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+          <g class="anim-head-dive">
+            <path d="M36 46 L72 46 L68 76 L40 76 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
+            <rect x="40" y="68" width="28" height="6" rx="2" fill="#f97316"/>
+            <circle cx="34" cy="44" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+            <path d="M22 38 L18 26 L30 32 L36 22 L42 32 Z" fill="#facc15" stroke="#000" stroke-width="1"/>
+          </g>
+          <!-- Czerwona zakrzywiona strzałka nurkowania głowy -->
+          <path d="M30 22 Q10 55 26 84" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+          <polygon points="30,88 18,84 26,75" fill="#ef4444"/>
+          <text x="72" y="114" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="bold">Głowa w dół do kolana! ⤵️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 4. GDZIE WCHODZI NOGA",
+        txt: "Zbliżenie na uda: Twoja ZIELONA PRAWA NOGA wchodzi dokładnie MIĘDZY NOGI niebieskiego rywala (pod jego wewnętrzne udo) i strzela prosto w sufit (🚀⬆️)!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Dwie niebieskie nogawki spodni rywala -->
+          <path d="M32 38 L48 38 L44 88 L28 88 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
+          <path d="M84 28 L100 28 L96 76 L80 76 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
+          <!-- Biała noga podporowa Tymona -->
+          <path d="M46 66 L60 66 L58 106 L44 106 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+          <!-- ZIELONA PRAWA NOGA TYMONA WCHODZĄCA MIĘDZY UDA RYWALA -->
+          <g class="anim-leg-blast">
+            <path d="M52 64 L104 48 L108 62 L54 78 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
+            <ellipse cx="110" cy="54" rx="8" ry="5" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
+          </g>
+          <!-- Zielona strzałka wyrzutu w sufit -->
+          <path d="M78 88 L96 16" stroke="#10b981" stroke-width="4" stroke-dasharray="4,2"/>
+          <polygon points="98,10 89,20 101,22" fill="#10b981"/>
+          <text x="65" y="115" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Między uda i w sufit! 🚀</text>
+        </svg>`
+      }
+    ],
 
-    // SZYBKIE STOPY 2: Ludzik Tymona pokazuje uchwyt (Niebieski Rękaw + Złoty Kołnierz) jak kierownica
-    fast_feet_2: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Cień niebieskiego rywala w tle z punktami uchwytu -->
-        <path d="M32 32 L88 32 L82 72 L38 72 Z" fill="rgba(37,99,235,0.35)" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3,2"/>
-        <!-- Ludzik Tymona -->
-        <rect x="44" y="68" width="12" height="22" rx="4" fill="#e2e8f0"/><rect x="64" y="68" width="12" height="22" rx="4" fill="#e2e8f0"/>
-        <path d="M40 38 L80 38 L76 68 L44 68 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <rect x="42" y="58" width="36" height="6" rx="2" fill="#f97316"/>
-        <!-- Rękawy i dłonie Tymona na kierownicy -->
-        <path d="M40 42 L26 48" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
-        <path d="M80 42 L94 40" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
-        <!-- Świecące punkty uchwytu: Niebieski Rękaw (Lewa) i Złoty Kołnierz (Prawa) -->
-        <circle cx="25" cy="48" r="7" fill="#00f0ff" class="pulse-target"/><text x="20" y="36" fill="#00f0ff" font-size="8" font-weight="bold">Rękaw</text>
-        <circle cx="95" cy="39" r="7" fill="#facc15" class="pulse-target"/><text x="76" y="28" fill="#facc15" font-size="8" font-weight="bold">Kołnierz</text>
-        <!-- Głowa Anime -->
-        <circle cx="60" cy="25" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-        <path d="M45 21 L40 11 L52 15 L56 6 L64 14 L72 7 L70 17 L80 13 L74 23 Z" fill="#facc15" stroke="#000" stroke-width="1.2"/>
-        <text x="60" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Ręce w górze (Kierownica!)</text>
-      </svg>`,
+    // ZESTAW 2: SZYBKIE STOPY (ASHI-WAZA: DE-ASHI-BARAI & KOUCHI-GARI)
+    fast_feet: [
+      {
+        badge: "🔍 1. STOPY & 2 KLAPKI NA ZIEMI",
+        txt: "Zbliżenie na podłogę: rozstaw 2 klapki na szerokość barków (to stopy rywala).Twoje kolana są lekko ugięte, stoisz na sprężystych palcach przed trójkątem (▲).",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <polygon points="65,42 25,98 105,98" fill="rgba(0,240,255,0.14)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
+          <!-- 2 Klapki jako stopy rywala -->
+          <rect x="22" y="42" width="18" height="30" rx="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+          <rect x="90" y="42" width="18" height="30" rx="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
+          <!-- Białe nogawki i stopy Tymona -->
+          <path d="M38 74 L54 74 L52 102 L36 102 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+          <path d="M76 74 L92 74 L90 102 L74 102 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
+          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Stań na ugiętych nogach!</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 2. DŁONIE TRZYMAJĄ KIEROWNICĘ",
+        txt: "Zbliżenie na ręce: obie dłonie trzymaj przed klatką piersiową jak kierownicę roweru! Prawa na wysokości brody (kołnierz), lewa przy łokciu (rękaw) – ciągnij w dół (⬇️)!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <path d="M36 42 L94 42 L88 96 L42 96 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <circle cx="65" cy="24" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <path d="M52 18 L48 8 L60 13 L66 4 L72 13 L82 9 L78 20 Z" fill="#facc15"/>
+          <!-- Ręce Tymona ułożone jak kierownica + strzałki -->
+          <path d="M40 50 L22 56" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <path d="M90 50 L108 46" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="20" cy="56" r="7" fill="#00f0ff" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="110" cy="46" r="7" fill="#facc15" stroke="#fff" stroke-width="1.5"/>
+          <path d="M20 66 L20 92" stroke="#00f0ff" stroke-width="4"/><polygon points="20,96 14,86 26,86" fill="#00f0ff"/>
+          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Rękaw w dół, kołnierz wysoko!</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 3. ZBLIŻENIE: STOPA JAK MIOTŁA",
+        txt: "Zbliżenie na samą kostkę: przekręć ZIELONĄ STOPĘ bokiem (tak, żeby mały palec szorował po dywanie jak miotła) i traf dokładnie w bok pięty rywala (⬅️)!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="8" y1="96" x2="122" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <!-- Niebieska nogawka i stopa rywala -->
+          <path d="M26 24 L46 24 L44 76 L24 76 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
+          <path d="M22 76 L48 76 L50 94 L20 94 Z" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <!-- Animowana Zielona Stopa Tymona sunąca po samej macie w kostkę rywala -->
+          <g class="anim-foot-sweep">
+            <path d="M78 28 L98 28 L92 78 L72 78 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+            <path d="M64 78 L94 78 L90 94 L58 94 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
+          </g>
+          <path d="M104 86 L54 86" stroke="#10b981" stroke-width="4"/><polygon points="48,86 58,80 58,92" fill="#10b981"/>
+          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Szoruj bokiem stopy po macie! ⬅️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 4. BIODRA I GŁOWA PROSTO",
+        txt: "Widok całej sylwetki: nie pochylaj głowy w dół przy podcięciach stóp! Głowa wysoko, biodra pchają do przodu (➡️), a stopa zamiata w rytmie 1 raz na sekundę!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Sylwetka Tymona wyprostowana, biodra do przodu -->
+          <circle cx="56" cy="22" r="10" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <path d="M44 16 L40 6 L52 12 L58 4 L66 12 Z" fill="#facc15"/>
+          <path d="M42 34 L70 34 L68 68 L44 68 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <rect x="43" y="60" width="26" height="6" rx="2" fill="#f97316"/>
+          <path d="M44 68 L40 98 L52 98 L54 68 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
+          <path d="M60 68 L88 92 L96 84 L68 64 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
+          <path d="M74 52 L106 52" stroke="#facc15" stroke-width="4"/><polygon points="112,52 102,46 102,58" fill="#facc15"/>
+          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Głowa wysoko, biodra w przód! ➡️</text>
+        </svg>`
+      }
+    ],
 
-    // SZYBKIE STOPY 3: Animowany ludzik Tymona zamiata zieloną nogą stopę niebieskiego rywala!
-    fast_feet_3: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Stopa rywala (cel) -->
-        <ellipse cx="32" cy="94" rx="11" ry="6" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
-        <text x="20" y="112" fill="#60a5fa" font-size="8" font-weight="bold">Stopa rywala</text>
-        <!-- Ludzik Tymona -->
-        <rect x="64" y="64" width="12" height="26" rx="4" fill="#e2e8f0" stroke="#000" stroke-width="1.5"/>
-        <!-- ANIMOWANA ZIELONA NOGA ZAMIATAJĄCA PO MACIE -->
-        <g class="anim-sweep-leg">
-          <rect x="44" y="64" width="13" height="26" rx="5" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          <ellipse cx="46" cy="92" rx="9" ry="5" fill="#10b981" stroke="#fff" stroke-width="1.5"/>
-        </g>
-        <path d="M42 36 L80 36 L76 66 L46 66 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <rect x="44" y="56" width="34" height="6" rx="2" fill="#f97316"/>
-        <circle cx="60" cy="24" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-        <path d="M45 20 L40 10 L52 14 L56 5 L64 13 L72 6 L70 16 L80 12 L74 22 Z" fill="#facc15" stroke="#000" stroke-width="1.2"/>
-        <path d="M55 96 Q40 102 25 94" fill="none" stroke="#facc15" stroke-width="3" stroke-dasharray="3,2"/>
-      </svg>`,
+    // ZESTAW 3: UCIECZKA Z TRZYMANIA KESA-GATAME (MOST UPA + KREWETKA EBI Z TATĄ)
+    escape: [
+      {
+        badge: "🔍 1. ŁOKCIE DO ŻEBER I STOPY DO PUPY",
+        txt: "Zbliżenie na parter: Tata (w niebieskiej judodze) trzyma Cię z boku. Przyklej oba swoje łokcie ciasno do żeber (🔵) i podciągnij zielone stopy pod samą pupę!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <!-- Biała sylwetka Tymona na plecach ze zgiętymi w kolanach zielonymi nogami -->
+          <circle cx="22" cy="78" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <rect x="32" y="72" width="44" height="18" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <path d="M74 84 L92 60 L106 94" fill="none" stroke="#10b981" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Niebieska sylwetka Taty z góry + strzałka łokcia do żeber -->
+          <rect x="44" y="48" width="30" height="26" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
+          <circle cx="52" cy="74" r="6" fill="#00f0ff"/>
+          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Łokcie ciasno, stopy pod pupę!</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 2. WYSOKI MOST (UPA) PRZEZ RAMIĘ!",
+        txt: "Zbliżenie z boku: wbij zielone stopy w matę i wyrzuć brzuch oraz biodra wysoko w górę (⬆️), przekręcając głowę i Tatę przez swoje lewe ramię!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <g class="anim-bridge-lift">
+            <circle cx="20" cy="82" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+            <!-- Wygięty w łuk tułów Tymona (Most) -->
+            <path d="M28 84 Q64 32 104 90" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+            <path d="M82 64 L104 92" stroke="#10b981" stroke-width="10" stroke-linecap="round"/>
+            <!-- Niebieski Tata unoszony w górę -->
+            <rect x="48" y="28" width="28" height="22" rx="6" fill="#1e40af" stroke="#facc15" stroke-width="2"/>
+          </g>
+          <path d="M64 88 L64 48" stroke="#facc15" stroke-width="4"/><polygon points="64,42 58,52 70,52" fill="#facc15"/>
+          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Wyrzuć brzuch w górę (MOST)! ⬆️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 3. KREWETKA (PUPA DALEKO W TYŁ!)",
+        txt: "Gdy Tata zaprze się ręką o matę, nagle opuść plecy i wyrzuć pupę daleko w tył od Taty (⬅️ jak krewetka), robiąc wolną szparę między Waszymi brzuchami!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <!-- Tymon cofa biodra w lewo, robiąc wolne miejsce -->
+          <circle cx="24" cy="64" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <path d="M30 68 L22 86 L56 88" fill="none" stroke="#ffffff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="74" y="58" width="28" height="28" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
+          <!-- Strzałka ucieczki bioder -->
+          <path d="M64 78 L32 78" stroke="#ef4444" stroke-width="4"/><polygon points="26,78 36,72 36,84" fill="#ef4444"/>
+          <text x="65" y="114" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="bold">Wyrzuć pupę w tył (Krewetka)! ⬅️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 4. WSADŹ ZIELONE KOLANO POD BRZUCH!",
+        txt: "Finał ucieczki: w powstałą szparę natychmiast wsuń swoje ZIELONE KOLANO (➡️) pod brzuch Taty i zamknij go w kleszcze swoimi nogami – TOKETA!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <circle cx="20" cy="70" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
+          <rect x="28" y="68" width="34" height="16" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <rect x="72" y="56" width="28" height="28" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
+          <!-- Zielone kolano wchodzące klinem pod brzuch Taty -->
+          <g class="anim-foot-sweep">
+            <path d="M54 78 L78 68 L62 90" fill="none" stroke="#10b981" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Zielone kolano pod brzuch! ➡️</text>
+        </svg>`
+      }
+    ],
 
-    // UCHI-MATA 1: Ludzik Tymona wskakuje zieloną prawą stopą w czubek Trójkąta między nogi Niebieskiego Rywala
-    uchimata_1: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Nogi Niebieskiego Rywala w rozkroku -->
-        <rect x="22" y="20" width="14" height="36" rx="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
-        <rect x="84" y="20" width="14" height="36" rx="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
-        <!-- Trójkąt Wejścia na macie -->
-        <polygon points="60,46 28,96 92,96" fill="rgba(0,240,255,0.16)" stroke="#00f0ff" stroke-width="2.5"/>
-        <!-- Animowany Ludzik Tymona wskakujący prawą (zieloną) stopą w czubek trójkąta -->
-        <g class="anim-step-in">
-          <ellipse cx="44" cy="86" rx="8" ry="5" fill="#e2e8f0" stroke="#000" stroke-width="1.5"/>
-          <ellipse cx="60" cy="54" rx="9" ry="13" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          <text x="60" y="57" text-anchor="middle" fill="#000" font-size="8" font-weight="900">PRAWA</text>
-        </g>
-        <text x="60" y="113" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">1. Prawa stopa w czubek ▲</text>
-      </svg>`,
-
-    // UCHI-MATA 2: Ludzik Tymona odwraca się plecami i ciągnie Niebieski Rękaw rywala do swojego ucha ("Zegarek")
-    uchimata_2: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Niebieski Rywal z tyłu -->
-        <path d="M44 26 L88 26 L84 68 L48 68 Z" fill="#2563eb" stroke="#60a5fa" stroke-width="2"/>
-        <!-- Ludzik Tymona odwrócony plecami (widać biały tył judogi i pomarańczowy pas) -->
-        <rect x="44" y="68" width="12" height="24" rx="4" fill="#e2e8f0"/><rect x="62" y="68" width="12" height="24" rx="4" fill="#10b981"/>
-        <path d="M38 38 L78 38 L74 68 L42 68 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <rect x="40" y="58" width="36" height="6" rx="2" fill="#f97316"/>
-        <!-- Animowana Lewa Ręka ciągnąca Niebieski Rękaw do ucha -->
-        <g class="anim-pull-hand">
-          <path d="M40 44 L18 26" stroke="#ffffff" stroke-width="9" stroke-linecap="round"/>
-          <circle cx="16" cy="24" r="7" fill="#00f0ff" stroke="#fff" stroke-width="2"/>
-        </g>
-        <circle cx="58" cy="25" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-        <path d="M43 21 L38 11 L50 15 L54 6 L62 14 L70 7 L68 17 L78 13 L72 23 Z" fill="#facc15" stroke="#000" stroke-width="1.2"/>
-        <text x="60" y="113" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">2. Rękaw do ucha (Zegarek!)</text>
-      </svg>`,
-
-    // UCHI-MATA 3: Ludzik Tymona schyla głowę do kolana, a ZIELONA PRAWA NOGA leci wysoko między uda Niebieskiego Rywala!
-    uchimata_3: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <!-- Niebieski Rywal lecący w górę na plecach Tymona -->
-        <g class="anim-step-in">
-          <path d="M42 22 L88 16 L82 48 L46 48 Z" fill="#2563eb" stroke="#60a5fa" stroke-width="2"/>
-          <circle cx="36" cy="26" r="8" fill="#fed7aa"/>
-        </g>
-        <!-- Noga podporowa Tymona (lewa) -->
-        <rect x="42" y="62" width="12" height="32" rx="4" fill="#e2e8f0" stroke="#000" stroke-width="1.5"/>
-        <!-- ANIMOWANA ZIELONA NOGA WYMACHOWA LECĄCA W SUFIT MIĘDZY UDA RYWALA -->
-        <g class="anim-uchimata-leg">
-          <rect x="48" y="56" width="44" height="13" rx="6" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          <ellipse cx="94" cy="62" rx="7" ry="5" fill="#fde047"/>
-        </g>
-        <!-- Pochylony tułów i głowa Tymona nisko przy kolanie -->
-        <path d="M26 52 L58 44 L54 66 L30 66 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <circle cx="22" cy="64" r="10" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-        <path d="M10 60 L16 48 L26 52 L30 44 Z" fill="#facc15"/>
-        <text x="60" y="113" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">3. Zielona noga między uda!</text>
-      </svg>`,
-
-    // KÓŁKO NA BRZUCH (AB WHEEL) 1-2-3 NA LUDZIKU TYMONA
-    wheel_1: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <rect x="98" y="18" width="8" height="76" fill="#ef4444"/><text x="72" y="28" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text>
-        <line x1="8" y1="94" x2="108" y2="94" stroke="#94a3b8" stroke-width="3"/>
-        <!-- Ludzik Tymona klęczący na macie z kółkiem w dłoniach -->
-        <rect x="20" y="76" width="18" height="16" rx="4" fill="#10b981"/>
-        <path d="M26 48 L48 52 L42 78 L24 78 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <path d="M44 54 L58 84" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="60" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
-        <circle cx="42" cy="36" r="10" fill="#fed7aa"/><path d="M32 30 L42 20 L54 28 Z" fill="#facc15"/>
-        <text x="60" y="113" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">1. Klęknij 3 stopy od ściany</text>
-      </svg>`,
-    wheel_2: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <rect x="98" y="18" width="8" height="76" fill="#ef4444"/>
-        <line x1="8" y1="94" x2="108" y2="94" stroke="#94a3b8" stroke-width="3"/>
-        <g class="anim-wheel-roll">
-          <rect x="18" y="80" width="18" height="12" rx="4" fill="#10b981"/>
-          <path d="M28 80 L64 64 L58 76 L26 88 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <path d="M62 66 L84 84" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="86" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
-          <circle cx="68" cy="56" r="9" fill="#fed7aa"/><path d="M58 50 L70 42 L78 50 Z" fill="#facc15"/>
-        </g>
-        <text x="60" y="113" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">2. Jedź prosto aż do ściany!</text>
-      </svg>`,
-    wheel_3: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <line x1="8" y1="94" x2="108" y2="94" stroke="#94a3b8" stroke-width="3"/>
-        <rect x="24" y="76" width="18" height="16" rx="4" fill="#10b981"/>
-        <path d="M30 48 L52 52 L46 78 L28 78 Z" fill="#ffffff" stroke="#10b981" stroke-width="2.5"/>
-        <circle cx="56" cy="86" r="8" fill="#090d16" stroke="#facc15" stroke-width="3"/>
-        <circle cx="46" cy="36" r="10" fill="#fed7aa"/><path d="M36 30 L46 20 L58 28 Z" fill="#facc15"/>
-        <path d="M82 70 L58 70" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
-        <text x="60" y="113" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">3. Wróć siłą brzucha!</text>
-      </svg>`,
-
-    // UCIECZKA Z PARTERU (MOST + KREWETKA Z TATĄ) NA 2 LUDZIKACH (BIAŁY TYMON + NIEBIESKI TATA)
-    escape_1: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <line x1="8" y1="92" x2="112" y2="92" stroke="#94a3b8" stroke-width="3"/>
-        <!-- Biały Ludzik Tymona na plecach + Zielone stopy blisko pupy -->
-        <rect x="26" y="72" width="46" height="16" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <path d="M72 84 L88 66 L98 90" fill="none" stroke="#10b981" stroke-width="8" stroke-linecap="round"/>
-        <circle cx="20" cy="76" r="9" fill="#fed7aa"/>
-        <!-- Niebieski Ludzik Taty trzymający z boku + Niebieskie łokcie Tymona przy żebrach -->
-        <rect x="42" y="54" width="28" height="22" rx="6" fill="#2563eb" stroke="#60a5fa" stroke-width="2"/>
-        <circle cx="48" cy="68" r="6" fill="#00f0ff" class="pulse-target"/>
-        <text x="60" y="113" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">1. Łokcie ciasno, stopy do pupy!</text>
-      </svg>`,
-    escape_2: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <line x1="8" y1="92" x2="112" y2="92" stroke="#94a3b8" stroke-width="3"/>
-        <!-- Animowany Wysoki Most (Upa) Białego Ludzika Tymona wyrzucający Niebieskiego Tatę w górę -->
-        <g class="anim-bridge-up">
-          <path d="M22 86 Q58 34 96 86" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
-          <path d="M76 66 L96 88" stroke="#10b981" stroke-width="10" stroke-linecap="round"/>
-          <rect x="44" y="32" width="26" height="20" rx="6" fill="#2563eb" stroke="#facc15" stroke-width="2"/>
-          <circle cx="20" cy="80" r="9" fill="#fed7aa"/>
-        </g>
-        <text x="60" y="113" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">2. Wysoki MOST brzucha w górę!</text>
-      </svg>`,
-    escape_3: `
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <line x1="8" y1="92" x2="112" y2="92" stroke="#94a3b8" stroke-width="3"/>
-        <!-- Biały Ludzik Tymona robi Krewetkę i wsadza ZIELONE KOLANO pod brzuch Niebieskiego Taty -->
-        <rect x="24" y="68" width="38" height="16" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
-        <rect x="66" y="56" width="28" height="24" rx="6" fill="#2563eb" stroke="#60a5fa" stroke-width="2"/>
-        <g class="anim-sweep-leg">
-          <path d="M48 76 L68 68 L56 88" fill="none" stroke="#10b981" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-        </g>
-        <circle cx="18" cy="72" r="9" fill="#fed7aa"/>
-        <text x="60" y="113" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">3. Wsadź zielone kolano pod brzuch!</text>
-      </svg>`
+    // ZESTAW 4: SIŁA & KÓŁKO NA BRZUCH (AB WHEEL + PARALETKI + GUMY)
+    core: [
+      {
+        badge: "🔍 1. KOLANA 3 STOPY OD ŚCIANY",
+        txt: "Zbliżenie na start: uklęknij kolanami (zielone spodenki) na miękkiej macie w odległości 3 swoich stóp (ok. 70 cm) przed ścianą – ściana to bezpieczny hamulec!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <rect x="106" y="16" width="8" height="80" fill="#ef4444"/><text x="78" y="28" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text>
+          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <rect x="22" y="76" width="18" height="18" rx="4" fill="#10b981"/>
+          <path d="M28 46 L50 50 L44 78 L26 78 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <circle cx="44" cy="34" r="10" fill="#fed7aa"/><path d="M34 28 L44 18 L56 26 Z" fill="#facc15"/>
+          <circle cx="64" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
+          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Klęknij 3 stopy przed ścianą!</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 2. DŁONIE I KOCIE PLECY",
+        txt: "Zbliżenie na uchwyt i brzuch: złap mocno rączki kółka, zablokuj proste łokcie i zaokrąglij lekko plecy w górę (jak kot!), mocno napinając brzuch!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <!-- Zbliżenie na tułów i ręce trzymające kółko -->
+          <path d="M24 66 Q56 42 84 62" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+          <path d="M80 62 L92 86" stroke="#00f0ff" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="94" cy="88" r="9" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
+          <path d="M56 76 L56 54" stroke="#10b981" stroke-width="4"/><polygon points="56,48 50,58 62,58" fill="#10b981"/>
+          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Wciągnij brzuch w górę! ⬆️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 3. WYJAZD PROSTO DO ŚCIANY",
+        txt: "Widok z boku: jedź powoli kółkiem do przodu (➡️ liczysz 1-2-3), aż kółko dotknie ściany. Biodra jadą razem z barkami, nie wyginaj brzucha w dół!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <rect x="106" y="16" width="8" height="80" fill="#ef4444"/>
+          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <rect x="18" y="82" width="18" height="12" rx="4" fill="#10b981"/>
+          <path d="M28 82 L68 64 L62 76 L26 90 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
+          <path d="M66 66 L94 86" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="96" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
+          <circle cx="72" cy="54" r="9" fill="#fed7aa"/><path d="M62 48 L74 40 L82 48 Z" fill="#facc15"/>
+          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Jedź aż dotkniesz ściany! ➡️</text>
+        </svg>`
+      },
+      {
+        badge: "🔍 4. POWRÓT SIŁĄ BRZUCHA",
+        txt: "Finał powtórzenia: dociśnij dłonie w dół i siłą samego brzucha przyciągnij kółko z powrotem do kolan (⬅️). Zrób 8 czystych powtórzeń w serii!",
+        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
+          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
+          <rect x="26" y="76" width="18" height="18" rx="4" fill="#10b981"/>
+          <path d="M32 46 L54 50 L48 78 L30 78 Z" fill="#ffffff" stroke="#10b981" stroke-width="2.5"/>
+          <circle cx="60" cy="86" r="8" fill="#090d16" stroke="#facc15" stroke-width="3"/>
+          <circle cx="48" cy="34" r="10" fill="#fed7aa"/><path d="M38 28 L48 18 L60 26 Z" fill="#facc15"/>
+          <path d="M96 72 L66 72" stroke="#facc15" stroke-width="4"/><polygon points="60,72 70,66 70,78" fill="#facc15"/>
+          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Wróć brzuchem do kolan! ⬅️</text>
+        </svg>`
+      }
+    ]
   };
 
+  function build4ZoomGridHtml(zoomKey, customId) {
+    const panels = ZOOM_PANELS[zoomKey] || ZOOM_PANELS.uchimata;
+    let html = `<div class="zoom-4-grid">`;
+    panels.forEach(p => {
+      html += `
+        <div class="zoom-tile-card">
+          <div class="zoom-svg-frame">${p.svg}</div>
+          <div>
+            <span class="zoom-badge">${p.badge}</span>
+            <div class="zoom-desc">${p.txt}</div>
+          </div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    if (customId) {
+      html += `
+        <img id="mangaImg_${customId}" class="custom-manga-preview" alt="Plansza Mangi">
+      `;
+    }
+    return html;
+  }
+
   /*************************************************************************
-   * 2. GŁOS SENSEIA (POLSKI SYNTEZATOR MOWY) + METRONOM SZYBKICH STÓP
+   * 2. BAZA INDEXED-DB NA PLANSZE MANGI PRZY KAŻDYM ĆWICZENIU
+   *************************************************************************/
+  async function saveMangaBoard(questId, dataUrl) {
+    try {
+      const db = await openPhotoDB();
+      db.transaction('cards', 'readwrite').objectStore('cards').put(dataUrl, 'manga_' + questId);
+    } catch (e) {
+      localStorage.setItem('tymon_manga_' + questId, dataUrl);
+    }
+  }
+
+  async function loadMangaBoard(questId) {
+    try {
+      const db = await openPhotoDB();
+      return await new Promise(res => {
+        const req = db.transaction('cards', 'readonly').objectStore('cards').get('manga_' + questId);
+        req.onsuccess = () => res(req.result || localStorage.getItem('tymon_manga_' + questId));
+        req.onerror = () => res(localStorage.getItem('tymon_manga_' + questId));
+      });
+    } catch (e) {
+      return localStorage.getItem('tymon_manga_' + questId);
+    }
+  }
+
+  function uploadMangaGuide(questId, ev) {
+    const file = ev.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async e => {
+      const dataUrl = e.target.result;
+      await saveMangaBoard(questId, dataUrl);
+      const img = document.getElementById('mangaImg_' + questId);
+      if (img) { img.src = dataUrl; img.style.display = 'block'; }
+      addExp(25);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function hydrateAllMangaBoards() {
+    document.querySelectorAll('.custom-manga-preview').forEach(async img => {
+      const qId = img.id.replace('mangaImg_', '');
+      const saved = await loadMangaBoard(qId);
+      if (saved) { img.src = saved; img.style.display = 'block'; }
+    });
+  }
+
+  /*************************************************************************
+   * 3. GŁOS SENSEIA (POLSKI SYNTEZATOR MOWY) + METRONOM SZYBKICH STÓP
    *************************************************************************/
   function speakInstruction(textToRead) {
     try {
@@ -1047,36 +1188,26 @@
   }
 
   /*************************************************************************
-   * 3. PLAN TRENINGU DNIA DLA 11-LATKA (Z ANIMOWANYMI LUDZIKAMI ANIME)
+   * 4. PLAN TRENINGU DNIA Z 4 KAFELKAMI ZBLIŻEŃ KAMERY DO KAŻDEGO ĆWICZENIA
    *************************************************************************/
   const DAILY_QUESTS = {
     1: {
       boss: "Pokaż Tacie 10 błyskawicznych podcięć w klapki + 5 wejść w Uchi-matę z głową nisko do kolana!",
       items: [
         {
-          id: "mon1", masteryId: "uchimata",
-          title: "⚡ Szybkie Stopy (Zamiatanie klapek zieloną nogą) – 3 serie po 20 sekund",
-          feet: "Połóż 2 klapki na podłodze (to stopy rywala). Stań przed trójkątem (▲) i zamiataj zieloną prawą oraz lewą stopą tuż nad podłogą!",
-          hands: "Unieś dłonie przed klatkę piersiową jak kierownicę roweru! Prawa dłoń trzyma złoty kołnierz, lewa niebieski rękaw.",
+          id: "mon1", masteryId: "uchimata", zoomKey: "fast_feet",
+          title: "⚡ Szybkie Stopy (Zamiatanie klapek bokiem stopy) – 3 serie po 20 sekund",
+          feet: "Połóż 2 klapki na podłodze (stopy rywala). Stań przed trójkątem (▲) i szoruj bokiem zielonej stopy po macie jak miotłą!",
+          hands: "Dłonie przed klatką jak kierownica roweru! Prawa dłoń wysoko (kołnierz), lewa ciągnie rękaw w dół.",
           speed: "Szybko i lekko: 1 podcięcie na 1 sekundę (włącz przycisk '🥁 Rytm Stóp' na Zegarze Dojo!).",
-          cards: [
-            { svg: "fast_feet_1", txt: "1. Połóż 2 klapki na dywanie i stań przed trójkątem (▲) na ugiętych nogach." },
-            { svg: "fast_feet_2", txt: "2. Trzymaj ręce wysoko jak kierownicę (🔵 Lewa rękaw, 🟡 Prawa kołnierz)." },
-            { svg: "fast_feet_3", txt: "3. Zieloną stopą (bokiem jak miotłą) zamiataj klapkę po dywanie przez 20 sekund!" }
-          ],
           dad: "Rola Taty: Włącz 20 sekund na Zegarze Dojo i pilnuj, żeby Tymon trzymał ręce w górze jak kierownicę!"
         },
         {
-          id: "mon2", masteryId: "uchimata",
+          id: "mon2", masteryId: "uchimata", zoomKey: "uchimata",
           title: "🔥 Wejście w Trójkąt pod Uchi-matę – 3 serie po 10 powtórzeń",
-          feet: "Zielona prawa stopa wskakuje w sam środek trójkąta (▲), lewa stopa staje obok niej, a potem zielona noga leci wysoko między uda rywala!",
-          hands: "Lewa ręka (🔵 niebieski punkt) ciągnie rękaw wysoko do Twojego lewego ucha (spójrz na zegarek!).",
-          speed: "Najpierw powoli (1, 2, 3), a ostatnie 5 powtórzeń w tempie bojowym!",
-          cards: [
-            { svg: "uchimata_1", txt: "1. Wskocz zieloną prawą stopą w sam czubek trójkąta (▲) między stopy rywala." },
-            { svg: "uchimata_2", txt: "2. Obróć się plecami i pociągnij lewą ręką niebieski rękaw do swojego ucha." },
-            { svg: "uchimata_3", txt: "3. Głowa w dół do kolana, a zielona prawa noga wystrzeliwuje między uda rywala!" }
-          ],
+          feet: "Zielona prawa stopa wskakuje w sam czubek trójkąta (▲), lewa staje obok niej, a potem zielona noga leci wysoko między uda rywala!",
+          hands: "Lewa ręka (🔵 niebieska strzałka) ciągnie rękaw wysoko do Twojego lewego ucha (spójrz na zegarek!).",
+          speed: "Najpierw powoli (1, 2, 3, 4), a ostatnie 5 powtórzeń w tempie bojowym!",
           dad: "Rola Taty: Trzymaj dłoń z tyłu na wysokości pasa Tymona – jego pięta musi dotknąć Twojej dłoni!"
         }
       ]
@@ -1085,78 +1216,53 @@
       boss: "Zrób 20 szybkich wejść w Uchi-matę na gumach z kołnierzem i rękawem w 25 sekund + 8 wyjazdów na kółku do ściany!",
       items: [
         {
-          id: "tue1", masteryId: "uchimata",
+          id: "tue1", masteryId: "uchimata", zoomKey: "uchimata",
           title: "🥋 Gumy Judo (z Rękawem i Kołnierzem): Turbo Uchi-mata – 4 serie po 15",
-          feet: "Wskakuj prawą stopą w czubek trójkąta (▲), obracaj się na palcach i wyrzucaj zieloną nogę wysoko w górę.",
-          hands: "Lewa dłoń mocno zaciska niebieski RĘKAW gumy, prawa dłoń trzyma złoty KOŁNIERZ.",
+          feet: "Wskakuj prawą stopą w czubek trójkąta (▲), obracaj się na palcach i wyrzucaj zieloną nogę wysoko w sufit.",
+          hands: "Lewa dłoń mocno zaciska niebieski RĘKAW gumy i ciągnie do ucha, prawa dłoń pcha złoty KOŁNIERZ.",
           speed: "Dynamiczny wystrzał: 15 wejść w 25 sekund!",
-          cards: [
-            { svg: "uchimata_1", txt: "1. Złap lewą ręką rękaw gumy, prawą kołnierz i wskocz prawą stopą w trójkąt (▲)." },
-            { svg: "uchimata_2", txt: "2. Obróć się plecami i pociągnij rękaw wysoko na wysokość swojego ucha." },
-            { svg: "uchimata_3", txt: "3. Schyl głowę nisko w dół i wyrzuć zieloną prawą nogę wysoko w sufit!" }
-          ],
-          dad: "Rola Taty: Odliczaj głośno od 1 do 15 i pilnuj, by przy każdym rzucie głowa Tymona schodziła w dół!"
+          dad: "Rola Taty: Odliczaj głośno od 1 do 15 i pilnuj, by przy każdym rzucie głowa Tymona nurkowała do kolana!"
         },
         {
-          id: "tue2", masteryId: "core",
-          title: "🛡️ Kółko na Brzuch (Ab Wheel do ściany) – 3 serie po 8 wyjazdów",
-          feet: "Uklęknij kolanami (zielone spodenki na ludziku) na miękkiej macie w odległości 3 swoich stóp przed ścianą.",
-          hands: "Złap mocno rączki niebieskiego kółka na prostych łokciach i napnij brzuch.",
-          speed: "Powoli do przodu (liczysz: 1-2-3 do ściany) i mocno wracasz!",
-          cards: [
-            { svg: "wheel_1", txt: "1. Uklęknij na macie 3 stopy przed ścianą (ściana zatrzyma kółko dla bezpieczeństwa)." },
-            { svg: "wheel_2", txt: "2. Napnij brzuch i jedź kółkiem prosto przed siebie, aż dotkniesz ściany." },
-            { svg: "wheel_3", txt: "3. Siłą brzucha wróć z powrotem na kolana. Zrób 8 razy!" }
-          ],
-          dad: "Rola Taty: Pilnuj, żeby brzuch Tymona nie opadał luźno na podłogę."
+          id: "tue2", masteryId: "core", zoomKey: "core",
+          title: "🛡️ Kółko na Brzuch (Ab Wheel do ściany) + Paraletki – 3 serie po 8 wyjazdów",
+          feet: "Uklęknij kolanami (zielone spodenki) na miękkiej macie w odległości 3 swoich stóp przed ścianą.",
+          hands: "Złap mocno rączki niebieskiego kółka na prostych łokciach i wciągnij brzuch w górę.",
+          speed: "Powoli do przodu (liczysz: 1-2-3 do ściany) i mocno wracasz brzuchem!",
+          dad: "Rola Taty: Pilnuj, żeby plecy Tymona były lekko zaokrąglone w górę (jak kot)."
         }
       ]
     },
     3: {
-      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'żółwia' i złapanie nogi Taty między swoje kolana!",
+      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'żółwia' i włożenie zielonego kolana pod brzuch Taty!",
       items: [
         {
-          id: "wed1", masteryId: "newaza",
-          title: "⚡ Uniki w Stójce + Szybki Żółw na Macie – 5 minut",
-          feet: "W stójce nogi szeroko na ugiętych kolanach. Na hasło Taty 'Gleba!' padasz na matę i chowasz stopy pod siebie.",
-          hands: "W stójce zbijasz ręce Taty, a na macie wbijasz łokcie ciasno w swoje kolana.",
+          id: "wed1", masteryId: "newaza", zoomKey: "escape",
+          title: "⚡ Uniki w Stójce + Szybka Obrona w Parterze – 5 minut",
+          feet: "Na hasło Taty padasz na matę, podciągasz stopy pod pupę i wsuwasz zielone kolano między siebie a Tatę.",
+          hands: "Przyklej oba łokcie ciasno do swoich żeber, żeby Tata nie włożył ręki pod pachę.",
           speed: "Reakcja w 1 sekundę na klaśnięcie Taty!",
-          cards: [
-            { svg: "fast_feet_2", txt: "1. Chodź na ugiętych nogach przed Tatą i zbijaj jego ręce, gdy sięga po Twój kark." },
-            { svg: "escape_1", txt: "2. Gdy Tata klaśnie – w 1 sekundę przyklej łokcie do brzucha i kolan!" },
-            { svg: "escape_3", txt: "3. Albo odwróć się na plecy i wsadź zielone kolano między siebie a Tatę!" }
-          ],
           dad: "Rola Taty: Klaszcz z zaskoczenia co 15 sekund!"
         }
       ]
     },
     4: {
-      boss: "Ucieknij z trzymania Kesa-gatame Taty na macie w mniej niż 10 sekund (Most + Krewetka)!",
+      boss: "Ucieknij z trzymania Kesa-gatame Taty na macie w mniej niż 10 sekund (Most Upa + Krewetka Ebi)!",
       items: [
         {
-          id: "thu1", masteryId: "newaza",
+          id: "thu1", masteryId: "newaza", zoomKey: "escape",
           title: "🛡️ Ucieczka z Trzymania Taty (Naprawa błędu z Bochni) – 5 rund po 15s",
           feet: "Podciągnij zielone pięty jak najbliżej swoich pośladków i wbij palce stóp mocno w matę!",
-          hands: "ZAKAZ pchania Taty prostymi rękami! Przyklej oba swoje łokcie (🔵 niebieski punkt) ciasno do własnych żeber.",
-          speed: "Wybuchowo: Most w górę (1 sekunda) i od razu wsadzenie zielonego kolana pod brzuch Taty!",
-          cards: [
-            { svg: "escape_1", txt: "1. Tata (w niebieskiej judodze) trzyma Cię z boku. Przyklej łokcie do brzucha, stopy do pupy." },
-            { svg: "escape_2", txt: "2. Wyrzuć brzuch wysoko w górę (zrób MOST), podnosząc Tatę w powietrze!" },
-            { svg: "escape_3", txt: "3. Cofnij pupę w tył i wsadź zielone kolano pod brzuch Taty – jesteś wolny!" }
-          ],
+          hands: "ZAKAZ pchania Taty prostymi rękami! Przyklej oba swoje łokcie ciasno do własnych żeber.",
+          speed: "Wybuchowo: Most w górę (1s) ➔ Krewetka pupą w tył (1s) ➔ Zielone kolano pod brzuch Taty!",
           dad: "Rola Taty: Trzymaj na 50% siły. Puść od razu, gdy Tymon zrobi Most + Krewetkę i włoży kolano!"
         },
         {
-          id: "thu2", masteryId: "core",
-          title: "💪 Zwykłe Gumy Oporowe + Małe Hantelki (Szybkie Ręce) – 3 serie",
-          feet: "Stań w wykroku przed trójkątem (▲).",
-          hands: "Gumy ciągnij mocno do brzucha. Hantelkami boksuj szybko na wysokość kołnierza i rękawa.",
+          id: "thu2", masteryId: "core", zoomKey: "fast_feet",
+          title: "💪 Zwykłe Gumy Oporowe + Małe Hantelki (Szybkie Ręce pod Kumi-kata) – 3 serie",
+          feet: "Stań w wykroku przed trójkątem (▲) na ugiętych kolanach.",
+          hands: "Gumy ciągnij mocno do pasa. Hantelkami boksuj szybko na wysokość kołnierza i rękawa.",
           speed: "20 sekund szybkiej pracy rąk bez zatrzymywania!",
-          cards: [
-            { svg: "fast_feet_1", txt: "1. Stań w pozycji walki przed trójkątem (kolana lekko ugięte)." },
-            { svg: "fast_feet_2", txt: "2. Zrób 15 mocnych przyciągań zwykłych gum oporowych do swojego pasa." },
-            { svg: "uchimata_2", txt: "3. Weź małe hantelki i przez 20 sekund wyrzucaj ręce szybko do przodu!" }
-          ],
           dad: "Rola Taty: Odliczaj 20 sekund na Zegarze Dojo."
         }
       ]
@@ -1165,34 +1271,24 @@
       boss: "Pokaż 10 błyskawicznych połączeń: Małe podcięcie w klapkę ➔ Wysoka Uchi-mata!",
       items: [
         {
-          id: "fri1", masteryId: "uchimata",
-          title: "⚡ Szybkie Stopy przed Piątkowymi Walkami w Klubie – 4 minuty",
+          id: "fri1", masteryId: "uchimata", zoomKey: "uchimata",
+          title: "⚡ Kombinacja Szybkie Stopy ➔ Uchi-mata przed Walkami w Klubie – 4 minuty",
           feet: "Zielona prawa stopa zaczepia klapkę od środka i w ułamku sekundy wskakujesz w czubek trójkąta (▲) pod Uchi-matę!",
-          hands: "Ręce cały czas w górze jak kierownica – przy Uchi-macie pociągnij niebieski rękaw do ucha!",
+          hands: "Ręce wysoko jak kierownica – przy Uchi-macie pociągnij niebieski rękaw do ucha!",
           speed: "Na 100% szybkości, ale krótko (po 6 powtórzeń w serii, żeby mieć świeże nogi na walkach w klubie!).",
-          cards: [
-            { svg: "fast_feet_3", txt: "1. Zaczep zieloną prawą stopą stopę rywala (klapkę na podłodze)." },
-            { svg: "uchimata_1", txt: "2. Gdy rywal cofa nogę – wskocz prawą stopą w sam czubek trójkąta (▲)!" },
-            { svg: "uchimata_3", txt: "3. Pociągnij rękaw do ucha i wystrzel zieloną nogę między uda rywala!" }
-          ],
           dad: "Rola Taty: Klaszcz, gdy wejście jest zrobione w jednym płynnym tempie 'Raz-Dwa!'."
         }
       ]
     },
     6: {
-      boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Obracanie Żółwia Taty na macie)!",
+      boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Ucieczka z Parteru z Tatą)!",
       items: [
         {
-          id: "sat1", masteryId: "core",
+          id: "sat1", masteryId: "core", zoomKey: "uchimata",
           title: "🏆 Sobotni Obwód Mistrza (3 stacje po 25 sekund)",
-          feet: "Stacja 1: Skoki w trójkąt (▲). Stacja 2: Kolana przed ścianą. Stacja 3: Obchodzenie żółwia Taty.",
-          hands: "Mocny uchwyt na rękawie gumy, sztywne ręce na kółku i wciąganie łokcia Taty w parterze.",
+          feet: "Stacja 1: Skoki w trójkąt (▲). Stacja 2: Kolana przed ścianą. Stacja 3: Most i zielone kolano pod brzuch Taty.",
+          hands: "Mocny uchwyt na rękawie gumy, sztywne ręce na kółku i ciasne łokcie w parterze.",
           speed: "25 sekund gazu na stacji i 30 sekund odpoczynku!",
-          cards: [
-            { svg: "uchimata_3", txt: "STACJA 1 (25s): Jak najwięcej czystych wejść w Uchi-matę na gumach judo." },
-            { svg: "wheel_2", txt: "STACJA 2 (25s): Wyjazdy na kółku na brzuch do ściany + pompki na paraletkach." },
-            { svg: "escape_2", txt: "STACJA 3 (25s): Tata klęczy w żółwiu na macie – przewróć Tatę na plecy i zapnij trzymanie!" }
-          ],
           dad: "Rola Taty: Bądź sędzią turniejowym i po 3 rundach kliknij zatwierdzenie Pokazu Mistrza!"
         }
       ]
@@ -1201,16 +1297,11 @@
       boss: "Dzień Regeneracji (Yasumi) – 5 minut lekkiego rozciągania i obejrzenie 1 filmu w Szkole Kodokan (+100 EXP)!",
       items: [
         {
-          id: "sun1", masteryId: "belt3kyu",
-          title: "🧘‍♂️ Regeneracja Mistrza i Obejrzenie Pokazu z Tokio",
+          id: "sun1", masteryId: "belt3kyu", zoomKey: "fast_feet",
+          title: "🧘‍♂️ Regeneracja Mistrza i Przegląd Zbliżeń ze Szkoły Kodokan",
           feet: "Usiądź wygodnie na macie w rozkroku i sięgnij dłońmi do palców stóp.",
           hands: "Spokojny oddech, luźne ramiona.",
           speed: "Powoli i na luzie – dzisiaj ładujemy akumulatory na nowy tydzień!",
-          cards: [
-            { svg: "fast_feet_1", txt: "1. Zrób 3 minuty lekkiego rozciągania nóg na macie." },
-            { svg: "uchimata_2", txt: "2. Wejdź w zakładkę 'Szkoła Kodokan' i odpal 1 film mistrzów z Japonii." },
-            { svg: "escape_3", txt: "3. Odbierz +100 EXP za regenerację!" }
-          ],
           dad: "Wspólne przybicie piątki za cały tydzień treningów!"
         }
       ]
@@ -1227,37 +1318,31 @@
     data.items.forEach(q => {
       const checked = doneMap[q.id] ? 'checked' : '';
       const cls = doneMap[q.id] ? 'quest-item completed' : 'quest-item';
-      const voiceText = `${q.title}. Gdzie stopy: ${q.feet}. Gdzie ręce: ${q.hands}. Jak szybko: ${q.speed}. Krok pierwszy: ${q.cards[0].txt}. Krok drugi: ${q.cards[1].txt}. Krok trzeci: ${q.cards[2].txt}. Hajime!`;
+      const panels = ZOOM_PANELS[q.zoomKey || 'uchimata'];
+      const voiceText = `${q.title}. Gdzie stopy: ${q.feet}. Gdzie ręce: ${q.hands}. Jak szybko: ${q.speed}. Kadr pierwszy: ${panels[0].txt}. Kadr drugi: ${panels[1].txt}. Kadr trzeci: ${panels[2].txt}. Kadr czwarty: ${panels[3].txt}. Hajime!`;
       const safeVoice = voiceText.replace(/'/g, "").replace(/"/g, "");
-
-      let cardsHtml = '';
-      q.cards.forEach((c, i) => {
-        cardsHtml += `
-          <div class="lego-step-card">
-            <span class="lego-step-num">KROK ${i + 1}</span>
-            <div class="lego-step-svg">${STEP_ILLUS[c.svg] || STEP_ILLUS.fast_feet_1}</div>
-            <div class="lego-step-text">${c.txt}</div>
-          </div>
-        `;
-      });
 
       html += `
         <div class="${cls}">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
             <strong style="font-size:0.95rem; color:var(--neon-gold);">${q.title}</strong>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="speakInstruction('${safeVoice}')">🔊 Sensei, mów co robić!</button>
+            <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+              <button class="btn btn-blue" style="padding:5px 10px; font-size:0.73rem;" onclick="speakInstruction('${safeVoice}')">🔊 Sensei, mów co robić!</button>
+              <label class="btn btn-ghost" style="padding:5px 9px; font-size:0.72rem; cursor:pointer; margin:0;">
+                🖼️ Wgraj Planszę Mangi
+                <input type="file" accept="image/*" style="display:none;" onchange="uploadMangaGuide('${q.id}', event)">
+              </label>
               <input type="checkbox" style="width:24px; height:24px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', '${q.masteryId}', this.checked)">
             </div>
           </div>
 
           <div class="Cue-pills">
             <div class="cue-pill cue-feet"><strong>🟩 GDZIE POŁOŻYĆ STOPY:</strong>${q.feet}</div>
-            <div class="cue-pill cue-hands"><strong>🔵🟡 GDZIE TRZYMAĆ RĘCE:</strong>${q.hands}</div>
+            <div class="cue-pill cue-hands"><strong>🔵🟡 GDZIE RĘCE & WYCHYLENIE:</strong>${q.hands}</div>
             <div class="cue-pill cue-speed"><strong>⚡ JAK SZYBKO ROBIĆ:</strong>${q.speed}</div>
           </div>
 
-          <div class="lego-steps-grid">${cardsHtml}</div>
+          ${build4ZoomGridHtml(q.zoomKey || 'uchimata', q.id)}
 
           <span class="dad-badge">👨‍👦 ${q.dad}</span>
         </div>
@@ -1265,6 +1350,7 @@
     });
     document.getElementById('questsContainer').innerHTML = html;
     renderInjectedQuests();
+    hydrateAllMangaBoards();
   }
 
   function toggleQuest(id, masteryId, isChecked) {
@@ -1282,119 +1368,87 @@
   }
 
   /*************************************************************************
-   * 4. SZKOŁA KODOKAN (ANIMOWANE LUDZIKI ANIME + DZIAŁAJĄCY YOUTUBE)
+   * 5. SZKOŁA KODOKAN (4 ZBLIŻENIA KAMERY + DZIAŁAJĄCY YOUTUBE)
    *************************************************************************/
   const KODOKAN_TECHS = {
     throws: [
       {
         name: "🔥 Uchi-mata (Wewnętrzne podcięcie udem – Koronny Rzut Tymona)",
+        zoomKey: "uchimata",
         ytId: "i9Su05b1e9k",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Zielona prawa stopa wskakuje w sam środek trójkąta (▲) między stopami rywala, lewa staje obok niej, a zielona noga leci prosto w górę między nogami przeciwnika!",
-        hands: "Lewa ręka (🔵 niebieski punkt) ciągnie rękaw rywala wysoko do Twojego lewego ucha ('spójrz na zegarek'), prawa ręka (🟡 złoty punkt) pcha kołnierz.",
-        speed: "Wskok i obrót w ułamku sekundy – głowa nurkuje do kolana!",
-        cards: [
-          { svg: "uchimata_1", txt: "FAZA 1 (STOPY): Wskocz prawą stopą w sam czubek trójkąta (▲) między stopy rywala." },
-          { svg: "uchimata_2", txt: "FAZA 2 (RĘCE): Obróć się plecami i pociągnij lewą ręką niebieski rękaw wysoko do ucha." },
-          { svg: "uchimata_3", txt: "FAZA 3 (RZUT): Głowa w dół, a zielona prawa noga leci między uda niebieskiego rywala!" }
-        ]
+        hands: "Lewa ręka (🔵 niebieska strzałka) ciągnie rękaw rywala wysoko do Twojego lewego ucha ('spójrz na zegarek'), prawa ręka (🟡 złota strzałka) pcha kołnierz.",
+        speed: "Wskok i obrót w ułamku sekundy – głowa nurkuje ostro w dół do kolana (⤵️)!"
       },
       {
         name: "⚡ Szybkie Stopy: De-ashi-barai & Kouchi-gari (Podcięcia stóp)",
+        zoomKey: "fast_feet",
         ytId: "4BUUvqxi_Kk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Zielona stopa obrócona bokiem (jak łyżwa lub miotła) szoruje po macie i zamiata stopę niebieskiego rywala!",
+        feet: "Zielona stopa obrócona bokiem (jak łyżwa lub miotła) szoruje po macie i zamiata kostkę niebieskiego rywala!",
         hands: "Ręce trzymają kierownicę (🔵 Rękaw / 🟡 Kołnierz) – pociągnij rękaw w dół w stronę podcięcia.",
-        speed: "Błyskawiczny ruch stopy tuż nad matą (nie podnoś stopy wysoko w powietrze!).",
-        cards: [
-          { svg: "fast_feet_1", txt: "FAZA 1: Stań przed trójkątem (▲) naprzeciwko rywala na ugiętych kolanach." },
-          { svg: "fast_feet_2", txt: "FAZA 2: Złap niebieski rękaw lewą ręką, a złoty kołnierz prawą (kierownica)." },
-          { svg: "fast_feet_3", txt: "FAZA 3: Zieloną stopą zamieć stopę niebieskiego rywala po macie!" }
-        ]
+        speed: "Błyskawiczny ruch stopy tuż nad matą, głowa prosto, biodra do przodu!"
       },
       {
         name: "⚡ O-uchi-gari (Duże wewnętrzne podcięcie – Otwieracz pod Uchi-matę)",
+        zoomKey: "fast_feet",
         ytId: "0itJFhV9pDQ",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Podejdź krokiem dostawnym, włóż zieloną prawą nogę między nogi niebieskiego rywala i narysuj na macie duże półkole.",
         hands: "Obie ręce (🔵 Rękaw i 🟡 Kołnierz) dociskają rywala w dół na jego pięty.",
-        speed: "Szybkie dosunięcie stopy i mocne wycięcie po półkolu!",
-        cards: [
-          { svg: "fast_feet_1", txt: "FAZA 1: Dosuń lewą stopę blisko prawej przed trójkątem (▲)." },
-          { svg: "fast_feet_2", txt: "FAZA 2: Rękoma na kołnierzu i rękawie pchnij rywala w dół na jego pięty." },
-          { svg: "fast_feet_3", txt: "FAZA 3: Zieloną stopą zakreśl po macie półksiężyc i wytnij jego nogę!" }
-        ]
+        speed: "Szybkie dosunięcie stopy i mocne wycięcie po półkolu!"
       },
       {
         name: "💥 Ippon-seoi-nage (Rzut przez plecy jednorącz)",
+        zoomKey: "uchimata",
         ytId: "twdcGf2_3wk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Wskocz obiema stopami w trójkąt (▲) między stopy rywala i ugnij mocno kolana poniżej jego pasa!",
-        hands: "Lewa ręka ciągnie niebieski rękaw do przodu, a prawy łokieć wbijasz głęboko pod pachę rywala.",
-        speed: "Głęboki przysiad na 2 nogach i mocny skłon głową do przodu!",
-        cards: [
-          { svg: "uchimata_1", txt: "FAZA 1: Wskocz stopami w trójkąt (▲) przed stopy rywala i mocno ugnij kolana." },
-          { svg: "uchimata_2", txt: "FAZA 2: Obróć się plecami i wbij prawy łokieć pod pachę niebieskiego rywala." },
-          { svg: "uchimata_3", txt: "FAZA 3: Wyprostuj nogi i skłoń się do przodu, przerzucając go przez plecy!" }
-        ]
+        hands: "Lewa ręka ciągnie niebieski rękaw w górę-przód, a prawy łokieć wbijasz głęboko pod pachę rywala.",
+        speed: "Głęboki przysiad na 2 nogach i mocny skłon głową w dół (⤵️)!"
       }
     ],
     pins: [
       {
         name: "🔒 Kesa-gatame (Trzymanie opasaniem z boku)",
+        zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Usiądź na prawym biodrze obok boku rywala. Zielone nogi rozstaw bardzo szeroko jak nożyczki.",
         hands: "Lewą pachą zaciśnij mocno niebieski rękaw rywala, a prawą ręką obejmij jego kark.",
-        speed: "Schowaj głowę nisko i przesuwaj stopy po macie, gdy rywal się wierci!",
-        cards: [
-          { svg: "escape_1", txt: "FAZA 1 (RĘCE): Wciągnij niebieski rękaw rywala głęboko pod swoją lewą pachę." },
-          { svg: "fast_feet_1", txt: "FAZA 2 (NOGI): Rozstaw nogi szeroko w trójkąt (▲), żeby nikt Cię nie przewrócił." },
-          { svg: "escape_3", txt: "FAZA 3 (GŁOWA): Opuść głowę nisko do kolana i trzymaj 20 sekund do Ipponu!" }
-        ]
+        speed: "Schowaj głowę nisko i przesuwaj stopy po macie, gdy rywal się wierci!"
       },
       {
         name: "🔒 Yoko-shiho-gatame (Trzymanie boczne na kolanach)",
+        zoomKey: "escape",
         ytId: "TT7XLUcM3Jg",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Uklęknij prostopadle do boku niebieskiego rywala. Jedno zielone kolano wbij pod jego pachę, drugie w biodro!",
         hands: "Jedna ręka pod głową rywala łapie kołnierz, druga między jego nogami łapie pas.",
-        speed: "Przyklej klatkę piersiową ciężko do klatki rywala!",
-        cards: [
-          { svg: "wheel_1", txt: "FAZA 1: Uklęknij przy boku rywala – wbij zielone kolana ciasno w jego biodro i pachę." },
-          { svg: "escape_1", txt: "FAZA 2: Złap rękoma jego kołnierz pod głową oraz pas między nogami." },
-          { svg: "escape_3", txt: "FAZA 3: Dociśnij klatkę piersiową i nie zostawiaj żadnej szpary!" }
-        ]
+        speed: "Przyklej klatkę piersiową ciężko do klatki rywala!"
       }
     ],
     turnovers: [
       {
         name: "🔄 Obracanie 'Żółwia' (Gdy rywal chowa się na brzuchu)",
+        zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Stań na kolanach z boku niebieskiego rywala, wbij swoje zielone kolano w jego bok.",
-        hands: "Włóż ręce pod pachy rywala, złap jego dalszy łokieć (🔵 niebieski punkt) i wciągnij go pod jego brzuch!",
-        speed: "Zabierz mu łokieć i od razu pchaj piersią do przodu w trzymanie!",
-        cards: [
-          { svg: "wheel_1", txt: "FAZA 1: Uklęknij z boku obok 'żółwia' niebieskiego rywala." },
-          { svg: "escape_1", txt: "FAZA 2: Złap dłońmi dalszy niebieski łokieć i wciągnij go do środka pod brzuch." },
-          { svg: "escape_2", txt: "FAZA 3: Pchnij rywala klatką piersiową na plecy i od razu zapnij trzymanie!" }
-        ]
+        hands: "Włóż ręce pod pachy rywala, złap jego dalszy łokieć (🔵) i wciągnij go pod jego brzuch!",
+        speed: "Zabierz mu łokieć i od razu pchaj piersią do przodu w trzymanie!"
       }
     ],
     escapes: [
       {
         name: "🛡️ Ucieczka z Kesa-gatame (Most Upa + Krewetka Ebi)",
+        zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Przyciągnij zielone pięty blisko pupy i mocno odepchnij się stopami od maty.",
-        hands: "Przyklej oba łokcie (🔵 niebieski punkt) ciasno do swojego brzucha!",
-        speed: "Raz: Wysoki Most w górę! Dwa: Wsadzenie zielonego kolana pod brzuch rywala!",
-        cards: [
-          { svg: "escape_1", txt: "FAZA 1: Przyklej łokcie ciasno do brzucha, a zielone stopy podciągnij blisko pupy." },
-          { svg: "escape_2", txt: "FAZA 2: Wyrzuć brzuch wysoko w górę (Most), podnosząc niebieskiego rywala!" },
-          { svg: "escape_3", txt: "FAZA 3: Cofnij biodra i wsadź zielone kolano pod brzuch rywala!" }
-        ]
+        hands: "Przyklej oba łokcie (🔵) ciasno do swojego brzucha!",
+        speed: "Raz: Wysoki Most w górę (⬆️)! Dwa: Krewetka (⬅️) i wsadzenie zielonego kolana pod brzuch rywala (➡️)!"
       }
     ]
   };
@@ -1415,33 +1469,28 @@
     const cat = document.getElementById('techCategorySelect').value;
     const idx = document.getElementById('techItemSelect').value || 0;
     const t = KODOKAN_TECHS[cat][idx];
-
-    let cardsHtml = '';
-    t.cards.forEach((c, i) => {
-      cardsHtml += `
-        <div class="lego-step-card">
-          <span class="lego-step-num">KROK ${i + 1}</span>
-          <div class="lego-step-svg">${STEP_ILLUS[c.svg] || STEP_ILLUS.uchimata_1}</div>
-          <div class="lego-step-text">${c.txt}</div>
-        </div>
-      `;
-    });
-
-    const voiceTxt = `${t.name}. Gdzie stopy: ${t.feet}. Gdzie ręce: ${t.hands}. Jak szybko: ${t.speed}.`.replace(/'/g, "");
+    const voiceTxt = `${t.name}. Gdzie stopy: ${t.feet}. Gdzie ręce i wychylenie: ${t.hands}. Jak szybko: ${t.speed}.`.replace(/'/g, "");
+    const kdkId = `kdk_${cat}_${idx}`;
 
     document.getElementById('techDetailContainer').innerHTML = `
       <h2>
         <span>${t.name}</span>
-        <button class="btn btn-blue" onclick="speakInstruction('${voiceTxt}')">🔊 Przeczytaj instrukcję na głos</button>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="btn btn-blue" onclick="speakInstruction('${voiceTxt}')">🔊 Przeczytaj na głos</button>
+          <label class="btn btn-ghost" style="cursor:pointer; margin:0;">
+            🖼️ Wgraj Planszę Mangi
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadMangaGuide('${kdkId}', event)">
+          </label>
+        </div>
       </h2>
 
       <div class="Cue-pills">
         <div class="cue-pill cue-feet"><strong>🟩 GDZIE STOPY (ZIELONA NOGA):</strong>${t.feet}</div>
-        <div class="cue-pill cue-hands"><strong>🔵🟡 GDZIE RĘCE (RĘKAW/KOŁNIERZ):</strong>${t.hands}</div>
-        <div class="cue-pill cue-speed"><strong>⚡ JAK SZYBKO:</strong>${t.speed}</div>
+        <div class="cue-pill cue-hands"><strong>🔵🟡 DŁONIE & WYCHYLENIE:</strong>${t.hands}</div>
+        <div class="cue-pill cue-speed"><strong>⚡ RUCH GŁOWY & TEMPO:</strong>${t.speed}</div>
       </div>
 
-      <div class="lego-steps-grid">${cardsHtml}</div>
+      ${build4ZoomGridHtml(t.zoomKey, kdkId)}
 
       <a href="https://www.youtube.com/watch?v=${t.ytId}" target="_blank" rel="noopener" class="yt-launch-card">
         <img src="https://img.youtube.com/vi/${t.ytId}/hqdefault.jpg" alt="Kodokan Video Preview">
@@ -1454,16 +1503,17 @@
       </a>
 
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
-        <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif ze Szkoły Kodokan – ${t.name}: Stopy (${t.feet})')">
-          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia)
+        <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('${t.zoomKey}', 'Szlif ze Szkoły Kodokan – ${t.name}: ${t.feet}')">
+          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia z 4 Zbliżeniami!)
         </button>
         <a href="${t.kdkUrl}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Oficjalna lista 100 technik na kdkjudo.org</a>
       </div>
     `;
+    hydrateAllMangaBoards();
   }
 
   /*************************************************************************
-   * 5. PASKI OPANOWANIA DO RANGI MASTER, KARTA 2.5D, CHMURA I KALKULATOR
+   * 6. PASKI OPANOWANIA DO RANGI MASTER, ZADANIA SPECJALNE I PASY (Z 4 ZBLIŻENIAMI)
    *************************************************************************/
   const DEFAULT_MASTERY_GOALS = [
     { id: 'uchimata', title: '🔥 Master Uchi-maty (Bochnia 1:12)', current: 4, target: 20, unit: 'sesji' },
@@ -1524,13 +1574,89 @@
     autoSyncCloudSilent();
   }
 
+  function injectToWeeklyPlan(zoomKey, taskText) {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    list.push({ zoomKey: zoomKey || 'uchimata', text: taskText });
+    localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(list));
+    addExp(40); renderInjectedQuests(); autoSyncCloudSilent();
+    alert("⚡ Dodano do Planu Dnia razem z 4 Kafelkami Zbliżeń Kamery!");
+  }
+
+  function removeInjectedTask(idx) {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    list.splice(idx, 1);
+    localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(list));
+    renderInjectedQuests(); autoSyncCloudSilent();
+  }
+
+  function renderInjectedQuests() {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    const box = document.getElementById('injectedQuestsBox');
+    if (!list.length) { box.innerHTML = ''; return; }
+    let html = `<h3 style="color:var(--neon-orange); margin-bottom:8px;">🎯 Dodane Zadania Specjalne (z 4 Zbliżeniami Kamery):</h3>`;
+    list.forEach((item, i) => {
+      const text = typeof item === 'string' ? item : item.text;
+      const zKey = typeof item === 'string' ? 'uchimata' : (item.zoomKey || 'uchimata');
+      html += `
+        <div class="quest-item" style="border-left-color:var(--neon-orange);">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+            <strong style="font-size:0.86rem; color:var(--neon-gold);">🔥 ${text}</strong>
+            <button class="btn btn-green" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('uchimata', 1); removeInjectedTask(${i});">✅ Zrobione (+1 Master)</button>
+          </div>
+          ${build4ZoomGridHtml(zKey, 'inj_' + i)}
+        </div>
+      `;
+    });
+    box.innerHTML = html;
+  }
+
+  const BELT_EXAMS = {
+    "3kyu": [
+      { txt: "Harai-goshi (Zagarnięcie biodrem) + kombinacja z O-uchi-gari", zoom: "uchimata" },
+      { txt: "Tai-otoshi (Rzut ręczny przed stopami) + mocne wychylenie rękawem do ucha", zoom: "uchimata" },
+      { txt: "De-ashi-barai & Kouchi-gari w ruchu (Szybkie Stopy)", zoom: "fast_feet" },
+      { txt: "Kami-shiho-gatame & Ucieczka Mostem i Krewetką", zoom: "escape" }
+    ],
+    "4kyu": [
+      { txt: "Ippon-seoi-nage & Morote-seoi-nage (Wejście w trójkąt)", zoom: "uchimata" },
+      { txt: "O-soto-gari, De-ashi-barai, Kouchi-gari", zoom: "fast_feet" },
+      { txt: "Yoko-shiho-gatame & Kuzure-kesa-gatame", zoom: "escape" }
+    ],
+    "2kyu": [
+      { txt: "Uchi-mata w ruchu po okręgu (Maru-uchi-mata)", zoom: "uchimata" },
+      { txt: "Sasae-tsuri-komi-ashi (Blokada stopy z wychyleniem)", zoom: "fast_feet" }
+    ]
+  };
+
+  function renderBeltRequirements() {
+    const key = document.getElementById('beltTargetSelect').value;
+    let html = '';
+    BELT_EXAMS[key].forEach((r, idx) => {
+      html += `
+        <div class="quest-item">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px;">
+            <strong style="font-size:0.86rem; color:var(--neon-gold);">🥋 ${r.txt}</strong>
+            <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('belt3kyu', 1); injectToWeeklyPlan('${r.zoom}', 'Egzamin na pas (${key.toUpperCase()}): ${r.txt}')">
+              ➕ Ćwicz do Pasa (+1 Master)
+            </button>
+          </div>
+          ${build4ZoomGridHtml(r.zoom, 'belt_' + key + '_' + idx)}
+        </div>
+      `;
+    });
+    document.getElementById('beltContentArea').innerHTML = html;
+  }
+
+  /*************************************************************************
+   * 7. KARTA BOHATERA 2.5D, CHMURA GOOGLE APPS SCRIPT, KALKULATOR & GEMINI API
+   *************************************************************************/
   let currentSlot = 1;
   let currentForm = 'thunder';
   let fallbackAttempt = 0;
 
   function openPhotoDB() {
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open('TymonFighterCardsDB_v91', 1);
+      const req = indexedDB.open('TymonFighterCardsDB_v12', 1);
       req.onupgradeneeded = e => { e.target.result.createObjectStore('cards'); };
       req.onsuccess = e => resolve(e.target.result);
       req.onerror = e => reject(e);
@@ -1712,7 +1838,7 @@
       exp: totalExp,
       masteryGoals: masteryGoals,
       doneQuests: JSON.parse(localStorage.getItem('tymon_done_quests') || '{}'),
-      injectedTasks: JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]'),
+      injectedTasks: JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]'),
       mealLog: mealLog
     };
   }
@@ -1722,7 +1848,7 @@
     if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp', totalExp); }
     if (Array.isArray(state.masteryGoals)) { masteryGoals = state.masteryGoals; localStorage.setItem('tymon_mastery_goals', JSON.stringify(masteryGoals)); }
     if (state.doneQuests) localStorage.setItem('tymon_done_quests', JSON.stringify(state.doneQuests));
-    if (state.injectedTasks) localStorage.setItem('tymon_injected_tasks', JSON.stringify(state.injectedTasks));
+    if (state.injectedTasks) localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(state.injectedTasks));
     if (Array.isArray(state.mealLog)) { mealLog = state.mealLog; localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog)); }
     updateHud(); renderMasteryGoals(); renderDailyQuests(); renderMealLog();
   }
@@ -1832,63 +1958,6 @@
     document.getElementById('expNumber').innerText = totalExp;
   }
 
-  function injectToWeeklyPlan(taskText) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    if (!list.includes(taskText)) {
-      list.push(taskText);
-      localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
-    }
-    addExp(40); renderInjectedQuests(); autoSyncCloudSilent();
-    alert("⚡ Dodano do Planu Dnia oraz zwiększono licznik Mastera!");
-  }
-
-  function removeInjectedTask(idx) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    list.splice(idx, 1);
-    localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
-    renderInjectedQuests(); autoSyncCloudSilent();
-  }
-
-  function renderInjectedQuests() {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    const box = document.getElementById('injectedQuestsBox');
-    if (!list.length) { box.innerHTML = ''; return; }
-    let html = `<h3 style="color:var(--neon-orange); margin-bottom:8px;">🎯 Aktywne Zadania Specjalne ("Popracujmy nad tym!"):</h3>`;
-    list.forEach((t, i) => {
-      html += `
-        <div class="quest-item" style="border-left-color:var(--neon-orange);">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span style="font-size:0.83rem;">🔥 ${t}</span>
-            <button class="btn btn-green" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('uchimata', 1); removeInjectedTask(${i});">✅ Zrobione (+1 Master)</button>
-          </div>
-        </div>
-      `;
-    });
-    box.innerHTML = html;
-  }
-
-  const BELT_EXAMS = {
-    "3kyu": ["Harai-goshi (Zagarnięcie biodrem) + kombinacja z O-uchi-gari", "Tai-otoshi (Rzut ręczny przed stopami) + praca rękawa", "Koshi-guruma & Tsuri-komi-goshi (Rzuty biodrowe)", "Kami-shiho-gatame & Tate-shiho-gatame (Trzymania w parterze)"],
-    "4kyu": ["Ippon-seoi-nage & Morote-seoi-nage", "O-soto-gari, De-ashi-barai, Kouchi-gari", "Yoko-shiho-gatame & Kuzure-kesa-gatame"],
-    "2kyu": ["Uchi-mata w ruchu po okręgu (Maru-uchi-mata)", "Tomoe-nage (Rzut poświęcenia przez głowę)", "Soto-makikomi & Sasae-tsuri-komi-ashi"]
-  };
-
-  function renderBeltRequirements() {
-    const key = document.getElementById('beltTargetSelect').value;
-    let html = '';
-    BELT_EXAMS[key].forEach(r => {
-      html += `
-        <div class="quest-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-          <span style="font-size:0.83rem;">🥋 ${r}</span>
-          <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('belt3kyu', 1); injectToWeeklyPlan('Egzamin na pas (${key.toUpperCase()}): ${r}')">
-            ➕ Ćwicz do Pasa (+1 Master)
-          </button>
-        </div>
-      `;
-    });
-    document.getElementById('beltContentArea').innerHTML = html;
-  }
-
   let timerSec = 25, defaultTimerSec = 25, timerInt = null;
   function fmtTime(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
   function setDojoTimer(s) { pauseDojoTimer(); defaultTimerSec = s; timerSec = s; document.getElementById('dojoTimerDisplay').innerText = fmtTime(s); }
@@ -1920,6 +1989,7 @@
     addExp(35);
   }
 
+  // Bezpieczne przechowywanie klucza Gemini API w konfiguracji lokalnej
   function saveApiKeySafe() {
     const k = document.getElementById('apiKeyField').value.trim();
     if (!k) return;
@@ -1933,12 +2003,12 @@
   }
 
   async function analyzeFightWithGemini() {
-    const q = document.getElementById('aiFightQuestion').value.trim() || "Przeanalizuj tę akcję 11-letniego Tymona (Uchi-mata) i podaj 3 kroki naprawcze.";
+    const q = document.getElementById('aiFightQuestion').value.trim() || "Przeanalizuj tę akcję 11-letniego Tymona (Uchi-mata) i podaj 4 kroki naprawcze (Stopy, Dłonie/Wychylenie, Głowa, Wejście Nogi).";
     const out = document.getElementById('aiVideoOutput');
     const apiKey = localStorage.getItem('TYMON_SAFE_GEMINI_KEY');
     out.innerText = "⏳ AI Sensei analizuje walkę...";
 
-    const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (koronny rzut Uchi-mata, w domu ma gumy z kołnierzem i rękawem, kółko na brzuch, paraletki, hantelki i Tatę na macie). Odpowiedz po polsku, prostym językiem (gdzie stopy, gdzie ręce, jak szybko): " + q }];
+    const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (koronny rzut Uchi-mata). Odpowiedz po polsku w 4 punktach: 1. Stopy, 2. Dłonie i Wychylenie, 3. Ruch Głowy, 4. Wejście Nogi: " + q }];
     const vid = document.getElementById('fightVideoPlayer');
     if (vid && vid.videoWidth > 0) {
       const c = document.createElement('canvas');
@@ -1948,7 +2018,7 @@
     }
 
     if (!apiKey) {
-      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. GDZIE STOPY: Zaczep zieloną prawą stopą piętę rywala, a potem wskocz w trójkąt (▲).\n2. GDZIE RĘCE: Lewa ręka ciągnie niebieski rękaw na wysokość ucha.\n3. PARTER: Łokcie do żeber ➔ Most (Upa) ➔ Krewetka (Ebi) i zielone kolano pod brzuch.";
+      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. STOPY: Wskocz zieloną prawą stopą w czubek trójkąta (▲).\n2. DŁONIE & WYCHYLENIE: Pociągnij niebieski rękaw do swojego ucha.\n3. GŁOWA: Nurkuj głową nisko do kolana.\n4. NOGA: Wyrzuć prawą nogę między uda rywala!";
       return;
     }
 
@@ -1965,16 +2035,48 @@
     }
   }
 
+  async function askAiDietitian() {
+    const q = document.getElementById('aiDietInput').value.trim();
+    const out = document.getElementById('aiDietOutput');
+    if (!q) return;
+    out.style.display = 'block';
+    out.innerText = "⏳ AI Dietetyk liczy makroskładniki...";
+    const apiKey = localStorage.getItem('TYMON_SAFE_GEMINI_KEY');
+    const mode = document.getElementById('calcProfileMode').value;
+    const contextStr = mode === 'jerry'
+      ? "Tryb JERRY BYKU: ULTIMATE OS (redukcja do 85 kg, cel 2250 kcal, 175 g białka, 190 g węglowodanów, 85 g tłuszczu)."
+      : "Tryb 11-letniego judoki Tymona (cel 2100 kcal, 85 g białka, lekkostrawne paliwo przed matą i regeneracja po treningu).";
+
+    if (!apiKey) {
+      out.innerText = `ℹ️ [Podpowiedź Offline – ${mode.toUpperCase()}]: Przed treningiem wybierz banana lub wafle ryżowe z miodem, a po treningu Skyr lub kurczaka z ryżem (na redukcji 2250 kcal świetnie sprawdzą się też odsączone śledzie i twaróg chudy!). Wklej klucz Gemini API w ⚙️ Chmura & AI, aby korzystać z pełnych analiz AI.`;
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: `Jesteś sportowym dietetykiem AI. Kontekst: ${contextStr}. Pytanie użytkownika: ${q}` }] }]
+        })
+      });
+      const data = await res.json();
+      out.innerText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Brak odpowiedzi.";
+      addExp(15);
+    } catch (e) {
+      out.innerText = "❌ Błąd API: " + e.message;
+    }
+  }
+
   const JUDOKA_FUEL_DB = [
+    { name: "🥛 Skyr naturalny / pitny (Hit Białkowy #1)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
+    { name: "🐟 Śledzie w oleju odsączone (Baza JERRY BYKU: Omega-3 & Białko)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
+    { name: "🧀 Twaróg chudy (Nocna regeneracja mięśni – 18g B)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
+    { name: "🍗 Pierś z kurczaka z ryżem (Obiad budujący siłę Uchi-maty)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
+    { name: "🌾 Płatki owsiane górskie (Owsianka Mistrza w dzień turnieju)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
+    { name: "🥚 Jajka kurze / Jajecznica (Siła chwytu Kumi-kata)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
     { name: "🍌 Banan (Turbo-Gaz na 60 min przed matą)", kcal: 89, p: 1.1, c: 22.8, f: 0.3 },
-    { name: "🥛 Skyr pitny / naturalny (Regeneracja po treningu)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
     { name: "🍘 Wafle ryżowe z miodem (Lekki brzuch do padów Ukemi)", kcal: 365, p: 7.0, c: 81.5, f: 2.2 },
     { name: "🍎 Mus owocowy w tubce (Szybka energia przed Randori)", kcal: 55, p: 0.5, c: 12.5, f: 0.2 },
-    { name: "🌾 Owsianka Mistrza na mleku (Śniadanie w dzień turnieju)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
-    { name: "🍗 Kurczak z ryżem (Obiad budujący siłę Uchi-maty)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
-    { name: "🥚 Jajecznica / Jajka (Siła chwytu Kumi-kata)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
-    { name: "🧀 Twaróg chudy (Nocna regeneracja mięśni)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
-    { name: "🐟 Śledzie w oleju odsączone (Omega-3 & Białko)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
     { name: "🍯 Domowy Izotonik (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
@@ -2087,8 +2189,11 @@
     renderDailyQuests();
     populateTechSelector();
     renderBeltRequirements();
+    document.getElementById('bochniaFix1Zoom').innerHTML = build4ZoomGridHtml('uchimata', 'bochnia1');
+    document.getElementById('bochniaFix2Zoom').innerHTML = build4ZoomGridHtml('escape', 'bochnia2');
     initFoodSelect();
     renderMealLog();
+    hydrateAllMangaBoards();
   };
 </script>
 </body>
