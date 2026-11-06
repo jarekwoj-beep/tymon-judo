@@ -2,11 +2,11 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v12.0</title>
+  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v14.0</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -20,7 +20,6 @@
       --neon-purple: #a855f7;
       --text-light: #f8fafc;
       --text-dim: #94a3b8;
-      --chibi-anim-speed: 1.8s;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
@@ -47,6 +46,27 @@
     #confettiCanvas {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 9999;
+    }
+
+    /* PEŁNOEKRANOWA LUPA (LIGHTBOX MODAL) */
+    #zoomLightboxModal {
+      position: fixed; inset: 0; background: rgba(3, 6, 15, 0.96);
+      z-index: 10000; display: none; flex-direction: column;
+      align-items: center; justify-content: center; padding: 12px;
+    }
+    .lightbox-Header {
+      width: 100%; max-width: 920px; display: flex; justify-content: space-between;
+      align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;
+      background: #111827; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--neon-gold);
+    }
+    .lightbox-viewport {
+      width: 100%; max-width: 920px; height: 75vh; overflow: auto;
+      border: 2px solid var(--neon-blue); border-radius: 14px; background: #000;
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    #lightboxImg {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      transition: transform 0.25s ease; transform-origin: center center;
     }
 
     header.game-hud {
@@ -257,9 +277,8 @@
     .btn-gold { background: linear-gradient(135deg, #eab308, #f59e0b); color: #000; }
     .btn-ghost { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
 
-    /* SYSTEM 4 KAFELKÓW ZE ZBLIŻENIEM KAMERY (ZOOM-IN CAMERA PANELS) */
     .quest-item {
-      background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.28);
+      background: rgba(15, 23, 42, 0.88); border: 1px solid rgba(0, 240, 255, 0.3);
       border-left: 5px solid var(--neon-gold); border-radius: 14px;
       padding: 14px; margin-bottom: 16px;
     }
@@ -277,93 +296,58 @@
     .cue-hands strong { color: var(--neon-blue); }
     .cue-speed strong { color: var(--neon-gold); }
 
-    /* Siatka 4 Kafelków Zbliżeń (1: Stopy, 2: Dłonie & Wychylenie, 3: Głowa & Tułów, 4: Wejście Nogi) */
-    .zoom-4-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0;
+    /* INTERAKTYWNY SILNIK KAMERY ZOOM 2.5x NA PLANSZACH KOMIKSOWYCH ANIME */
+    .anime-camera-box {
+      background: #060913; border: 2px solid var(--neon-blue);
+      border-radius: 14px; padding: 10px; margin: 10px 0;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.12);
     }
-    @media (max-width: 580px) { .zoom-4-grid { grid-template-columns: 1fr; } }
+    .camera-viewport {
+      position: relative; width: 100%; height: 310px;
+      border-radius: 10px; overflow: hidden; background: #000;
+      border: 2px solid rgba(250, 204, 21, 0.5); cursor: zoom-in;
+    }
+    .camera-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-origin: center center;
+    }
+    /* Przybliżenie 4 kadrów z 4-panelowej planszy komiksowej */
+    .camera-img.zoom-quad-1 { transform: scale(2.05) translate(24%, 24%); }
+    .camera-img.zoom-quad-2 { transform: scale(2.05) translate(-24%, 24%); }
+    .camera-img.zoom-quad-3 { transform: scale(2.05) translate(24%, -24%); }
+    .camera-img.zoom-quad-4 { transform: scale(2.05) translate(-24%, -24%); }
 
-    .zoom-tile-card {
-      background: #070b14; border: 1px solid rgba(0, 240, 255, 0.35);
-      border-radius: 12px; padding: 10px;
-      display: grid; grid-template-columns: 138px minmax(0, 1fr); gap: 10px; align-items: center;
-      box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.05);
-    }
-    @media (max-width: 400px) {
-      .zoom-tile-card { grid-template-columns: 1fr; text-align: center; }
-    }
-    .zoom-svg-frame {
-      width: 138px; height: 126px; margin: 0 auto;
-      background: radial-gradient(circle at 50% 55%, #1e293b 0%, #050811 90%);
-      border: 2px solid rgba(250, 204, 21, 0.45);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative;
-    }
-    .zoom-badge {
-      display: inline-block; background: linear-gradient(90deg, var(--neon-gold), #fde047);
-      color: #000; font-weight: 900; font-size: 0.69rem; padding: 2px 8px;
-      border-radius: 99px; margin-bottom: 4px; text-transform: uppercase;
-    }
-    .zoom-desc {
-      font-size: 0.79rem; color: #f1f5f9; line-height: 1.35; font-weight: 600;
-    }
+    /* Przybliżenie anatomicznych części ciała, gdy używana jest karta tymon1.jpeg / tymon2.jpeg */
+    .camera-img.single-hero.zoom-quad-1 { transform: scale(2.35) translate(0%, -28%); }
+    .camera-img.single-hero.zoom-quad-2 { transform: scale(2.3) translate(-8%, 8%); }
+    .camera-img.single-hero.zoom-quad-3 { transform: scale(2.3) translate(8%, 22%); }
+    .camera-img.single-hero.zoom-quad-4 { transform: scale(2.25) translate(12%, -5%); }
 
-    /* Animacje Ruchu w Zbliżeniach */
-    .anim-foot-step {
-      animation: footZoomStep var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .camera-hud-overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 4;
     }
-    @keyframes footZoomStep {
-      0% { transform: translate(0, 12px); }
-      100% { transform: translate(0, -4px); }
+    .camera-caption-bar {
+      background: linear-gradient(90deg, rgba(15,23,42,0.95), rgba(30,27,75,0.95));
+      border-left: 4px solid var(--neon-gold); border-radius: 8px;
+      padding: 9px 11px; margin-top: 8px; font-size: 0.82rem; color: #fff;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;
     }
-    .anim-foot-sweep {
-      animation: footZoomSweep var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .camera-controls-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: 8px;
     }
-    @keyframes footZoomSweep {
-      0% { transform: translateX(14px) rotate(8deg); }
-      100% { transform: translateX(-16px) rotate(-14deg); }
+    @media (min-width: 640px) {
+      .camera-controls-grid { grid-template-columns: repeat(5, 1fr); }
     }
-    .anim-kuzushi-pull {
-      animation: kuzushiPull var(--chibi-anim-speed) ease-in-out infinite alternate;
+    .cam-btn {
+      background: var(--bg-panel); border: 1px solid rgba(0, 240, 255, 0.35);
+      color: var(--text-light); padding: 8px 6px; border-radius: 8px;
+      font-size: 0.74rem; font-weight: 800; cursor: pointer; text-align: center;
+      transition: all 0.2s;
     }
-    @keyframes kuzushiPull {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(-8px, -8px); }
-    }
-    .anim-head-dive {
-      transform-origin: 65px 75px;
-      animation: headDive var(--chibi-anim-speed) ease-in-out infinite alternate;
-    }
-    @keyframes headDive {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(-28deg); }
-    }
-    .anim-leg-blast {
-      transform-origin: 55px 70px;
-      animation: legBlastUp var(--chibi-anim-speed) ease-in-out infinite alternate;
-    }
-    @keyframes legBlastUp {
-      0% { transform: rotate(-10deg); }
-      100% { transform: rotate(-68deg); }
-    }
-    .anim-bridge-lift {
-      animation: bridgeLift var(--chibi-anim-speed) ease-in-out infinite alternate;
-    }
-    @keyframes bridgeLift {
-      0% { transform: translateY(6px); }
-      100% { transform: translateY(-10px); }
-    }
-
-    .custom-manga-preview {
-      width: 100%; max-height: 320px; object-fit: contain;
-      border-radius: 12px; border: 2px solid var(--neon-gold);
-      margin-top: 8px; background: #000; display: none;
-    }
-
-    .legend-bar {
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      background: rgba(0, 240, 255, 0.08); border: 1px solid rgba(0, 240, 255, 0.25);
-      padding: 8px 11px; border-radius: 10px; margin-bottom: 12px; font-size: 0.76rem;
+    .cam-btn.active {
+      background: linear-gradient(135deg, var(--neon-gold), var(--neon-orange));
+      color: #000; border-color: #fff; box-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
     }
 
     .dad-badge {
@@ -408,6 +392,22 @@
 
 <canvas id="confettiCanvas"></canvas>
 
+<!-- PEŁNOEKRANOWA LUPA (LIGHTBOX DO PRZYBLIŻANIA PLANSZ KOMIKSOWYCH NA CAŁY EKRAN) -->
+<div id="zoomLightboxModal">
+  <div class="lightbox-Header">
+    <strong style="color:var(--neon-gold); font-size:0.9rem;">🔎 Pełnoekranowa Lupa Komiksowa</strong>
+    <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+      <button class="btn btn-ghost" style="padding:5px 10px;" onclick="setLightboxZoom(1)">1x</button>
+      <button class="btn btn-blue" style="padding:5px 10px;" onclick="setLightboxZoom(1.8)">1.8x</button>
+      <button class="btn btn-gold" style="padding:5px 10px;" onclick="setLightboxZoom(2.6)">2.6x Zoom</button>
+      <button class="btn" style="padding:5px 12px;" onclick="closeLightbox()">✕ Zamknij</button>
+    </div>
+  </div>
+  <div class="lightbox-viewport" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Powiększona Plansza Anime" onclick="event.stopPropagation()">
+  </div>
+</div>
+
 <header class="game-hud">
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
@@ -427,7 +427,7 @@
   <div class="card" style="border:2px solid var(--neon-gold);">
     <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
     <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy z Arkuszem Google – nawet po wyczyszczeniu pamięci iPhone'a nic nie zginie, a postęp widać też na Twoim Pixelu 10!
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy Tymona z Arkuszem Google – nawet po wyczyszczeniu pamięci iPhone'a nic nie zginie, a postęp widać też na Twoim Pixelu 10!
     </p>
     <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
@@ -469,9 +469,6 @@
         <div id="uploadHintOverlay">
           <div style="font-size:2rem;">🥋⚡</div>
           <strong style="color:var(--neon-gold); font-size:0.88rem;">AKTYWUJ KARTĘ BOJOWĄ ANIME (SLOT #<span id="overlaySlotNum">1</span>)</strong>
-          <p style="font-size:0.75rem; color:var(--text-dim);">
-            Wybierz z galerii telefonu Kartę Bojową Anime Tymona lub swoje zdjęcie – ożyje w ruchu 60 FPS!
-          </p>
           <label class="btn btn-gold" style="cursor:pointer; width:100%;" onclick="event.stopPropagation()">
             📸 Wczytaj Kartę Anime do Slotu
             <input type="file" accept="image/*" style="display:none;" onchange="uploadHeroCardToSlot(event)">
@@ -516,38 +513,51 @@
 
 <!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
-  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (4 Zbliżenia Kamery)</button>
-  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Zbliżenia + Filmy)</button>
+  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Kamera Zoom 2.5x)</button>
+  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Kamera Zoom + Filmy)</button>
   <button onclick="switchTab('pane-belts', this)">🎯 Cele & Pas 3 Kyu</button>
   <button onclick="switchTab('pane-video', this)">🎥 Analiza Walki</button>
-  <button onclick="switchTab('pane-fuel', this)">⚡ Kalkulator Mocy & AI Dietetyk</button>
+  <button onclick="switchTab('pane-fuel', this)">⚡ Ładowarka Mocy Tymona</button>
 </nav>
 
 <div class="container">
 
-  <!-- LEGENDA ZBLIŻEŃ KAMERY + PRZEŁĄCZNIK TEMPA RUCHU -->
-  <div class="legend-bar">
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-      <span><strong>🔍 4 Kafelki Zbliżeń:</strong></span>
-      <span style="color:#fff;">⬜ Biała Judoga = <strong>Tymon</strong></span>
-      <span style="color:#60a5fa;">🟦 Niebieska Judoga = <strong>Rywal / Tata</strong></span>
-      <span style="color:var(--neon-green);">🟩 Zielona Noga/Stopa = <strong>Gdzie wchodzi noga!</strong></span>
-      <span style="color:var(--neon-blue);">🔵 Niebieska Strzałka = <strong>Rękaw (Wychylenie!)</strong></span>
-      <span style="color:var(--neon-red);">🔴 Czerwona Strzałka = <strong>Ruch Głowy i Tułowia!</strong></span>
-    </div>
-    <div style="display:flex; gap:6px;">
-      <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.72rem;" onclick="setChibiSpeed('3.2s')">🐢 Zwolnij ruch</button>
-      <button class="btn btn-blue" style="padding:4px 9px; font-size:0.72rem;" onclick="setChibiSpeed('0.9s')">⚡ Tempo Bojowe!</button>
+  <!-- PANEL PODPINANIA 4 WYGENEROWANYCH PLANSZ KOMIKSOWYCH -->
+  <div class="card" style="border: 1px solid var(--neon-gold); background: rgba(15,23,42,0.92);">
+    <h2>
+      <span>🎨 4 Plansze Komiksowe Anime (Prawdziwe postacie i Zoom 2.5x na każdy kadr!)</span>
+      <span style="font-size:0.74rem; color:var(--neon-green);">Wczytaj 4 plansze z czatu jednym kliknięciem!</span>
+    </h2>
+    <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:8px;">
+      Zapisz 4 wygenerowane wyżej na czacie plansze komiksowe i wskaż je poniższymi przyciskami (zapiszą się na stałe w pamięci telefonu) lub wrzuć je na GitHuba jako <code>manga_uchimata.jpeg</code>, <code>manga_feet.jpeg</code>, <code>manga_escape.jpeg</code>, <code>manga_core.jpeg</code>:
+    </p>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+      <label class="btn btn-gold" style="cursor:pointer; margin:0; font-size:0.76rem;">
+        📥 1. Wgraj Planszę: Uchi-mata
+        <input type="file" accept="image/*" style="display:none;" onchange="uploadGlobalMangaPack('uchimata', event)">
+      </label>
+      <label class="btn btn-blue" style="cursor:pointer; margin:0; font-size:0.76rem;">
+        📥 2. Wgraj Planszę: Szybkie Stopy
+        <input type="file" accept="image/*" style="display:none;" onchange="uploadGlobalMangaPack('fast_feet', event)">
+      </label>
+      <label class="btn btn-green" style="cursor:pointer; margin:0; font-size:0.76rem;">
+        📥 3. Wgraj Planszę: Parter (Most)
+        <input type="file" accept="image/*" style="display:none;" onchange="uploadGlobalMangaPack('escape', event)">
+      </label>
+      <label class="btn btn-ghost" style="cursor:pointer; margin:0; font-size:0.76rem;">
+        📥 4. Wgraj Planszę: Siła (Kółko)
+        <input type="file" accept="image/*" style="display:none;" onchange="uploadGlobalMangaPack('core', event)">
+      </label>
     </div>
   </div>
 
-  <!-- ZAKŁADKA 1: TRENING DNIA Z 4 KAFELKAMI ZBLIŻEŃ KAMERY DO KAŻDEGO ĆWICZENIA -->
+  <!-- ZAKŁADKA 1: TRENING DNIA Z INTERAKTYWNĄ KAMERĄ ZOOM 2.5x -->
   <div id="pane-daily" class="tab-pane active">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>📅 Trening Dnia – 4 Zbliżenia Kamery (Stopy • Ręce • Głowa • Wejście)</span>
-          <span style="font-size:0.72rem; color:var(--neon-blue);">Kliknij 🔊 aby telefon przeczytał na głos!</span>
+          <span>📅 Trening Dnia – Klikaj przyciski [🔍 1-4], aby przybliżyć kadr komiksu!</span>
+          <span style="font-size:0.72rem; color:var(--neon-blue);">Dotknij obrazka, aby otworzyć Lupę na cały ekran!</span>
         </h2>
         <select id="daySelect" onchange="renderDailyQuests()">
           <option value="1">Poniedziałek – Dzień Klubu (Szybkie Stopy + Wejście pod Uchi-matę)</option>
@@ -593,12 +603,12 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 2: SZKOŁA KODOKAN (4 ZBLIŻENIA KAMERY + DZIAŁAJĄCE FILMY YOUTUBE) -->
+  <!-- ZAKŁADKA 2: SZKOŁA KODOKAN (INTERAKTYWNA KAMERA ZOOM 2.5x + FILMY YOUTUBE) -->
   <div id="pane-kodokan" class="tab-pane">
     <div class="card">
-      <h2>🥋 Szkoła Kodokan (Tokio) – 4 Kafelki Zbliżeń Kamery + Wideo</h2>
+      <h2>🥋 Szkoła Kodokan (Tokio) – Interaktywna Kamera Zoom 2.5x + Wideo</h2>
       <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:10px;">
-        Każda technika ma 4 dokładne zbliżenia: 1. Stopy na ziemi i trójkąt (▲), 2. Dłonie i strzałka wychylenia (Kuzushi), 3. Ruch głowy i tułowia, 4. Gdzie dokładnie wchodzi noga!
+        Wybierz technikę i klikaj przyciski pod planszą Anime: <strong>[🔍 1. Stopy]</strong>, <strong>[🔍 2. Dłonie & Wychylenie]</strong>, <strong>[🔍 3. Głowa]</strong>, <strong>[🔍 4. Wejście Nogi]</strong>, aby kamera zrobiła zbliżenie!
       </p>
       <div class="grid-2">
         <div>
@@ -619,7 +629,7 @@
     <div id="techDetailContainer" class="card"></div>
   </div>
 
-  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA Z 4 ZBLIŻENIAMI -->
+  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA -->
   <div id="pane-belts" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -632,7 +642,7 @@
       </div>
 
       <div class="card">
-        <h2>🥋 Ćwicz do Pasa (Wymagania Kyu z Pokazem Zbliżeń)</h2>
+        <h2>🥋 Ćwicz do Pasa (Wymagania Kyu z Interaktywną Kamerą Zoom)</h2>
         <select id="beltTargetSelect" onchange="renderBeltRequirements()">
           <option value="3kyu">🟢 3 Kyu – Zielony Pas (Główny Cel Tymona!)</option>
           <option value="4kyu">🟠 4 Kyu – Pomarańczowy Pas (Szlif Mistrzowski)</option>
@@ -647,7 +657,7 @@
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>📊 Wnioski z Walki Tymona (Bochnia) – Zbliżenia Naprawcze</h2>
+        <h2>📊 Wnioski z Walki Tymona (Bochnia) – Zbliżenia Kamery</h2>
         <div class="quest-item" style="border-left-color:var(--neon-red);">
           <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z wychyleniem i nurkowaniem głowy</strong>
           <div id="bochniaFix1Zoom"></div>
@@ -659,7 +669,7 @@
         <div class="quest-item" style="border-left-color:var(--neon-red);">
           <strong>🔧 FUNDAMENT NAPRAWCZY #2 (1:27): Ucieczka z Kesa-gatame (Most + Krewetka)</strong>
           <div id="bochniaFix2Zoom"></div>
-          <button class="btn btn-blue" style="width:100%; margin-top:6px;" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('escape', 'Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Łokcie do brzucha ➔ Wysoki Most ➔ Krewetka i zielone kolano pod brzuch Taty!')">
+          <button class="btn btn-blue" style="width:100%; margin-top:6px;" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('escape', 'Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Łokcie do brzucha ➔ Wysoki Most ➔ Krewetka i kolano pod brzuch Taty!')">
             ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Parteru!)
           </button>
         </div>
@@ -688,18 +698,12 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 5: KALKULATOR MOCY + AI DIETETYK (GEMINI API) -->
+  <!-- ZAKŁADKA 5: ŁADOWARKA MOCY TYMONA (100% POD 11-LETNIEGO JUDOKĘ) -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>
-          <span>⚡ Ładowarka Mocy & Kalkulator Produktów</span>
-          <select id="calcProfileMode" onchange="renderMealLog()" style="width:auto; margin:0; font-size:0.75rem;">
-            <option value="tymon">🥋 Tymon (Paliwo Judoki – 2100 kcal / 85g B)</option>
-            <option value="jerry">🔥 JERRY BYKU: ULTIMATE OS (2250 kcal / 175g B / Cel 85kg)</option>
-          </select>
-        </h2>
-        <label>1. Wybierz produkt z bazy najpopularniejszych produktów:</label>
+        <h2>⚡ Ładowarka Mocy Judoki (Paliwo Tymona na Tatami)</h2>
+        <label>1. Wybierz przekąskę lub posiłek młodego judoki:</label>
         <select id="calcFoodSelect" onchange="updateFoodPreview()"></select>
 
         <div class="grid-2" style="gap:8px;">
@@ -714,21 +718,21 @@
         </div>
 
         <button class="btn btn-green" style="width:100%; margin-top:4px;" onclick="addMealToLog()">
-          ➕ Doładuj Baterię Mocy (+15 EXP)
+          ➕ Doładuj Baterię Mocy Tymona (+15 EXP)
         </button>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
-        <h3>🤖 Zapytaj AI Dietetyka / Senseia (Gemini API)</h3>
+        <h3>🤖 Zapytaj AI Senseia o Paliwo przed Treningiem (Gemini API)</h3>
         <div style="display:flex; gap:6px; margin-top:6px;">
-          <input type="text" id="aiDietInput" placeholder="Np. Co zjeść po treningu judo / Jak wkomponować śledzie w 2250 kcal?" style="margin:0;">
+          <input type="text" id="aiDietInput" placeholder="Np. Co Tymon ma zjeść godzinę przed walkami w klubie?" style="margin:0;">
           <button class="btn btn-blue" onclick="askAiDietitian()">Zapytaj AI</button>
         </div>
         <div id="aiDietOutput" style="margin-top:8px; padding:9px; background:var(--bg-panel); border-radius:8px; font-size:0.8rem; white-space:pre-wrap; display:none;"></div>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
-        <h3>➕ Dodaj własny produkt</h3>
+        <h3>➕ Dodaj ulubione danie Tymona</h3>
         <div class="grid-2" style="gap:6px;">
-          <input type="text" id="newFoodName" placeholder="Nazwa produktu">
+          <input type="text" id="newFoodName" placeholder="Nazwa (np. Naleśniki Taty)">
           <input type="number" id="newFoodKcal" placeholder="Kcal / 100g">
           <input type="number" id="newFoodP" placeholder="Białko / 100g">
           <input type="number" id="newFoodC" placeholder="Węglowodany / 100g">
@@ -738,11 +742,11 @@
       </div>
 
       <div class="card">
-        <h2>🔋 Dzisiejsze Naładowanie Baterii <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="resetMealLog()">Nowy dzień</button></h2>
+        <h2>🔋 Dzisiejsze Naładowanie Baterii Tymona <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="resetMealLog()">Nowy dzień</button></h2>
 
         <div style="margin-bottom:8px;">
           <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-            <span>⚡ Energia Całkowita</span>
+            <span>⚡ Energia Całkowita (Paliwo Dnia)</span>
             <span><strong id="sumKcal">0</strong> / <span id="goalKcal">2100</span> kcal</span>
           </div>
           <div class="macro-bar-bg"><div id="barKcal" class="macro-bar-fill" style="width:0%"></div></div>
@@ -750,7 +754,7 @@
 
         <div style="margin-bottom:8px;">
           <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-            <span>💪 Białko (Siła mięśni i chwytu)</span>
+            <span>💪 Białko (Siła mięśni i chwytu Kumi-kata)</span>
             <span><strong id="sumP">0</strong> / <span id="goalP">85</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barP" class="macro-bar-fill" style="width:0%; background:var(--neon-blue);"></div></div>
@@ -758,7 +762,7 @@
 
         <div style="margin-bottom:8px;">
           <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-            <span>🚀 Węglowodany (Gaz na Randori)</span>
+            <span>🚀 Węglowodany (Turbo-Gaz na Randori)</span>
             <span><strong id="sumC">0</strong> / <span id="goalC">285</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barC" class="macro-bar-fill" style="width:0%; background:var(--neon-gold);"></div></div>
@@ -766,7 +770,7 @@
 
         <div style="margin-bottom:10px;">
           <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
-            <span>🧠 Zdrowe Tłuszcze & Omega-3</span>
+            <span>🧠 Zdrowe Tłuszcze (Koncentracja i Refleks)</span>
             <span><strong id="sumF">0</strong> / <span id="goalF">65</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barF" class="macro-bar-fill" style="width:0%; background:var(--neon-orange);"></div></div>
@@ -786,362 +790,334 @@
 
 <script>
   /*************************************************************************
-   * 1. SYSTEM 4 KAFELKÓW ZE ZBLIŻENIEM KAMERY (ZOOM-IN ANATOMICAL PANELS)
-   *    Każdy zestaw ma 4 kadry:
-   *    [0] ZBLIŻENIE NA STOPY I TRÓJKĄT NA MACIE
-   *    [1] ZBLIŻENIE NA DŁONIE I STRZAŁKI WYCHYLENIA (KUZUSHI)
-   *    [2] ZBLIŻENIE NA RUCH GŁOWY I TUŁOWIA Z PROFILU
-   *    [3] ZBLIŻENIE NA WEJŚCIE NOGI / KOLANA (FINAŁ!)
+   * 1. INTERAKTYWNY SILNIK KAMERY ZOOM 2.5x NA PLANSZACH KOMIKSOWYCH ANIME
    *************************************************************************/
-  function setChibiSpeed(dur) {
-    document.documentElement.style.setProperty('--chibi-anim-speed', dur);
-  }
+  const CAMERA_GUIDES = {
+    uchimata: {
+      primaryFile: 'manga_uchimata.jpeg',
+      fallbackHero: 'tymon2.jpeg',
+      steps: [
+        {
+          btn: "🔍 1. Stopy & ▲",
+          caption: "KADR 1 (STOPY NA MACIE): Między stopami niebieskiego rywala świeci Trójkąt (▲). Twoja PRAWA STOPA wskakuje w sam czubek trójkąta, a lewa staje obok niej!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <polygon points="150,115 95,185 205,185" fill="rgba(0,240,255,0.22)" stroke="#00f0ff" stroke-width="3" stroke-dasharray="6,3"/>
+            <path d="M150 195 L150 135" stroke="#10b981" stroke-width="6" stroke-linecap="round"/>
+            <polygon points="150,122 140,140 160,140" fill="#10b981"/>
+            <rect x="65" y="12" width="170" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#10b981"/>
+            <text x="150" y="28" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: STOPY W TRÓJKĄT ▲</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 2. Dłonie & Wychylenie",
+          caption: "KADR 2 (DŁONIE & KUZUSHI): Lewa dłoń łapie RĘKAW przy łokciu i ciągnie mocno w górę do Twojego ucha ('spójrz na zegarek' ↖️). Prawa dłoń na KOŁNIERZU pcha rywala na palce!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <circle cx="135" cy="110" r="24" fill="rgba(0,240,255,0.2)" stroke="#00f0ff" stroke-width="3"/>
+            <path d="M135 110 L75 45" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
+            <polygon points="65,35 72,55 88,42" fill="#00f0ff"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#00f0ff"/>
+            <text x="150" y="28" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: RĘKAW DO UCHA! ↖️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 3. Głowa w dół!",
+          caption: "KADR 3 (RUCH GŁOWY): Po obrocie plecami Twoja GŁOWA nurkuje ostro w dół w stronę lewego kolana (⤵️)! Kiedy głowa idzie w dół, noga sama wystrzeliwuje w górę!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M165 55 Q95 95 115 165" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round"/>
+            <polygon points="118,175 104,160 124,156" fill="#ef4444"/>
+            <rect x="60" y="12" width="180" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#ef4444"/>
+            <text x="150" y="28" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: GŁOWA DO KOLANA! ⤵️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 4. Wejście Nogi!",
+          caption: "KADR 4 (GDZIE WCHODZI NOGA): Prawa noga wchodzi dokładnie MIĘDZY UDA niebieskiego rywala i strzela wysoko w sufit (🚀⬆️), odrywając go od maty na IPPON!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M145 165 L105 45" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="100,32 96,52 116,46" fill="#10b981"/>
+            <rect x="50" y="12" width="200" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#10b981"/>
+            <text x="150" y="28" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: NOGA MIĘDZY UDA! 🚀</text>
+          </svg>`
+        }
+      ]
+    },
 
-  const ZOOM_PANELS = {
-    // ZESTAW 1: UCHI-MATA (4 Zbliżenia Kamery)
-    uchimata: [
-      {
-        badge: "🔍 1. ZBLIŻENIE: STOPY NA ZIEMI",
-        txt: "Patrz na dół: między niebieskimi nogawkami rywala świeci Trójkąt (▲). Twoja PRAWA STOPA (zielona) wskakuje w sam czubek trójkąta, a lewa staje obok!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Nogawki niebieskiej judogi rywala i jego stopy z palcami -->
-          <path d="M14 5 L28 5 L30 42 L12 42 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
-          <path d="M12 42 C10 52, 28 54, 30 42 Z" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
-          <path d="M100 5 L114 5 L116 42 L98 42 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
-          <path d="M98 42 C96 52, 114 54, 116 42 Z" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
-          <!-- Trójkąt na macie -->
-          <polygon points="65,36 24,104 106,104" fill="rgba(0,240,255,0.16)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
-          <!-- Biała nogawka i zielona prawa stopa Tymona wchodząca w czubek trójkąta -->
-          <g class="anim-foot-step">
-            <path d="M54 54 C52 40, 76 40, 74 54 L76 74 L52 74 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
-            <path d="M50 72 L78 72 L80 98 L48 98 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-            <text x="64" y="62" text-anchor="middle" fill="#000" font-size="8" font-weight="900">PRAWA</text>
-          </g>
-          <!-- Strzałka wejścia stopy -->
-          <path d="M65 112 L65 78" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
-          <polygon points="65,72 59,82 71,82" fill="#facc15"/>
-        </svg>`
-      },
-      {
-        badge: "🔍 2. DŁONIE & WYCHYLENIE",
-        txt: "Zbliżenie na ręce: Lewa dłoń łapie NIEBIESKI RĘKAW przy łokciu i ciągnie mocno w górę do Twojego ucha (⬆️). Prawa dłoń na ZŁOTYM KOŁNIERZU pcha rywala na palce!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Niebieska góra judogi rywala przechylająca się do przodu (Kuzushi) -->
-          <g class="anim-kuzushi-pull">
-            <path d="M35 28 L98 28 L92 92 L42 92 Z" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
-            <path d="M55 28 L66 56 L77 28" fill="none" stroke="#93c5fd" stroke-width="3"/>
-            <!-- Lewa dłoń Tymona (z palcami) na rękawie rywala + Niebieska strzałka do ucha -->
-            <rect x="20" y="42" width="22" height="14" rx="4" fill="#00f0ff" stroke="#fff" stroke-width="1.5"/>
-            <circle cx="38" cy="49" r="7" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-            <path d="M36 42 L14 14" stroke="#00f0ff" stroke-width="5" stroke-linecap="round"/>
-            <polygon points="10,10 13,22 23,14" fill="#00f0ff"/>
-            <!-- Prawa dłoń Tymona na kołnierzu + Złota strzałka -->
-            <circle cx="76" cy="44" r="7" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-            <path d="M76 44 L54 20" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
-            <polygon points="50,16 53,27 62,20" fill="#facc15"/>
-          </g>
-          <text x="65" y="112" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Ciągnij rękaw do ucha! ↖️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 3. GŁOWA NURKUJE W DÓŁ!",
-        txt: "Widok z boku na obie postacie: po obrocie plecami Twoja GŁOWA (w złotych włosach) nurkuje ostro w dół (⤵️) do Twojego kolana! Nie stój prosto!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Sylwetka Niebieskiego Rywala z tyłu -->
-          <circle cx="82" cy="24" r="10" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <path d="M68 36 L96 36 L92 84 L70 84 Z" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5"/>
-          <!-- Sylwetka Tymona w białej judodze pochylająca głowę w dół -->
-          <rect x="52" y="72" width="13" height="34" rx="4" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-          <g class="anim-head-dive">
-            <path d="M36 46 L72 46 L68 76 L40 76 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-            <rect x="40" y="68" width="28" height="6" rx="2" fill="#f97316"/>
-            <circle cx="34" cy="44" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-            <path d="M22 38 L18 26 L30 32 L36 22 L42 32 Z" fill="#facc15" stroke="#000" stroke-width="1"/>
-          </g>
-          <!-- Czerwona zakrzywiona strzałka nurkowania głowy -->
-          <path d="M30 22 Q10 55 26 84" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
-          <polygon points="30,88 18,84 26,75" fill="#ef4444"/>
-          <text x="72" y="114" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="bold">Głowa w dół do kolana! ⤵️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 4. GDZIE WCHODZI NOGA",
-        txt: "Zbliżenie na uda: Twoja ZIELONA PRAWA NOGA wchodzi dokładnie MIĘDZY NOGI niebieskiego rywala (pod jego wewnętrzne udo) i strzela prosto w sufit (🚀⬆️)!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Dwie niebieskie nogawki spodni rywala -->
-          <path d="M32 38 L48 38 L44 88 L28 88 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
-          <path d="M84 28 L100 28 L96 76 L80 76 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
-          <!-- Biała noga podporowa Tymona -->
-          <path d="M46 66 L60 66 L58 106 L44 106 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-          <!-- ZIELONA PRAWA NOGA TYMONA WCHODZĄCA MIĘDZY UDA RYWALA -->
-          <g class="anim-leg-blast">
-            <path d="M52 64 L104 48 L108 62 L54 78 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
-            <ellipse cx="110" cy="54" rx="8" ry="5" fill="#fed7aa" stroke="#000" stroke-width="1.2"/>
-          </g>
-          <!-- Zielona strzałka wyrzutu w sufit -->
-          <path d="M78 88 L96 16" stroke="#10b981" stroke-width="4" stroke-dasharray="4,2"/>
-          <polygon points="98,10 89,20 101,22" fill="#10b981"/>
-          <text x="65" y="115" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Między uda i w sufit! 🚀</text>
-        </svg>`
-      }
-    ],
+    fast_feet: {
+      primaryFile: 'manga_feet.jpeg',
+      fallbackHero: 'tymon1.jpeg',
+      steps: [
+        {
+          btn: "🔍 1. Klapki & ▲",
+          caption: "KADR 1 (STOPY NA ZIEMI): Połóż 2 klapki na dywanie w szerokości barków. Stań przed trójkątem (▲) na lekko ugiętych, sprężystych kolanach!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <polygon points="150,110 90,185 210,185" fill="rgba(0,240,255,0.2)" stroke="#00f0ff" stroke-width="3" stroke-dasharray="5,3"/>
+            <rect x="65" y="12" width="170" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#facc15"/>
+            <text x="150" y="28" text-anchor="middle" fill="#facc15" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: POZYCJA STÓP ▲</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 2. Ręce Kierownica",
+          caption: "KADR 2 (DŁONIE & KIEROWNICA): Trzymaj obie dłonie wysoko przed klatką jak kierownicę roweru! Lewa dłoń ciągnie rękaw w dół (⬇️), prawa kontroluje kołnierz!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <circle cx="110" cy="115" r="22" fill="rgba(0,240,255,0.22)" stroke="#00f0ff" stroke-width="3"/>
+            <circle cx="190" cy="115" r="22" fill="rgba(250,204,21,0.22)" stroke="#facc15" stroke-width="3"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#00f0ff"/>
+            <text x="150" y="28" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: RĘCE JAK KIEROWNICA!</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 3. Stopa Miotła",
+          caption: "KADR 3 (BOK STOPY PO MACIE): Przekręć stopę bokiem (tak jak łyżwę lub miotłę) i szoruj małym palcem po samym dywanie, zamiatając kostkę rywala (⬅️)!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M210 155 L95 155" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="82,155 102,145 102,165" fill="#10b981"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#10b981"/>
+            <text x="150" y="28" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: ZAMIATAJ PO MACIE! ⬅️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 4. Głowa & Biodra",
+          caption: "KADR 4 (SYLWETKA): Nie patrz w podłogę! Głowa wysoko, wzrok na kołnierzu rywala, a biodra idą dynamicznie do przodu (➡️) w rytmie 1 podcięcie na sekundę!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M110 110 L195 110" stroke="#facc15" stroke-width="6" stroke-linecap="round"/>
+            <polygon points="208,110 188,100 188,120" fill="#facc15"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#facc15"/>
+            <text x="150" y="28" text-anchor="middle" fill="#facc15" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: GŁOWA PROSTO! ➡️</text>
+          </svg>`
+        }
+      ]
+    },
 
-    // ZESTAW 2: SZYBKIE STOPY (ASHI-WAZA: DE-ASHI-BARAI & KOUCHI-GARI)
-    fast_feet: [
-      {
-        badge: "🔍 1. STOPY & 2 KLAPKI NA ZIEMI",
-        txt: "Zbliżenie na podłogę: rozstaw 2 klapki na szerokość barków (to stopy rywala).Twoje kolana są lekko ugięte, stoisz na sprężystych palcach przed trójkątem (▲).",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <polygon points="65,42 25,98 105,98" fill="rgba(0,240,255,0.14)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
-          <!-- 2 Klapki jako stopy rywala -->
-          <rect x="22" y="42" width="18" height="30" rx="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
-          <rect x="90" y="42" width="18" height="30" rx="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/>
-          <!-- Białe nogawki i stopy Tymona -->
-          <path d="M38 74 L54 74 L52 102 L36 102 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-          <path d="M76 74 L92 74 L90 102 L74 102 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Stań na ugiętych nogach!</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 2. DŁONIE TRZYMAJĄ KIEROWNICĘ",
-        txt: "Zbliżenie na ręce: obie dłonie trzymaj przed klatką piersiową jak kierownicę roweru! Prawa na wysokości brody (kołnierz), lewa przy łokciu (rękaw) – ciągnij w dół (⬇️)!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <path d="M36 42 L94 42 L88 96 L42 96 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <circle cx="65" cy="24" r="11" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <path d="M52 18 L48 8 L60 13 L66 4 L72 13 L82 9 L78 20 Z" fill="#facc15"/>
-          <!-- Ręce Tymona ułożone jak kierownica + strzałki -->
-          <path d="M40 50 L22 56" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
-          <path d="M90 50 L108 46" stroke="#ffffff" stroke-width="10" stroke-linecap="round"/>
-          <circle cx="20" cy="56" r="7" fill="#00f0ff" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="110" cy="46" r="7" fill="#facc15" stroke="#fff" stroke-width="1.5"/>
-          <path d="M20 66 L20 92" stroke="#00f0ff" stroke-width="4"/><polygon points="20,96 14,86 26,86" fill="#00f0ff"/>
-          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Rękaw w dół, kołnierz wysoko!</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 3. ZBLIŻENIE: STOPA JAK MIOTŁA",
-        txt: "Zbliżenie na samą kostkę: przekręć ZIELONĄ STOPĘ bokiem (tak, żeby mały palec szorował po dywanie jak miotła) i traf dokładnie w bok pięty rywala (⬅️)!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="8" y1="96" x2="122" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <!-- Niebieska nogawka i stopa rywala -->
-          <path d="M26 24 L46 24 L44 76 L24 76 Z" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1.5"/>
-          <path d="M22 76 L48 76 L50 94 L20 94 Z" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <!-- Animowana Zielona Stopa Tymona sunąca po samej macie w kostkę rywala -->
-          <g class="anim-foot-sweep">
-            <path d="M78 28 L98 28 L92 78 L72 78 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-            <path d="M64 78 L94 78 L90 94 L58 94 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          </g>
-          <path d="M104 86 L54 86" stroke="#10b981" stroke-width="4"/><polygon points="48,86 58,80 58,92" fill="#10b981"/>
-          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Szoruj bokiem stopy po macie! ⬅️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 4. BIODRA I GŁOWA PROSTO",
-        txt: "Widok całej sylwetki: nie pochylaj głowy w dół przy podcięciach stóp! Głowa wysoko, biodra pchają do przodu (➡️), a stopa zamiata w rytmie 1 raz na sekundę!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Sylwetka Tymona wyprostowana, biodra do przodu -->
-          <circle cx="56" cy="22" r="10" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <path d="M44 16 L40 6 L52 12 L58 4 L66 12 Z" fill="#facc15"/>
-          <path d="M42 34 L70 34 L68 68 L44 68 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <rect x="43" y="60" width="26" height="6" rx="2" fill="#f97316"/>
-          <path d="M44 68 L40 98 L52 98 L54 68 Z" fill="#ffffff" stroke="#000" stroke-width="1.5"/>
-          <path d="M60 68 L88 92 L96 84 L68 64 Z" fill="#10b981" stroke="#fff" stroke-width="2"/>
-          <path d="M74 52 L106 52" stroke="#facc15" stroke-width="4"/><polygon points="112,52 102,46 102,58" fill="#facc15"/>
-          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Głowa wysoko, biodra w przód! ➡️</text>
-        </svg>`
-      }
-    ],
+    escape: {
+      primaryFile: 'manga_escape.jpeg',
+      fallbackHero: 'tymon2.jpeg',
+      steps: [
+        {
+          btn: "🔍 1. Łokcie & Stopy",
+          caption: "KADR 1 (PRZYGOTOWANIE): Tata (w niebieskiej judodze) trzyma Cię z boku. Przyklej oba łokcie ciasno do swoich żeber i podciągnij pięty pod samą pupę!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <circle cx="150" cy="125" r="28" fill="rgba(0,240,255,0.22)" stroke="#00f0ff" stroke-width="3"/>
+            <rect x="50" y="12" width="200" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#00f0ff"/>
+            <text x="150" y="28" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: ŁOKCIE DO ŻEBER!</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 2. Wysoki Most!",
+          caption: "KADR 2 (MOST UPA): Wbij stopy w matę i wyrzuć brzuch wysoko w górę (⬆️), przekręcając Tatę przez swoje lewe ramię!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M150 165 L150 55" stroke="#facc15" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="150,40 138,60 162,60" fill="#facc15"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#facc15"/>
+            <text x="150" y="28" text-anchor="middle" fill="#facc15" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: BRZUCH W GÓRĘ (MOST)! ⬆️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 3. Krewetka Ebi",
+          caption: "KADR 3 (UCIECZKA BIODRAMI): Gdy Tata zaprze się o matę, wyrzuć pupę daleko w tył (⬅️ jak krewetka), robiąc wolne miejsce między Wami!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M195 125 L95 125" stroke="#ef4444" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="82,125 102,115 102,135" fill="#ef4444"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#ef4444"/>
+            <text x="150" y="28" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: PUPA W TYŁ (KREWETKA)! ⬅️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 4. Wsadź Kolano!",
+          caption: "KADR 4 (FINAŁ UCIECZKI): W powstałą szparę natychmiast wsuń swoje KOLANO pod brzuch Taty (➡️) i zamknij go nogami – jesteś wolny (TOKETA)!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M105 135 L195 105" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="208,100 186,98 192,118" fill="#10b981"/>
+            <rect x="50" y="12" width="200" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#10b981"/>
+            <text x="150" y="28" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: KOLANO POD BRZUCH! ➡️</text>
+          </svg>`
+        }
+      ]
+    },
 
-    // ZESTAW 3: UCIECZKA Z TRZYMANIA KESA-GATAME (MOST UPA + KREWETKA EBI Z TATĄ)
-    escape: [
-      {
-        badge: "🔍 1. ŁOKCIE DO ŻEBER I STOPY DO PUPY",
-        txt: "Zbliżenie na parter: Tata (w niebieskiej judodze) trzyma Cię z boku. Przyklej oba swoje łokcie ciasno do żeber (🔵) i podciągnij zielone stopy pod samą pupę!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <!-- Biała sylwetka Tymona na plecach ze zgiętymi w kolanach zielonymi nogami -->
-          <circle cx="22" cy="78" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <rect x="32" y="72" width="44" height="18" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <path d="M74 84 L92 60 L106 94" fill="none" stroke="#10b981" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Niebieska sylwetka Taty z góry + strzałka łokcia do żeber -->
-          <rect x="44" y="48" width="30" height="26" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
-          <circle cx="52" cy="74" r="6" fill="#00f0ff"/>
-          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Łokcie ciasno, stopy pod pupę!</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 2. WYSOKI MOST (UPA) PRZEZ RAMIĘ!",
-        txt: "Zbliżenie z boku: wbij zielone stopy w matę i wyrzuć brzuch oraz biodra wysoko w górę (⬆️), przekręcając głowę i Tatę przez swoje lewe ramię!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <g class="anim-bridge-lift">
-            <circle cx="20" cy="82" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-            <!-- Wygięty w łuk tułów Tymona (Most) -->
-            <path d="M28 84 Q64 32 104 90" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
-            <path d="M82 64 L104 92" stroke="#10b981" stroke-width="10" stroke-linecap="round"/>
-            <!-- Niebieski Tata unoszony w górę -->
-            <rect x="48" y="28" width="28" height="22" rx="6" fill="#1e40af" stroke="#facc15" stroke-width="2"/>
-          </g>
-          <path d="M64 88 L64 48" stroke="#facc15" stroke-width="4"/><polygon points="64,42 58,52 70,52" fill="#facc15"/>
-          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Wyrzuć brzuch w górę (MOST)! ⬆️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 3. KREWETKA (PUPA DALEKO W TYŁ!)",
-        txt: "Gdy Tata zaprze się ręką o matę, nagle opuść plecy i wyrzuć pupę daleko w tył od Taty (⬅️ jak krewetka), robiąc wolną szparę między Waszymi brzuchami!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <!-- Tymon cofa biodra w lewo, robiąc wolne miejsce -->
-          <circle cx="24" cy="64" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <path d="M30 68 L22 86 L56 88" fill="none" stroke="#ffffff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="74" y="58" width="28" height="28" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
-          <!-- Strzałka ucieczki bioder -->
-          <path d="M64 78 L32 78" stroke="#ef4444" stroke-width="4"/><polygon points="26,78 36,72 36,84" fill="#ef4444"/>
-          <text x="65" y="114" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="bold">Wyrzuć pupę w tył (Krewetka)! ⬅️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 4. WSADŹ ZIELONE KOLANO POD BRZUCH!",
-        txt: "Finał ucieczki: w powstałą szparę natychmiast wsuń swoje ZIELONE KOLANO (➡️) pod brzuch Taty i zamknij go w kleszcze swoimi nogami – TOKETA!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="6" y1="96" x2="124" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <circle cx="20" cy="70" r="9" fill="#fed7aa" stroke="#000" stroke-width="1.5"/>
-          <rect x="28" y="68" width="34" height="16" rx="6" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <rect x="72" y="56" width="28" height="28" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2"/>
-          <!-- Zielone kolano wchodzące klinem pod brzuch Taty -->
-          <g class="anim-foot-sweep">
-            <path d="M54 78 L78 68 L62 90" fill="none" stroke="#10b981" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Zielone kolano pod brzuch! ➡️</text>
-        </svg>`
-      }
-    ],
-
-    // ZESTAW 4: SIŁA & KÓŁKO NA BRZUCH (AB WHEEL + PARALETKI + GUMY)
-    core: [
-      {
-        badge: "🔍 1. KOLANA 3 STOPY OD ŚCIANY",
-        txt: "Zbliżenie na start: uklęknij kolanami (zielone spodenki) na miękkiej macie w odległości 3 swoich stóp (ok. 70 cm) przed ścianą – ściana to bezpieczny hamulec!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <rect x="106" y="16" width="8" height="80" fill="#ef4444"/><text x="78" y="28" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text>
-          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <rect x="22" y="76" width="18" height="18" rx="4" fill="#10b981"/>
-          <path d="M28 46 L50 50 L44 78 L26 78 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <circle cx="44" cy="34" r="10" fill="#fed7aa"/><path d="M34 28 L44 18 L56 26 Z" fill="#facc15"/>
-          <circle cx="64" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
-          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Klęknij 3 stopy przed ścianą!</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 2. DŁONIE I KOCIE PLECY",
-        txt: "Zbliżenie na uchwyt i brzuch: złap mocno rączki kółka, zablokuj proste łokcie i zaokrąglij lekko plecy w górę (jak kot!), mocno napinając brzuch!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <!-- Zbliżenie na tułów i ręce trzymające kółko -->
-          <path d="M24 66 Q56 42 84 62" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
-          <path d="M80 62 L92 86" stroke="#00f0ff" stroke-width="7" stroke-linecap="round"/>
-          <circle cx="94" cy="88" r="9" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
-          <path d="M56 76 L56 54" stroke="#10b981" stroke-width="4"/><polygon points="56,48 50,58 62,58" fill="#10b981"/>
-          <text x="65" y="114" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="bold">Wciągnij brzuch w górę! ⬆️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 3. WYJAZD PROSTO DO ŚCIANY",
-        txt: "Widok z boku: jedź powoli kółkiem do przodu (➡️ liczysz 1-2-3), aż kółko dotknie ściany. Biodra jadą razem z barkami, nie wyginaj brzucha w dół!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <rect x="106" y="16" width="8" height="80" fill="#ef4444"/>
-          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <rect x="18" y="82" width="18" height="12" rx="4" fill="#10b981"/>
-          <path d="M28 82 L68 64 L62 76 L26 90 Z" fill="#ffffff" stroke="#000" stroke-width="2"/>
-          <path d="M66 66 L94 86" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
-          <circle cx="96" cy="86" r="8" fill="#090d16" stroke="#00f0ff" stroke-width="3"/>
-          <circle cx="72" cy="54" r="9" fill="#fed7aa"/><path d="M62 48 L74 40 L82 48 Z" fill="#facc15"/>
-          <text x="65" y="114" text-anchor="middle" fill="#00f0ff" font-size="8.5" font-weight="bold">Jedź aż dotkniesz ściany! ➡️</text>
-        </svg>`
-      },
-      {
-        badge: "🔍 4. POWRÓT SIŁĄ BRZUCHA",
-        txt: "Finał powtórzenia: dociśnij dłonie w dół i siłą samego brzucha przyciągnij kółko z powrotem do kolan (⬅️). Zrób 8 czystych powtórzeń w serii!",
-        svg: `<svg viewBox="0 0 130 120" width="130" height="120">
-          <line x1="8" y1="96" x2="116" y2="96" stroke="#94a3b8" stroke-width="3"/>
-          <rect x="26" y="76" width="18" height="18" rx="4" fill="#10b981"/>
-          <path d="M32 46 L54 50 L48 78 L30 78 Z" fill="#ffffff" stroke="#10b981" stroke-width="2.5"/>
-          <circle cx="60" cy="86" r="8" fill="#090d16" stroke="#facc15" stroke-width="3"/>
-          <circle cx="48" cy="34" r="10" fill="#fed7aa"/><path d="M38 28 L48 18 L60 26 Z" fill="#facc15"/>
-          <path d="M96 72 L66 72" stroke="#facc15" stroke-width="4"/><polygon points="60,72 70,66 70,78" fill="#facc15"/>
-          <text x="65" y="114" text-anchor="middle" fill="#facc15" font-size="8.5" font-weight="bold">Wróć brzuchem do kolan! ⬅️</text>
-        </svg>`
-      }
-    ]
+    core: {
+      primaryFile: 'manga_core.jpeg',
+      fallbackHero: 'tymon1.jpeg',
+      steps: [
+        {
+          btn: "🔍 1. Kolana & Ściana",
+          caption: "KADR 1 (POZYCJA): Uklęknij na macie w odległości 3 swoich stóp (ok. 70 cm) przed ścianą – ściana zatrzyma kółko i ochroni Twój brzuch!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#facc15"/>
+            <text x="150" y="28" text-anchor="middle" fill="#facc15" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: 3 STOPY OD ŚCIANY!</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 2. Wyjazd do Ściany",
+          caption: "KADR 2 (KÓŁKO NA BRZUCH): Napnij brzuch i jedź powoli kółkiem do przodu (➡️), aż dotkniesz ściany, a potem wróć siłą brzucha!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M95 125 L205 125" stroke="#10b981" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="218,125 198,115 198,135" fill="#10b981"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#10b981"/>
+            <text x="150" y="28" text-anchor="middle" fill="#10b981" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: JEDŹ DO ŚCIANY! ➡️</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 3. Gumy Judo",
+          caption: "KADR 3 (GUMY Z RĘKAWEM I KOŁNIERZEM): Lewą ręką ciągnij rękaw gumy do ucha, prawą pchaj kołnierz i wskakuj w trójkąt!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M150 155 L95 65" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/>
+            <polygon points="88,52 90,72 108,62" fill="#00f0ff"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#00f0ff"/>
+            <text x="150" y="28" text-anchor="middle" fill="#00f0ff" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: RĘKAW GUMY DO UCHA!</text>
+          </svg>`
+        },
+        {
+          btn: "🔍 4. Paraletki",
+          caption: "KADR 4 (PARALETKI): Zrób 10 pompek nurkujących między paraletkami, a na koniec unieś kolana w górę i trzymaj 10 sekund!",
+          hudSvg: `<svg viewBox="0 0 300 200" width="100%" height="100%">
+            <path d="M150 165 L150 75" stroke="#facc15" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="150,60 138,80 162,80" fill="#facc15"/>
+            <rect x="55" y="12" width="190" height="24" rx="6" fill="rgba(0,0,0,0.75)" stroke="#facc15"/>
+            <text x="150" y="28" text-anchor="middle" fill="#facc15" font-size="11" font-weight="900">ZBLIŻENIE 2.5x: KOLANA W GÓRĘ! ⬆️</text>
+          </svg>`
+        }
+      ]
+    }
   };
 
-  function build4ZoomGridHtml(zoomKey, customId) {
-    const panels = ZOOM_PANELS[zoomKey] || ZOOM_PANELS.uchimata;
-    let html = `<div class="zoom-4-grid">`;
-    panels.forEach(p => {
-      html += `
-        <div class="zoom-tile-card">
-          <div class="zoom-svg-frame">${p.svg}</div>
-          <div>
-            <span class="zoom-badge">${p.badge}</span>
-            <div class="zoom-desc">${p.txt}</div>
-          </div>
+  function buildInteractiveCameraHtml(zoomKey, uid) {
+    const cfg = CAMERA_GUIDES[zoomKey] || CAMERA_GUIDES.uchimata;
+    return `
+      <div class="anime-camera-box" id="camBox_${uid}" data-zoomkey="${zoomKey}">
+        <div class="camera-viewport" onclick="openLightboxFromStage('${uid}')">
+          <img id="camImg_${uid}" class="camera-img" src="${cfg.primaryFile}"
+               onerror="handleMangaFallback(this, '${cfg.fallbackHero}')"
+               alt="Plansza Instruktażowa Anime">
+          <div id="camHud_${uid}" class="camera-hud-overlay"></div>
         </div>
-      `;
-    });
-    html += `</div>`;
-    if (customId) {
-      html += `
-        <img id="mangaImg_${customId}" class="custom-manga-preview" alt="Plansza Mangi">
-      `;
+
+        <div class="camera-caption-bar">
+          <span id="camCap_${uid}">👆 <strong>KLIKNIJ PRZYCISK [🔍 1–4] PONIŻEJ</strong>, aby kamera przybliżyła (Zoom 2.5x) wybrany kadr komiksu (lub dotknij obrazka, aby otworzyć Lupę na cały ekran!).</span>
+          <button class="btn btn-gold" style="padding:4px 10px; font-size:0.73rem;" onclick="openLightboxFromStage('${uid}')">🔎 Lupa (Cały Ekran)</button>
+        </div>
+
+        <div class="camera-controls-grid">
+          <button class="cam-btn" id="camBtn_${uid}_1" onclick="setCameraStep('${uid}', 1)">${cfg.steps[0].btn}</button>
+          <button class="cam-btn" id="camBtn_${uid}_2" onclick="setCameraStep('${uid}', 2)">${cfg.steps[1].btn}</button>
+          <button class="cam-btn" id="camBtn_${uid}_3" onclick="setCameraStep('${uid}', 3)">${cfg.steps[2].btn}</button>
+          <button class="cam-btn" id="camBtn_${uid}_4" onclick="setCameraStep('${uid}', 4)">${cfg.steps[3].btn}</button>
+          <button class="cam-btn active" id="camBtn_${uid}_0" onclick="setCameraStep('${uid}', 0)">🖼️ Cała Plansza (1x)</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleMangaFallback(imgEl, fallbackFile) {
+    if (!imgEl.dataset.triedFallback) {
+      imgEl.dataset.triedFallback = '1';
+      imgEl.classList.add('single-hero');
+      imgEl.src = fallbackFile;
+    } else if (imgEl.dataset.triedFallback === '1') {
+      imgEl.dataset.triedFallback = '2';
+      imgEl.src = 'tymon1.jpeg';
     }
-    return html;
+  }
+
+  function setCameraStep(uid, stepNum) {
+    const box = document.getElementById('camBox_' + uid);
+    if (!box) return;
+    const zoomKey = box.dataset.zoomkey || 'uchimata';
+    const cfg = CAMERA_GUIDES[zoomKey] || CAMERA_GUIDES.uchimata;
+    const img = document.getElementById('camImg_' + uid);
+    const hud = document.getElementById('camHud_' + uid);
+    const cap = document.getElementById('camCap_' + uid);
+
+    [0, 1, 2, 3, 4].forEach(n => {
+      const b = document.getElementById(`camBtn_${uid}_${n}`);
+      if (b) b.classList.toggle('active', n === stepNum);
+      img.classList.remove('zoom-quad-' + n);
+    });
+
+    if (stepNum === 0) {
+      hud.innerHTML = '';
+      cap.innerHTML = `🖼️ <strong>Widok całej planszy (1x):</strong> Kliknij przycisk [🔍 1–4], aby przybliżyć wybrany kadr, lub kliknij w obrazek, aby otworzyć Lupę na cały ekran!`;
+    } else {
+      img.classList.add('zoom-quad-' + stepNum);
+      const st = cfg.steps[stepNum - 1];
+      hud.innerHTML = st.hudSvg;
+      cap.innerHTML = `🎯 <strong>${st.caption}</strong>`;
+      playSound('exp');
+    }
+  }
+
+  function openLightboxFromStage(uid) {
+    const img = document.getElementById('camImg_' + uid);
+    if (!img) return;
+    const modal = document.getElementById('zoomLightboxModal');
+    const lImg = document.getElementById('lightboxImg');
+    lImg.src = img.src;
+    lImg.style.transform = 'scale(1)';
+    modal.style.display = 'flex';
+  }
+
+  function setLightboxZoom(scaleVal) {
+    const lImg = document.getElementById('lightboxImg');
+    lImg.style.transform = `scale(${scaleVal})`;
+  }
+
+  function closeLightbox() {
+    document.getElementById('zoomLightboxModal').style.display = 'none';
   }
 
   /*************************************************************************
-   * 2. BAZA INDEXED-DB NA PLANSZE MANGI PRZY KAŻDYM ĆWICZENIU
+   * 2. ZAPIS 4 PLANSZ MANGI W PAMIĘCI TELEFONU (INDEXED-DB)
    *************************************************************************/
-  async function saveMangaBoard(questId, dataUrl) {
+  async function saveGlobalMangaPack(zoomKey, dataUrl) {
     try {
       const db = await openPhotoDB();
-      db.transaction('cards', 'readwrite').objectStore('cards').put(dataUrl, 'manga_' + questId);
+      db.transaction('cards', 'readwrite').objectStore('cards').put(dataUrl, 'pack_' + zoomKey);
     } catch (e) {
-      localStorage.setItem('tymon_manga_' + questId, dataUrl);
+      localStorage.setItem('tymon_pack_' + zoomKey, dataUrl);
     }
   }
 
-  async function loadMangaBoard(questId) {
+  async function loadGlobalMangaPack(zoomKey) {
     try {
       const db = await openPhotoDB();
       return await new Promise(res => {
-        const req = db.transaction('cards', 'readonly').objectStore('cards').get('manga_' + questId);
-        req.onsuccess = () => res(req.result || localStorage.getItem('tymon_manga_' + questId));
-        req.onerror = () => res(localStorage.getItem('tymon_manga_' + questId));
+        const req = db.transaction('cards', 'readonly').objectStore('cards').get('pack_' + zoomKey);
+        req.onsuccess = () => res(req.result || localStorage.getItem('tymon_pack_' + zoomKey));
+        req.onerror = () => res(localStorage.getItem('tymon_pack_' + zoomKey));
       });
     } catch (e) {
-      return localStorage.getItem('tymon_manga_' + questId);
+      return localStorage.getItem('tymon_pack_' + zoomKey);
     }
   }
 
-  function uploadMangaGuide(questId, ev) {
+  function uploadGlobalMangaPack(zoomKey, ev) {
     const file = ev.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = async e => {
       const dataUrl = e.target.result;
-      await saveMangaBoard(questId, dataUrl);
-      const img = document.getElementById('mangaImg_' + questId);
-      if (img) { img.src = dataUrl; img.style.display = 'block'; }
-      addExp(25);
+      await saveGlobalMangaPack(zoomKey, dataUrl);
+      hydrateAllCameraStages();
+      addExp(30);
+      launchConfetti();
+      alert("✅ Plansza Komiksowa Anime zapisana! Klikaj teraz przyciski [🔍 1-4], aby przybliżać poszczególne kadry!");
     };
     reader.readAsDataURL(file);
   }
 
-  async function hydrateAllMangaBoards() {
-    document.querySelectorAll('.custom-manga-preview').forEach(async img => {
-      const qId = img.id.replace('mangaImg_', '');
-      const saved = await loadMangaBoard(qId);
-      if (saved) { img.src = saved; img.style.display = 'block'; }
-    });
+  async function hydrateAllCameraStages() {
+    const boxes = document.querySelectorAll('.anime-camera-box');
+    for (const box of boxes) {
+      const zKey = box.dataset.zoomkey;
+      const uid = box.id.replace('camBox_', '');
+      const saved = await loadGlobalMangaPack(zKey);
+      if (saved) {
+        const img = document.getElementById('camImg_' + uid);
+        if (img) {
+          img.classList.remove('single-hero');
+          img.src = saved;
+        }
+      }
+    }
   }
 
   /*************************************************************************
@@ -1188,7 +1164,7 @@
   }
 
   /*************************************************************************
-   * 4. PLAN TRENINGU DNIA Z 4 KAFELKAMI ZBLIŻEŃ KAMERY DO KAŻDEGO ĆWICZENIA
+   * 4. PLAN TRENINGU DNIA Z INTERAKTYWNĄ KAMERĄ ZOOM 2.5x
    *************************************************************************/
   const DAILY_QUESTS = {
     1: {
@@ -1197,7 +1173,7 @@
         {
           id: "mon1", masteryId: "uchimata", zoomKey: "fast_feet",
           title: "⚡ Szybkie Stopy (Zamiatanie klapek bokiem stopy) – 3 serie po 20 sekund",
-          feet: "Połóż 2 klapki na podłodze (stopy rywala). Stań przed trójkątem (▲) i szoruj bokiem zielonej stopy po macie jak miotłą!",
+          feet: "Połóż 2 klapki na podłodze (stopy rywala). Stań przed trójkątem (▲) i szoruj bokiem stopy po macie jak miotłą!",
           hands: "Dłonie przed klatką jak kierownica roweru! Prawa dłoń wysoko (kołnierz), lewa ciągnie rękaw w dół.",
           speed: "Szybko i lekko: 1 podcięcie na 1 sekundę (włącz przycisk '🥁 Rytm Stóp' na Zegarze Dojo!).",
           dad: "Rola Taty: Włącz 20 sekund na Zegarze Dojo i pilnuj, żeby Tymon trzymał ręce w górze jak kierownicę!"
@@ -1205,9 +1181,9 @@
         {
           id: "mon2", masteryId: "uchimata", zoomKey: "uchimata",
           title: "🔥 Wejście w Trójkąt pod Uchi-matę – 3 serie po 10 powtórzeń",
-          feet: "Zielona prawa stopa wskakuje w sam czubek trójkąta (▲), lewa staje obok niej, a potem zielona noga leci wysoko między uda rywala!",
-          hands: "Lewa ręka (🔵 niebieska strzałka) ciągnie rękaw wysoko do Twojego lewego ucha (spójrz na zegarek!).",
-          speed: "Najpierw powoli (1, 2, 3, 4), a ostatnie 5 powtórzeń w tempie bojowym!",
+          feet: "Prawa stopa wskakuje w sam czubek trójkąta (▲), lewa staje obok niej, a potem prawa noga leci wysoko między uda rywala!",
+          hands: "Lewa ręka ciągnie rękaw wysoko do Twojego lewego ucha (spójrz na zegarek!).",
+          speed: "Najpierw powoli z przybliżeniem kamery (Kadr 1-2-3-4), a ostatnie 5 powtórzeń w tempie bojowym!",
           dad: "Rola Taty: Trzymaj dłoń z tyłu na wysokości pasa Tymona – jego pięta musi dotknąć Twojej dłoni!"
         }
       ]
@@ -1218,28 +1194,28 @@
         {
           id: "tue1", masteryId: "uchimata", zoomKey: "uchimata",
           title: "🥋 Gumy Judo (z Rękawem i Kołnierzem): Turbo Uchi-mata – 4 serie po 15",
-          feet: "Wskakuj prawą stopą w czubek trójkąta (▲), obracaj się na palcach i wyrzucaj zieloną nogę wysoko w sufit.",
-          hands: "Lewa dłoń mocno zaciska niebieski RĘKAW gumy i ciągnie do ucha, prawa dłoń pcha złoty KOŁNIERZ.",
+          feet: "Wskakuj prawą stopą w czubek trójkąta (▲), obracaj się na palcach i wyrzucaj nogę wysoko w sufit.",
+          hands: "Lewa dłoń mocno zaciska RĘKAW gumy i ciągnie do ucha, prawa dłoń pcha KOŁNIERZ.",
           speed: "Dynamiczny wystrzał: 15 wejść w 25 sekund!",
           dad: "Rola Taty: Odliczaj głośno od 1 do 15 i pilnuj, by przy każdym rzucie głowa Tymona nurkowała do kolana!"
         },
         {
           id: "tue2", masteryId: "core", zoomKey: "core",
           title: "🛡️ Kółko na Brzuch (Ab Wheel do ściany) + Paraletki – 3 serie po 8 wyjazdów",
-          feet: "Uklęknij kolanami (zielone spodenki) na miękkiej macie w odległości 3 swoich stóp przed ścianą.",
-          hands: "Złap mocno rączki niebieskiego kółka na prostych łokciach i wciągnij brzuch w górę.",
+          feet: "Uklęknij kolanami na miękkiej macie w odległości 3 swoich stóp przed ścianą.",
+          hands: "Złap mocno rączki kółka na prostych łokciach i wciągnij brzuch w górę.",
           speed: "Powoli do przodu (liczysz: 1-2-3 do ściany) i mocno wracasz brzuchem!",
           dad: "Rola Taty: Pilnuj, żeby plecy Tymona były lekko zaokrąglone w górę (jak kot)."
         }
       ]
     },
     3: {
-      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'żółwia' i włożenie zielonego kolana pod brzuch Taty!",
+      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'żółwia' i włożenie kolana pod brzuch Taty!",
       items: [
         {
           id: "wed1", masteryId: "newaza", zoomKey: "escape",
           title: "⚡ Uniki w Stójce + Szybka Obrona w Parterze – 5 minut",
-          feet: "Na hasło Taty padasz na matę, podciągasz stopy pod pupę i wsuwasz zielone kolano między siebie a Tatę.",
+          feet: "Na hasło Taty padasz na matę, podciągasz stopy pod pupę i wsuwasz kolano między siebie a Tatę.",
           hands: "Przyklej oba łokcie ciasno do swoich żeber, żeby Tata nie włożył ręki pod pachę.",
           speed: "Reakcja w 1 sekundę na klaśnięcie Taty!",
           dad: "Rola Taty: Klaszcz z zaskoczenia co 15 sekund!"
@@ -1252,13 +1228,13 @@
         {
           id: "thu1", masteryId: "newaza", zoomKey: "escape",
           title: "🛡️ Ucieczka z Trzymania Taty (Naprawa błędu z Bochni) – 5 rund po 15s",
-          feet: "Podciągnij zielone pięty jak najbliżej swoich pośladków i wbij palce stóp mocno w matę!",
+          feet: "Podciągnij pięty jak najbliżej swoich pośladków i wbij palce stóp mocno w matę!",
           hands: "ZAKAZ pchania Taty prostymi rękami! Przyklej oba swoje łokcie ciasno do własnych żeber.",
-          speed: "Wybuchowo: Most w górę (1s) ➔ Krewetka pupą w tył (1s) ➔ Zielone kolano pod brzuch Taty!",
+          speed: "Wybuchowo: Most w górę (1s) ➔ Krewetka pupą w tył (1s) ➔ Kolano pod brzuch Taty!",
           dad: "Rola Taty: Trzymaj na 50% siły. Puść od razu, gdy Tymon zrobi Most + Krewetkę i włoży kolano!"
         },
         {
-          id: "thu2", masteryId: "core", zoomKey: "fast_feet",
+          id: "thu2", masteryId: "core", zoomKey: "core",
           title: "💪 Zwykłe Gumy Oporowe + Małe Hantelki (Szybkie Ręce pod Kumi-kata) – 3 serie",
           feet: "Stań w wykroku przed trójkątem (▲) na ugiętych kolanach.",
           hands: "Gumy ciągnij mocno do pasa. Hantelkami boksuj szybko na wysokość kołnierza i rękawa.",
@@ -1273,8 +1249,8 @@
         {
           id: "fri1", masteryId: "uchimata", zoomKey: "uchimata",
           title: "⚡ Kombinacja Szybkie Stopy ➔ Uchi-mata przed Walkami w Klubie – 4 minuty",
-          feet: "Zielona prawa stopa zaczepia klapkę od środka i w ułamku sekundy wskakujesz w czubek trójkąta (▲) pod Uchi-matę!",
-          hands: "Ręce wysoko jak kierownica – przy Uchi-macie pociągnij niebieski rękaw do ucha!",
+          feet: "Prawa stopa zaczepia klapkę od środka i w ułamku sekundy wskakujesz w czubek trójkąta (▲) pod Uchi-matę!",
+          hands: "Ręce wysoko jak kierownica – przy Uchi-macie pociągnij rękaw do ucha!",
           speed: "Na 100% szybkości, ale krótko (po 6 powtórzeń w serii, żeby mieć świeże nogi na walkach w klubie!).",
           dad: "Rola Taty: Klaszcz, gdy wejście jest zrobione w jednym płynnym tempie 'Raz-Dwa!'."
         }
@@ -1284,9 +1260,9 @@
       boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Ucieczka z Parteru z Tatą)!",
       items: [
         {
-          id: "sat1", masteryId: "core", zoomKey: "uchimata",
+          id: "sat1", masteryId: "core", zoomKey: "core",
           title: "🏆 Sobotni Obwód Mistrza (3 stacje po 25 sekund)",
-          feet: "Stacja 1: Skoki w trójkąt (▲). Stacja 2: Kolana przed ścianą. Stacja 3: Most i zielone kolano pod brzuch Taty.",
+          feet: "Stacja 1: Skoki w trójkąt (▲). Stacja 2: Kolana przed ścianą. Stacja 3: Most i kolano pod brzuch Taty.",
           hands: "Mocny uchwyt na rękawie gumy, sztywne ręce na kółku i ciasne łokcie w parterze.",
           speed: "25 sekund gazu na stacji i 30 sekund odpoczynku!",
           dad: "Rola Taty: Bądź sędzią turniejowym i po 3 rundach kliknij zatwierdzenie Pokazu Mistrza!"
@@ -1318,8 +1294,8 @@
     data.items.forEach(q => {
       const checked = doneMap[q.id] ? 'checked' : '';
       const cls = doneMap[q.id] ? 'quest-item completed' : 'quest-item';
-      const panels = ZOOM_PANELS[q.zoomKey || 'uchimata'];
-      const voiceText = `${q.title}. Gdzie stopy: ${q.feet}. Gdzie ręce: ${q.hands}. Jak szybko: ${q.speed}. Kadr pierwszy: ${panels[0].txt}. Kadr drugi: ${panels[1].txt}. Kadr trzeci: ${panels[2].txt}. Kadr czwarty: ${panels[3].txt}. Hajime!`;
+      const cfg = CAMERA_GUIDES[q.zoomKey || 'uchimata'];
+      const voiceText = `${q.title}. Gdzie stopy: ${q.feet}. Gdzie ręce: ${q.hands}. Jak szybko: ${q.speed}. ${cfg.steps[0].caption} ${cfg.steps[1].caption} ${cfg.steps[2].caption} ${cfg.steps[3].caption} Hajime!`;
       const safeVoice = voiceText.replace(/'/g, "").replace(/"/g, "");
 
       html += `
@@ -1328,10 +1304,6 @@
             <strong style="font-size:0.95rem; color:var(--neon-gold);">${q.title}</strong>
             <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
               <button class="btn btn-blue" style="padding:5px 10px; font-size:0.73rem;" onclick="speakInstruction('${safeVoice}')">🔊 Sensei, mów co robić!</button>
-              <label class="btn btn-ghost" style="padding:5px 9px; font-size:0.72rem; cursor:pointer; margin:0;">
-                🖼️ Wgraj Planszę Mangi
-                <input type="file" accept="image/*" style="display:none;" onchange="uploadMangaGuide('${q.id}', event)">
-              </label>
               <input type="checkbox" style="width:24px; height:24px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', '${q.masteryId}', this.checked)">
             </div>
           </div>
@@ -1342,7 +1314,7 @@
             <div class="cue-pill cue-speed"><strong>⚡ JAK SZYBKO ROBIĆ:</strong>${q.speed}</div>
           </div>
 
-          ${build4ZoomGridHtml(q.zoomKey || 'uchimata', q.id)}
+          ${buildInteractiveCameraHtml(q.zoomKey || 'uchimata', q.id)}
 
           <span class="dad-badge">👨‍👦 ${q.dad}</span>
         </div>
@@ -1350,7 +1322,7 @@
     });
     document.getElementById('questsContainer').innerHTML = html;
     renderInjectedQuests();
-    hydrateAllMangaBoards();
+    hydrateAllCameraStages();
   }
 
   function toggleQuest(id, masteryId, isChecked) {
@@ -1368,7 +1340,7 @@
   }
 
   /*************************************************************************
-   * 5. SZKOŁA KODOKAN (4 ZBLIŻENIA KAMERY + DZIAŁAJĄCY YOUTUBE)
+   * 5. SZKOŁA KODOKAN (INTERAKTYWNA KAMERA ZOOM 2.5x + DZIAŁAJĄCY YOUTUBE)
    *************************************************************************/
   const KODOKAN_TECHS = {
     throws: [
@@ -1377,8 +1349,8 @@
         zoomKey: "uchimata",
         ytId: "i9Su05b1e9k",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Zielona prawa stopa wskakuje w sam środek trójkąta (▲) między stopami rywala, lewa staje obok niej, a zielona noga leci prosto w górę między nogami przeciwnika!",
-        hands: "Lewa ręka (🔵 niebieska strzałka) ciągnie rękaw rywala wysoko do Twojego lewego ucha ('spójrz na zegarek'), prawa ręka (🟡 złota strzałka) pcha kołnierz.",
+        feet: "Prawa stopa wskakuje w sam środek trójkąta (▲) między stopami rywala, lewa staje obok niej, a prawa noga leci prosto w górę między nogami przeciwnika!",
+        hands: "Lewa ręka ciągnie rękaw rywala wysoko do Twojego lewego ucha ('spójrz na zegarek' ↖️), prawa ręka pcha kołnierz.",
         speed: "Wskok i obrót w ułamku sekundy – głowa nurkuje ostro w dół do kolana (⤵️)!"
       },
       {
@@ -1386,8 +1358,8 @@
         zoomKey: "fast_feet",
         ytId: "4BUUvqxi_Kk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Zielona stopa obrócona bokiem (jak łyżwa lub miotła) szoruje po macie i zamiata kostkę niebieskiego rywala!",
-        hands: "Ręce trzymają kierownicę (🔵 Rękaw / 🟡 Kołnierz) – pociągnij rękaw w dół w stronę podcięcia.",
+        feet: "Stopa obrócona bokiem (jak łyżwa lub miotła) szoruje po macie i zamiata kostkę niebieskiego rywala!",
+        hands: "Ręce trzymają kierownicę – pociągnij rękaw w dół w stronę podcięcia.",
         speed: "Błyskawiczny ruch stopy tuż nad matą, głowa prosto, biodra do przodu!"
       },
       {
@@ -1395,8 +1367,8 @@
         zoomKey: "fast_feet",
         ytId: "0itJFhV9pDQ",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Podejdź krokiem dostawnym, włóż zieloną prawą nogę między nogi niebieskiego rywala i narysuj na macie duże półkole.",
-        hands: "Obie ręce (🔵 Rękaw i 🟡 Kołnierz) dociskają rywala w dół na jego pięty.",
+        feet: "Podejdź krokiem dostawnym, włóż prawą nogę między nogi niebieskiego rywala i narysuj na macie duże półkole.",
+        hands: "Obie ręce dociskają rywala w dół na jego pięty.",
         speed: "Szybkie dosunięcie stopy i mocne wycięcie po półkolu!"
       },
       {
@@ -1405,7 +1377,7 @@
         ytId: "twdcGf2_3wk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
         feet: "Wskocz obiema stopami w trójkąt (▲) między stopy rywala i ugnij mocno kolana poniżej jego pasa!",
-        hands: "Lewa ręka ciągnie niebieski rękaw w górę-przód, a prawy łokieć wbijasz głęboko pod pachę rywala.",
+        hands: "Lewa ręka ciągnie rękaw w górę-przód, a prawy łokieć wbijasz głęboko pod pachę rywala.",
         speed: "Głęboki przysiad na 2 nogach i mocny skłon głową w dół (⤵️)!"
       }
     ],
@@ -1415,8 +1387,8 @@
         zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Usiądź na prawym biodrze obok boku rywala. Zielone nogi rozstaw bardzo szeroko jak nożyczki.",
-        hands: "Lewą pachą zaciśnij mocno niebieski rękaw rywala, a prawą ręką obejmij jego kark.",
+        feet: "Usiądź na prawym biodrze obok boku rywala. Nogi rozstaw bardzo szeroko jak nożyczki.",
+        hands: "Lewą pachą zaciśnij mocno rękaw rywala, a prawą ręką obejmij jego kark.",
         speed: "Schowaj głowę nisko i przesuwaj stopy po macie, gdy rywal się wierci!"
       },
       {
@@ -1424,7 +1396,7 @@
         zoomKey: "escape",
         ytId: "TT7XLUcM3Jg",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Uklęknij prostopadle do boku niebieskiego rywala. Jedno zielone kolano wbij pod jego pachę, drugie w biodro!",
+        feet: "Uklęknij prostopadle do boku niebieskiego rywala. Jedno kolano wbij pod jego pachę, drugie w biodro!",
         hands: "Jedna ręka pod głową rywala łapie kołnierz, druga między jego nogami łapie pas.",
         speed: "Przyklej klatkę piersiową ciężko do klatki rywala!"
       }
@@ -1435,8 +1407,8 @@
         zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Stań na kolanach z boku niebieskiego rywala, wbij swoje zielone kolano w jego bok.",
-        hands: "Włóż ręce pod pachy rywala, złap jego dalszy łokieć (🔵) i wciągnij go pod jego brzuch!",
+        feet: "Stań na kolanach z boku niebieskiego rywala, wbij swoje kolano w jego bok.",
+        hands: "Włóż ręce pod pachy rywala, złap jego dalszy łokieć i wciągnij go pod jego brzuch!",
         speed: "Zabierz mu łokieć i od razu pchaj piersią do przodu w trzymanie!"
       }
     ],
@@ -1446,9 +1418,9 @@
         zoomKey: "escape",
         ytId: "NDaQuJOFBYk",
         kdkUrl: "https://kdkjudo.org/en/techniques/",
-        feet: "Przyciągnij zielone pięty blisko pupy i mocno odepchnij się stopami od maty.",
-        hands: "Przyklej oba łokcie (🔵) ciasno do swojego brzucha!",
-        speed: "Raz: Wysoki Most w górę (⬆️)! Dwa: Krewetka (⬅️) i wsadzenie zielonego kolana pod brzuch rywala (➡️)!"
+        feet: "Przyciągnij pięty blisko pupy i mocno odepchnij się stopami od maty.",
+        hands: "Przyklej oba łokcie ciasno do swojego brzucha!",
+        speed: "Raz: Wysoki Most w górę (⬆️)! Dwa: Krewetka (⬅️) i wsadzenie kolana pod brzuch rywala (➡️)!"
       }
     ]
   };
@@ -1475,22 +1447,16 @@
     document.getElementById('techDetailContainer').innerHTML = `
       <h2>
         <span>${t.name}</span>
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button class="btn btn-blue" onclick="speakInstruction('${voiceTxt}')">🔊 Przeczytaj na głos</button>
-          <label class="btn btn-ghost" style="cursor:pointer; margin:0;">
-            🖼️ Wgraj Planszę Mangi
-            <input type="file" accept="image/*" style="display:none;" onchange="uploadMangaGuide('${kdkId}', event)">
-          </label>
-        </div>
+        <button class="btn btn-blue" onclick="speakInstruction('${voiceTxt}')">🔊 Przeczytaj na głos</button>
       </h2>
 
       <div class="Cue-pills">
-        <div class="cue-pill cue-feet"><strong>🟩 GDZIE STOPY (ZIELONA NOGA):</strong>${t.feet}</div>
+        <div class="cue-pill cue-feet"><strong>🟩 GDZIE STOPY:</strong>${t.feet}</div>
         <div class="cue-pill cue-hands"><strong>🔵🟡 DŁONIE & WYCHYLENIE:</strong>${t.hands}</div>
         <div class="cue-pill cue-speed"><strong>⚡ RUCH GŁOWY & TEMPO:</strong>${t.speed}</div>
       </div>
 
-      ${build4ZoomGridHtml(t.zoomKey, kdkId)}
+      ${buildInteractiveCameraHtml(t.zoomKey, kdkId)}
 
       <a href="https://www.youtube.com/watch?v=${t.ytId}" target="_blank" rel="noopener" class="yt-launch-card">
         <img src="https://img.youtube.com/vi/${t.ytId}/hqdefault.jpg" alt="Kodokan Video Preview">
@@ -1504,16 +1470,16 @@
 
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
         <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('${t.zoomKey}', 'Szlif ze Szkoły Kodokan – ${t.name}: ${t.feet}')">
-          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia z 4 Zbliżeniami!)
+          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia!)
         </button>
         <a href="${t.kdkUrl}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Oficjalna lista 100 technik na kdkjudo.org</a>
       </div>
     `;
-    hydrateAllMangaBoards();
+    hydrateAllCameraStages();
   }
 
   /*************************************************************************
-   * 6. PASKI OPANOWANIA DO RANGI MASTER, ZADANIA SPECJALNE I PASY (Z 4 ZBLIŻENIAMI)
+   * 6. PASKI OPANOWANIA DO RANGI MASTER, ZADANIA SPECJALNE I PASY
    *************************************************************************/
   const DEFAULT_MASTERY_GOALS = [
     { id: 'uchimata', title: '🔥 Master Uchi-maty (Bochnia 1:12)', current: 4, target: 20, unit: 'sesji' },
@@ -1575,25 +1541,25 @@
   }
 
   function injectToWeeklyPlan(zoomKey, taskText) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v13') || '[]');
     list.push({ zoomKey: zoomKey || 'uchimata', text: taskText });
-    localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(list));
+    localStorage.setItem('tymon_injected_tasks_v13', JSON.stringify(list));
     addExp(40); renderInjectedQuests(); autoSyncCloudSilent();
-    alert("⚡ Dodano do Planu Dnia razem z 4 Kafelkami Zbliżeń Kamery!");
+    alert("⚡ Dodano do Planu Dnia z Interaktywną Kamerą Zoom 2.5x!");
   }
 
   function removeInjectedTask(idx) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v13') || '[]');
     list.splice(idx, 1);
-    localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(list));
+    localStorage.setItem('tymon_injected_tasks_v13', JSON.stringify(list));
     renderInjectedQuests(); autoSyncCloudSilent();
   }
 
   function renderInjectedQuests() {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]');
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks_v13') || '[]');
     const box = document.getElementById('injectedQuestsBox');
     if (!list.length) { box.innerHTML = ''; return; }
-    let html = `<h3 style="color:var(--neon-orange); margin-bottom:8px;">🎯 Dodane Zadania Specjalne (z 4 Zbliżeniami Kamery):</h3>`;
+    let html = `<h3 style="color:var(--neon-orange); margin-bottom:8px;">🎯 Dodane Zadania Specjalne (z Kamerą Zoom 2.5x):</h3>`;
     list.forEach((item, i) => {
       const text = typeof item === 'string' ? item : item.text;
       const zKey = typeof item === 'string' ? 'uchimata' : (item.zoomKey || 'uchimata');
@@ -1603,11 +1569,12 @@
             <strong style="font-size:0.86rem; color:var(--neon-gold);">🔥 ${text}</strong>
             <button class="btn btn-green" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('uchimata', 1); removeInjectedTask(${i});">✅ Zrobione (+1 Master)</button>
           </div>
-          ${build4ZoomGridHtml(zKey, 'inj_' + i)}
+          ${buildInteractiveCameraHtml(zKey, 'inj_' + i)}
         </div>
       `;
     });
     box.innerHTML = html;
+    hydrateAllCameraStages();
   }
 
   const BELT_EXAMS = {
@@ -1640,11 +1607,12 @@
               ➕ Ćwicz do Pasa (+1 Master)
             </button>
           </div>
-          ${build4ZoomGridHtml(r.zoom, 'belt_' + key + '_' + idx)}
+          ${buildInteractiveCameraHtml(r.zoom, 'belt_' + key + '_' + idx)}
         </div>
       `;
     });
     document.getElementById('beltContentArea').innerHTML = html;
+    hydrateAllCameraStages();
   }
 
   /*************************************************************************
@@ -1656,7 +1624,7 @@
 
   function openPhotoDB() {
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open('TymonFighterCardsDB_v12', 1);
+      const req = indexedDB.open('TymonFighterCardsDB_v14', 1);
       req.onupgradeneeded = e => { e.target.result.createObjectStore('cards'); };
       req.onsuccess = e => resolve(e.target.result);
       req.onerror = e => reject(e);
@@ -1838,7 +1806,7 @@
       exp: totalExp,
       masteryGoals: masteryGoals,
       doneQuests: JSON.parse(localStorage.getItem('tymon_done_quests') || '{}'),
-      injectedTasks: JSON.parse(localStorage.getItem('tymon_injected_tasks_v12') || '[]'),
+      injectedTasks: JSON.parse(localStorage.getItem('tymon_injected_tasks_v13') || '[]'),
       mealLog: mealLog
     };
   }
@@ -1848,7 +1816,7 @@
     if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp', totalExp); }
     if (Array.isArray(state.masteryGoals)) { masteryGoals = state.masteryGoals; localStorage.setItem('tymon_mastery_goals', JSON.stringify(masteryGoals)); }
     if (state.doneQuests) localStorage.setItem('tymon_done_quests', JSON.stringify(state.doneQuests));
-    if (state.injectedTasks) localStorage.setItem('tymon_injected_tasks_v12', JSON.stringify(state.injectedTasks));
+    if (state.injectedTasks) localStorage.setItem('tymon_injected_tasks_v13', JSON.stringify(state.injectedTasks));
     if (Array.isArray(state.mealLog)) { mealLog = state.mealLog; localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog)); }
     updateHud(); renderMasteryGoals(); renderDailyQuests(); renderMealLog();
   }
@@ -1989,7 +1957,6 @@
     addExp(35);
   }
 
-  // Bezpieczne przechowywanie klucza Gemini API w konfiguracji lokalnej
   function saveApiKeySafe() {
     const k = document.getElementById('apiKeyField').value.trim();
     if (!k) return;
@@ -2018,7 +1985,7 @@
     }
 
     if (!apiKey) {
-      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. STOPY: Wskocz zieloną prawą stopą w czubek trójkąta (▲).\n2. DŁONIE & WYCHYLENIE: Pociągnij niebieski rękaw do swojego ucha.\n3. GŁOWA: Nurkuj głową nisko do kolana.\n4. NOGA: Wyrzuć prawą nogę między uda rywala!";
+      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. STOPY: Wskocz prawą stopą w czubek trójkąta (▲).\n2. DŁONIE & WYCHYLENIE: Pociągnij rękaw do swojego ucha.\n3. GŁOWA: Nurkuj głową nisko do kolana.\n4. NOGA: Wyrzuć prawą nogę między uda rywala!";
       return;
     }
 
@@ -2040,15 +2007,11 @@
     const out = document.getElementById('aiDietOutput');
     if (!q) return;
     out.style.display = 'block';
-    out.innerText = "⏳ AI Dietetyk liczy makroskładniki...";
+    out.innerText = "⏳ AI Sensei dobiera paliwo dla Tymona...";
     const apiKey = localStorage.getItem('TYMON_SAFE_GEMINI_KEY');
-    const mode = document.getElementById('calcProfileMode').value;
-    const contextStr = mode === 'jerry'
-      ? "Tryb JERRY BYKU: ULTIMATE OS (redukcja do 85 kg, cel 2250 kcal, 175 g białka, 190 g węglowodanów, 85 g tłuszczu)."
-      : "Tryb 11-letniego judoki Tymona (cel 2100 kcal, 85 g białka, lekkostrawne paliwo przed matą i regeneracja po treningu).";
 
     if (!apiKey) {
-      out.innerText = `ℹ️ [Podpowiedź Offline – ${mode.toUpperCase()}]: Przed treningiem wybierz banana lub wafle ryżowe z miodem, a po treningu Skyr lub kurczaka z ryżem (na redukcji 2250 kcal świetnie sprawdzą się też odsączone śledzie i twaróg chudy!). Wklej klucz Gemini API w ⚙️ Chmura & AI, aby korzystać z pełnych analiz AI.`;
+      out.innerText = "ℹ️ [Podpowiedź Offline]: Na 60 minut przed treningiem judo dla 11-latka najlepiej sprawdzi się banan, mus owocowy lub wafle ryżowe z miodem (lekki brzuch przy padach Ukemi!), a po treningu Skyr pitny lub kurczak z ryżem.";
       return;
     }
 
@@ -2056,7 +2019,7 @@
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: `Jesteś sportowym dietetykiem AI. Kontekst: ${contextStr}. Pytanie użytkownika: ${q}` }] }]
+          contents: [{ parts: [{ text: `Jesteś dietetykiem sportowym dla 11-letniego zawodnika judo Tymona (cel 2100 kcal, 85g białka). Odpowiedz krótko i przyjaźnie po polsku: ${q}` }] }]
         })
       });
       const data = await res.json();
@@ -2068,24 +2031,21 @@
   }
 
   const JUDOKA_FUEL_DB = [
-    { name: "🥛 Skyr naturalny / pitny (Hit Białkowy #1)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
-    { name: "🐟 Śledzie w oleju odsączone (Baza JERRY BYKU: Omega-3 & Białko)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
-    { name: "🧀 Twaróg chudy (Nocna regeneracja mięśni – 18g B)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
-    { name: "🍗 Pierś z kurczaka z ryżem (Obiad budujący siłę Uchi-maty)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
-    { name: "🌾 Płatki owsiane górskie (Owsianka Mistrza w dzień turnieju)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
-    { name: "🥚 Jajka kurze / Jajecznica (Siła chwytu Kumi-kata)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
     { name: "🍌 Banan (Turbo-Gaz na 60 min przed matą)", kcal: 89, p: 1.1, c: 22.8, f: 0.3 },
+    { name: "🥛 Skyr pitny / naturalny (Regeneracja mięśni po treningu)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
     { name: "🍘 Wafle ryżowe z miodem (Lekki brzuch do padów Ukemi)", kcal: 365, p: 7.0, c: 81.5, f: 2.2 },
     { name: "🍎 Mus owocowy w tubce (Szybka energia przed Randori)", kcal: 55, p: 0.5, c: 12.5, f: 0.2 },
+    { name: "🌾 Owsianka Mistrza na mleku (Śniadanie w dzień turnieju)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
+    { name: "🍗 Kurczak z ryżem (Obiad budujący siłę Uchi-maty)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
+    { name: "🥞 Naleśniki z twarogiem (Doładowanie po szkole)", kcal: 215, p: 11.5, c: 28.0, f: 6.0 },
+    { name: "🥚 Jajecznica / Jajka (Siła chwytu Kumi-kata)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
+    { name: "🥪 Kanapka z szynką z indyka i serem", kcal: 235, p: 13.5, c: 29.0, f: 6.5 },
     { name: "🍯 Domowy Izotonik (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
-  let foods = JSON.parse(localStorage.getItem('tymon_only_foods')) || JUDOKA_FUEL_DB;
+  let foods = JSON.parse(localStorage.getItem('tymon_only_foods_v14')) || JUDOKA_FUEL_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
-  const GOALS_MAP = {
-    tymon: { kcal: 2100, p: 85, c: 285, f: 65 },
-    jerry: { kcal: 2250, p: 175, c: 190, f: 85 }
-  };
+  const TYMON_GOAL = { kcal: 2100, p: 85, c: 285, f: 65 };
 
   function initFoodSelect() {
     const s = document.getElementById('calcFoodSelect');
@@ -2131,7 +2091,7 @@
     const f = parseFloat(document.getElementById('newFoodF').value) || 0;
     if (!name || isNaN(kcal)) return;
     foods.push({ name: "⭐ " + name, kcal, p, c, f });
-    localStorage.setItem('tymon_only_foods', JSON.stringify(foods));
+    localStorage.setItem('tymon_only_foods_v14', JSON.stringify(foods));
     initFoodSelect();
   }
 
@@ -2148,8 +2108,6 @@
   }
 
   function renderMealLog() {
-    const mode = document.getElementById('calcProfileMode') ? document.getElementById('calcProfileMode').value : 'tymon';
-    const gTarget = GOALS_MAP[mode] || GOALS_MAP.tymon;
     const tb = document.getElementById('mealLogTable');
     tb.innerHTML = '';
     let tk = 0, tp = 0, tc = 0, tf = 0;
@@ -2159,18 +2117,14 @@
       tr.innerHTML = `<td>${m.name}</td><td>${m.g}g</td><td><strong>${m.kcal}</strong></td><td>${m.p}/${m.c}/${m.f}g</td><td><button class="btn btn-ghost" style="padding:2px 7px;" onclick="removeMeal(${i})">✕</button></td>`;
       tb.appendChild(tr);
     });
-    document.getElementById('goalKcal').innerText = gTarget.kcal;
-    document.getElementById('goalP').innerText = gTarget.p;
-    document.getElementById('goalC').innerText = gTarget.c;
-    document.getElementById('goalF').innerText = gTarget.f;
     document.getElementById('sumKcal').innerText = Math.round(tk);
     document.getElementById('sumP').innerText = tp.toFixed(1);
     document.getElementById('sumC').innerText = tc.toFixed(1);
     document.getElementById('sumF').innerText = tf.toFixed(1);
-    document.getElementById('barKcal').style.width = Math.min(100, (tk / gTarget.kcal) * 100) + '%';
-    document.getElementById('barP').style.width = Math.min(100, (tp / gTarget.p) * 100) + '%';
-    document.getElementById('barC').style.width = Math.min(100, (tc / gTarget.c) * 100) + '%';
-    document.getElementById('barF').style.width = Math.min(100, (tf / gTarget.f) * 100) + '%';
+    document.getElementById('barKcal').style.width = Math.min(100, (tk / TYMON_GOAL.kcal) * 100) + '%';
+    document.getElementById('barP').style.width = Math.min(100, (tp / TYMON_GOAL.p) * 100) + '%';
+    document.getElementById('barC').style.width = Math.min(100, (tc / TYMON_GOAL.c) * 100) + '%';
+    document.getElementById('barF').style.width = Math.min(100, (tf / TYMON_GOAL.f) * 100) + '%';
   }
 
   function switchTab(paneId, btn) {
@@ -2189,11 +2143,11 @@
     renderDailyQuests();
     populateTechSelector();
     renderBeltRequirements();
-    document.getElementById('bochniaFix1Zoom').innerHTML = build4ZoomGridHtml('uchimata', 'bochnia1');
-    document.getElementById('bochniaFix2Zoom').innerHTML = build4ZoomGridHtml('escape', 'bochnia2');
+    document.getElementById('bochniaFix1Zoom').innerHTML = buildInteractiveCameraHtml('uchimata', 'bochnia1');
+    document.getElementById('bochniaFix2Zoom').innerHTML = buildInteractiveCameraHtml('escape', 'bochnia2');
     initFoodSelect();
     renderMealLog();
-    hydrateAllMangaBoards();
+    hydrateAllCameraStages();
   };
 </script>
 </body>
