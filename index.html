@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v9.1</title>
+  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v10.0</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -48,6 +48,7 @@
       pointer-events: none; z-index: 9999;
     }
 
+    /* GÓRNY PASEK HUD GRY */
     header.game-hud {
       background: linear-gradient(90deg, #090d16 0%, #1e1b4b 50%, #090d16 100%);
       border-bottom: 3px solid var(--neon-gold);
@@ -78,6 +79,7 @@
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
     }
 
+    /* KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D */
     .hero-banner { max-width: 1120px; margin: 12px auto; padding: 0 10px; }
     .hero-card {
       background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
@@ -103,7 +105,6 @@
     .avatar-stage.form-fire { border-color: var(--neon-orange); box-shadow: 0 0 34px var(--neon-red); }
     .avatar-stage.form-ultra { border-color: var(--neon-purple); box-shadow: 0 0 34px var(--neon-purple); }
 
-    /* Żywa animacja oddychania bojowego i kołysania w pozycji judo 2.5D */
     #fighterSprite {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
       position: absolute; top: 0; left: 0; z-index: 2;
@@ -117,7 +118,6 @@
       100% { transform: scale(1.05, 1.02) translateY(-4px) rotate(-0.4deg); }
     }
 
-    /* Animacja Ataku Specjalnego Uchi-mata po kliknięciu */
     #fighterSprite.attack-burst {
       animation: ultimateThrowAttack 0.65s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards !important;
     }
@@ -258,29 +258,75 @@
     .btn-gold { background: linear-gradient(135deg, #eab308, #f59e0b); color: #000; }
     .btn-ghost { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
 
+    /* NOWY SYSTEM 3 OBRAZKOWYCH KROKÓW (JAK INSTRUKCJA LEGO / KOMIKS DLA 11-LATKA) */
     .quest-item {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-      border-left: 5px solid var(--neon-gold); border-radius: 12px;
-      padding: 12px; margin-bottom: 10px;
+      background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(0, 240, 255, 0.22);
+      border-left: 5px solid var(--neon-gold); border-radius: 14px;
+      padding: 14px; margin-bottom: 14px;
     }
-    .quest-item.completed { border-left-color: var(--neon-green); opacity: 0.68; }
-    .visual-guide-grid {
-      display: grid; grid-template-columns: 105px minmax(0, 1fr); gap: 10px; align-items: center; margin-top: 8px;
+    .quest-item.completed { border-left-color: var(--neon-green); opacity: 0.72; }
+
+    /* Pigułki: Gdzie stopy, Gdzie ręce, Jak szybko */
+    .Cue-pills {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 7px; margin: 10px 0;
     }
-    @media (max-width: 480px) { .visual-guide-grid { grid-template-columns: 1fr; } }
-    .diagram-box {
-      width: 105px; height: 105px; background: #090d16;
-      border: 1px solid var(--neon-blue); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto;
+    .cue-pill {
+      background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 9px; padding: 7px 9px; font-size: 0.78rem;
     }
-    .quest-steps {
-      padding: 8px; background: rgba(0,0,0,0.35);
-      border-radius: 8px; font-size: 0.81rem; color: #cbd5e1; white-space: pre-line;
+    .cue-pill strong { display: block; font-size: 0.72rem; text-transform: uppercase; margin-bottom: 2px; }
+    .cue-feet strong { color: var(--neon-gold); }
+    .cue-hands strong { color: var(--neon-blue); }
+    .cue-speed strong { color: var(--neon-green); }
+
+    /* 3 Obrazkowe Kafelki Krok po Kroku (KROK 1 -> KROK 2 -> KROK 3) */
+    .lego-steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;
     }
+    @media (max-width: 640px) { .lego-steps-grid { grid-template-columns: 1fr; } }
+    .lego-step-card {
+      background: #090d16; border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 10px; padding: 10px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .lego-step-num {
+      background: var(--neon-gold); color: #000; font-weight: 900;
+      font-size: 0.72rem; padding: 2px 9px; border-radius: 99px;
+    }
+    .lego-step-svg {
+      width: 95px; height: 95px; background: rgba(30, 41, 59, 0.5);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .lego-step-text {
+      font-size: 0.79rem; color: #e2e8f0; line-height: 1.35;
+    }
+
     .dad-badge {
       display: inline-block; background: rgba(0, 240, 255, 0.14);
       color: var(--neon-blue); border: 1px solid var(--neon-blue);
-      padding: 3px 8px; border-radius: 6px; font-size: 0.71rem; font-weight: 800; margin-top: 6px;
+      padding: 4px 9px; border-radius: 7px; font-size: 0.74rem; font-weight: 800; margin-top: 6px;
+    }
+
+    /* Karta Wideo YouTube bez blokady osadzania */
+    .yt-launch-card {
+      position: relative; border-radius: 12px; overflow: hidden;
+      border: 2px solid var(--neon-gold); background: #000;
+      margin: 12px 0; cursor: pointer; display: block; text-decoration: none;
+    }
+    .yt-launch-card img {
+      width: 100%; max-height: 230px; object-fit: cover; opacity: 0.8; display: block;
+      transition: opacity 0.2s, transform 0.3s;
+    }
+    .yt-launch-card:hover img { opacity: 1; transform: scale(1.02); }
+    .yt-play-overlay {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; background: rgba(0,0,0,0.45);
+      padding: 12px; text-align: center;
+    }
+    .yt-play-btn-big {
+      background: #ef4444; color: #fff; font-weight: 900; font-size: 0.95rem;
+      padding: 10px 20px; border-radius: 99px; border: 2px solid #fff;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.85);
     }
 
     .dojo-timer {
@@ -343,7 +389,7 @@
   </div>
 </div>
 
-<!-- KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D + OBSŁUGA TWOICH PLIKÓW .JPEG -->
+<!-- KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D -->
 <section class="hero-banner">
   <div class="hero-card">
     <div class="holo-card-wrap">
@@ -353,7 +399,6 @@
         <div id="ipponFlashBanner">⚡ IPPON!</div>
         <div class="holo-shine"></div>
 
-        <!-- Domyślnie ładuje Twoje wgrane pliki tymon1.jpeg / tymon2.jpeg / tymon3.jpeg -->
         <img id="fighterSprite" src="tymon1.jpeg" onerror="handleMissingSlotImage()" onload="hideMissingOverlay()" alt="Tymon Anime Fighter">
         <canvas id="heroVfxCanvas" width="250" height="330"></canvas>
 
@@ -370,7 +415,6 @@
         </div>
       </div>
 
-      <!-- 4 Sloty na różne Pozy Bojowe Anime Tymona -->
       <div class="card-slots">
         <button class="slot-btn active" id="slotBtn1" onclick="selectCardSlot(1)">⚡ #1 Pozycja</button>
         <button class="slot-btn" id="slotBtn2" onclick="selectCardSlot(2)">🔥 #2 Uchi-mata</button>
@@ -406,9 +450,10 @@
   </div>
 </section>
 
+<!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
-  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Krok po Kroku)</button>
-  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Wideo)</button>
+  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Obrazki 1-2-3)</button>
+  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Jak robić + Filmy)</button>
   <button onclick="switchTab('pane-belts', this)">🎯 Cele & Pas 3 Kyu</button>
   <button onclick="switchTab('pane-video', this)">🎥 Analiza Walki</button>
   <button onclick="switchTab('pane-fuel', this)">⚡ Kalkulator Mocy</button>
@@ -416,20 +461,21 @@
 
 <div class="container">
 
+  <!-- ZAKŁADKA 1: TRENING DNIA Z OBRAZKAMI 1-2-3 + GDZIE STOPY / RĘCE / TEMPO -->
   <div id="pane-daily" class="tab-pane active">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>📅 Dzisiejsze Misje z Wizualną Instrukcją</span>
-          <span style="font-size:0.72rem; color:var(--neon-blue);">Gumy Judo • Gumy Oporowe • Kółko • Paraletki • Hantelki • Tata</span>
+          <span>📅 Trening Dnia – Instrukcja Obrazkowa Krok po Kroku</span>
+          <span style="font-size:0.72rem; color:var(--neon-blue);">Kliknij 🔊 aby telefon przeczytał na głos!</span>
         </h2>
         <select id="daySelect" onchange="renderDailyQuests()">
-          <option value="1">Poniedziałek – Dzień Klubu (Lekka aktywacja stóp + Cel na Randori)</option>
+          <option value="1">Poniedziałek – Dzień Klubu (Szybkie Stopy + Cel na Randori)</option>
           <option value="2">Wtorek – Domowa Kuźnia: Uchi-mata na Gumach + Kółko na Brzuch + Paraletki</option>
-          <option value="3">Środa – Dzień Klubu (Lekki Szlif Obrony i Chwytu)</option>
-          <option value="4">Czwartek – Domowa Kuźnia: Wyjścia z Parteru z Tatą + Gumy Oporowe + Hantelki</option>
-          <option value="5">Piątek – Dzień Klubu (Szybkie Stopy & Luz przed Walkami)</option>
-          <option value="6">Sobota – Boss Fight! (Obwód Mistrza + Prezentacja przed Tatą)</option>
+          <option value="3">Środa – Dzień Klubu (Uniki + Szybki Żółw po upadku)</option>
+          <option value="4">Czwartek – Domowa Kuźnia: Ucieczka z Parteru z Tatą + Gumy Oporowe + Hantelki</option>
+          <option value="5">Piątek – Dzień Klubu (Szybkie Stopy De-ashi-barai & Kouchi-gari przed walkami)</option>
+          <option value="6">Sobota – Boss Fight! (Obwód 3 Stacji + Pokaz przed Tatą)</option>
           <option value="0">Niedziela – Yasumi (Regeneracja Bohatera)</option>
         </select>
 
@@ -450,41 +496,42 @@
         </div>
 
         <div class="card">
-          <h2>⏱️ Zegar Dojo (Hajime / Mate Timer)</h2>
+          <h2>⏱️ Zegar Dojo + Metronom Szybkich Stóp</h2>
           <div class="dojo-timer" id="dojoTimerDisplay">00:25</div>
           <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:10px;">
-            <button class="btn btn-ghost" onclick="setDojoTimer(15)">15s (Ucieczka z Kesa-gatame)</button>
-            <button class="btn btn-ghost" onclick="setDojoTimer(25)">25s (Uchi-komi na gumach)</button>
-            <button class="btn btn-ghost" onclick="setDojoTimer(180)">3:00 (Walka Turniejowa)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(15)">15s (Ucieczka z trzymania)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(20)">20s (Szybkie Stopy)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(25)">25s (Gumy Judo)</button>
           </div>
-          <div style="display:flex; gap:8px; justify-content:center;">
-            <button class="btn btn-green" onclick="startDojoTimer()">▶ HAJIME!</button>
-            <button class="btn btn-gold" onclick="pauseDojoTimer()">⏸ MATE</button>
-            <button class="btn btn-ghost" onclick="resetDojoTimer()">🔄 Reset</button>
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-green" onclick="startDojoTimer()">▶ HAJIME! (Start)</button>
+            <button class="btn btn-gold" onclick="pauseDojoTimer()">⏸ MATE (Stop)</button>
+            <button class="btn btn-blue" id="metronomeBtn" onclick="toggleFootworkMetronome()">🥁 Włącz Rytm Stóp (1/sek)</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- ZAKŁADKA 2: SZKOŁA KODOKAN (PROSTE INSTRUKCJE 1-2-3 + DZIAŁAJĄCE FILMY YOUTUBE) -->
   <div id="pane-kodokan" class="tab-pane">
     <div class="card">
-      <h2>🥋 Oficjalna Baza Kodokan Judo Institute (Tokio) – Wideo & Instrukcje</h2>
+      <h2>🥋 Szkoła Kodokan (Tokio) – Prosty Pokaz Krok po Kroku + Wideo</h2>
       <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:10px;">
-        Wybierz kategorię i technikę ze szkoły Kodokan (`kdkjudo.org/en/techniques/`), obejrzyj oficjalny pokaz mistrzów z Japonii i dodaj ćwiczenie do swoich celów!
+        Wybierz kategorię i technikę – zobaczysz na 3 prostych obrazkach, gdzie postawić stopy, gdzie trzymać ręce i jednym kliknięciem otworzysz oficjalny film w aplikacji YouTube!
       </p>
       <div class="grid-2">
         <div>
-          <label>1. Kategoria Kodokan:</label>
+          <label>1. Co ćwiczymy?</label>
           <select id="techCategorySelect" onchange="populateTechSelector()">
-            <option value="throws">🔥 Nage-waza (Rzuty w stójce – Uchi-mata i kombinacje)</option>
-            <option value="pins">🔒 Osaekomi-waza (Trzymania w parterze)</option>
-            <option value="turnovers">🔄 Ne-waza Atak (Obracanie "żółwia" do trzymania)</option>
-            <option value="escapes">🛡️ Ne-waza Obrona (Wyjścia z trzymań i Obrona w stójce)</option>
+            <option value="throws">🔥 Rzuty w stójce (Uchi-mata, Szybkie Stopy, Seoi-nage)</option>
+            <option value="pins">🔒 Trzymania w parterze (Jak utrzymać rywala na macie)</option>
+            <option value="turnovers">🔄 Atak w parterze (Jak obrócić "żółwia" Taty)</option>
+            <option value="escapes">🛡️ Ucieczki z parteru (Most + Krewetka)</option>
           </select>
         </div>
         <div>
-          <label>2. Wybierz technikę Kodokanu:</label>
+          <label>2. Wybierz technikę:</label>
           <select id="techItemSelect" onchange="renderTechDetailCard()"></select>
         </div>
       </div>
@@ -492,6 +539,7 @@
     <div id="techDetailContainer" class="card"></div>
   </div>
 
+  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA -->
   <div id="pane-belts" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -515,6 +563,7 @@
     </div>
   </div>
 
+  <!-- ZAKŁADKA 4: ANALIZA WALKI Z BOCHNI + ODTWARZACZ SLOW-MO & AI SENSEI -->
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -527,11 +576,11 @@
         </div>
 
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z daleka bez wychylenia (Kuzushi)</strong>
+          <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z daleka bez wychylenia</strong>
           <p style="font-size:0.81rem; color:var(--text-dim); margin:4px 0 8px;">
-            Wejście z za dużej odległości bez wyciągnięcia rękawa (<em>Hikite</em>) i bez wcześniejszego podcięcia <em>Kouchi-gari / O-uchi-gari</em>.
+            Zanim wejdziesz w Uchi-matę, zrób małe podcięcie prawą stopą w piętę rywala (Kouchi-gari) i pociągnij lewą ręką rękaw do swojego ucha!
           </p>
-          <button class="btn btn-blue" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo (kołnierz+rękaw) – małe podcięcie Kouchi-gari ➔ pociągnięcie rękawa do ucha ➔ głęboka Uchi-mata!')">
+          <button class="btn btn-blue" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo – podcięcie w piętę ➔ rękaw do ucha ➔ głowa do kolana i noga w sufit!')">
             ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Uchi-maty!)
           </button>
         </div>
@@ -539,9 +588,9 @@
         <div class="quest-item" style="border-left-color:var(--neon-red);">
           <strong>🔧 FUNDAMENT NAPRAWCZY #2 (1:25–1:42): Ucieczka z Kesa-gatame</strong>
           <p style="font-size:0.81rem; color:var(--text-dim); margin:4px 0 8px;">
-            Zamiast pchać rywala samymi rękami: łokcie ciasno do żeber, wysoki Most (<em>Upa</em>) przez lewe ramię i natychmiastowa Krewetka (<em>Ebi</em>) z włożeniem kolana.
+            Zamiast pchać rywala prostymi rękami: przyklej łokcie do brzucha, zrób wysoki Most przez lewe ramię i cofnij pupę w tył (Krewetka) wkładając kolano!
           </p>
-          <button class="btn btn-blue" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Tata trzyma Kesa-gatame, Tymon robi: Łokcie ciasno ➔ Wysoki Most (Upa) ➔ Krewetka (Ebi) ➔ Kolano pod brzuch!')">
+          <button class="btn btn-blue" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Łokcie do brzucha ➔ Wysoki Most ➔ Krewetka i kolano pod brzuch Taty!')">
             ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Parteru!)
           </button>
         </div>
@@ -570,6 +619,7 @@
     </div>
   </div>
 
+  <!-- ZAKŁADKA 5: KALKULATOR MOCY I NAJPOPULARNIEJSZYCH PRODUKTÓW -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -658,6 +708,498 @@
 </div>
 
 <script>
+  /*************************************************************************
+   * 1. CZYTELNE ILUSTRACJE KROK PO KROKU (SYLWETKA JUDOKI: STOPY & RĘCE)
+   *************************************************************************/
+  const STEP_ILLUS = {
+    // Szybkie stopy (Ashi-waza) - 3 obrazki
+    fast_feet_1: `<svg viewBox="0 0 100 100" width="85" height="85"><rect x="22" y="72" width="16" height="8" rx="4" fill="#ef4444"/><rect x="62" y="72" width="16" height="8" rx="4" fill="#ef4444"/><text x="18" y="92" fill="#facc15" font-size="8" font-weight="bold">2 klapki = stopy rywala</text><circle cx="50" cy="24" r="9" fill="#fde047"/><path d="M50 33 L50 55 M32 42 L68 42 M50 55 L40 70 M50 55 L60 70" stroke="#00f0ff" stroke-width="4" stroke-linecap="round"/></svg>`,
+    fast_feet_2: `<svg viewBox="0 0 100 100" width="85" height="85"><circle cx="50" cy="22" r="9" fill="#fde047"/><path d="M50 31 L50 52 M30 38 L46 32 M70 38 L54 32" stroke="#00f0ff" stroke-width="4" stroke-linecap="round"/><rect x="25" y="30" width="50" height="12" rx="4" fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="3,2"/><text x="12" y="88" fill="#00f0ff" font-size="8" font-weight="bold">Ręce jak kierownica!</text></svg>`,
+    fast_feet_3: `<svg viewBox="0 0 100 100" width="85" height="85"><rect x="62" y="72" width="16" height="8" rx="4" fill="#ef4444"/><circle cx="45" cy="22" r="9" fill="#fde047"/><path d="M45 31 L45 52 M45 52 L32 76" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M45 52 L65 74" stroke="#10b981" stroke-width="5" stroke-linecap="round"/><path d="M75 65 Q60 75 50 72" stroke="#facc15" stroke-width="3" fill="none"/><text x="8" y="92" fill="#10b981" font-size="8" font-weight="bold">Zamiataj małym palcem!</text></svg>`,
+
+    // Uchi-mata na gumach - 3 obrazki
+    uchimata_1: `<svg viewBox="0 0 100 100" width="85" height="85"><polygon points="50,25 22,80 78,80" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="2"/><circle cx="25" cy="28" r="6" fill="#ef4444"/><circle cx="75" cy="28" r="6" fill="#ef4444"/><ellipse cx="50" cy="48" rx="7" ry="12" fill="#facc15"/><text x="15" y="92" fill="#facc15" font-size="8" font-weight="bold">Prawa stopa w czubek ▲</text></svg>`,
+    uchimata_2: `<svg viewBox="0 0 100 100" width="85" height="85"><circle cx="52" cy="30" r="10" fill="#fde047"/><path d="M52 40 L52 72" stroke="#fff" stroke-width="5"/><path d="M52 48 L22 25" stroke="#00f0ff" stroke-width="5" stroke-linecap="round"/><circle cx="22" cy="25" r="5" fill="#facc15"/><text x="8" y="88" fill="#00f0ff" font-size="8" font-weight="bold">Lewa ręka do ucha (Zegarek)</text></svg>`,
+    uchimata_3: `<svg viewBox="0 0 100 100" width="85" height="85"><circle cx="30" cy="62" r="9" fill="#fde047"/><path d="M35 58 L52 55 L48 85" stroke="#fff" stroke-width="5" fill="none"/><path d="M52 55 L84 16" stroke="#10b981" stroke-width="6" stroke-linecap="round"/><text x="8" y="94" fill="#10b981" font-size="8" font-weight="bold">Głowa w dół, noga w sufit!</text></svg>`,
+
+    // Kółko na brzuch (Ab wheel) - 3 obrazki
+    wheel_1: `<svg viewBox="0 0 100 100" width="85" height="85"><rect x="84" y="15" width="7" height="70" fill="#ef4444"/><line x1="10" y1="85" x2="91" y2="85" stroke="#94a3b8" stroke-width="3"/><circle cx="35" cy="45" r="8" fill="#fde047"/><path d="M35 53 L30 82 L18 82" stroke="#fff" stroke-width="4" fill="none"/><text x="10" y="25" fill="#facc15" font-size="8" font-weight="bold">3 stopy przed ścianą</text></svg>`,
+    wheel_2: `<svg viewBox="0 0 100 100" width="85" height="85"><rect x="84" y="15" width="7" height="70" fill="#ef4444"/><line x1="10" y1="85" x2="91" y2="85" stroke="#94a3b8" stroke-width="3"/><circle cx="74" cy="76" r="7" fill="none" stroke="#00f0ff" stroke-width="3"/><path d="M22 82 L48 62 L74 76" stroke="#10b981" stroke-width="5" fill="none"/><text x="10" y="30" fill="#10b981" font-size="8" font-weight="bold">Jedź aż dotkniesz ściany</text></svg>`,
+    wheel_3: `<svg viewBox="0 0 100 100" width="85" height="85"><line x1="10" y1="85" x2="91" y2="85" stroke="#94a3b8" stroke-width="3"/><circle cx="42" cy="76" r="7" fill="none" stroke="#00f0ff" stroke-width="3"/><path d="M22 82 L35 55 L42 76" stroke="#facc15" stroke-width="5" fill="none"/><text x="12" y="30" fill="#facc15" font-size="8" font-weight="bold">Wróć brzuchem do kolan!</text></svg>`,
+
+    // Ucieczka z trzymania (Most + Krewetka) - 3 obrazki
+    escape_1: `<svg viewBox="0 0 100 100" width="85" height="85"><rect x="20" y="45" width="60" height="22" rx="8" fill="#fff"/><path d="M32 48 L32 64 M68 48 L68 64" stroke="#ef4444" stroke-width="5"/><text x="10" y="88" fill="#facc15" font-size="8" font-weight="bold">Przyklej łokcie do żeber!</text></svg>`,
+    escape_2: `<svg viewBox="0 0 100 100" width="85" height="85"><path d="M15 78 Q50 20 85 78" stroke="#facc15" stroke-width="6" fill="none"/><path d="M50 68 L50 28" stroke="#00f0ff" stroke-width="4"/><text x="14" y="92" fill="#00f0ff" font-size="8" font-weight="bold">Wyrzuć brzuch w górę (Most)!</text></svg>`,
+    escape_3: `<svg viewBox="0 0 100 100" width="85" height="85"><path d="M25 45 L55 65 L30 78" stroke="#10b981" stroke-width="6" fill="none" stroke-linecap="round"/><text x="10" y="92" fill="#10b981" font-size="8" font-weight="bold">Pupa w tył i wsuń kolano!</text></svg>`
+  };
+
+  /*************************************************************************
+   * 2. GŁOS SENSEIA (POLSKI SYNTEZATOR MOWY) + METRONOM SZYBKICH STÓP
+   *************************************************************************/
+  function speakInstruction(textToRead) {
+    try {
+      if (!('speechSynthesis' in window)) {
+        alert("Twoja przeglądarka nie obsługuje czytania głosowego.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(textToRead);
+      u.lang = 'pl-PL';
+      u.rate = 1.02;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+
+  let metroInt = null;
+  function toggleFootworkMetronome() {
+    const btn = document.getElementById('metronomeBtn');
+    if (metroInt) {
+      clearInterval(metroInt);
+      metroInt = null;
+      btn.innerText = "🥁 Włącz Rytm Stóp (1/sek)";
+      return;
+    }
+    btn.innerText = "⏹ Wyłącz Rytm Stóp";
+    playSound('exp');
+    metroInt = setInterval(() => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(740, ctx.currentTime);
+        g.gain.setValueAtTime(0.18, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.09);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(); osc.stop(ctx.currentTime + 0.1);
+      } catch (e) {}
+    }, 1000);
+  }
+
+  /*************************************************************************
+   * 3. PLAN TRENINGU DNIA DLA 11-LATKA (Z 3 OBRAZKAMI, STOPAMI, RĘKOMA I TEMPEM)
+   *************************************************************************/
+  const DAILY_QUESTS = {
+    1: {
+      boss: "Pokaż Tacie 10 błyskawicznych podcięć w klapki + 5 wejść w Uchi-matę z głową nisko do kolana!",
+      items: [
+        {
+          id: "mon1", masteryId: "uchimata",
+          title: "⚡ Szybkie Stopy (Zamiatanie klapek) – 3 serie po 20 sekund",
+          feet: "Połóż 2 klapki na podłodze (to stopy rywala). Stań naprzeciwko nich na lekko ugiętych kolanach. Zamiataj prawą i lewą stopą tuż nad podłogą!",
+          hands: "Unieś dłonie przed klatkę piersiową, jakbyś trzymał kierownicę roweru! Prawa dłoń na wysokości brody (kołnierz), lewa na wysokości łokcia (rękaw).",
+          speed: "Szybko i lekko: 1 podcięcie na 1 sekundę (włącz przycisk '🥁 Rytm Stóp' na Zegarze Dojo!).",
+          cards: [
+            { svg: "fast_feet_1", txt: "1. Połóż 2 klapki na dywanie w szerokości swoich barków." },
+            { svg: "fast_feet_2", txt: "2. Trzymaj ręce wysoko przed sobą jak kierownicę roweru (nie opuszczaj rąk!)." },
+            { svg: "fast_feet_3", txt: "3. Bokiem stopy (jak miotłą) zamiataj klapki na zmianę: prawa-lewa przez 20 sekund!" }
+          ],
+          dad: "Rola Taty: Włącz 20 sekund na Zegarze Dojo i pilnuj, żeby Tymon trzymał ręce w górze jak kierownicę!"
+        },
+        {
+          id: "mon2", masteryId: "uchimata",
+          title: "🔥 Wejście w Trójkąt pod Uchi-matę – 3 serie po 10 powtórzeń",
+          feet: "Prawa stopa wskakuje w sam środek między dwa klapki (w czubek trójkąta), lewa stopa obraca się dookoła, a prawa noga leci wysoko w tył!",
+          hands: "Lewa ręka ciągnie wyimaginowany rękaw wysoko do Twojego lewego ucha (jakbyś sprawdzał godzinę na zegarku!).",
+          speed: "Najpierw powoli i dokładnie (1, 2, 3), a ostatnie 5 powtórzeń zrób jak błyskawica!",
+          cards: [
+            { svg: "uchimata_1", txt: "1. Postaw prawą stopę na środku między dwoma klapkami (czubek trójkąta)." },
+            { svg: "uchimata_2", txt: "2. Odwróć się plecami i pociągnij lewą rękę wysoko do swojego ucha (spójrz na zegarek)." },
+            { svg: "uchimata_3", txt: "3. Schyl głowę nisko do kolana, a prawą nogę wyrzuć prosto w sufit!" }
+          ],
+          dad: "Rola Taty: Trzymaj dłoń z tyłu na wysokości pasa Tymona – jego pięta musi dotknąć Twojej dłoni!"
+        }
+      ]
+    },
+    2: {
+      boss: "Zrób 20 szybkich wejść w Uchi-matę na gumach z kołnierzem i rękawem w 25 sekund + 8 wyjazdów na kółku do ściany!",
+      items: [
+        {
+          id: "tue1", masteryId: "uchimata",
+          title: "🥋 Gumy Judo (z Rękawem i Kołnierzem): Turbo Uchi-mata – 4 serie po 15",
+          feet: "Wskakuj prawą stopą między klapki, obracaj się na palcach i wyrzucaj prawą nogę wysoko w górę.",
+          hands: "Lewa dłoń mocno zaciska RĘKAW gumy (szczególnie mały palec!), prawa dłoń trzyma KOŁNIERZ przy swoim obojczyku.",
+          speed: "Dynamiczny wystrzał: 15 wejść w 25 sekund!",
+          cards: [
+            { svg: "uchimata_1", txt: "1. Złap lewą ręką rękaw gumy, a prawą kołnierz. Stań przodem do zaczepu." },
+            { svg: "uchimata_2", txt: "2. Wskocz prawą stopą w trójkąt, obróć się plecami i pociągnij rękaw do ucha." },
+            { svg: "uchimata_3", txt: "3. Schyl głowę nisko w dół i wyrzuć prawą nogę wysoko w sufit!" }
+          ],
+          dad: "Rola Taty: Odliczaj głośno od 1 do 15 i pilnuj, by przy każdym rzucie głowa Tymona schodziła w dół!"
+        },
+        {
+          id: "tue2", masteryId: "core",
+          title: "🛡️ Kółko na Brzuch (Ab Wheel do ściany) – 3 serie po 8 wyjazdów",
+          feet: "Uklęknij kolanami na miękkiej macie w odległości 3 swoich stóp (ok. 70 cm) przed ścianą.",
+          hands: "Złap mocno rączki kółka na prostych łokciach, wbij brodę do klatki i napnij brzuch.",
+          speed: "Powoli do przodu (liczysz: 1-2-3 do ściany) i mocno wracasz!",
+          cards: [
+            { svg: "wheel_1", txt: "1. Uklęknij na macie 3 stopy przed ścianą (ściana zatrzyma kółko dla bezpieczeństwa)." },
+            { svg: "wheel_2", txt: "2. Napnij brzuch i jedź kółkiem prosto przed siebie, aż dotkniesz ściany." },
+            { svg: "wheel_3", txt: "3. Siłą brzucha wróć z powrotem na kolana. Zrób 8 razy!" }
+          ],
+          dad: "Rola Taty: Pilnuj, żeby brzuch Tymona nie opadał luźno na podłogę."
+        }
+      ]
+    },
+    3: {
+      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'żółwia' i złapanie nogi Taty między swoje kolana!",
+      items: [
+        {
+          id: "wed1", masteryId: "newaza",
+          title: "⚡ Uniki w Stójce + Szybki Żółw na Macie – 5 minut",
+          feet: "W stójce nogi szeroko na ugiętych kolanach. Na hasło Taty 'Gleba!' padasz na matę i chowasz stopy pod siebie.",
+          hands: "W stójce zbijasz ręce Taty, a na macie wbijasz łokcie ciasno w swoje kolana (zamykasz skorupę żółwia!).",
+          speed: "Reakcja w 1 sekundę na klaśnięcie Taty!",
+          cards: [
+            { svg: "fast_feet_2", txt: "1. Chodź na ugiętych nogach przed Tatą i zbijaj jego ręce, gdy próbuje złapać Twój kark." },
+            { svg: "escape_1", txt: "2. Gdy Tata klaśnie – w 1 sekundę zwiń się na macie w ciasnego żółwia (łokcie do kolan!)." },
+            { svg: "escape_3", txt: "3. Albo odwróć się na plecy i złap jedną nogę Taty w kleszcze między swoje nogi!" }
+          ],
+          dad: "Rola Taty: Klaszcz z zaskoczenia co 15 sekund!"
+        }
+      ]
+    },
+    4: {
+      boss: "Ucieknij z trzymania Kesa-gatame Taty na macie w mniej niż 10 sekund (Most + Krewetka)!",
+      items: [
+        {
+          id: "thu1", masteryId: "newaza",
+          title: "🛡️ Ucieczka z Trzymania Taty (Naprawa błędu z Bochni) – 5 rund po 15s",
+          feet: "Podciągnij pięty jak najbliżej swoich pośladków i wbij palce stóp mocno w matę!",
+          hands: "ZAKAZ pchania Taty prostymi rękami! Przyklej oba swoje łokcie ciasno do własnych żeber i obejmij Tatę.",
+          speed: "Wybuchowo: Most w górę (1 sekunda) i od razu ucieczka biodrami w tył (1 sekunda)!",
+          cards: [
+            { svg: "escape_1", txt: "1. Tata trzyma Cię z boku. Przyklej swoje łokcie ciasno do brzucha i podciągnij pięty do pupy." },
+            { svg: "escape_2", txt: "2. Wyrzuć brzuch wysoko w górę (zrób MOST), przekręcając Tatę przez swoje lewe ramię!" },
+            { svg: "escape_3", txt: "3. Wyrzuć pupę daleko w tył (Krewetka) i wsuń kolano pod brzuch Taty – jesteś wolny!" }
+          ],
+          dad: "Rola Taty: Trzymaj na 50% siły. Puść od razu, gdy Tymon zrobi Most + Krewetkę i włoży kolano!"
+        },
+        {
+          id: "thu2", masteryId: "core",
+          title: "💪 Zwykłe Gumy Oporowe + Małe Hantelki (Szybkie Ręce) – 3 serie",
+          feet: "Stań w wykroku (lewa noga z przodu, prawa z tyłu jak w walce).",
+          hands: "Gumy ciągnij mocno do brzucha. Hantelkami boksuj szybko na wprost na wysokości swoich oczu.",
+          speed: "20 sekund szybkiej pracy rąk bez zatrzymywania!",
+          cards: [
+            { svg: "fast_feet_1", txt: "1. Stań w pozycji walki (jedna noga z przodu, kolana lekko ugięte)." },
+            { svg: "fast_feet_2", txt: "2. Zrób 15 mocnych przyciągań zwykłych gum oporowych do swojego pasa." },
+            { svg: "uchimata_2", txt: "3. Weź małe hantelki i przez 20 sekund wyrzucaj ręce szybko do przodu (walka o uchwyt)!" }
+          ],
+          dad: "Rola Taty: Odliczaj 20 sekund na Zegarze Dojo."
+        }
+      ]
+    },
+    5: {
+      boss: "Pokaż 10 błyskawicznych połączeń: Małe podcięcie w klapkę ➔ Wysoka Uchi-mata!",
+      items: [
+        {
+          id: "fri1", masteryId: "uchimata",
+          title: "⚡ Szybkie Stopy przed Piątkowymi Walkami w Klubie – 4 minuty",
+          feet: "Lewa stopa robi kroczek w bok, prawa stopa zaczepia klapkę od środka (Kouchi-gari) i od razu wskakujesz w trójkąt pod Uchi-matę!",
+          hands: "Ręce cały czas w górze jak kierownica – przy podcięciu pchnij ręce w przód, przy Uchi-macie pociągnij rękaw do ucha!",
+          speed: "Na 100% szybkości, ale krótko (tylko po 6 powtórzeń w serii, żeby nie zmęczyć nóg przed klubem!).",
+          cards: [
+            { svg: "fast_feet_3", txt: "1. Zaczep prawą stopą klapkę na podłodze (jakbyś podcinał piętę rywala)." },
+            { svg: "uchimata_1", txt: "2. Gdy rywal cofa nogę – wskocz prawą stopą w środek trójkąta!" },
+            { svg: "uchimata_3", txt: "3. Pociągnij rękaw do ucha i wystrzel nogę w górę do Uchi-maty!" }
+          ],
+          dad: "Rola Taty: Klaszcz, gdy wejście jest zrobione w jednym płynnym tempie 'Raz-Dwa!'."
+        }
+      ]
+    },
+    6: {
+      boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Obracanie Żółwia Taty na macie)!",
+      items: [
+        {
+          id: "sat1", masteryId: "core",
+          title: "🏆 Sobotni Obwód Mistrza (3 stacje po 25 sekund)",
+          feet: "Stacja 1: Skoki w trójkąt na gumach. Stacja 2: Kolana na macie przed ścianą. Stacja 3: Obchodzenie żółwia Taty.",
+          hands: "Mocny uchwyt na rękawie gumy, sztywne ręce na kółku i wciąganie łokcia Taty w parterze.",
+          speed: "25 sekund gazu na stacji i 30 sekund odpoczynku!",
+          cards: [
+            { svg: "uchimata_3", txt: "STACJA 1 (25s): Jak najwięcej czystych wejść w Uchi-matę na gumach judo." },
+            { svg: "wheel_2", txt: "STACJA 2 (25s): Wyjazdy na kółku na brzuch do ściany + pompki na paraletkach." },
+            { svg: "escape_2", txt: "STACJA 3 (25s): Tata klęczy w żółwiu na macie – przewróć Tatę na plecy i zapnij trzymanie!" }
+          ],
+          dad: "Rola Taty: Bądź sędzią turniejowym i po 3 rundach kliknij zatwierdzenie Pokazu Mistrza!"
+        }
+      ]
+    },
+    0: {
+      boss: "Dzień Regeneracji (Yasumi) – 5 minut lekkiego rozciągania i obejrzenie 1 filmu w Szkole Kodokan (+100 EXP)!",
+      items: [
+        {
+          id: "sun1", masteryId: "belt3kyu",
+          title: "🧘‍♂️ Regeneracja Mistrza i Obejrzenie Pokazu z Tokio",
+          feet: "Usiądź wygodnie na macie w rozkroku i sięgnij dłońmi do palców stóp.",
+          hands: "Spokojny oddech, luźne ramiona.",
+          speed: "Powoli i na luzie – dzisiaj ładujemy akumulatory na nowy tydzień!",
+          cards: [
+            { svg: "fast_feet_1", txt: "1. Zrób 3 minuty lekkiego rozciągania nóg na macie." },
+            { svg: "uchimata_2", txt: "2. Wejdź w zakładkę 'Szkoła Kodokan' i odpal 1 film mistrzów z Japonii." },
+            { svg: "escape_3", txt: "3. Odbierz +100 EXP za regenerację!" }
+          ],
+          dad: "Wspólne przybicie piątki za cały tydzień treningów!"
+        }
+      ]
+    }
+  };
+
+  function renderDailyQuests() {
+    const day = document.getElementById('daySelect').value;
+    const data = DAILY_QUESTS[day];
+    const doneMap = JSON.parse(localStorage.getItem('tymon_done_quests') || '{}');
+    document.getElementById('bossChallengeText').innerText = data.boss;
+
+    let html = '';
+    data.items.forEach(q => {
+      const checked = doneMap[q.id] ? 'checked' : '';
+      const cls = doneMap[q.id] ? 'quest-item completed' : 'quest-item';
+      const voiceText = `${q.title}. Gdzie stopy: ${q.feet}. Gdzie ręce: ${q.hands}. Jak szybko: ${q.speed}. Krok pierwszy: ${q.cards[0].txt}. Krok drugi: ${q.cards[1].txt}. Krok trzeci: ${q.cards[2].txt}. Hajime!`;
+      const safeVoice = voiceText.replace(/'/g, "").replace(/"/g, "");
+
+      let cardsHtml = '';
+      q.cards.forEach((c, i) => {
+        cardsHtml += `
+          <div class="lego-step-card">
+            <span class="lego-step-num">KROK ${i + 1}</span>
+            <div class="lego-step-svg">${STEP_ILLUS[c.svg] || STEP_ILLUS.fast_feet_1}</div>
+            <div class="lego-step-text">${c.txt}</div>
+          </div>
+        `;
+      });
+
+      html += `
+        <div class="${cls}">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong style="font-size:0.95rem; color:var(--neon-gold);">${q.title}</strong>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="speakInstruction('${safeVoice}')">🔊 Sensei, mów co robić!</button>
+              <input type="checkbox" style="width:24px; height:24px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', '${q.masteryId}', this.checked)">
+            </div>
+          </div>
+
+          <!-- Czytelne Pigułki dla 11-latka: Stopy, Ręce, Tempo -->
+          <div class="Cue-pills">
+            <div class="cue-pill cue-feet"><strong>🦶 GDZIE POŁOŻYĆ STOPY:</strong>${q.feet}</div>
+            <div class="cue-pill cue-hands"><strong>✋ GDZIE TRZYMAĆ RĘCE:</strong>${q.hands}</div>
+            <div class="cue-pill cue-speed"><strong>⚡ JAK SZYBKO ROBIĆ:</strong>${q.speed}</div>
+          </div>
+
+          <!-- 3 Obrazkowe Kafelki LEGO 1 -> 2 -> 3 -->
+          <div class="lego-steps-grid">${cardsHtml}</div>
+
+          <span class="dad-badge">👨‍👦 ${q.dad}</span>
+        </div>
+      `;
+    });
+    document.getElementById('questsContainer').innerHTML = html;
+    renderInjectedQuests();
+  }
+
+  function toggleQuest(id, masteryId, isChecked) {
+    const doneMap = JSON.parse(localStorage.getItem('tymon_done_quests') || '{}');
+    doneMap[id] = isChecked;
+    localStorage.setItem('tymon_done_quests', JSON.stringify(doneMap));
+    if (isChecked) incrementMastery(masteryId || 'uchimata', 1);
+    renderDailyQuests();
+  }
+
+  function completeBossPresentation() {
+    addExp(100);
+    incrementMastery('uchimata', 1);
+    launchConfetti();
+  }
+
+  /*************************************************************************
+   * 4. SZKOŁA KODOKAN (PROSTE OBRAZKI 1-2-3 + DZIAŁAJĄCY PRZYCISK YOUTUBE)
+   *************************************************************************/
+  const KODOKAN_TECHS = {
+    throws: [
+      {
+        name: "🔥 Uchi-mata (Wewnętrzne podcięcie udem – Koronny Rzut Tymona)",
+        ytId: "i9Su05b1e9k",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Prawa stopa wskakuje w sam środek trójkąta między stopami rywala, lewa staje obok niej, a prawa noga leci prosto w górę między nogami przeciwnika!",
+        hands: "Lewa ręka ciągnie rękaw rywala wysoko do Twojego lewego ucha ('spójrz na zegarek'), prawa ręka na kołnierzu pcha jego kark w dół.",
+        speed: "Wskok i obrót w ułamku sekundy – głowa nurkuje do kolana!",
+        cards: [
+          { svg: "uchimata_1", txt: "KROK 1 (STOPY): Wskocz prawą stopą między stopy rywala (w czubek trójkąta)." },
+          { svg: "uchimata_2", txt: "KROK 2 (RĘCE): Obróć się plecami i pociągnij lewą ręką rękaw wysoko do ucha." },
+          { svg: "uchimata_3", txt: "KROK 3 (RZUT): Schyl głowę nisko do kolana, a prawą nogę wyrzuć w sufit!" }
+        ]
+      },
+      {
+        name: "⚡ Szybkie Stopy: De-ashi-barai & Kouchi-gari (Podcięcia stóp)",
+        ytId: "4BUUvqxi_Kk",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Stopa obrócona bokiem (jak łyżwa lub miotła) szoruje po macie i zamiata piętę rywala dokładnie w momencie, gdy stawia on krok!",
+        hands: "Ręce trzymają kierownicę – pociągnij rękaw w dół w tę samą stronę, w którą zamiatasz stopę.",
+        speed: "Błyskawiczny ruch stopy tuż nad matą (nie podnoś stopy wysoko w powietrze!).",
+        cards: [
+          { svg: "fast_feet_1", txt: "KROK 1: Stań naprzeciwko rywala (lub 2 klapek na podłodze) na ugiętych kolanach." },
+          { svg: "fast_feet_2", txt: "KROK 2: Ręce trzymaj wysoko jak kierownicę i pociągnij rękaw w dół." },
+          { svg: "fast_feet_3", txt: "KROK 3: Bokiem stopy (małym palcem po macie) zamieć stopę rywala jak miotłą!" }
+        ]
+      },
+      {
+        name: "⚡ O-uchi-gari (Duże wewnętrzne podcięcie – Otwieracz pod Uchi-matę)",
+        ytId: "0itJFhV9pDQ",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Podejdź krokiem dostawnym (lewa stopa goni prawą, nie krzyżuj nóg!), włóż prawą nogę między nogi rywala i narysuj na macie duże półkole.",
+        hands: "Obie ręce dociskają rywala w dół i do tyłu (na jego pięty), jakbyś chciał go posadzić na krześle.",
+        speed: "Szybkie dosunięcie stopy i mocne wycięcie po półkolu!",
+        cards: [
+          { svg: "fast_feet_1", txt: "KROK 1: Dosuń lewą stopę blisko prawej (nigdy nie krzyżuj nóg!)." },
+          { svg: "fast_feet_2", txt: "KROK 2: Rękoma pchnij rywala w dół na jego pięty." },
+          { svg: "fast_feet_3", txt: "KROK 3: Prawą stopą zakreśl po macie półksiężyc i wytnij jego nogę!" }
+        ]
+      },
+      {
+        name: "💥 Ippon-seoi-nage (Rzut przez plecy jednorącz)",
+        ytId: "twdcGf2_3wk",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Wskocz obiema stopami między stopy rywala i ugnij mocno kolana tak, by Twój pas był niżej niż pas przeciwnika!",
+        hands: "Lewa ręka ciągnie rękaw do przodu, a prawy łokieć wbijasz głęboko pod pachę rywala (jakbyś zakładał ciężki plecak).",
+        speed: "Głęboki przysiad na 2 nogach i mocny skłon głową do przodu!",
+        cards: [
+          { svg: "uchimata_1", txt: "KROK 1: Wskocz stopami przed stopy rywala i mocno ugnij kolana." },
+          { svg: "uchimata_2", txt: "KROK 2: Wbij prawy łokieć pod pachę rywala i zaciśnij pięść." },
+          { svg: "uchimata_3", txt: "KROK 3: Wyprostuj nogi i skłoń się mocno do przodu, przerzucając go przez plecy!" }
+        ]
+      }
+    ],
+    pins: [
+      {
+        name: "🔒 Kesa-gatame (Trzymanie opasaniem z boku)",
+        ytId: "NDaQuJOFBYk",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Usiądź na prawym biodrze obok boku rywala. Nogi rozstaw bardzo szeroko jak nożyczki (prawa noga z przodu, lewa z tyłu).",
+        hands: "Lewą pachą zaciśnij mocno rękę rywala przy swoim boku, a prawą ręką obejmij jego szyję/kołnierz.",
+        speed: "Schowaj głowę nisko i przesuwaj stopy po macie, gdy rywal się wierci!",
+        cards: [
+          { svg: "escape_1", txt: "KROK 1 (RĘCE): Wciągnij rękaw rywala głęboko pod swoją lewą pachę." },
+          { svg: "fast_feet_1", txt: "KROK 2 (NOGI): Rozstaw nogi szeroko jak cyrkiel, żeby nikt Cię nie przewrócił." },
+          { svg: "escape_3", txt: "KROK 3 (GŁOWA): Opuść głowę nisko do kolana i licz 20 sekund do Ipponu!" }
+        ]
+      },
+      {
+        name: "🔒 Yoko-shiho-gatame (Trzymanie boczne na kolanach)",
+        ytId: "TT7XLUcM3Jg",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Uklęknij prostopadle do boku rywala. Jedno kolano wbij ciasno pod jego pachę, drugie kolano wbij w jego biodro (zero szpary!).",
+        hands: "Jedna ręka pod głową rywala łapie kołnierz, druga między jego nogami łapie pas.",
+        speed: "Przyklej klatkę piersiową ciężko do klatki rywala!",
+        cards: [
+          { svg: "wheel_1", txt: "KROK 1: Uklęknij przy boku rywala – wbij kolana ciasno w jego biodro i pachę." },
+          { svg: "escape_1", txt: "KROK 2: Złap rękoma jego kołnierz pod głową oraz pas między nogami." },
+          { svg: "escape_3", txt: "KROK 3: Dociśnij klatkę piersiową i przyciągaj go mocno do siebie!" }
+        ]
+      }
+    ],
+    turnovers: [
+      {
+        name: "🔄 Obracanie 'Żółwia' (Gdy rywal chowa się na brzuchu)",
+        ytId: "NDaQuJOFBYk",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Stań na kolanach z boku rywala, wbij swoje kolano w jego bok.",
+        hands: "Włóż ręce pod pachy rywala, złap jego dalszy łokieć i wciągnij go mocno pod jego brzuch!",
+        speed: "Zabierz mu łokieć i od razu pchaj piersią do przodu w trzymanie!",
+        cards: [
+          { svg: "wheel_1", txt: "KROK 1: Uklęknij z boku Tatami obok 'żółwia' Taty." },
+          { svg: "escape_1", txt: "KROK 2: Złap dłońmi dalszy łokieć Taty i wciągnij go do środka pod jego brzuch." },
+          { svg: "escape_2", txt: "KROK 3: Pchnij Tatę klatką piersiową na plecy i od razu zapnij trzymanie!" }
+        ]
+      }
+    ],
+    escapes: [
+      {
+        name: "🛡️ Ucieczka z Kesa-gatame (Most Upa + Krewetka Ebi)",
+        ytId: "NDaQuJOFBYk",
+        kdkUrl: "https://kdkjudo.org/en/techniques/",
+        feet: "Przyciągnij pięty blisko pupy i mocno odepchnij się stopami od maty.",
+        hands: "Przyklej oba łokcie ciasno do swojego brzucha (nigdy nie wypychaj rywala prostymi rękami!).",
+        speed: "Raz: Wysoki Most w górę! Dwa: Błyskawiczna Krewetka pupą w tył!",
+        cards: [
+          { svg: "escape_1", txt: "KROK 1: Przyklej łokcie ciasno do brzucha i podciągnij stopy blisko pupy." },
+          { svg: "escape_2", txt: "KROK 2: Wyrzuć brzuch wysoko w górę (Most) przez swoje lewe ramię!" },
+          { svg: "escape_3", txt: "KROK 3: Wyrzuć biodra w tył (Krewetka) i wsuń kolano pod brzuch rywala!" }
+        ]
+      }
+    ]
+  };
+
+  function populateTechSelector() {
+    const cat = document.getElementById('techCategorySelect').value;
+    const sel = document.getElementById('techItemSelect');
+    sel.innerHTML = '';
+    KODOKAN_TECHS[cat].forEach((t, i) => {
+      const o = document.createElement('option');
+      o.value = i; o.innerText = t.name;
+      sel.appendChild(o);
+    });
+    renderTechDetailCard();
+  }
+
+  function renderTechDetailCard() {
+    const cat = document.getElementById('techCategorySelect').value;
+    const idx = document.getElementById('techItemSelect').value || 0;
+    const t = KODOKAN_TECHS[cat][idx];
+
+    let cardsHtml = '';
+    t.cards.forEach((c, i) => {
+      cardsHtml += `
+        <div class="lego-step-card">
+          <span class="lego-step-num">FAZA ${i + 1}</span>
+          <div class="lego-step-svg">${STEP_ILLUS[c.svg] || STEP_ILLUS.uchimata_1}</div>
+          <div class="lego-step-text">${c.txt}</div>
+        </div>
+      `;
+    });
+
+    const voiceTxt = `${t.name}. Gdzie stopy: ${t.feet}. Gdzie ręce: ${t.hands}. Jak szybko: ${t.speed}.`.replace(/'/g, "");
+
+    document.getElementById('techDetailContainer').innerHTML = `
+      <h2>
+        <span>${t.name}</span>
+        <button class="btn btn-blue" onclick="speakInstruction('${voiceTxt}')">🔊 Przeczytaj instrukcję na głos</button>
+      </h2>
+
+      <!-- Czytelne Pigułki: Stopy, Ręce, Tempo -->
+      <div class="Cue-pills">
+        <div class="cue-pill cue-feet"><strong>🦶 GDZIE STOPY:</strong>${t.feet}</div>
+        <div class="cue-pill cue-hands"><strong>✋ GDZIE RĘCE:</strong>${t.hands}</div>
+        <div class="cue-pill cue-speed"><strong>⚡ JAK SZYBKO:</strong>${t.speed}</div>
+      </div>
+
+      <!-- 3 Obrazkowe Kafelki Faza 1 -> 2 -> 3 -->
+      <div class="lego-steps-grid">${cardsHtml}</div>
+
+      <!-- Karta Wideo otwierająca bezpośrednio natywną aplikację YouTube (Zero blokady osadzania!) -->
+      <a href="https://www.youtube.com/watch?v=${t.ytId}" target="_blank" rel="noopener" class="yt-launch-card">
+        <img src="https://img.youtube.com/vi/${t.ytId}/hqdefault.jpg" alt="Kodokan Video Preview">
+        <div class="yt-play-overlay">
+          <div class="yt-play-btn-big">▶️ KLIKNIJ, ABY ODPALIĆ WIDEO MISTRZÓW W YOUTUBE</div>
+          <span style="font-size:0.78rem; color:#fff; margin-top:6px; font-weight:800; text-shadow:1px 1px 2px #000;">
+            Oficjalny pokaz Kodokan Judo Institute (Tokio) – otwiera się w pełnym ekranie!
+          </span>
+        </div>
+      </a>
+
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
+        <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif ze Szkoły Kodokan – ${t.name}: Stopy (${t.feet})')">
+          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia)
+        </button>
+        <a href="${t.kdkUrl}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Oficjalna lista 100 technik na kdkjudo.org</a>
+      </div>
+    `;
+  }
+
+  /*************************************************************************
+   * 5. PASKI OPANOWANIA DO RANGI MASTER, KARTA 2.5D, CHMURA I KALKULATOR
+   *************************************************************************/
   const DEFAULT_MASTERY_GOALS = [
     { id: 'uchimata', title: '🔥 Master Uchi-maty (Bochnia 1:12)', current: 4, target: 20, unit: 'sesji' },
     { id: 'newaza', title: '🛡️ Ucieczka Kesa-gatame (Most+Krewetka)', current: 2, target: 15, unit: 'ucieczek' },
@@ -752,7 +1294,6 @@
     }
   }
 
-  // Obsługa Twoich wgranych na GitHuba plików tymon1.jpeg, tymon2.jpeg, tymon3.jpeg + fallback na .jpg/.png
   async function selectCardSlot(slot) {
     currentSlot = slot;
     fallbackAttempt = 0;
@@ -886,161 +1427,6 @@
       requestAnimationFrame(loop);
     }
     loop();
-  }
-
-  const EXERCISE_DIAGRAMS = {
-    uchimata_triangle: `<svg viewBox="0 0 100 100" width="90" height="90"><polygon points="50,18 20,82 80,82" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/><circle cx="25" cy="22" r="7" fill="#ef4444"/><circle cx="75" cy="22" r="7" fill="#ef4444"/><ellipse cx="50" cy="44" rx="7" ry="12" fill="#facc15"/><text x="34" y="66" fill="#facc15" font-size="8" font-weight="bold">1.Krok w ▲</text><path d="M50 44 L82 15" stroke="#10b981" stroke-width="4" stroke-linecap="round"/><text x="48" y="94" fill="#10b981" font-size="8" font-weight="bold">2.Noga w górę!</text></svg>`,
-    ab_wheel: `<svg viewBox="0 0 100 100" width="90" height="90"><rect x="86" y="15" width="6" height="70" fill="#ef4444"/><text x="58" y="25" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text><line x1="10" y1="85" x2="92" y2="85" stroke="#94a3b8" stroke-width="3"/><circle cx="68" cy="76" r="8" fill="none" stroke="#00f0ff" stroke-width="3"/><path d="M22 82 L38 62 L68 76" stroke="#facc15" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="45" cy="54" r="6" fill="#facc15"/><text x="12" y="40" fill="#10b981" font-size="8" font-weight="bold">Brzuch napięty!</text></svg>`,
-    kesa_escape: `<svg viewBox="0 0 100 100" width="90" height="90"><path d="M15 75 Q50 25 85 75" stroke="#facc15" stroke-width="5" fill="none"/><path d="M50 65 L50 28" stroke="#00f0ff" stroke-width="3"/><text x="12" y="22" fill="#facc15" font-size="8" font-weight="bold">1. MOST (Upa) ▲</text><text x="12" y="92" fill="#10b981" font-size="8" font-weight="bold">2. KREWETKA ◄</text></svg>`,
-    parallettes: `<svg viewBox="0 0 100 100" width="90" height="90"><path d="M20 80 L20 60 L40 60 L40 80" stroke="#00f0ff" stroke-width="3" fill="none"/><path d="M60 80 L60 60 L80 60 L80 80" stroke="#00f0ff" stroke-width="3" fill="none"/><path d="M25 58 Q50 85 75 35" stroke="#facc15" stroke-width="4" fill="none"/><text x="15" y="25" fill="#facc15" font-size="8" font-weight="bold">Nurkowanie klatką</text></svg>`
-  };
-
-  const DAILY_QUESTS = {
-    1: {
-      boss: "Pokaż Tacie 5 idealnych wejść na sucho: małe podcięcie Kouchi-gari ➔ Uchi-mata (głowa nisko do kolana!).",
-      items: [
-        { id: "mon1", diag: "uchimata_triangle", masteryId: "uchimata", title: "Cieniowanie Stóp w Trójkąt (Tandoku-renshu) – 4 minuty", steps: "KROK 1: Postaw na macie 2 klapki jako stopy rywala.\nKROK 2: Prawa stopa wchodzi w czubek trójkąta.\nKROK 3: Lewa ręka ciągnie na wysokość ucha ('spójrz na zegarek'), głowa nurkuje do kolana, prawa noga leci wysoko w sufit!", dad: "Tata sprawdza: czy głowa Tymona schodzi nisko w dół (naprawa 1:12 z Bochni)." },
-        { id: "mon2", diag: "uchimata_triangle", masteryId: "uchimata", title: "Zadanie na wieczorny trening w klubie (Randori)", steps: "Zanim wejdziesz w Uchi-matę, zrób 1 zaczepienie stopą (Kouchi-gari lub O-uchi-gari)!", dad: "Po treningu przybijcie piątkę i dodajcie +1 do paska Mastera Uchi-maty!" }
-      ]
-    },
-    2: {
-      boss: "Zrób 20 szybkich wejść w Uchi-matę na gumach z kołnierzem i rękawem w 25 sekund + 8 wyjazdów na kółku do ściany!",
-      items: [
-        { id: "tue1", diag: "uchimata_triangle", masteryId: "uchimata", title: "Gumy Judo (Kołnierz + Rękaw): Eksplozywna Uchi-mata (4 serie x 15)", steps: "KROK 1: Lewa dłoń trzyma RĘKAW (zaciśnij mały palec!), prawa dłoń KOŁNIERZ.\nKROK 2: Wskocz stopą podporową w trójkąt obracając biodro.\nKROK 3: Pociągnij rękaw aż do podłogi i wystrzel nogę wymachową w górę!", dad: "Rola Taty: Trzymaj dłoń wysoko z tyłu – Tymon ma uderzyć w nią piętą!" },
-        { id: "tue2", diag: "ab_wheel", masteryId: "core", title: "Kółko na Brzuch (Ab Wheel do ściany) – Pancerny Brzuch (3 serie x 8)", steps: "KROK 1: Uklęknij na macie 60–80 cm przed ścianą.\nKROK 2: Napnij brzuch i jedź powoli do ściany, wróć siłą brzucha.", dad: "Rola Taty: Pilnuj prostych pleców Tymona." },
-        { id: "tue3", diag: "parallettes", masteryId: "core", title: "Paraletki: Pompki Nurkujące Judogi + Trzymanie Kolan L-Sit (3 serie x 10)", steps: "KROK 1: Zanurkuj klatką nisko między paraletkami i wyjdź w górę.\nKROK 2: Podnieś kolana w podporze na paraletkach i trzymaj 10 sekund!", dad: "Rola Taty: Odliczaj 10 sekund na Zegarze Dojo!" }
-      ]
-    },
-    3: {
-      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'aktywnego żółwia' i złapanie nogi w półgardę.",
-      items: [
-        { id: "wed1", diag: "kesa_escape", masteryId: "newaza", title: "Obrona Stójka & Szybki Żółw po upadku – 5 minut", steps: "KROK 1: Obniż kolana (Jigotai) i zbij rękę Taty.\nKROK 2: Po upadku w 1 sekundę zamknij łokcie przy kolanach lub złap nogę Taty swoimi nogami!", dad: "Rola Taty: Próbuj obejść nogi Tymona." }
-      ]
-    },
-    4: {
-      boss: "Ucieknij z trzymania Kesa-gatame Taty na macie w mniej niż 10 sekund (Most Upa + Krewetka Ebi)!",
-      items: [
-        { id: "thu1", diag: "kesa_escape", masteryId: "newaza", title: "Mata Domowa z Tatą: Wyjście z Kesa-gatame (Naprawa 1:27 z Bochni) – 5 rund x 15s", steps: "KROK 1: Przyklej łokcie ciasno do żeber.\nKROK 2: Zrób wysoki MOST (Upa) przez lewe ramię.\nKROK 3: Wyrzuć biodra w tył (KREWETKA / Ebi) i wbij kolano pod brzuch Taty!", dad: "Rola Taty: Puść i krzyknij 'TOKETA!', gdy zrobi Most + Krewetkę!" },
-        { id: "thu2", diag: "ab_wheel", masteryId: "core", title: "Gumy Oporowe + Małe Hantelki: Wiosłowanie i Szybki Chwyt (3 serie)", steps: "KROK 1: Gumy oporowe – 15 przyciągań do brzucha.\nKROK 2: Małe hantelki – 20 sekund szybkich wyrzutów rąk pod walkę o uchwyt!", dad: "Rola Taty: Mierz 20 sekund na Zegarze Dojo." }
-      ]
-    },
-    5: {
-      boss: "Pokaż 10 ultra-szybkich kombinacji O-uchi-gari ➔ Uchi-mata bez utraty równowagi.",
-      items: [
-        { id: "fri1", diag: "uchimata_triangle", masteryId: "uchimata", title: "Szybkie Stopy (Ashi-waza) przed klubem – 4 minuty", steps: "Lekkie, sprężyste wejścia O-uchi-gari ➔ Uchi-mata na sucho przed wieczornymi walkami!", dad: "Zadbaj o przekąskę z Kalkulatora na 60 min przed treningiem." }
-      ]
-    },
-    6: {
-      boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Obracanie Żółwia Taty na macie)!",
-      items: [
-        { id: "sat1", diag: "parallettes", masteryId: "core", title: "Obwód Mistrza Kodokanu (3 rundy x 25 sekund pracy)", steps: "STACJA 1: Uchi-mata na gumach z kołnierzem i rękawem.\nSTACJA 2: Kółko na brzuch do ściany + pompki na paraletkach.\nSTACJA 3: Obracanie żółwia Taty na macie do trzymania!", dad: "Rola Taty: Sędziuj obwód i zatwierdź Pokaz Mistrza!" }
-      ]
-    },
-    0: {
-      boss: "Dzień Regeneracji (Yasumi) – 5 minut lekkiego rozciągania bioder (+100 EXP)!",
-      items: [
-        { id: "sun1", diag: "kesa_escape", masteryId: "belt3kyu", title: "Odpoczynek Mistrza i Obejrzenie 1 Filmu ze Szkoły Kodokan", steps: "Obejrzyj wideo wybranego rzutu w zakładce 'Szkoła Kodokan' i naładuj akumulatory!", dad: "Wspólny przegląd pasków postępu do rangi Master." }
-      ]
-    }
-  };
-
-  function renderDailyQuests() {
-    const day = document.getElementById('daySelect').value;
-    const data = DAILY_QUESTS[day];
-    const doneMap = JSON.parse(localStorage.getItem('tymon_done_quests') || '{}');
-    document.getElementById('bossChallengeText').innerText = data.boss;
-
-    let html = '';
-    data.items.forEach(q => {
-      const checked = doneMap[q.id] ? 'checked' : '';
-      const cls = doneMap[q.id] ? 'quest-item completed' : 'quest-item';
-      const svgDiag = EXERCISE_DIAGRAMS[q.diag] || EXERCISE_DIAGRAMS.uchimata_triangle;
-      html += `
-        <div class="${cls}">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-            <strong>🥋 ${q.title}</strong>
-            <input type="checkbox" style="width:22px; height:22px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', '${q.masteryId}', this.checked)">
-          </div>
-          <div class="visual-guide-grid">
-            <div class="diagram-box">${svgDiag}</div>
-            <div>
-              <div class="quest-steps">${q.steps}</div>
-              <span class="dad-badge">👨‍👦 ${q.dad}</span>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-    document.getElementById('questsContainer').innerHTML = html;
-    renderInjectedQuests();
-  }
-
-  function toggleQuest(id, masteryId, isChecked) {
-    const doneMap = JSON.parse(localStorage.getItem('tymon_done_quests') || '{}');
-    doneMap[id] = isChecked;
-    localStorage.setItem('tymon_done_quests', JSON.stringify(doneMap));
-    if (isChecked) incrementMastery(masteryId || 'uchimata', 1);
-    renderDailyQuests();
-  }
-
-  function completeBossPresentation() {
-    addExp(100);
-    incrementMastery('uchimata', 1);
-    launchConfetti();
-  }
-
-  const KODOKAN_TECHS = {
-    throws: [
-      { name: "🔥 Uchi-mata (Wewnętrzne podcięcie udem – Koronny Rzut Tymona)", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "i9Su05b1e9k", ytDirect: "https://www.youtube.com/watch?v=i9Su05b1e9k", tip: "Oficjalny standard Kodokan: Wyciągnij rywala ręką z rękawem ('spójrz na zegarek'), wejdź w środek trójkąta, opuść głowę do kolana i wyrzuć nogę wymachową wysoko!", drills: "1. Na gumach judo (kołnierz+rękaw): 4x15 wejść w trójkąt.\n2. Z Tatą na macie: Kombinacja Kouchi-gari ➔ Uchi-mata (3x10)." },
-      { name: "⚡ O-uchi-gari (Duże wewnętrzne podcięcie)", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "0itJFhV9pDQ", ytDirect: "https://www.youtube.com/watch?v=0itJFhV9pDQ", tip: "Standard Kodokan: Podejdź krokiem dostawnym, dociśnij rywala na pięty i wytnij nogę po półkolu.", drills: "1. Rysowanie półksiężyca dużym palcem stopy na macie (3x15)." },
-      { name: "💥 Ippon-seoi-nage (Rzut przez plecy jednorącz)", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "twdcGf2_3wk", ytDirect: "https://www.youtube.com/watch?v=twdcGf2_3wk", tip: "Standard Kodokan: Wbij łokieć głęboko pod pachę rywala i ugnij kolana poniżej jego pasa.", drills: "1. Szybkie obroty na gumach z głębokim przysiadem (3x15)." },
-      { name: "🌪️ Harai-goshi (Zagarnięcie biodrem – Zielony Pas 3 Kyu)", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "qTo8HlAAkOo", ytDirect: "https://www.youtube.com/watch?v=qTo8HlAAkOo", tip: "Standard Kodokan: Silne dociągnięcie do klatki i wymach nogą po zewnętrznej stronie nogi rywala.", drills: "1. Wejścia na gumach judo z szerokim wymachem nogi (3x12)." }
-    ],
-    pins: [
-      { name: "🔒 Kesa-gatame & Kuzure-kesa-gatame", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "NDaQuJOFBYk", ytDirect: "https://www.youtube.com/watch?v=NDaQuJOFBYk", tip: "Kontrola łokcia pod pachą, nogi szeroko jak cyrkiel, głowa nisko!", drills: "1. Szybkie zmiany nóg 'wycieraczki' na macie (3x20s)." },
-      { name: "🔒 Yoko-shiho-gatame & Kami-shiho-gatame", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "TT7XLUcM3Jg", ytDirect: "https://www.youtube.com/watch?v=TT7XLUcM3Jg", tip: "Kolana wciśnięte ciasno przy boku i barku rywala.", drills: "1. Przechodzenie wokół Taty między 4 trzymaniami (3x45s)." }
-    ],
-    turnovers: [
-      { name: "🔄 Obracanie 'Żółwia' do trzymania", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "NDaQuJOFBYk", ytDirect: "https://www.youtube.com/results?search_query=Kodokan+Ne-waza+turnover+turtle", tip: "Zabierz rywalowi podparcie na łokciu i przewróć go prosto w trzymanie!", drills: "1. Tata klęczy w żółwiu na macie – 8 przewrotów na czas." }
-    ],
-    escapes: [
-      { name: "🛡️ Wyjście z Kesa-gatame: Most (Upa) + Krewetka (Ebi)", kdkPage: "https://kdkjudo.org/en/techniques/", ytEmbedId: "NDaQuJOFBYk", ytDirect: "https://www.youtube.com/results?search_query=Kesa+gatame+escape+Kodokan", tip: "Łokcie do żeber ➔ wysoki Most (Upa) ➔ Krewetka (Ebi) i włożenie kolana!", drills: "1. 5 rund x 15 sekund z Tatą na macie domowej." }
-    ]
-  };
-
-  function populateTechSelector() {
-    const cat = document.getElementById('techCategorySelect').value;
-    const sel = document.getElementById('techItemSelect');
-    sel.innerHTML = '';
-    KODOKAN_TECHS[cat].forEach((t, i) => {
-      const o = document.createElement('option');
-      o.value = i; o.innerText = t.name;
-      sel.appendChild(o);
-    });
-    renderTechDetailCard();
-  }
-
-  function renderTechDetailCard() {
-    const cat = document.getElementById('techCategorySelect').value;
-    const idx = document.getElementById('techItemSelect').value || 0;
-    const t = KODOKAN_TECHS[cat][idx];
-    document.getElementById('techDetailContainer').innerHTML = `
-      <h2>${t.name}</h2>
-      <div style="background:rgba(250,204,21,0.1); padding:10px; border-left:4px solid var(--neon-gold); border-radius:8px; margin-bottom:10px; font-size:0.84rem;">
-        <strong>💡 Instrukcja Szkoły Kodokan (Tokio):</strong><br>${t.tip}
-      </div>
-      <div class="quest-steps" style="margin-bottom:12px;"><strong>🏠 Zadanie domowe dla Tymona:</strong>\n${t.drills}</div>
-      <div style="margin-bottom:12px; border-radius:12px; overflow:hidden; border:1px solid var(--neon-blue); background:#000;">
-        <iframe width="100%" height="240" src="https://www.youtube.com/embed/${t.ytEmbedId}" title="Kodokan Official Video" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Kodokan – ${t.name}: ${t.drills.replace(/\n/g, ' ')}')">
-          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia)
-        </button>
-        <a href="${t.ytDirect}" target="_blank" class="btn btn-blue" style="text-decoration:none;">▶️ Otwórz Film na YouTube</a>
-        <a href="${t.kdkPage}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Oficjalna Strona kdkjudo.org</a>
-      </div>
-    `;
   }
 
   function toggleConfigModal() {
@@ -1287,7 +1673,7 @@
     const apiKey = localStorage.getItem('TYMON_SAFE_GEMINI_KEY');
     out.innerText = "⏳ AI Sensei analizuje walkę...";
 
-    const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (koronny rzut Uchi-mata, w domu ma gumy z kołnierzem i rękawem, kółko na brzuch, paraletki, hantelki i Tatę na macie). Odpowiedz po polsku, konkretnie: " + q }];
+    const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (koronny rzut Uchi-mata, w domu ma gumy z kołnierzem i rękawem, kółko na brzuch, paraletki, hantelki i Tatę na macie). Odpowiedz po polsku, prostym językiem (gdzie stopy, gdzie ręce, jak szybko): " + q }];
     const vid = document.getElementById('fightVideoPlayer');
     if (vid && vid.videoWidth > 0) {
       const c = document.createElement('canvas');
@@ -1297,7 +1683,7 @@
     }
 
     if (!apiKey) {
-      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. Przed Uchi-matą zrób podcięcie Kouchi-gari.\n2. Ciągnij rękaw na wysokość ucha.\n3. W parterze: Łokcie do żeber ➔ Most (Upa) ➔ Krewetka (Ebi).";
+      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. GDZIE STOPY: Zaczep prawą stopą piętę rywala, a potem wskocz w trójkąt.\n2. GDZIE RĘCE: Lewa ręka ciągnie rękaw na wysokość ucha.\n3. PARTER: Łokcie do żeber ➔ Most (Upa) ➔ Krewetka (Ebi).";
       return;
     }
 
