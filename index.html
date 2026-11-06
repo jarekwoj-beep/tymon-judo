@@ -6,12 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v7.1</title>
+  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v8.0</title>
   <style>
     :root {
-      --bg-deep: #070b19;
+      --bg-deep: #060914;
       --bg-card: #111827;
-      --bg-panel: #1f2937;
+      --bg-panel: #1e293b;
       --neon-blue: #00f0ff;
       --neon-gold: #facc15;
       --neon-orange: #f97316;
@@ -25,10 +25,10 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
     body {
       background-color: var(--bg-deep);
-      background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #070b19 75%);
+      background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #060914 75%);
       color: var(--text-light);
       line-height: 1.45;
-      padding-bottom: 85px;
+      padding-bottom: 90px;
       overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
     }
@@ -38,71 +38,66 @@
       pointer-events: none; z-index: 9999;
     }
 
+    /* GÓRNY PASEK HUD GRY */
     header.game-hud {
       background: linear-gradient(90deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
       border-bottom: 3px solid var(--neon-gold);
-      padding: 12px 16px;
+      padding: 10px 14px;
       position: sticky; top: 0; z-index: 1000;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
       box-shadow: 0 4px 20px rgba(250, 204, 21, 0.25);
     }
-    .hud-brand { display: flex; align-items: center; gap: 12px; }
+    .hud-brand { display: flex; align-items: center; gap: 10px; }
     .kodokan-crest {
-      width: 42px; height: 42px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       background: #fff; border: 4px solid var(--neon-red);
       display: flex; align-items: center; justify-content: center;
-      color: var(--neon-red); font-weight: 900; font-size: 19px;
+      color: var(--neon-red); font-weight: 900; font-size: 18px;
       box-shadow: 0 0 10px var(--neon-red);
     }
     .hud-title h1 {
-      font-size: 1.2rem; font-weight: 900; letter-spacing: 0.8px;
+      font-size: 1.15rem; font-weight: 900; letter-spacing: 0.8px;
       background: linear-gradient(90deg, #fff, var(--neon-gold), var(--neon-orange));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hud-title span { font-size: 0.76rem; color: var(--neon-blue); font-weight: 700; display: block; }
+    .hud-title span { font-size: 0.74rem; color: var(--neon-blue); font-weight: 700; display: block; }
     .lvl-pill {
       background: linear-gradient(135deg, var(--neon-orange), var(--neon-red));
-      color: #fff; padding: 6px 14px; border-radius: 99px; font-weight: 900; font-size: 0.88rem;
+      color: #fff; padding: 6px 12px; border-radius: 99px; font-weight: 900; font-size: 0.85rem;
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
     }
 
+    /* GŁÓWNA KARTA BOHATERA + AUTO-ANIME STUDIO CANVAS */
     .hero-banner { max-width: 1120px; margin: 14px auto; padding: 0 14px; }
     .hero-card {
       background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
-      border: 2px solid var(--neon-gold); border-radius: 18px; padding: 18px;
-      display: grid; grid-template-columns: 250px 1fr; gap: 20px;
+      border: 2px solid var(--neon-gold); border-radius: 18px; padding: 16px;
+      display: grid; grid-template-columns: 255px 1fr; gap: 18px;
       box-shadow: 0 0 30px rgba(250, 204, 21, 0.18);
     }
-    @media (max-width: 740px) { .hero-card { grid-template-columns: 1fr; text-align: center; } }
+    @media (max-width: 760px) { .hero-card { grid-template-columns: 1fr; text-align: center; } }
 
-    .holo-card-wrap { perspective: 900px; width: 240px; margin: 0 auto; }
+    .holo-card-wrap { perspective: 900px; width: 245px; margin: 0 auto; }
     .avatar-stage {
-      position: relative; width: 240px; height: 310px;
+      position: relative; width: 245px; height: 315px;
       border-radius: 16px; overflow: hidden;
       border: 3px solid var(--neon-blue);
       background: radial-gradient(circle at 50% 35%, #1e3a8a 0%, #090d16 100%);
       box-shadow: 0 0 25px var(--neon-blue), inset 0 0 20px var(--neon-gold);
       transition: transform 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      display: flex; align-items: center; justify-content: center;
-      user-select: none;
     }
-    .avatar-stage.form-thunder { border-color: var(--neon-blue); box-shadow: 0 0 28px var(--neon-blue), inset 0 0 18px var(--neon-gold); }
-    .avatar-stage.form-fire { border-color: var(--neon-orange); box-shadow: 0 0 32px var(--neon-red), inset 0 0 22px var(--neon-orange); }
-    .avatar-stage.form-ultra { border-color: var(--neon-purple); box-shadow: 0 0 32px var(--neon-purple), inset 0 0 22px var(--neon-blue); }
+    .avatar-stage.form-thunder { border-color: var(--neon-blue); box-shadow: 0 0 28px var(--neon-blue); }
+    .avatar-stage.form-fire { border-color: var(--neon-orange); box-shadow: 0 0 32px var(--neon-red); }
+    .avatar-stage.form-ultra { border-color: var(--neon-purple); box-shadow: 0 0 32px var(--neon-purple); }
 
-    #heroPhotoEl {
-      width: 100%; height: 100%; object-fit: cover; object-position: center top;
-      display: none; z-index: 1;
+    /* Główny Canvas przerabiający zdjęcie Tymona na Anime/Komiks + Pioruny */
+    #animeStudioCanvas {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
     }
-    .filter-thunder { filter: contrast(1.12) saturate(1.2) brightness(1.03); }
-    .filter-fire { filter: contrast(1.18) saturate(1.35) sepia(0.12); }
-    .filter-ultra { filter: contrast(1.15) saturate(1.25) hue-rotate(-8deg); }
-
     #heroVfxCanvas {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 3;
     }
-
     .holo-shine {
       position: absolute; inset: 0;
       background: linear-gradient(125deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.22) 48%, rgba(0,240,255,0.18) 52%, rgba(255,255,255,0) 70%);
@@ -113,17 +108,6 @@
     @keyframes holoSweep {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
-    }
-
-    .upload-prompt-overlay {
-      position: relative; z-index: 2; padding: 18px; text-align: center;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-    }
-    .upload-prompt-overlay .crest-big {
-      width: 68px; height: 68px; border-radius: 50%;
-      background: rgba(250,204,21,0.15); border: 2px dashed var(--neon-gold);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; color: var(--neon-gold);
     }
 
     .comic-nameplate {
@@ -141,46 +125,47 @@
       box-shadow: 2px 2px 0 #000;
     }
 
-    .card-slots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+    .card-slots { display: flex; gap: 5px; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
     .slot-btn {
       background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2);
-      color: var(--text-light); padding: 5px 10px; border-radius: 8px;
-      font-size: 0.75rem; font-weight: 800; cursor: pointer;
+      color: var(--text-light); padding: 5px 9px; border-radius: 8px;
+      font-size: 0.73rem; font-weight: 800; cursor: pointer;
     }
     .slot-btn.active { border-color: var(--neon-gold); background: rgba(250,204,21,0.2); color: var(--neon-gold); }
 
-    .exp-bar-wrap {
-      background: #090d16; border: 1px solid rgba(0,240,255,0.35);
-      height: 16px; border-radius: 99px; overflow: hidden; margin: 8px 0;
+    /* PASKI CELÓW DO RANGI MASTER (MASTERY TRACKER) */
+    .mastery-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin-top: 12px;
     }
-    .exp-bar-fill {
-      height: 100%; width: 40%;
-      background: linear-gradient(90deg, var(--neon-blue), var(--neon-gold), var(--neon-orange));
+    .mastery-card {
+      background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.28);
+      border-radius: 12px; padding: 11px; position: relative;
+    }
+    .mastery-card h4 { font-size: 0.86rem; color: var(--neon-gold); margin-bottom: 4px; display: flex; justify-content: space-between; }
+    .mastery-bar-bg {
+      width: 100%; height: 12px; background: #090d16; border-radius: 99px;
+      overflow: hidden; border: 1px solid rgba(255,255,255,0.15); margin: 5px 0;
+    }
+    .mastery-bar-fill {
+      height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
       transition: width 0.35s ease;
     }
-    .stat-boxes {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); gap: 8px; margin-top: 10px;
-    }
-    .stat-box {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      padding: 7px 10px; border-radius: 10px;
-    }
-    .stat-box span { font-size: 0.72rem; color: var(--text-dim); display: block; }
-    .stat-box strong { font-size: 0.96rem; color: var(--neon-gold); }
+    .mastery-sub { font-size: 0.74rem; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; }
 
+    /* MENU ZAKŁADEK */
     nav.game-tabs {
       display: flex; overflow-x: auto; background: var(--bg-card);
       border-bottom: 2px solid rgba(0, 240, 255, 0.25);
-      padding: 0 8px; gap: 4px; position: sticky; top: 67px; z-index: 900;
+      padding: 0 8px; gap: 4px; position: sticky; top: 64px; z-index: 900;
     }
     nav.game-tabs button {
       background: transparent; border: none; color: var(--text-dim);
-      padding: 12px 13px; font-weight: 800; font-size: 0.85rem;
+      padding: 12px 13px; font-weight: 800; font-size: 0.84rem;
       cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent;
     }
     nav.game-tabs button.active {
       color: var(--neon-gold); border-bottom-color: var(--neon-gold);
-      background: rgba(250, 204, 21, 0.07);
+      background: rgba(250, 204, 21, 0.08);
     }
 
     .container { max-width: 1120px; margin: 16px auto; padding: 0 14px; }
@@ -193,10 +178,9 @@
       border-radius: 14px; padding: 16px; margin-bottom: 16px;
     }
     .card h2 {
-      font-size: 1.08rem; color: var(--neon-gold); margin-bottom: 10px;
+      font-size: 1.06rem; color: var(--neon-gold); margin-bottom: 10px;
       display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
     }
-    .card h3 { font-size: 0.95rem; color: var(--neon-blue); margin: 10px 0 6px; }
 
     input, select, textarea {
       width: 100%; padding: 9px 11px; border-radius: 9px;
@@ -205,8 +189,8 @@
     }
     .btn {
       background: linear-gradient(135deg, var(--neon-orange), var(--neon-red));
-      color: #fff; border: none; padding: 9px 14px; border-radius: 9px;
-      font-weight: 800; font-size: 0.85rem; cursor: pointer;
+      color: #fff; border: none; padding: 9px 13px; border-radius: 9px;
+      font-weight: 800; font-size: 0.83rem; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     }
     .btn-blue { background: linear-gradient(135deg, #0284c7, #2563eb); }
@@ -214,27 +198,37 @@
     .btn-gold { background: linear-gradient(135deg, #eab308, #f59e0b); color: #000; }
     .btn-ghost { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
 
+    /* WIZUALNE KARTY ĆWICZEŃ Z RYSUNKIEM TECHNICZNYM KROK PO KROKU */
     .quest-item {
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-      border-left: 5px solid var(--neon-gold); border-radius: 10px;
-      padding: 12px; margin-bottom: 10px;
+      border-left: 5px solid var(--neon-gold); border-radius: 12px;
+      padding: 13px; margin-bottom: 12px;
     }
-    .quest-item.completed { border-left-color: var(--neon-green); opacity: 0.65; }
+    .quest-item.completed { border-left-color: var(--neon-green); opacity: 0.68; }
+    .visual-guide-grid {
+      display: grid; grid-template-columns: 115px 1fr; gap: 12px; align-items: center; margin-top: 8px;
+    }
+    @media (max-width: 500px) { .visual-guide-grid { grid-template-columns: 1fr; } }
+    .diagram-box {
+      width: 115px; height: 115px; background: #090d16;
+      border: 1px solid var(--neon-blue); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto;
+    }
     .quest-steps {
-      margin-top: 6px; padding: 9px; background: rgba(0,0,0,0.3);
-      border-radius: 8px; font-size: 0.84rem; color: #cbd5e1; white-space: pre-line;
+      padding: 9px; background: rgba(0,0,0,0.35);
+      border-radius: 8px; font-size: 0.83rem; color: #cbd5e1; white-space: pre-line;
     }
     .dad-badge {
       display: inline-block; background: rgba(0, 240, 255, 0.14);
       color: var(--neon-blue); border: 1px solid var(--neon-blue);
-      padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; margin-top: 6px;
+      padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; margin-top: 6px;
     }
 
     .dojo-timer {
-      font-size: 2.9rem; font-weight: 900; text-align: center;
+      font-size: 2.8rem; font-weight: 900; text-align: center;
       color: var(--neon-gold); margin: 6px 0; font-variant-numeric: tabular-nums;
     }
-    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin-top: 8px; }
     th, td { padding: 8px 6px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
     th { color: var(--neon-gold); font-size: 0.74rem; text-transform: uppercase; }
     .macro-bar-bg { width: 100%; height: 9px; background: var(--bg-panel); border-radius: 99px; overflow: hidden; margin-top: 3px; }
@@ -245,129 +239,131 @@
 
 <canvas id="confettiCanvas"></canvas>
 
+<!-- GÓRNY PASEK HUD -->
 <header class="game-hud">
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
       <h1>TYMON: IPPON HERO</h1>
-      <span id="rankTitleDisplay">Ranga: Błyskawica Uchi-maty (4 Kyu • Pomarańczowy Pas)</span>
+      <span id="rankTitleDisplay">Ranga: Błyskawica Uchi-maty (4 Kyu ➔ Cel: 3 Kyu)</span>
     </div>
   </div>
-  <div style="display:flex; gap:8px; align-items:center;">
+  <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
     <div class="lvl-pill">⚡ LVL <span id="lvlNumber">3</span> (<span id="expNumber">340</span> EXP)</div>
-    <button class="btn btn-ghost" onclick="toggleApiSettings()">⚙️ Klucz AI</button>
+    <button class="btn btn-blue" onclick="syncWithCloud('save')" id="cloudSyncBtn" title="Zapisz postępy w Chmurze Google">☁️ Zapisz</button>
+    <button class="btn btn-ghost" onclick="toggleConfigModal()">⚙️ Chmura & AI</button>
   </div>
 </header>
 
+<!-- MODAL KONFIGURACJI CHMURY GOOGLE APPS SCRIPT, BACKUPU I KLUCZA GEMINI API -->
+<div class="container" id="configModal" style="display:none;">
+  <div class="card" style="border:2px solid var(--neon-gold);">
+    <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
+    <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:10px;">
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Po wklejeniu linku postępy Tymona synchronizują się z Twoim Arkuszem Google – nawet jak Tymon wyczyści pamięć iPhone'a albo otworzysz grę na swoim Pixelu 10, nic nie zginie!
+    </p>
+    <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+      <button class="btn btn-green" onclick="saveGasUrl()">💾 Zapisz adres Chmury</button>
+      <button class="btn btn-blue" onclick="syncWithCloud('load')">📥 Pobierz postępy z Chmury</button>
+      <button class="btn btn-gold" onclick="exportSaveFile()">📦 Pobierz plik kopii zapasowej (.json)</button>
+      <label class="btn btn-ghost" style="cursor:pointer; margin:0;">
+        📂 Wczytaj plik kopii
+        <input type="file" accept=".json" style="display:none;" onchange="importSaveFile(event)">
+      </label>
+    </div>
+
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
+    <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:8px;">
+      <strong>2. Bezpieczny Klucz Gemini API:</strong> Zapisywany wyłącznie lokalnie w urządzeniu (`localStorage`). Chroń swój klucz i nigdy nie udostępniaj go publicznie!
+    </p>
+    <input type="password" id="apiKeyField" placeholder="Wklej klucz Gemini API (AIzaSy...)">
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-green" onclick="saveApiKeySafe()">💾 Zapisz klucz AI</button>
+      <button class="btn btn-ghost" onclick="removeApiKeySafe()">🗑️ Usuń klucz</button>
+    </div>
+    <p id="configStatusMsg" style="font-size:0.82rem; margin-top:8px; color:var(--neon-green);"></p>
+  </div>
+</div>
+
+<!-- KARTA BOHATERA + AUTO-ANIME STUDIO + PASKI OPANOWANIA DO RANGI MASTER -->
 <section class="hero-banner">
   <div class="hero-card">
     <div class="holo-card-wrap">
       <div id="avatarStage" class="avatar-stage form-thunder" onmousemove="tiltCard(event)" onmouseleave="resetTilt()" ontouchmove="tiltCardTouch(event)" ontouchend="resetTilt()">
         <div class="comic-nameplate">TYMON</div>
-        <div class="comic-quirk" id="quirkBadge">IPPON HERO • UCHI-MATA</div>
+        <div class="comic-quirk" id="quirkBadge">AUTO-ANIME • UCHI-MATA</div>
         <div class="holo-shine"></div>
 
-        <img id="heroPhotoEl" class="filter-thunder" src="tymon.jpg" onerror="showUploadOverlay()" onload="hideUploadOverlay()" alt="Tymon Ippon Hero">
-        <canvas id="heroVfxCanvas" width="240" height="310"></canvas>
-
-        <div id="uploadPromptOverlay" class="upload-prompt-overlay">
-          <div class="crest-big">📸</div>
-          <strong style="font-size:0.92rem; color:var(--neon-gold);">AKTYWUJ KARTĘ ZE ZDJĘCIEM TYMONA!</strong>
-          <p style="font-size:0.76rem; color:var(--text-dim);">
-            Kliknij poniżej i wybierz wygenerowaną Kartę ze zdjęciem Tymona lub fotkę z turnieju – zapisze się w pamięci iPhone'a z efektami błyskawic 3D!
-          </p>
-          <label class="btn btn-gold" style="cursor:pointer; width:100%;">
-            ⚡ Wybierz Zdjęcie Tymona
-            <input type="file" accept="image/*" style="display:none;" onchange="uploadHeroPhoto(event)">
-          </label>
-        </div>
+        <!-- Canvas renderujący zdjęcie Tymona z automatycznym filtrem Komiks/Anime -->
+        <canvas id="animeStudioCanvas" width="245" height="315"></canvas>
+        <!-- Canvas z błyskawicami i cząsteczkami na żywo -->
+        <canvas id="heroVfxCanvas" width="245" height="315"></canvas>
       </div>
 
       <div class="card-slots">
-        <button class="slot-btn active" id="slotBtn1" onclick="selectCardSlot(1)">Karta #1</button>
-        <button class="slot-btn" id="slotBtn2" onclick="selectCardSlot(2)">Karta #2</button>
-        <button class="slot-btn" id="slotBtn3" onclick="selectCardSlot(3)">Karta #3</button>
-        <button class="slot-btn" id="slotBtn4" onclick="selectCardSlot(4)">Karta #4</button>
+        <button class="slot-btn active" id="slotBtn1" onclick="selectCardSlot(1)">Slot #1</button>
+        <button class="slot-btn" id="slotBtn2" onclick="selectCardSlot(2)">Slot #2</button>
+        <button class="slot-btn" id="slotBtn3" onclick="selectCardSlot(3)">Slot #3</button>
+        <button class="slot-btn" id="slotBtn4" onclick="selectCardSlot(4)">Slot #4</button>
       </div>
     </div>
 
     <div style="display:flex; flex-direction:column; justify-content:space-between;">
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <h2 style="font-size:1.3rem; color:#fff; margin:0;">⚡ BOHATER: <span style="color:var(--neon-gold);">TYMON</span> (PLUS ULTRA!)</h2>
-          <span style="font-size:0.78rem; background:rgba(0,240,255,0.15); color:var(--neon-blue); padding:4px 10px; border-radius:99px; font-weight:800;">
-            Pas: 4 Kyu ➔ Cel: 3 Kyu (Zielony Pas) i wyżej!
-          </span>
-        </div>
-
-        <div class="exp-bar-wrap">
-          <div id="expBarFill" class="exp-bar-fill"></div>
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:0.76rem; color:var(--text-dim);">
-          <span>Postęp do kolejnego Levelu (Skrzynka Mistrza co 100 EXP)</span>
-          <span id="expToNextText">40 / 100 EXP</span>
-        </div>
-
-        <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-          <select id="heroFormSelect" onchange="changeHeroForm()" style="width:auto; margin:0; font-weight:800;">
-            <option value="thunder">⚡ Forma 1: Błyskawica Kodokanu (Pioruny 60 FPS)</option>
-            <option value="fire">🔥 Forma 2: Ogniste Tornado Uchi-mata (Płomienie)</option>
-            <option value="ultra">🌌 Forma 3: Ultra Instinct Sensei (Aura Mocy)</option>
-          </select>
-          <label class="btn btn-blue" style="margin:0; cursor:pointer;">
-            📸 Zmień / Dodaj Zdjęcie do Slotu #<span id="activeSlotLabel">1</span>
-            <input type="file" accept="image/*" style="display:none;" onchange="uploadHeroPhoto(event)">
+          <h2 style="font-size:1.25rem; color:#fff; margin:0;">⚡ BOHATER: <span style="color:var(--neon-gold);">TYMON</span> — DROGA DO MASTERA!</h2>
+          <label class="btn btn-gold" style="margin:0; cursor:pointer;">
+            📸 Wgraj Zdjęcie z Telefonu (Przerób na Anime!)
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadAndConvertAnime(event)">
           </label>
         </div>
-      </div>
 
-      <div class="stat-boxes">
-        <div class="stat-box"><span>🔥 KORONNY RZUT</span><strong>Uchi-mata (86)</strong></div>
-        <div class="stat-box"><span>✊ CHWYT (GUMY)</span><strong>Kumi-kata (80)</strong></div>
-        <div class="stat-box"><span>🛡️ CORE & PARTER</span><strong>Ab-Wheel & Ebi (75)</strong></div>
-        <div class="stat-box"><span>🔋 BATERIA MOCY</span><strong id="heroBatteryText">100% Gaz</strong></div>
+        <!-- Przełącznik Stylu Filtra Anime i Formy Mocy -->
+        <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+          <select id="animeFilterMode" onchange="redrawAnimePhoto()" style="width:auto; margin:0; font-weight:800;">
+            <option value="mha_comic">🎨 Filtr: Komiks Anime (Cel-Shading + Kontur + Speedlines)</option>
+            <option value="neon_power">⚡ Filtr: Cyber-Power (Wysoki kontrast + Złota poświata)</option>
+            <option value="original_hd">📷 Filtr: Oryginalne Zdjęcie HD + Pioruny</option>
+          </select>
+          <select id="heroFormSelect" onchange="changeHeroForm()" style="width:auto; margin:0; font-weight:800;">
+            <option value="thunder">⚡ Aura: Błyskawica Kodokanu</option>
+            <option value="fire">🔥 Aura: Ogniste Tornado Uchi-mata</option>
+            <option value="ultra">🌌 Aura: Ultra Instinct Sensei</option>
+          </select>
+        </div>
+
+        <!-- CZYTELNE PASKI CELÓW DO RANGI MASTER (ILE BRAKUJE DO CELU!) -->
+        <div class="mastery-grid" id="masteryGoalsContainer"></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="container" id="apiConfigModal" style="display:none;">
-  <div class="card" style="border:2px solid var(--neon-gold);">
-    <h2>🔐 Bezpieczna Konfiguracja Klucza Gemini API <button class="btn btn-ghost" onclick="toggleApiSettings()">Zamknij</button></h2>
-    <p style="font-size:0.84rem; color:var(--text-dim); margin-bottom:10px;">
-      Klucz API nigdy nie jest wpisany na stałe w kodzie aplikacji. Zapisuje się wyłącznie lokalnie w konfiguracji Twojej przeglądarki (`localStorage`). Chroń swój klucz i nigdy nie udostępniaj go publicznie! Bez klucza aplikacja działa w 100% w trybie offline.
-    </p>
-    <input type="password" id="apiKeyField" placeholder="Wklej swój klucz Gemini API (AIzaSy...)">
-    <div style="display:flex; gap:10px;">
-      <button class="btn btn-green" onclick="saveApiKeySafe()">💾 Zapisz klucz lokalnie</button>
-      <button class="btn btn-ghost" onclick="removeApiKeySafe()">🗑️ Usuń klucz</button>
-    </div>
-    <p id="apiKeyStatus" style="font-size:0.82rem; margin-top:8px; color:var(--neon-green);"></p>
-  </div>
-</div>
-
+<!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
-  <button class="active" onclick="switchTab('pane-daily', this)">📅 Misje Dnia (Pon-Sob)</button>
-  <button onclick="switchTab('pane-kodokan', this)">🥋 Kuźnia Techniki (Kodokan)</button>
-  <button onclick="switchTab('pane-belts', this)">🎯 Ćwicz do Pasa (Egzamin Kyu)</button>
+  <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Instrukcje Krok po Kroku)</button>
+  <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Oficjalne Filmy & Techniki)</button>
+  <button onclick="switchTab('pane-belts', this)">🎯 Cele & Pas 3 Kyu</button>
   <button onclick="switchTab('pane-video', this)">🎥 Analiza Walki & Wideo</button>
   <button onclick="switchTab('pane-fuel', this)">⚡ Ładowarka Mocy Judoki</button>
 </nav>
 
 <div class="container">
 
+  <!-- ZAKŁADKA 1: TRENING DNIA Z WIZUALNYMI INSTRUKCJAMI KROK PO KROKU -->
   <div id="pane-daily" class="tab-pane active">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>📅 Plan Treningowy Tymona</span>
-          <span style="font-size:0.74rem; color:var(--neon-blue);">Gumy Judo • Gumy Oporowe • Kółko na Brzuch • Paraletki • Hantelki • Tata</span>
+          <span>📅 Dzisiejsze Misje z Wizualną Instrukcją</span>
+          <span style="font-size:0.74rem; color:var(--neon-blue);">Gumy Judo • Gumy Oporowe • Kółko • Paraletki • Hantelki • Tata</span>
         </h2>
         <select id="daySelect" onchange="renderDailyQuests()">
-          <option value="1">Poniedziałek – Dzień Klubu (Lekka aktywacja + Tip na Randori)</option>
+          <option value="1">Poniedziałek – Dzień Klubu (Lekka aktywacja stóp + Cel na Randori)</option>
           <option value="2">Wtorek – Domowa Kuźnia: Uchi-mata na Gumach + Kółko na Brzuch + Paraletki</option>
           <option value="3">Środa – Dzień Klubu (Lekki Szlif Obrony i Chwytu)</option>
-          <option value="4">Czwartek – Domowa Kuźnia: Ucieczki z Parteru z Tatą + Gumy Oporowe + Hantelki</option>
+          <option value="4">Czwartek – Domowa Kuźnia: Wyjścia z Parteru z Tatą + Gumy Oporowe + Hantelki</option>
           <option value="5">Piątek – Dzień Klubu (Szybkie Stopy & Luz przed Walkami)</option>
           <option value="6">Sobota – Boss Fight! (Obwód Mistrza + Prezentacja przed Tatą)</option>
           <option value="0">Niedziela – Yasumi (Regeneracja Bohatera)</option>
@@ -379,25 +375,22 @@
 
       <div>
         <div class="card" style="border: 2px solid var(--neon-gold);">
-          <h2>🏆 Wyzwanie Dnia: Zaprezentuj przed Tatą (+100 EXP!)</h2>
-          <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:10px;">
-            Pokaż Tacie na macie domowej dzisiejszą technikę. Po zatwierdzeniu przez Tatę wybucha deszcz konfetti i zgarniasz +100 EXP!
-          </p>
+          <h2>🏆 Pokaz Mistrza przed Tatą (+100 EXP & +1 Krok do Mastera!)</h2>
           <div style="background:rgba(250,204,21,0.1); padding:11px; border-radius:9px; margin-bottom:12px; font-size:0.88rem;">
-            <strong>🎯 Dzisiejszy pokaz dla Taty:</strong><br>
+            <strong>🎯 Zadanie pokazowe na dziś:</strong><br>
             <span id="bossChallengeText"></span>
           </div>
           <button class="btn btn-gold" style="width:100%; padding:13px; font-size:0.95rem;" onclick="completeBossPresentation()">
-            🔥 TATA ZATWIERDZA POKAZ! ODBIERZ +100 EXP (PLUS ULTRA!)
+            🔥 TATA ZATWIERDZA POKAZ! (+100 EXP & +1 DO MASTERA!)
           </button>
         </div>
 
         <div class="card">
           <h2>⏱️ Zegar Dojo (Hajime / Mate Timer)</h2>
-          <div class="dojo-timer" id="dojoTimerDisplay">00:20</div>
+          <div class="dojo-timer" id="dojoTimerDisplay">00:25</div>
           <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:10px;">
-            <button class="btn btn-ghost" onclick="setDojoTimer(15)">15s (Ucieczka z trzymania)</button>
-            <button class="btn btn-ghost" onclick="setDojoTimer(25)">25s (Szybkie Uchi-komi)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(15)">15s (Ucieczka z Kesa-gatame)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(25)">25s (Uchi-komi na gumach)</button>
             <button class="btn btn-ghost" onclick="setDojoTimer(180)">3:00 (Walka Turniejowa)</button>
           </div>
           <div style="display:flex; gap:8px; justify-content:center;">
@@ -410,21 +403,25 @@
     </div>
   </div>
 
+  <!-- ZAKŁADKA 2: OFICJALNA SZKOŁA KODOKAN (KDKJUDO.ORG + BEZPOŚREDNIE FILMY) -->
   <div id="pane-kodokan" class="tab-pane">
     <div class="card">
-      <h2>🥋 Kuźnia Techniki Kodokan – Wybierz element do szlifu!</h2>
+      <h2>🥋 Oficjalna Baza Kodokan Judo Institute (Tokio) – Wideo & Instrukcje</h2>
+      <p style="font-size:0.84rem; color:var(--text-dim); margin-bottom:10px;">
+        Wybierz kategorię i technikę ze szkoły założyciela judo Jigoro Kano (`kdkjudo.org/en/techniques/`), obejrzyj oficjalny pokaz mistrzów Kodokanu i dodaj ćwiczenie do swoich celów!
+      </p>
       <div class="grid-2">
         <div>
-          <label>1. Kategoria (wg Kodokan Judo Institute):</label>
+          <label>1. Kategoria Kodokan:</label>
           <select id="techCategorySelect" onchange="populateTechSelector()">
-            <option value="throws">🔥 Rzuty w stójce (Nage-waza – Uchi-mata i kombinacje)</option>
-            <option value="pins">🔒 Trzymania w parterze (Osaekomi-waza)</option>
-            <option value="turnovers">🔄 Atak w parterze (Obracanie "żółwia" Taty)</option>
-            <option value="escapes">🛡️ Wyjścia z parteru i Obrona w stójce</option>
+            <option value="throws">🔥 Nage-waza (Rzuty w stójce – Uchi-mata i kombinacje)</option>
+            <option value="pins">🔒 Osaekomi-waza (Trzymania w parterze)</option>
+            <option value="turnovers">🔄 Ne-waza Atak (Obracanie "żółwia" do trzymania)</option>
+            <option value="escapes">🛡️ Ne-waza Obrona (Wyjścia z trzymań i Obrona w stójce)</option>
           </select>
         </div>
         <div>
-          <label>2. Wybierz technikę:</label>
+          <label>2. Wybierz technikę Kodokanu:</label>
           <select id="techItemSelect" onchange="renderTechDetailCard()"></select>
         </div>
       </div>
@@ -432,25 +429,38 @@
     <div id="techDetailContainer" class="card"></div>
   </div>
 
+  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA -->
   <div id="pane-belts" class="tab-pane">
-    <div class="card">
-      <h2>🎯 Akademia Pasów – Przygotowanie do Egzaminu Kyu</h2>
-      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:10px;">
-        Wybierz pas, zobacz szczegółowe instrukcje i jednym kliknięciem wstrzyknij wybraną technikę do swojego Planu Tygodnia!
-      </p>
-      <select id="beltTargetSelect" onchange="renderBeltRequirements()">
-        <option value="3kyu">🟢 3 Kyu – Zielony Pas (Kolejny cel Tymona!)</option>
-        <option value="4kyu">🟠 4 Kyu – Pomarańczowy Pas (Szlif Mistrzowski)</option>
-        <option value="2kyu">🔵 2 Kyu – Niebieski Pas (Techniki zaawansowane)</option>
-      </select>
-      <div id="beltContentArea"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h2>➕ Dodaj Dodatkowy Cel dla Tymona (Mastery Goal)</h2>
+        <p style="font-size:0.84rem; color:var(--text-dim); margin-bottom:10px;">
+          Oprócz celów z analizy walki w Bochni możesz dodać nowy cel – pojawi się na górze ekranu z własnym paskiem postępu i licznikiem ile brakuje do rangi MASTER!
+        </p>
+        <input type="text" id="customGoalTitle" placeholder="Nazwa celu (np. O-uchi-gari na Master / 100 wyjazdów na kółku)">
+        <input type="number" id="customGoalTarget" value="15" min="3" max="100" placeholder="Ile treningów potrzebnych do Mastera? (np. 15)">
+        <button class="btn btn-green" style="width:100%;" onclick="addCustomMasteryGoal()">
+          🎯 Dodaj Cel do Pasków Mastera na Górze Ekranu
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>🥋 Ćwicz do Pasa (Wymagania Kyu + Wrzucanie do Planu)</h2>
+        <select id="beltTargetSelect" onchange="renderBeltRequirements()">
+          <option value="3kyu">🟢 3 Kyu – Zielony Pas (Główny Cel Tymona!)</option>
+          <option value="4kyu">🟠 4 Kyu – Pomarańczowy Pas (Szlif Mistrzowski)</option>
+          <option value="2kyu">🔵 2 Kyu – Niebieski Pas (Wyprzedzamy rówieśników!)</option>
+        </select>
+        <div id="beltContentArea"></div>
+      </div>
     </div>
   </div>
 
+  <!-- ZAKŁADKA 4: ANALIZA WALKI Z BOCHNI + ODTWARZACZ SLOW-MO & AI SENSEI -->
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>📊 Raport z Walki Tymona (Bochnia) – „Popracujmy nad tym!”</h2>
+        <h2>📊 Wnioski z Walki Tymona (Bochnia) – Fundament Planu Naprawczego</h2>
         <div class="quest-item" style="border-left-color:var(--neon-green);">
           <strong>✅ MOCNA STRONA (0:57–1:05): Bojowy start i wysoki prawy uchwyt</strong>
           <p style="font-size:0.83rem; color:var(--text-dim); margin-top:4px;">
@@ -459,22 +469,22 @@
         </div>
 
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 MISJA NAPRAWCZA #1 (1:12): Uchi-mata z daleka bez wychylenia (Kuzushi)</strong>
+          <strong>🔧 FUNDAMENT NAPRAWCZY #1 (1:12): Uchi-mata z daleka bez wychylenia (Kuzushi)</strong>
           <p style="font-size:0.83rem; color:var(--text-dim); margin:4px 0 8px;">
-            Wejście z za dużej odległości bez wyciągnięcia rękawa (<em>Hikite</em>) i bez wcześniejszego podcięcia.
+            Wejście z za dużej odległości bez wyciągnięcia rękawa (<em>Hikite</em>) i bez wcześniejszego podcięcia <em>Kouchi-gari / O-uchi-gari</em>.
           </p>
-          <button class="btn btn-blue" onclick="injectToWeeklyPlan('Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo (kołnierz+rękaw) – małe podcięcie Kouchi-gari ➔ pociągnięcie rękawa do ucha ➔ głęboka Uchi-mata!')">
-            ⚡ Popracujmy nad tym! (+Dodaj do Planu Dnia i Uchi-maty)
+          <button class="btn btn-blue" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Uchi-maty (Bochnia 1:12): 4x12 na gumach judo (kołnierz+rękaw) – małe podcięcie Kouchi-gari ➔ pociągnięcie rękawa do ucha ➔ głęboka Uchi-mata!')">
+            ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Uchi-maty!)
           </button>
         </div>
 
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 MISJA NAPRAWCZA #2 (1:25–1:42): Wyjście z trzymania Kesa-gatame</strong>
+          <strong>🔧 FUNDAMENT NAPRAWCZY #2 (1:25–1:42): Ucieczka z Kesa-gatame</strong>
           <p style="font-size:0.83rem; color:var(--text-dim); margin:4px 0 8px;">
             Zamiast pchać rywala samymi rękami: łokcie ciasno do żeber, wysoki Most (<em>Upa</em>) przez lewe ramię i natychmiastowa Krewetka (<em>Ebi</em>) z włożeniem kolana.
           </p>
-          <button class="btn btn-blue" onclick="injectToWeeklyPlan('Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Tata trzyma Kesa-gatame, Tymon robi: Łokcie ciasno ➔ Wysoki Most (Upa) ➔ Krewetka (Ebi) ➔ Kolano pod brzuch!')">
-            ⚡ Popracujmy nad tym! (+Dodaj do Planu Dnia)
+          <button class="btn btn-blue" onclick="incrementMastery('newaza', 1); injectToWeeklyPlan('Naprawa Parteru z Tatą (Bochnia 1:27): 5x15 sek na macie – Tata trzyma Kesa-gatame, Tymon robi: Łokcie ciasno ➔ Wysoki Most (Upa) ➔ Krewetka (Ebi) ➔ Kolano pod brzuch!')">
+            ⚡ Ćwicz teraz i dodaj do Planu Dnia (+1 Krok do Mastera Parteru!)
           </button>
         </div>
       </div>
@@ -482,16 +492,16 @@
       <div class="card">
         <h2>🎥 Odtwarzacz Walk Slow-Mo + AI Sensei (Gemini API)</h2>
         <input type="file" accept="video/*" onchange="loadFightVideo(event)">
-        <video id="fightVideoPlayer" controls playsinline style="width:100%; max-height:240px; background:#000; border-radius:10px; margin-bottom:8px;"></video>
+        <video id="fightVideoPlayer" controls playsinline style="width:100%; max-height:230px; background:#000; border-radius:10px; margin-bottom:8px;"></video>
 
         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
           <button class="btn btn-ghost" onclick="setVideoSpeed(0.25)">🐢 0.25x</button>
           <button class="btn btn-ghost" onclick="setVideoSpeed(0.5)">⚡ 0.5x</button>
           <button class="btn btn-ghost" onclick="setVideoSpeed(1.0)">▶️ 1.0x</button>
-          <button class="btn btn-gold" onclick="captureFrameToAvatar()">📸 Ustaw ten kadr na Karcie Tymona!</button>
+          <button class="btn btn-gold" onclick="captureFrameToAnimeCard()">📸 Przerób ten kadr z filmu na Kartę Anime!</button>
         </div>
 
-        <textarea id="aiFightQuestion" rows="2" placeholder="Zadaj pytanie AI Senseiowi o walkę lub technikę (np. Jak poprawić balans w Uchi-macie?)"></textarea>
+        <textarea id="aiFightQuestion" rows="2" placeholder="Zadaj pytanie AI Senseiowi o walkę lub technikę..."></textarea>
         <button class="btn" style="width:100%;" onclick="analyzeFightWithGemini()">
           🤖 Analizuj z AI Senseiem (Gemini API)
         </button>
@@ -502,18 +512,12 @@
     </div>
   </div>
 
+  <!-- ZAKŁADKA 5: ŁADOWARKA MOCY JUDOKI (KALKULATOR PRODUKTÓW DLA 11-LATKA) -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>
-          <span>⚡ Ładowarka Mocy & Kalkulator Produktów</span>
-          <select id="calcProfileMode" onchange="renderMealLog()" style="width:auto; margin:0; font-size:0.78rem;">
-            <option value="tymon">🥋 Tymon (Paliwo Judoki – 2100 kcal)</option>
-            <option value="jerry">🔥 Tryb Redukcji 85kg (2250 kcal / 175g B)</option>
-          </select>
-        </h2>
-
-        <label>1. Wybierz produkt z bazy najpopularniejszych produktów:</label>
+        <h2>⚡ Ładowarka Mocy Judoki (Paliwo na Tatami)</h2>
+        <label>1. Wybierz produkt z bazy najpopularniejszych produktów młodego judoki:</label>
         <select id="calcFoodSelect" onchange="updateFoodPreview()"></select>
 
         <div class="grid-2" style="gap:10px;">
@@ -528,14 +532,14 @@
         </div>
 
         <button class="btn btn-green" style="width:100%; margin-top:4px;" onclick="addMealToLog()">
-          ➕ Doładuj Baterię Mocy (+15 EXP)
+          ➕ Doładuj Baterię Mocy Tymona (+15 EXP)
         </button>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:14px 0;">
-        <h3>➕ Dodaj własny produkt do bazy</h3>
+        <h3>➕ Dodaj własną przekąskę</h3>
         <div class="grid-2" style="gap:8px;">
-          <input type="text" id="newFoodName" placeholder="Nazwa produktu">
-          <input type="number" id="newFoodKcal" placeholder="Energia (Kcal / 100g)">
+          <input type="text" id="newFoodName" placeholder="Nazwa (np. Naleśniki Taty)">
+          <input type="number" id="newFoodKcal" placeholder="Kcal / 100g">
           <input type="number" id="newFoodP" placeholder="Białko / 100g">
           <input type="number" id="newFoodC" placeholder="Węglowodany / 100g">
           <input type="number" id="newFoodF" placeholder="Tłuszcze / 100g">
@@ -544,11 +548,11 @@
       </div>
 
       <div class="card">
-        <h2>🔋 Dzisiejszy Poziom Naładowania Baterii <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.74rem;" onclick="resetMealLog()">Nowy dzień</button></h2>
+        <h2>🔋 Dzisiejsze Naładowanie Baterii <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.74rem;" onclick="resetMealLog()">Nowy dzień</button></h2>
 
         <div style="margin-bottom:9px;">
           <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
-            <span>⚡ Energia Całkowita</span>
+            <span>⚡ Energia Całkowita (Paliwo Dnia)</span>
             <span><strong id="sumKcal">0</strong> / <span id="goalKcal">2100</span> kcal</span>
           </div>
           <div class="macro-bar-bg"><div id="barKcal" class="macro-bar-fill" style="width:0%"></div></div>
@@ -556,7 +560,7 @@
 
         <div style="margin-bottom:9px;">
           <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
-            <span>💪 Białko (Siła mięśni i chwytu)</span>
+            <span>💪 Budulec Mięśni i Chwytu (Białko)</span>
             <span><strong id="sumP">0</strong> / <span id="goalP">85</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barP" class="macro-bar-fill" style="width:0%; background:var(--neon-blue);"></div></div>
@@ -564,7 +568,7 @@
 
         <div style="margin-bottom:9px;">
           <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
-            <span>🚀 Węglowodany (Gaz na Randori)</span>
+            <span>🚀 Turbo-Gaz na Randori (Węglowodany)</span>
             <span><strong id="sumC">0</strong> / <span id="goalC">285</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barC" class="macro-bar-fill" style="width:0%; background:var(--neon-gold);"></div></div>
@@ -572,7 +576,7 @@
 
         <div style="margin-bottom:10px;">
           <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
-            <span>🧠 Zdrowe Tłuszcze & Omega-3</span>
+            <span>🧠 Koncentracja & Refleks (Zdrowe Tłuszcze)</span>
             <span><strong id="sumF">0</strong> / <span id="goalF">65</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barF" class="macro-bar-fill" style="width:0%; background:var(--neon-orange);"></div></div>
@@ -591,12 +595,79 @@
 </div>
 
 <script>
+  /*************************************************************************
+   * 1. SYSTEM PASKÓW OPANOWANIA DO RANGI MASTER (MASTERY TRACKER)
+   *************************************************************************/
+  const DEFAULT_MASTERY_GOALS = [
+    { id: 'uchimata', title: '🔥 Master Uchi-maty (Naprawa Bochnia 1:12)', current: 4, target: 20, unit: 'sesji' },
+    { id: 'newaza', title: '🛡️ Ucieczka Kesa-gatame (Most+Krewetka 1:27)', current: 2, target: 15, unit: 'ucieczek' },
+    { id: 'core', title: '💪 Pancerny Brzuch & Chwyt (Kółko + Gumy)', current: 3, target: 15, unit: 'treningów' },
+    { id: 'belt3kyu', title: '🟢 Gotowość do Zielonego Pasa (3 Kyu)', current: 3, target: 12, unit: 'technik' }
+  ];
+
+  let masteryGoals = JSON.parse(localStorage.getItem('tymon_mastery_goals')) || DEFAULT_MASTERY_GOALS;
+
+  function renderMasteryGoals() {
+    const box = document.getElementById('masteryGoalsContainer');
+    let html = '';
+    masteryGoals.forEach((g, idx) => {
+      const pct = Math.min(100, Math.round((g.current / g.target) * 100));
+      const left = Math.max(0, g.target - g.current);
+      const stars = '⭐'.repeat(Math.min(5, Math.floor(pct / 20))) || '☆';
+      html += `
+        <div class="mastery-card">
+          <h4><span>${g.title}</span> <span>${pct}%</span></h4>
+          <div class="mastery-bar-bg">
+            <div class="mastery-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <div class="mastery-sub">
+            <span>${stars} (${g.current}/${g.target} ${g.unit})</span>
+            <strong style="color:${left === 0 ? 'var(--neon-green)' : 'var(--neon-gold)'};">
+              ${left === 0 ? '🏆 MASTER!' : 'Brakuje: ' + left}
+            </strong>
+          </div>
+          <button class="btn btn-blue" style="width:100%; margin-top:6px; padding:5px; font-size:0.75rem;" onclick="incrementMastery('${g.id}', 1)">
+            ➕ Zaliczyłem dzisiaj (+1 do Mastera & +35 EXP)
+          </button>
+        </div>
+      `;
+    });
+    box.innerHTML = html;
+  }
+
+  function incrementMastery(goalId, amount) {
+    const g = masteryGoals.find(x => x.id === goalId);
+    if (g) {
+      g.current = Math.min(g.target, g.current + amount);
+      localStorage.setItem('tymon_mastery_goals', JSON.stringify(masteryGoals));
+      renderMasteryGoals();
+      addExp(35);
+      autoSyncCloudSilent();
+    }
+  }
+
+  function addCustomMasteryGoal() {
+    const title = document.getElementById('customGoalTitle').value.trim();
+    const target = parseInt(document.getElementById('customGoalTarget').value) || 15;
+    if (!title) { alert("Wpisz nazwę celu!"); return; }
+    masteryGoals.push({ id: 'custom_' + Date.now(), title: '🎯 ' + title, current: 0, target, unit: 'sesji' });
+    localStorage.setItem('tymon_mastery_goals', JSON.stringify(masteryGoals));
+    document.getElementById('customGoalTitle').value = '';
+    renderMasteryGoals();
+    addExp(20);
+    autoSyncCloudSilent();
+  }
+
+  /*************************************************************************
+   * 2. AUTO-ANIME STUDIO (FILTR PRZERABIAJĄCY ZDJĘCIE Z TELEFONU NA ANIME)
+   *************************************************************************/
   let currentSlot = 1;
   let currentForm = 'thunder';
+  let loadedSlotImage = new Image();
 
   function openPhotoDB() {
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open('TymonHeroCardsDB', 1);
+      const req = indexedDB.open('TymonHeroCardsDB_v8', 1);
       req.onupgradeneeded = e => { e.target.result.createObjectStore('cards'); };
       req.onsuccess = e => resolve(e.target.result);
       req.onerror = e => reject(e);
@@ -606,8 +677,7 @@
   async function savePhotoToSlot(slot, dataUrl) {
     try {
       const db = await openPhotoDB();
-      const tx = db.transaction('cards', 'readwrite');
-      tx.objectStore('cards').put(dataUrl, 'slot_' + slot);
+      db.transaction('cards', 'readwrite').objectStore('cards').put(dataUrl, 'slot_' + slot);
     } catch (e) {
       localStorage.setItem('tymon_card_slot_' + slot, dataUrl);
     }
@@ -628,210 +698,192 @@
 
   async function selectCardSlot(slot) {
     currentSlot = slot;
-    document.getElementById('activeSlotLabel').innerText = slot;
     [1, 2, 3, 4].forEach(s => {
       document.getElementById('slotBtn' + s).classList.toggle('active', s === slot);
     });
-
-    const savedData = await loadPhotoFromSlot(slot);
-    const imgEl = document.getElementById('heroPhotoEl');
-    if (savedData) {
-      imgEl.src = savedData;
-      hideUploadOverlay();
+    const saved = await loadPhotoFromSlot(slot);
+    if (saved) {
+      loadedSlotImage = new Image();
+      loadedSlotImage.onload = () => redrawAnimePhoto();
+      loadedSlotImage.src = saved;
     } else {
-      imgEl.src = slot === 1 ? 'tymon.jpg' : `tymon${slot}.jpg`;
+      const fallbackImg = new Image();
+      fallbackImg.crossOrigin = "anonymous";
+      fallbackImg.onload = () => { loadedSlotImage = fallbackImg; redrawAnimePhoto(); };
+      fallbackImg.onerror = () => drawEmptyAnimePoster();
+      fallbackImg.src = slot === 1 ? 'tymon.jpg' : `tymon${slot}.jpg`;
     }
   }
 
-  function showUploadOverlay() {
-    document.getElementById('heroPhotoEl').style.display = 'none';
-    document.getElementById('uploadPromptOverlay').style.display = 'flex';
-  }
-
-  function hideUploadOverlay() {
-    document.getElementById('heroPhotoEl').style.display = 'block';
-    document.getElementById('uploadPromptOverlay').style.display = 'none';
-  }
-
-  function uploadHeroPhoto(e) {
+  function uploadAndConvertAnime(e) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = async ev => {
       const dataUrl = ev.target.result;
       await savePhotoToSlot(currentSlot, dataUrl);
-      const imgEl = document.getElementById('heroPhotoEl');
-      imgEl.src = dataUrl;
-      hideUploadOverlay();
-      addExp(30);
+      loadedSlotImage = new Image();
+      loadedSlotImage.onload = () => {
+        redrawAnimePhoto();
+        addExp(40);
+        launchConfetti();
+      };
+      loadedSlotImage.src = dataUrl;
     };
     reader.readAsDataURL(file);
   }
 
-  function tiltCard(e) {
-    const el = document.getElementById('avatarStage');
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transform = `rotateY(${(x / 12).toFixed(1)}deg) rotateX(${(-y / 12).toFixed(1)}deg) scale(1.02)`;
-  }
-  function tiltCardTouch(e) { if (e.touches[0]) tiltCard(e.touches[0]); }
-  function resetTilt() { document.getElementById('avatarStage').style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)'; }
-
-  function initHeroVfxEngine() {
-    const canvas = document.getElementById('heroVfxCanvas');
+  // Algorytm przerabiający prawdziwe zdjęcie Tymona na styl Komiks/Anime (Cel-Shading + Kontur + Speedlines)
+  function redrawAnimePhoto() {
+    const canvas = document.getElementById('animeStudioCanvas');
     const ctx = canvas.getContext('2d');
-    const particles = Array.from({ length: 28 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vy: -0.8 - Math.random() * 1.8,
-      r: 1.5 + Math.random() * 2.8,
-      a: 0.4 + Math.random() * 0.6
-    }));
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
 
-    function drawLightningBolt() {
-      ctx.strokeStyle = currentForm === 'thunder' ? '#00f0ff' : (currentForm === 'fire' ? '#facc15' : '#d8b4fe');
-      ctx.lineWidth = 2.2;
-      ctx.shadowColor = ctx.strokeStyle;
-      ctx.shadowBlur = 10;
-      ctx.beginPath();
-      let x = Math.random() < 0.5 ? 15 + Math.random() * 35 : canvas.width - 50 + Math.random() * 35;
-      let y = 10;
-      ctx.moveTo(x, y);
-      while (y < canvas.height - 20) {
-        x += (Math.random() - 0.5) * 26;
-        y += 18 + Math.random() * 18;
-        ctx.lineTo(x, y);
+    if (!loadedSlotImage || !loadedSlotImage.width) {
+      drawEmptyAnimePoster();
+      return;
+    }
+
+    // Dopasowanie zdjęcia (object-fit: cover)
+    const scale = Math.max(w / loadedSlotImage.width, h / loadedSlotImage.height);
+    const nw = loadedSlotImage.width * scale;
+    const nh = loadedSlotImage.height * scale;
+    const nx = (w - nw) / 2;
+    const ny = (h - nh) * 0.15;
+
+    const mode = document.getElementById('animeFilterMode').value;
+
+    if (mode === 'original_hd') {
+      ctx.drawImage(loadedSlotImage, nx, ny, nw, nh);
+      return;
+    }
+
+    ctx.drawImage(loadedSlotImage, nx, ny, nw, nh);
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const d = imgData.data;
+    const copy = new Uint8ClampedArray(d);
+
+    // Kwantyzacja kolorów (Cel-Shading Anime) + detekcja krawędzi komiksowych (Sobel Edge)
+    const levels = mode === 'mha_comic' ? 6 : 8;
+    const step = 255 / levels;
+
+    for (let y = 1; y < h - 1; y++) {
+      for (let x = 1; x < w - 1; x++) {
+        const idx = (y * w + x) * 4;
+        const right = (y * w + (x + 1)) * 4;
+        const down = ((y + 1) * w + x) * 4;
+
+        const diff = Math.abs(copy[idx] - copy[right]) +
+                     Math.abs(copy[idx + 1] - copy[right + 1]) +
+                     Math.abs(copy[idx] - copy[down]);
+
+        if (mode === 'mha_comic' && diff > 72) {
+          // Wyrazisty komiksowy kontur tuszem
+          d[idx] = 10; d[idx + 1] = 15; d[idx + 2] = 30;
+        } else {
+          // Podbicie nasycenia i plakatowe cieniowanie Anime
+          let r = Math.round(copy[idx] / step) * step;
+          let g = Math.round(copy[idx + 1] / step) * step;
+          let b = Math.round(copy[idx + 2] / step) * step;
+
+          r = Math.min(255, r * 1.12);
+          g = Math.min(255, g * 1.08);
+          b = Math.min(255, b * 1.05);
+
+          d[idx] = r; d[idx + 1] = g; d[idx + 2] = b;
+        }
       }
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    // Komiksowe linie prędkości (Anime Speedlines) na obrzeżach karty
+    ctx.save();
+    ctx.strokeStyle = currentForm === 'fire' ? 'rgba(250,204,21,0.45)' : 'rgba(0,240,255,0.45)';
+    ctx.lineWidth = 2;
+    for (let i = 0; i < 36; i++) {
+      const angle = (i / 36) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(w / 2 + Math.cos(angle) * 95, h / 2 + Math.sin(angle) * 115);
+      ctx.lineTo(w / 2 + Math.cos(angle) * 180, h / 2 + Math.sin(angle) * 180);
       ctx.stroke();
     }
-
-    function loop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.y += p.vy;
-        if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
-        ctx.beginPath();
-        ctx.fillStyle = currentForm === 'fire' ? `rgba(249,115,22,${p.a})` : (currentForm === 'ultra' ? `rgba(168,85,247,${p.a})` : `rgba(250,204,21,${p.a})`);
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      if (Math.random() < 0.18) drawLightningBolt();
-      requestAnimationFrame(loop);
-    }
-    loop();
+    ctx.restore();
   }
 
-  function changeHeroForm() {
-    currentForm = document.getElementById('heroFormSelect').value;
-    document.getElementById('avatarStage').className = 'avatar-stage form-' + currentForm;
-    document.getElementById('heroPhotoEl').className = 'filter-' + currentForm;
-    const map = {
-      thunder: 'IPPON HERO • UCHI-MATA',
-      fire: 'DAR: OGNISTY IPPON',
-      ultra: 'DAR: ULTRA INSTINCT KODOKAN'
-    };
-    document.getElementById('quirkBadge').innerText = map[currentForm];
-  }
-
-  function playSound(type = 'exp') {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const freqs = type === 'levelup' ? [523.25, 659.25, 783.99, 1046.5] : [587.33, 880];
-      freqs.forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.08);
-        gain.gain.setValueAtTime(0.16, ctx.currentTime + i * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.22);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(ctx.currentTime + i * 0.08);
-        osc.stop(ctx.currentTime + i * 0.08 + 0.24);
-      });
-    } catch (e) {}
-  }
-
-  function launchConfetti() {
-    const canvas = document.getElementById('confettiCanvas');
+  function drawEmptyAnimePoster() {
+    const canvas = document.getElementById('animeStudioCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const pieces = Array.from({ length: 85 }, () => ({
-      x: Math.random() * canvas.width,
-      y: -20 - Math.random() * 80,
-      s: 6 + Math.random() * 7,
-      c: ['#facc15', '#00f0ff', '#f97316', '#10b981', '#ef4444'][Math.floor(Math.random() * 5)],
-      vy: 3 + Math.random() * 5,
-      vx: -2 + Math.random() * 4
-    }));
-    let f = 0;
-    function step() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pieces.forEach(p => {
-        p.y += p.vy; p.x += p.vx;
-        ctx.fillStyle = p.c;
-        ctx.fillRect(p.x, p.y, p.s, p.s);
-      });
-      if (++f < 105) requestAnimationFrame(step);
-      else ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    step();
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#facc15';
+    ctx.font = 'bold 15px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('📸 KLIKNIJ ZŁOTY PRZYCISK', canvas.width / 2, 130);
+    ctx.fillStyle = '#00f0ff';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('I WGRAJ ZDJĘCIE TYMONA!', canvas.width / 2, 155);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px sans-serif';
+    ctx.fillText('Filtr przerobi je na Anime!', canvas.width / 2, 180);
   }
 
-  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp')) || 340;
+  /*************************************************************************
+   * 3. WIZUALNE RYSUNKI TECHNICZNE KROK PO KROKU (SCHEMATY SVG DO ĆWICZEŃ)
+   *************************************************************************/
+  const EXERCISE_DIAGRAMS = {
+    uchimata_triangle: `
+      <svg viewBox="0 0 100 100" width="95" height="95">
+        <polygon points="50,18 20,82 80,82" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/>
+        <circle cx="25" cy="22" r="7" fill="#ef4444"/><text x="15" y="12" fill="#fff" font-size="8">Rywal</text>
+        <circle cx="75" cy="22" r="7" fill="#ef4444"/>
+        <ellipse cx="50" cy="44" rx="7" ry="12" fill="#facc15"/><text x="34" y="66" fill="#facc15" font-size="8" font-weight="bold">1.Krok w ▲</text>
+        <path d="M50 44 L82 15" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+        <text x="52" y="94" fill="#10b981" font-size="8" font-weight="bold">2.Noga w górę!</text>
+      </svg>`,
+    ab_wheel: `
+      <svg viewBox="0 0 100 100" width="95" height="95">
+        <rect x="86" y="15" width="6" height="70" fill="#ef4444"/><text x="58" y="25" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text>
+        <line x1="10" y1="85" x2="92" y2="85" stroke="#94a3b8" stroke-width="3"/>
+        <circle cx="68" cy="76" r="8" fill="none" stroke="#00f0ff" stroke-width="3"/>
+        <path d="M22 82 L38 62 L68 76" stroke="#facc15" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <circle cx="45" cy="54" r="6" fill="#facc15"/>
+        <text x="12" y="40" fill="#10b981" font-size="8" font-weight="bold">Brzuch napięty!</text>
+      </svg>`,
+    kesa_escape: `
+      <svg viewBox="0 0 100 100" width="95" height="95">
+        <path d="M15 75 Q50 25 85 75" stroke="#facc15" stroke-width="5" fill="none"/>
+        <path d="M50 65 L50 28" stroke="#00f0ff" stroke-width="3" marker-end="url(#arr)"/>
+        <text x="12" y="22" fill="#facc15" font-size="8" font-weight="bold">1. MOST (Upa) ▲</text>
+        <text x="12" y="92" fill="#10b981" font-size="8" font-weight="bold">2. KREWETKA ◄</text>
+      </svg>`,
+    parallettes: `
+      <svg viewBox="0 0 100 100" width="95" height="95">
+        <path d="M20 80 L20 60 L40 60 L40 80" stroke="#00f0ff" stroke-width="3" fill="none"/>
+        <path d="M60 80 L60 60 L80 60 L80 80" stroke="#00f0ff" stroke-width="3" fill="none"/>
+        <path d="M25 58 Q50 85 75 35" stroke="#facc15" stroke-width="4" fill="none"/>
+        <text x="15" y="25" fill="#facc15" font-size="8" font-weight="bold">Nurkowanie klatką</text>
+      </svg>`
+  };
 
-  function addExp(pts) {
-    const prevLvl = Math.floor(totalExp / 100) + 1;
-    totalExp += pts;
-    localStorage.setItem('tymon_judo_exp', totalExp);
-    const nextLvl = Math.floor(totalExp / 100) + 1;
-    updateHud();
-    if (nextLvl > prevLvl) {
-      playSound('levelup');
-      launchConfetti();
-      alert(`🎉 PLUS ULTRA! TYMON WBIJA POZIOM ${nextLvl}! Nowa Skrzynka Mistrza odblokowana!`);
-    } else {
-      playSound('exp');
-    }
-  }
-
-  function updateHud() {
-    const lvl = Math.floor(totalExp / 100) + 1;
-    const rem = totalExp % 100;
-    document.getElementById('lvlNumber').innerText = lvl;
-    document.getElementById('expNumber').innerText = totalExp;
-    document.getElementById('expBarFill').style.width = rem + '%';
-    document.getElementById('expToNextText').innerText = `${rem} / 100 EXP`;
-
-    const ranks = [
-      "Wojownik Tatami (4 Kyu)",
-      "Łowca Waza-ari",
-      "Błyskawica Uchi-maty (4 Kyu • Pomarańczowy Pas)",
-      "Mistrz Kontry i Parteru",
-      "Książę Kodokanu (Plus Ultra!)",
-      "Legenda Ipponu (Droga do Czarnego Pasa)"
-    ];
-    document.getElementById('rankTitleDisplay').innerText =
-      "Ranga: " + ranks[Math.min(ranks.length - 1, Math.floor((lvl - 1) / 2))];
-  }
-
+  /*************************************************************************
+   * 4. PLAN TYGODNIOWY Z RYSUNKAMI I INSTRUKCJAMI KROK PO KROKU
+   *************************************************************************/
   const DAILY_QUESTS = {
     1: {
       boss: "Pokaż Tacie 5 idealnych wejść na sucho: małe podcięcie Kouchi-gari ➔ Uchi-mata (głowa nisko do kolana!).",
       items: [
         {
-          id: "mon1",
-          title: "Cieniowanie (Tandoku-renshu) przed lustrem – 4 minuty",
-          steps: "1. Prawa stopa wchodzi w wierzchołek trójkąta.\n2. Lewa ręka ciągnie wyimaginowany rękaw do wysokości ucha ('spójrz na zegarek').\n3. Głowa nurkuje nisko w dół, prawa noga wystrzeliwuje w górę!",
-          dad: "Tata sprawdza: czy Tymon nie zostawia głowy wysoko (błąd z 1:12 z Bochni)."
+          id: "mon1", diag: "uchimata_triangle", masteryId: "uchimata",
+          title: "Cieniowanie Stóp w Trójkąt (Tandoku-renshu) – 4 minuty",
+          steps: "KROK 1: Postaw na macie 2 klapki jako stopy rywala.\nKROK 2: Prawa stopa wchodzi w czubek trójkąta między nimi.\nKROK 3: Lewa ręka ciągnie na wysokość ucha ('spójrz na zegarek'), głowa nurkuje do kolana, prawa noga leci wysoko w sufit!",
+          dad: "Tata sprawdza: czy głowa Tymona schodzi nisko w dół (naprawa 1:12 z Bochni)."
         },
         {
-          id: "mon2",
-          title: "Cel taktyczny na trening w klubie (Randori)",
-          steps: "Nie wchodź w Uchi-matę z daleka! Najpierw zrób zaczepienie stopą (O-uchi-gari lub Kouchi-gari), a gdy rywal cofnie nogę – odpal Uchi-matę.",
-          dad: "Po treningu przybijcie piątkę i zapiszcie, ile akcji wyszło!"
+          id: "mon2", diag: "uchimata_triangle", masteryId: "uchimata",
+          title: "Zadanie na wieczorny trening w klubie (Randori)",
+          steps: "Zanim wejdziesz w Uchi-matę, zrób 1 zaczepienie stopą (Kouchi-gari lub O-uchi-gari), żeby rywal zrobił krok!",
+          dad: "Po treningu przybijcie piątkę i dodajcie +1 do paska Mastera Uchi-maty!"
         }
       ]
     },
@@ -839,33 +891,33 @@
       boss: "Zrób 20 szybkich wejść w Uchi-matę na gumach z kołnierzem i rękawem w 25 sekund + 8 wyjazdów na kółku do ściany!",
       items: [
         {
-          id: "tue1",
-          title: "Gumy Judo z Kołnierzem i Rękawem: Szlif Uchi-maty (4 serie x 15 powt.)",
-          steps: "1. Lewa dłoń trzyma RĘKAW (zaciśnij mały palec!), prawa dłoń trzyma KOŁNIERZ.\n2. Wejdź stopą podporową w trójkąt, obróć biodro i pociągnij rękaw mocno w dół przy wyrzucie nogi w sufit.",
-          dad: "Rola Taty: Trzymaj dłoń z tyłu na wysokości pasa/klatki – Tymon ma dotknąć jej piętą podczas wymachu!"
+          id: "tue1", diag: "uchimata_triangle", masteryId: "uchimata",
+          title: "Gumy Judo (Kołnierz + Rękaw): Eksplozywna Uchi-mata (4 serie x 15)",
+          steps: "KROK 1: Lewa dłoń trzyma RĘKAW (zaciśnij mały palec!), prawa dłoń KOŁNIERZ.\nKROK 2: Wskocz stopą podporową w trójkąt obracając biodro.\nKROK 3: Pociągnij rękaw aż do podłogi i wystrzel nogę wymachową w górę!",
+          dad: "Rola Taty: Trzymaj dłoń wysoko z tyłu – Tymon ma uderzyć w nią piętą podczas wymachu!"
         },
         {
-          id: "tue2",
-          title: "Kółko na Brzuch (Ab Wheel) – Pancerny Core Judoki (3 serie x 8 powt.)",
-          steps: "1. Uklęknij na macie domowej w odległości ok. 60-80 cm od ściany (ściana to bezpieczny stoper dla 11-latka!).\n2. Napnij brzuch i pośladki (schowaj żebra), jedź kółkiem powoli do ściany i wróć siłą brzucha bez wyginania pleców w dół.",
-          dad: "Rola Taty: Pilnuj, żeby biodra Tymona nie opadały w stronę maty!"
+          id: "tue2", diag: "ab_wheel", masteryId: "core",
+          title: "Kółko na Brzuch (Ab Wheel do ściany) – Pancerny Brzuch (3 serie x 8)",
+          steps: "KROK 1: Uklęknij na macie 60–80 cm przed ścianą (ściana to bezpieczny hamulec!).\nKROK 2: Podwiń miednicę (napnij brzuch jak przed ciosem).\nKROK 3: Jedź powoli do ściany i wróć siłą brzucha (nie wyginaj pleców w dół!).",
+          dad: "Rola Taty: Pilnuj prostych pleców Tymona w każdej powtórce."
         },
         {
-          id: "tue3",
-          title: "Paraletki: Pompki Nurkujące Judogi + Trzymanie L-Sit (3 serie x 10 powt.)",
-          steps: "1. Na paraletkach zanurkuj klatką piersiową nisko między uchwytami i wyjdź mocno w górę.\n2. Na koniec serii unieś ugięte kolana w górę w podporze na paraletkach i utrzymaj 10 sekund!",
-          dad: "Rola Taty: Odliczaj głośno 10 sekund trzymania brzucha na paraletkach!"
+          id: "tue3", diag: "parallettes", masteryId: "core",
+          title: "Paraletki: Pompki Nurkujące Judogi + Trzymanie Kolan L-Sit (3 serie x 10)",
+          steps: "KROK 1: Z pozycji wysokiego dachu zanurkuj klatką nisko między paraletkami i wyjdź w górę.\nKROK 2: Na koniec serii oprzyj się na prostych rękach na paraletkach, podnieś kolana w górę i trzymaj 10 sekund!",
+          dad: "Rola Taty: Odliczaj głośno 10 sekund na Zegarze Dojo!"
         }
       ]
     },
     3: {
-      boss: "Pokaż Tacie na macie błyskawiczne przejście z nieudanego rzutu do 'aktywnego żółwia' i złapanie nogi w półgardę.",
+      boss: "Pokaż Tacie na macie błyskawiczne zwinięcie w 'aktywnego żółwia' i złapanie nogi w półgardę.",
       items: [
         {
-          id: "wed1",
-          title: "Obrona w Stójce (Jigotai + Zejście po łuku Tai-sabaki) – 5 minut",
-          steps: "1. Gdy Tata sięga ręką po Twój kark, natychmiast ugnij kolana (obniż biodra).\n2. Zbij rękę Taty oburącz i odejdź krokiem po okręgu.",
-          dad: "Rola Taty: Atakuj uchwytem na 30% szybkości, niech Tymon wyprzedza Twój ruch."
+          id: "wed1", diag: "kesa_escape", masteryId: "newaza",
+          title: "Obrona Stójka & Szybki Żółw po upadku – 5 minut",
+          steps: "KROK 1: W stójce obniż kolana (Jigotai) i zbij rękę Taty sięgającą po kark.\nKROK 2: Na sygnał Taty padnij na matę i w 1 sekundę zamknij łokcie przy kolanach (żółw) lub złap nogę Taty swoimi nogami!",
+          dad: "Rola Taty: Próbuj obejść nogi Tymona – niech łapie Twoją nogę w kłódkę."
         }
       ]
     },
@@ -873,22 +925,16 @@
       boss: "Ucieknij z trzymania Kesa-gatame Taty na macie w mniej niż 10 sekund (Most Upa + Krewetka Ebi)!",
       items: [
         {
-          id: "thu1",
-          title: "Mata Domowa z Tatą: Wyjście z Kesa-gatame (Naprawa błędu 1:27 z Bochni) – 5 rund x 15s",
-          steps: "1. Tata zapina Kesa-gatame. ZAKAZ wypychania Taty samymi prostymi rękami!\n2. Krok 1: Przyklej swoje łokcie ciasno do żeber.\n3. Krok 2: Zrób wysoki MOST (Upa) przez lewe ramię.\n4. Krok 3: Gdy Tata zaprze się do przodu, wystrzel biodra w tył (KREWETKA / Ebi) i wbij kolano pod brzuch Taty!",
-          dad: "Rola Taty: Daj 50% oporu. Puść tylko wtedy, gdy Tymon zrobi pełną sekwencję Most + Krewetka + Kolano!"
+          id: "thu1", diag: "kesa_escape", masteryId: "newaza",
+          title: "Mata Domowa z Tatą: Wyjście z Kesa-gatame (Naprawa 1:27 z Bochni) – 5 rund x 15s",
+          steps: "KROK 1: Przyklej oba łokcie ciasno do swoich żeber (zakaz pchania Taty prostymi rękami!).\nKROK 2: Wbij stopy w matę i zrób wysoki MOST (Upa) przez lewe ramię.\nKROK 3: Gdy Tata zaprze się do przodu, wyrzuć biodra w tył (KREWETKA / Ebi) i wbij kolano pod brzuch Taty!",
+          dad: "Rola Taty: Trzymaj na 50% siły. Puść i krzyknij 'TOKETA!', gdy zrobi Most + Krewetkę!"
         },
         {
-          id: "thu2",
-          title: "Klasyczne Gumy Oporowe + Małe Hantelki: Wiosłowanie i Szybkie Kumi-kata (3 serie)",
-          steps: "1. Gumy oporowe: 15 dynamicznych przyciągań gumy do brzucha (silne plecy do dociągania rywala).\n2. Małe hantelki: 20 sekund szybkich wyrzutów rąk przód-tył pod walkę o uchwyt + 12 ugięć nadgarstków.",
-          dad: "Rola Taty: Kontroluj czas na Zegarze Dojo."
-        },
-        {
-          id: "thu3",
-          title: "Kółko na Brzuch + Mosty Zapaśnicze na Macie (3 serie x 8 powt.)",
-          steps: "1. 8 bezpiecznych wyjazdów kółkiem na brzuch z kolan do ściany.\n2. 10 wysokich mostów biodrowych leżąc na plecach na macie.",
-          dad: "Rola Taty: Połóż dłoń na brzuchu Tymona przy mostach, żeby wypchnął biodra maksymalnie w górę."
+          id: "thu2", diag: "ab_wheel", masteryId: "core",
+          title: "Gumy Oporowe + Małe Hantelki: Wiosłowanie i Szybki Chwyt (3 serie)",
+          steps: "KROK 1: Gumy oporowe zaczepione nisko – 15 mocnych przyciągań do brzucha.\nKROK 2: Małe hantelki w dłonie – 20 sekund szybkich wyrzutów rąk na wprost pod wygrywanie pierwszego uchwytu!",
+          dad: "Rola Taty: Mierz czas 20 sekund na Zegarze Dojo."
         }
       ]
     },
@@ -896,10 +942,10 @@
       boss: "Pokaż 10 ultra-szybkich kombinacji O-uchi-gari ➔ Uchi-mata bez utraty równowagi.",
       items: [
         {
-          id: "fri1",
-          title: "Szybkie Stopy (Ashi-waza Speed) na luzie przed klubem – 4 minuty",
-          steps: "1. Lekkie, sprężyste podcięcia De-ashi-barai i Kouchi-gari.\n2. Zero zmęczenia mięśni – dzisiaj masz mieć 100% gazu na piątkowych walkach w klubie!",
-          dad: "Rola Taty: Zadbaj o lekką przekąskę z Ładowarki Mocy na 60 min przed treningiem."
+          id: "fri1", diag: "uchimata_triangle", masteryId: "uchimata",
+          title: "Szybkie Stopy (Ashi-waza) przed klubem – 4 minuty",
+          steps: "Lekkie, dynamiczne wejścia O-uchi-gari ➔ Uchi-mata na sucho, żeby nogi same chodziły na wieczornych walkach w klubie!",
+          dad: "Zadbaj o doładowanie baterii na 60 min przed wyjściem na matę."
         }
       ]
     },
@@ -907,21 +953,21 @@
       boss: "Sobota Boss Fight: Obwód 3 stacji (Gumy Judo + Kółko na Brzuch + Obracanie Żółwia Taty na macie)!",
       items: [
         {
-          id: "sat1",
-          title: "Obwód Mistrza Kodokanu (3 rundy po 25 sekund pracy na stacji)",
-          steps: "Stacja 1: Max liczba czystych wejść w Uchi-matę na gumach z kołnierzem i rękawem.\nStacja 2: Wyjazdy na kółku na brzuch z kolan + pompki na paraletkach.\nStacja 3: Tata klęczy w 'żółwiu' na macie – Tymon obraca Tatę do trzymania Yoko-shiho-gatame!",
-          dad: "Rola Taty: Bądź sędzią głównym, włącz Zegar Dojo i krzycz 'HAJIME!' oraz 'SOREMADE!'."
+          id: "sat1", diag: "parallettes", masteryId: "core",
+          title: "Obwód Mistrza Kodokanu (3 rundy x 25 sekund pracy)",
+          steps: "STACJA 1: Uchi-mata na gumach z kołnierzem i rękawem na czas.\nSTACJA 2: Kółko na brzuch do ściany + pompki na paraletkach.\nSTACJA 3: Tata klęczy w żółwiu na macie – Tymon obraca Tatę do trzymania!",
+          dad: "Rola Taty: Sędziuj obwód i po zakończeniu kliknij zatwierdzenie Pokazu Mistrza!"
         }
       ]
     },
     0: {
-      boss: "Dzień Regeneracji (Yasumi) – zrób 5 minut lekkiego rozciągania bioder i odbierz darmowe +100 EXP!",
+      boss: "Dzień Regeneracji (Yasumi) – 5 minut lekkiego rozciągania bioder (+100 EXP)!",
       items: [
         {
-          id: "sun1",
-          title: "Pełny Odpoczynek i Ładowanie Baterii Mocy",
-          steps: "Mięśnie judoki rosną podczas odpoczynku! Spacer, basen i dobre jedzenie.",
-          dad: "Wspólne obejrzenie 1 walki mistrzów z Tokio!"
+          id: "sun1", diag: "kesa_escape", masteryId: "belt3kyu",
+          title: "Odpoczynek Mistrza i Obejrzenie 1 Filmu ze Szkoły Kodokan",
+          steps: "Wejdź w zakładkę 'Szkoła Kodokan', obejrzyj wideo wybranego rzutu i naładuj akumulatory na nowy tydzień!",
+          dad: "Wspólny przegląd pasków postępu do rangi Master."
         }
       ]
     }
@@ -937,14 +983,20 @@
     data.items.forEach(q => {
       const checked = doneMap[q.id] ? 'checked' : '';
       const cls = doneMap[q.id] ? 'quest-item completed' : 'quest-item';
+      const svgDiag = EXERCISE_DIAGRAMS[q.diag] || EXERCISE_DIAGRAMS.uchimata_triangle;
       html += `
         <div class="${cls}">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
             <strong>🥋 ${q.title}</strong>
-            <input type="checkbox" style="width:22px; height:22px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', this.checked)">
+            <input type="checkbox" style="width:22px; height:22px; cursor:pointer;" ${checked} onchange="toggleQuest('${q.id}', '${q.masteryId}', this.checked)">
           </div>
-          <div class="quest-steps">${q.steps}</div>
-          <span class="dad-badge">👨‍👦 ${q.dad}</span>
+          <div class="visual-guide-grid">
+            <div class="diagram-box">${svgDiag}</div>
+            <div>
+              <div class="quest-steps">${q.steps}</div>
+              <span class="dad-badge">👨‍👦 ${q.dad}</span>
+            </div>
+          </div>
         </div>
       `;
     });
@@ -952,105 +1004,96 @@
     renderInjectedQuests();
   }
 
-  function toggleQuest(id, isChecked) {
+  function toggleQuest(id, masteryId, isChecked) {
     const doneMap = JSON.parse(localStorage.getItem('tymon_done_quests') || '{}');
     doneMap[id] = isChecked;
     localStorage.setItem('tymon_done_quests', JSON.stringify(doneMap));
-    if (isChecked) addExp(30);
+    if (isChecked) {
+      incrementMastery(masteryId || 'uchimata', 1);
+    }
     renderDailyQuests();
   }
 
   function completeBossPresentation() {
     addExp(100);
+    incrementMastery('uchimata', 1);
     launchConfetti();
   }
 
-  function injectToWeeklyPlan(taskText) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    if (!list.includes(taskText)) {
-      list.push(taskText);
-      localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
-    }
-    addExp(40);
-    renderInjectedQuests();
-    alert("⚡ Misja została wstrzyknięta do Twojego Planu Dnia oraz Szlifu Uchi-mata! (+40 EXP)");
-  }
-
-  function removeInjectedTask(idx) {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    list.splice(idx, 1);
-    localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
-    renderInjectedQuests();
-  }
-
-  function renderInjectedQuests() {
-    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
-    const box = document.getElementById('injectedQuestsBox');
-    if (!list.length) { box.innerHTML = ''; return; }
-
-    let html = `<h3 style="color:var(--neon-orange);">🎯 Dodatkowe Misje Specjalne ("Popracujmy nad tym!"):</h3>`;
-    list.forEach((t, i) => {
-      html += `
-        <div class="quest-item" style="border-left-color:var(--neon-orange);">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <span style="font-size:0.86rem;">🔥 ${t}</span>
-            <button class="btn btn-green" style="padding:5px 10px; font-size:0.75rem;" onclick="addExp(35); removeInjectedTask(${i});">✅ Zrobione (+35 EXP)</button>
-          </div>
-        </div>
-      `;
-    });
-    box.innerHTML = html;
-  }
-
+  /*************************************************************************
+   * 5. OFICJALNA SZKOŁA KODOKAN (KDKJUDO.ORG + BEZPOŚREDNIE FILMY KODOKAN)
+   *************************************************************************/
   const KODOKAN_TECHS = {
     throws: [
       {
         name: "🔥 Uchi-mata (Wewnętrzne podcięcie udem – Koronny Rzut Tymona)",
-        tip: "Sekret Kodokanu: Ręka z rękawem ciągnie wysoko do przodu ('spójrz na zegarek'), głowa schodzi nisko w dół do kolana podporowego, a noga wymachowa wystrzeliwuje pionowo w górę między nogami rywala!",
-        drills: "1. Na gumach judo (kołnierz+rękaw): 4x15 wejść w trójkąt.\n2. Z Tatą na macie: Kombinacja Kouchi-gari ➔ Uchi-mata (3x10).\n3. Jaskółka na jednej nodze z wyrzutem pięty w dłoń Taty (3x12).",
-        url: "https://www.youtube.com/results?search_query=Kodokan+Uchi-mata+official"
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "i9Su05b1e9k",
+        ytDirect: "https://www.youtube.com/watch?v=i9Su05b1e9k",
+        tip: "Oficjalny standard Kodokan Judo Institute: Wyciągnij rywala do przodu-góry ręką trzymającą rękaw (Hikite – 'spójrz na zegarek'), wejdź ugiętą nogą podporową w środek trójkąta między jego stopami, opuść głowę do kolana i wyrzuć nogę wymachową wysoko pod jego udo!",
+        drills: "1. Na gumach judo (kołnierz+rękaw): 4x15 wejść w trójkąt.\n2. Z Tatą na macie: Kombinacja Kouchi-gari ➔ Uchi-mata (3x10)."
       },
       {
-        name: "⚡ O-uchi-gari (Duże wewnętrzne podcięcie – Otwieracz pod Uchi-matę)",
-        tip: "Podejdź krokiem dostawnym (Tsugi-ashi), dociśnij rywala w dół na jego pięty i zakreśl stopą półkole po macie.",
-        drills: "1. Rysowanie półksiężyca dużym palcem stopy na macie (3x15).\n2. Kombinacja z Tatą: O-uchi-gari ➔ gdy Tata cofa nogę, natychmiast wchodzisz w Uchi-matę!",
-        url: "https://www.youtube.com/results?search_query=Kodokan+O-uchi-gari+official"
+        name: "⚡ O-uchi-gari (Duże wewnętrzne podcięcie – Kombinacja z Uchi-matą)",
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "0itJFhV9pDQ",
+        ytDirect: "https://www.youtube.com/watch?v=0itJFhV9pDQ",
+        tip: "Standard Kodokan: Podejdź krokiem dostawnym (Tsugi-ashi), dociśnij rywala na jego pięty i wytnij nogę po półkolu.",
+        drills: "1. Rysowanie półksiężyca dużym palcem stopy na macie (3x15).\n2. Kombinacja O-uchi-gari ➔ Uchi-mata z Tatą."
       },
       {
-        name: "💥 Ippon-seoi-nage / Morote-seoi-nage (Rzut przez plecy)",
-        tip: "Zejdź na ugiętych kolanach tak, by Twój pas znalazł się poniżej pasa rywala!",
-        drills: "1. Szybkie wejścia na gumach z głębokim przysiadem (3x15).\n2. Pompki judogi na paraletkach dla siły barków (3x10).",
-        url: "https://www.youtube.com/results?search_query=Kodokan+Ippon-seoi-nage+official"
+        name: "💥 Ippon-seoi-nage (Rzut przez plecy jednorącz)",
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "twdcGf2_3wk",
+        ytDirect: "https://www.youtube.com/watch?v=twdcGf2_3wk",
+        tip: "Standard Kodokan: Wbij łokieć głęboko pod pachę rywala, ugnij kolana poniżej jego pasa i dokręć barkiem w dół.",
+        drills: "1. Szybkie obroty na gumach z głębokim przysiadem (3x15)."
+      },
+      {
+        name: "🌪️ Harai-goshi (Zagarnięcie biodrem – Wymagane na Zielony Pas 3 Kyu!)",
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "qTo8HlAAkOo",
+        ytDirect: "https://www.youtube.com/watch?v=qTo8HlAAkOo",
+        tip: "Standard Kodokan: Silne dociągnięcie do swojej klatki i wymach prostą nogą po zewnętrznej stronie nogi rywala.",
+        drills: "1. Wejścia na gumach judo z szerokim wymachem nogi (3x12)."
       }
     ],
     pins: [
       {
-        name: "🔒 Hon-kesa-gatame & Kuzure-kesa-gatame (Trzymanie opasaniem)",
-        tip: "Wciągnij rękaw rywala głęboko pod swoją pachę, nogi rozstaw szeroko jak cyrkiel, a głowę trzymaj nisko!",
-        drills: "1. Szybkie zmiany nóg 'wycieraczki' na macie domowej (3x20s).\n2. Utrzymanie Taty na macie przez 15 sekund przy jego próbach ucieczki!",
-        url: "https://www.youtube.com/results?search_query=Kodokan+Kesa-gatame+official"
+        name: "🔒 Kesa-gatame & Kuzure-kesa-gatame (Trzymanie opasaniem)",
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "NDaQuJOFBYk",
+        ytDirect: "https://www.youtube.com/watch?v=NDaQuJOFBYk",
+        tip: "Standard Kodokan: Kontrola łokcia rywala pod pachą, nogi szeroko jak cyrkiel, klatka piersiowa pracuje ciężarem na żebra przeciwnika.",
+        drills: "1. Szybkie zmiany nóg 'wycieraczki' na macie (3x20s)."
       },
       {
         name: "🔒 Yoko-shiho-gatame & Kami-shiho-gatame (Trzymanie boczne i od głowy)",
-        tip: "Zero wolnej przestrzeni między Twoim brzuchem a bokiem rywala – kolana wciśnięte ciasno pod pachę i biodro!",
-        drills: "1. Obieganie wokół poduszki/Taty ze zmianą 4 trzymań bez odrywania klatki piersiowej (3x45s).",
-        url: "https://www.youtube.com/results?search_query=Kodokan+Yoko-shiho-gatame+official"
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "TT7XLUcM3Jg",
+        ytDirect: "https://www.youtube.com/watch?v=TT7XLUcM3Jg",
+        tip: "Standard Kodokan: Kolana wciśnięte ciasno przy boku i barku rywala – zero szpary na włożenie kolana!",
+        drills: "1. Przechodzenie wokół Taty między 4 trzymaniami bez odrywania klatki (3x45s)."
       }
     ],
     turnovers: [
       {
-        name: "🔄 Obracanie 'Żółwia' (Atak w parterze do trzymania)",
-        tip: "Zanim przewrócisz rywala w żółwiu, zabierz mu punkt podparcia – wciągnij jego dalszy łokieć do środka i wbij kolano w bok!",
-        drills: "1. Tata klęczy w żółwiu na macie – Tymon wykonuje 8 szybkich przewrotów do trzymania Yoko-shiho-gatame.",
-        url: "https://www.youtube.com/results?search_query=Judo+turtle+turnover+kids"
+        name: "🔄 Obracanie 'Żółwia' (Przejście z obrony rywala do trzymania)",
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "NDaQuJOFBYk",
+        ytDirect: "https://www.youtube.com/results?search_query=Kodokan+Ne-waza+turnover+turtle",
+        tip: "Zabierz rywalowi podparcie na łokciu (wciągnij łokieć do środka), wbij kolano w bok i przewróć go prosto w trzymanie!",
+        drills: "1. Tata klęczy w żółwiu na macie – Tymon wykonuje 8 przewrotów na czas."
       }
     ],
     escapes: [
       {
         name: "🛡️ Wyjście z Kesa-gatame: Most (Upa) + Krewetka (Ebi)",
-        tip: "Nigdy nie pchaj samymi rękami! Łokcie do żeber ➔ potężny most przez ramię (Upa) ➔ wyrzut bioder w tył (Krewetka Ebi) i włożenie kolana!",
-        drills: "1. 3x10 powtórzeń Most + Krewetka na macie domowej.\n2. 5 rund zadaniowych z Tatą (15 sekund na ucieczkę).",
-        url: "https://www.youtube.com/results?search_query=Kesa+gatame+escape+upa+shrimp"
+        kdkPage: "https://kdkjudo.org/en/techniques/",
+        ytEmbedId: "NDaQuJOFBYk",
+        ytDirect: "https://www.youtube.com/results?search_query=Kesa+gatame+escape+Kodokan",
+        tip: "Fundament obrony: Łokcie do żeber ➔ wysoki Most (Upa) przez ramię ➔ Krewetka (Ebi) i włożenie kolana pod brzuch rywala!",
+        drills: "1. 5 rund x 15 sekund z Tatą na macie domowej."
       }
     ]
   };
@@ -1073,57 +1116,319 @@
     const t = KODOKAN_TECHS[cat][idx];
     document.getElementById('techDetailContainer').innerHTML = `
       <h2>${t.name}</h2>
-      <div style="background:rgba(250,204,21,0.1); padding:11px; border-left:4px solid var(--neon-gold); border-radius:8px; margin-bottom:10px; font-size:0.88rem;">
-        <strong>💡 Złota Wskazówka Kodokanu:</strong><br>${t.tip}
+      <div style="background:rgba(250,204,21,0.1); padding:11px; border-left:4px solid var(--neon-gold); border-radius:8px; margin-bottom:10px; font-size:0.86rem;">
+        <strong>💡 Instrukcja Szkoły Kodokan (Tokio):</strong><br>${t.tip}
       </div>
-      <div class="quest-steps" style="margin-bottom:12px;"><strong>🏠 Jak ćwiczyć w domu:</strong>\n${t.drills}</div>
+      <div class="quest-steps" style="margin-bottom:12px;"><strong>🏠 Zadanie domowe dla Tymona:</strong>\n${t.drills}</div>
+      <div style="margin-bottom:12px; border-radius:12px; overflow:hidden; border:1px solid var(--neon-blue); background:#000;">
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/${t.ytEmbedId}" title="Kodokan Official Video" frameborder="0" allowfullscreen></iframe>
+      </div>
       <div style="display:flex; gap:8px; flex-wrap:wrap;">
-        <button class="btn btn-blue" onclick="injectToWeeklyPlan('Szlif z Kuźni Kodokan – ${t.name}: ${t.drills.replace(/\n/g, ' ')}')">
-          ⚡ Popracujmy nad tym! (+Dodaj do Planu Dnia)
+        <button class="btn btn-green" onclick="incrementMastery('uchimata', 1); injectToWeeklyPlan('Szlif Kodokan – ${t.name}: ${t.drills.replace(/\n/g, ' ')}')">
+          ⚡ Przećwiczone! (+1 do Mastera & Dodaj do Planu Dnia)
         </button>
-        <a href="${t.url}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">▶️ Wideo Demonstracyjne Kodokan</a>
-        <a href="https://kdkjudo.org/en/techniques/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Strona Kodokan.org</a>
+        <a href="${t.ytDirect}" target="_blank" class="btn btn-blue" style="text-decoration:none;">▶️ Otwórz Oficjalny Film Kodokan</a>
+        <a href="${t.kdkPage}" target="_blank" class="btn btn-ghost" style="text-decoration:none;">🌐 Oficjalna Karta na kdkjudo.org</a>
       </div>
     `;
   }
 
-  const BELT_EXAMS = {
-    "3kyu": {
-      title: "🟢 Wymagania na 3 Kyu (Zielony Pas) – Kolejny Wielki Cel Tymona!",
-      reqs: [
-        "Rzuty (Nage-waza): Harai-goshi, Tai-otoshi, Koshi-guruma, Tsuri-komi-goshi, Ko-soto-gake + mistrzowska Uchi-mata!",
-        "Trzymania i Parter (Katame-waza): Kami-shiho-gatame, Kuzure-kami-shiho-gatame, Tate-shiho-gatame oraz płynne przejścia między 4 trzymaniami.",
-        "Kombinacje (Renraku-waza): O-uchi-gari ➔ Uchi-mata, Kouchi-gari ➔ Ippon-seoi-nage.",
-        "Kontry (Kaeshi-waza): Blok biodrem i zejście Tani-otoshi / Ko-soto-gake."
-      ]
-    },
-    "4kyu": {
-      title: "🟠 Wymagania na 4 Kyu (Pomarańczowy Pas) – Powtórka Mistrzowska",
-      reqs: [
-        "Rzuty: Ippon-seoi-nage, Morote-seoi-nage, O-soto-gari, De-ashi-barai, Kouchi-gari.",
-        "Trzymania: Yoko-shiho-gatame, Kuzure-kesa-gatame + ucieczki Mostem (Upa) i Krewetką (Ebi)."
-      ]
-    },
-    "2kyu": {
-      title: "🔵 Wymagania na 2 Kyu (Niebieski Pas) – Wyprzedzamy Rówieśników!",
-      reqs: [
-        "Rzuty: Uchi-mata w ruchu po okręgu, Tomoe-nage (rzut poświęcenia), Soto-makikomi, Sasae-tsuri-komi-ashi.",
-        "Zaawansowane kombinacje stójka-parter i błyskawiczne obracanie 'żółwia'."
-      ]
+  /*************************************************************************
+   * 6. SYNCHRONIZACJA W CHMURZE GOOGLE APPS SCRIPT + KOPIA ZAPASOWA (.JSON)
+   *************************************************************************/
+  function toggleConfigModal() {
+    const m = document.getElementById('configModal');
+    m.style.display = m.style.display === 'none' ? 'block' : 'none';
+    document.getElementById('gasUrlInput').value = localStorage.getItem('tymon_gas_cloud_url') || '';
+  }
+
+  function saveGasUrl() {
+    const url = document.getElementById('gasUrlInput').value.trim();
+    localStorage.setItem('tymon_gas_cloud_url', url);
+    document.getElementById('configStatusMsg').innerText = "✅ Adres Chmury Google zapisany! Klikam pierwszą synchronizację...";
+    syncWithCloud('save');
+  }
+
+  function collectFullGameState() {
+    return {
+      exp: totalExp,
+      masteryGoals: masteryGoals,
+      doneQuests: JSON.parse(localStorage.getItem('tymon_done_quests') || '{}'),
+      injectedTasks: JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]'),
+      mealLog: mealLog
+    };
+  }
+
+  function applyFullGameState(state) {
+    if (!state) return;
+    if (typeof state.exp === 'number') {
+      totalExp = state.exp;
+      localStorage.setItem('tymon_judo_exp', totalExp);
     }
+    if (Array.isArray(state.masteryGoals)) {
+      masteryGoals = state.masteryGoals;
+      localStorage.setItem('tymon_mastery_goals', JSON.stringify(masteryGoals));
+    }
+    if (state.doneQuests) localStorage.setItem('tymon_done_quests', JSON.stringify(state.doneQuests));
+    if (state.injectedTasks) localStorage.setItem('tymon_injected_tasks', JSON.stringify(state.injectedTasks));
+    if (Array.isArray(state.mealLog)) {
+      mealLog = state.mealLog;
+      localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
+    }
+    updateHud();
+    renderMasteryGoals();
+    renderDailyQuests();
+    renderMealLog();
+  }
+
+  async function syncWithCloud(direction = 'save') {
+    const gasUrl = localStorage.getItem('tymon_gas_cloud_url');
+    const btn = document.getElementById('cloudSyncBtn');
+    if (!gasUrl) {
+      toggleConfigModal();
+      document.getElementById('configStatusMsg').innerText = "ℹ️ Wklej najpierw link Web App ze swojego Google Apps Script (lub pobierz plik kopii .json).";
+      return;
+    }
+
+    try {
+      if (btn) btn.innerText = "⏳ Chmura...";
+      if (direction === 'save') {
+        await fetch(gasUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'save', payload: collectFullGameState() })
+        });
+        if (btn) btn.innerText = "✅ Zapisano!";
+        setTimeout(() => { if (btn) btn.innerText = "☁️ Zapisz"; }, 2000);
+      } else {
+        const res = await fetch(gasUrl + '?action=load');
+        const json = await res.json();
+        if (json && json.data) {
+          applyFullGameState(json.data);
+          alert("☁️ Pobrano aktualne postępy Tymona z Chmury Google!");
+        }
+        if (btn) btn.innerText = "☁️ Zapisz";
+      }
+    } catch (e) {
+      if (btn) btn.innerText = "☁️ Zapisz";
+    }
+  }
+
+  function autoSyncCloudSilent() {
+    const gasUrl = localStorage.getItem('tymon_gas_cloud_url');
+    if (!gasUrl) return;
+    fetch(gasUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'save', payload: collectFullGameState() })
+    }).catch(() => {});
+  }
+
+  function exportSaveFile() {
+    const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'tymon-judo-save.json';
+    a.click();
+  }
+
+  function importSaveFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        applyFullGameState(JSON.parse(ev.target.result));
+        alert("✅ Stan gry Tymona został wczytany z pliku!");
+      } catch (err) { alert("Błąd pliku zapisu."); }
+    };
+    reader.readAsText(file);
+  }
+
+  /*************************************************************************
+   * 7. POZOSTAŁE MODUŁY (EXP, EFEKTY 60 FPS, PASY, WIDEO, KALKULATOR)
+   *************************************************************************/
+  function tiltCard(e) {
+    const el = document.getElementById('avatarStage');
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `rotateY(${(x / 12).toFixed(1)}deg) rotateX(${(-y / 12).toFixed(1)}deg) scale(1.02)`;
+  }
+  function tiltCardTouch(e) { if (e.touches[0]) tiltCard(e.touches[0]); }
+  function resetTilt() { document.getElementById('avatarStage').style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)'; }
+
+  function initHeroVfxEngine() {
+    const canvas = document.getElementById('heroVfxCanvas');
+    const ctx = canvas.getContext('2d');
+    const particles = Array.from({ length: 26 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vy: -0.8 - Math.random() * 1.8,
+      r: 1.5 + Math.random() * 2.5,
+      a: 0.4 + Math.random() * 0.6
+    }));
+
+    function drawBolt() {
+      ctx.strokeStyle = currentForm === 'thunder' ? '#00f0ff' : (currentForm === 'fire' ? '#facc15' : '#d8b4fe');
+      ctx.lineWidth = 2.2;
+      ctx.shadowColor = ctx.strokeStyle;
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      let x = Math.random() < 0.5 ? 12 + Math.random() * 35 : canvas.width - 48 + Math.random() * 35;
+      let y = 10;
+      ctx.moveTo(x, y);
+      while (y < canvas.height - 20) {
+        x += (Math.random() - 0.5) * 24;
+        y += 18 + Math.random() * 18;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y += p.vy;
+        if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
+        ctx.beginPath();
+        ctx.fillStyle = currentForm === 'fire' ? `rgba(249,115,22,${p.a})` : `rgba(250,204,21,${p.a})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      if (Math.random() < 0.18) drawBolt();
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  function changeHeroForm() {
+    currentForm = document.getElementById('heroFormSelect').value;
+    document.getElementById('avatarStage').className = 'avatar-stage form-' + currentForm;
+    redrawAnimePhoto();
+  }
+
+  function playSound(type = 'exp') {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const freqs = type === 'levelup' ? [523.25, 659.25, 783.99, 1046.5] : [587.33, 880];
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.08);
+        gain.gain.setValueAtTime(0.16, ctx.currentTime + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.22);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.08); osc.stop(ctx.currentTime + i * 0.08 + 0.24);
+      });
+    } catch (e) {}
+  }
+
+  function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const pieces = Array.from({ length: 85 }, () => ({
+      x: Math.random() * canvas.width, y: -20 - Math.random() * 80,
+      s: 6 + Math.random() * 7,
+      c: ['#facc15', '#00f0ff', '#f97316', '#10b981', '#ef4444'][Math.floor(Math.random() * 5)],
+      vy: 3 + Math.random() * 5, vx: -2 + Math.random() * 4
+    }));
+    let f = 0;
+    function step() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => { p.y += p.vy; p.x += p.vx; ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.s, p.s); });
+      if (++f < 105) requestAnimationFrame(step);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    step();
+  }
+
+  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp')) || 340;
+  function addExp(pts) {
+    const prevLvl = Math.floor(totalExp / 100) + 1;
+    totalExp += pts;
+    localStorage.setItem('tymon_judo_exp', totalExp);
+    const nextLvl = Math.floor(totalExp / 100) + 1;
+    updateHud();
+    if (nextLvl > prevLvl) {
+      playSound('levelup'); launchConfetti();
+      alert(`🎉 PLUS ULTRA! TYMON WBIJA POZIOM ${nextLvl}!`);
+    } else playSound('exp');
+  }
+
+  function updateHud() {
+    const lvl = Math.floor(totalExp / 100) + 1;
+    document.getElementById('lvlNumber').innerText = lvl;
+    document.getElementById('expNumber').innerText = totalExp;
+  }
+
+  function injectToWeeklyPlan(taskText) {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
+    if (!list.includes(taskText)) {
+      list.push(taskText);
+      localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
+    }
+    addExp(40); renderInjectedQuests(); autoSyncCloudSilent();
+    alert("⚡ Dodano do Planu Dnia oraz zwiększono licznik Mastera!");
+  }
+
+  function removeInjectedTask(idx) {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
+    list.splice(idx, 1);
+    localStorage.setItem('tymon_injected_tasks', JSON.stringify(list));
+    renderInjectedQuests(); autoSyncCloudSilent();
+  }
+
+  function renderInjectedQuests() {
+    const list = JSON.parse(localStorage.getItem('tymon_injected_tasks') || '[]');
+    const box = document.getElementById('injectedQuestsBox');
+    if (!list.length) { box.innerHTML = ''; return; }
+    let html = `<h3 style="color:var(--neon-orange); margin-bottom:8px;">🎯 Aktywne Zadania Specjalne ("Popracujmy nad tym!"):</h3>`;
+    list.forEach((t, i) => {
+      html += `
+        <div class="quest-item" style="border-left-color:var(--neon-orange);">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+            <span style="font-size:0.85rem;">🔥 ${t}</span>
+            <button class="btn btn-green" style="padding:5px 10px; font-size:0.75rem;" onclick="incrementMastery('uchimata', 1); removeInjectedTask(${i});">✅ Zrobione (+1 Master)</button>
+          </div>
+        </div>
+      `;
+    });
+    box.innerHTML = html;
+  }
+
+  const BELT_EXAMS = {
+    "3kyu": [
+      "Harai-goshi (Zagarnięcie biodrem) + kombinacja z O-uchi-gari",
+      "Tai-otoshi (Rzut ręczny przed stopami) + praca rękawa",
+      "Koshi-guruma & Tsuri-komi-goshi (Rzuty biodrowe)",
+      "Kami-shiho-gatame & Tate-shiho-gatame (Trzymania w parterze)"
+    ],
+    "4kyu": [
+      "Ippon-seoi-nage & Morote-seoi-nage",
+      "O-soto-gari, De-ashi-barai, Kouchi-gari",
+      "Yoko-shiho-gatame & Kuzure-kesa-gatame"
+    ],
+    "2kyu": [
+      "Uchi-mata w ruchu po okręgu (Maru-uchi-mata)",
+      "Tomoe-nage (Rzut poświęcenia przez głowę)",
+      "Soto-makikomi & Sasae-tsuri-komi-ashi"
+    ]
   };
 
   function renderBeltRequirements() {
     const key = document.getElementById('beltTargetSelect').value;
-    const b = BELT_EXAMS[key];
-    let html = `<h3 style="margin-top:8px;">${b.title}</h3>`;
-    b.reqs.forEach(r => {
-      const safeText = r.replace(/'/g, "");
+    let html = '';
+    BELT_EXAMS[key].forEach(r => {
       html += `
-        <div class="quest-item" style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-          <span style="font-size:0.86rem;">🥋 ${r}</span>
-          <button class="btn btn-blue" style="padding:6px 10px; font-size:0.76rem;" onclick="injectToWeeklyPlan('Trening do pasa (${key.toUpperCase()}): ${safeText}')">
-            ➕ Wrzuć do Planu Tygodnia
+        <div class="quest-item" style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:0.84rem;">🥋 ${r}</span>
+          <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="incrementMastery('belt3kyu', 1); injectToWeeklyPlan('Egzamin na pas (${key.toUpperCase()}): ${r}')">
+            ➕ Ćwicz do Pasa (+1 Master)
           </button>
         </div>
       `;
@@ -1131,27 +1436,15 @@
     document.getElementById('beltContentArea').innerHTML = html;
   }
 
-  let timerSec = 20, defaultTimerSec = 20, timerInt = null;
-  function fmtTime(s) {
-    return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
-  }
-  function setDojoTimer(s) {
-    pauseDojoTimer(); defaultTimerSec = s; timerSec = s;
-    document.getElementById('dojoTimerDisplay').innerText = fmtTime(s);
-  }
+  let timerSec = 25, defaultTimerSec = 25, timerInt = null;
+  function fmtTime(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+  function setDojoTimer(s) { pauseDojoTimer(); defaultTimerSec = s; timerSec = s; document.getElementById('dojoTimerDisplay').innerText = fmtTime(s); }
   function startDojoTimer() {
     if (timerInt) return;
     playSound('exp');
     timerInt = setInterval(() => {
-      if (timerSec > 0) {
-        timerSec--;
-        document.getElementById('dojoTimerDisplay').innerText = fmtTime(timerSec);
-      } else {
-        pauseDojoTimer();
-        playSound('levelup');
-        alert("🔔 SOREMADE! Koniec rundy – świetna robota Tymon (+20 EXP)!");
-        addExp(20);
-      }
+      if (timerSec > 0) { timerSec--; document.getElementById('dojoTimerDisplay').innerText = fmtTime(timerSec); }
+      else { pauseDojoTimer(); playSound('levelup'); addExp(25); alert("🔔 SOREMADE! Runda zaliczona (+25 EXP)!"); }
     }, 1000);
   }
   function pauseDojoTimer() { clearInterval(timerInt); timerInt = null; }
@@ -1159,82 +1452,64 @@
 
   function loadFightVideo(e) {
     const file = e.target.files[0];
-    if (!file) return;
-    document.getElementById('fightVideoPlayer').src = URL.createObjectURL(file);
+    if (file) document.getElementById('fightVideoPlayer').src = URL.createObjectURL(file);
   }
-  function setVideoSpeed(rate) {
-    document.getElementById('fightVideoPlayer').playbackRate = rate;
-  }
-  async function captureFrameToAvatar() {
+  function setVideoSpeed(rate) { document.getElementById('fightVideoPlayer').playbackRate = rate; }
+  async function captureFrameToAnimeCard() {
     const vid = document.getElementById('fightVideoPlayer');
-    if (!vid.videoWidth) { alert("Najpierw wczytaj i uruchom film z walki!"); return; }
+    if (!vid.videoWidth) { alert("Najpierw uruchom wideo z walki!"); return; }
     const c = document.createElement('canvas');
     c.width = vid.videoWidth; c.height = vid.videoHeight;
     c.getContext('2d').drawImage(vid, 0, 0);
     const dataUrl = c.toDataURL('image/jpeg', 0.9);
     await savePhotoToSlot(currentSlot, dataUrl);
-    document.getElementById('heroPhotoEl').src = dataUrl;
-    hideUploadOverlay();
-    addExp(30);
-    alert(`📸 Kadr z walki zapisany w Slocie #${currentSlot} na Karcie Tymona (+30 EXP)!`);
+    loadedSlotImage = new Image();
+    loadedSlotImage.onload = () => { redrawAnimePhoto(); addExp(35); };
+    loadedSlotImage.src = dataUrl;
   }
 
-  function toggleApiSettings() {
-    const m = document.getElementById('apiConfigModal');
-    m.style.display = m.style.display === 'none' ? 'block' : 'none';
-  }
   function saveApiKeySafe() {
     const k = document.getElementById('apiKeyField').value.trim();
     if (!k) return;
     localStorage.setItem('TYMON_SAFE_GEMINI_KEY', k);
     document.getElementById('apiKeyField').value = '';
-    document.getElementById('apiKeyStatus').innerText = "✅ Klucz zapisany bezpiecznie w pamięci przeglądarki!";
+    document.getElementById('configStatusMsg').innerText = "✅ Klucz AI zapisany bezpiecznie w pamięci urządzenia!";
   }
   function removeApiKeySafe() {
     localStorage.removeItem('TYMON_SAFE_GEMINI_KEY');
-    document.getElementById('apiKeyStatus').innerText = "🗑️ Klucz usunięty z pamięci lokalnej.";
+    document.getElementById('configStatusMsg').innerText = "🗑️ Klucz usunięty.";
   }
 
   async function analyzeFightWithGemini() {
-    const q = document.getElementById('aiFightQuestion').value.trim() || "Przeanalizuj tę sytuację w walce judo 11-letniego Tymona (koronny rzut Uchi-mata) i podaj 3 konkretne ćwiczenia do domu.";
+    const q = document.getElementById('aiFightQuestion').value.trim() || "Przeanalizuj tę akcję 11-letniego Tymona (Uchi-mata) i podaj 3 kroki naprawcze.";
     const out = document.getElementById('aiVideoOutput');
     const apiKey = localStorage.getItem('TYMON_SAFE_GEMINI_KEY');
+    out.innerText = "⏳ AI Sensei analizuje walkę...";
 
-    out.innerText = "⏳ AI Sensei Kodokanu analizuje akcję...";
+    const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (koronny rzut Uchi-mata, w domu ma gumy z kołnierzem i rękawem, kółko na brzuch, paraletki, hantelki i Tatę na macie). Odpowiedz po polsku, konkretnie: " + q }];
+    const vid = document.getElementById('fightVideoPlayer');
+    if (vid && vid.videoWidth > 0) {
+      const c = document.createElement('canvas');
+      c.width = 480; c.height = Math.round(vid.videoHeight * (480 / vid.videoWidth));
+      c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
+      parts.push({ inline_data: { mime_type: "image/jpeg", data: c.toDataURL('image/jpeg', 0.8).split(',')[1] } });
+    }
 
     if (!apiKey) {
-      out.innerText =
-        "ℹ️ [Tryb Trenera Offline – brak klucza w konfiguracji]\n\n" +
-        "Sensei radzi Tymonowi:\n" +
-        "1. W stójce: Zanim wejdziesz w Uchi-matę, zrób małe podcięcie Kouchi-gari i mocno pociągnij rękaw do wysokości swojego ucha.\n" +
-        "2. W parterze: Po nieudanym rzucie natychmiast zwijaj się w aktywnego żółwia lub łap nogę rywala między kolana.\n\n" +
-        "(Aby użyć analizy obrazu/tekstu na żywo przez Gemini 2.5 Flash, kliknij '⚙️ Klucz AI' na górze i wklej swój klucz).";
+      out.innerText = "ℹ️ [Tryb Offline – brak klucza API]\n1. Przed Uchi-matą zrób podcięcie Kouchi-gari.\n2. Ciągnij rękaw na wysokość ucha.\n3. W parterze: Łokcie do żeber ➔ Most (Upa) ➔ Krewetka (Ebi).";
       return;
     }
 
     try {
-      const parts = [{ text: "Jesteś trenerem Kodokan Judo dla 11-letniego Tymona (pomarańczowy pas, koronny rzut Uchi-mata, w domu ma gumy z kołnierzem i rękawem, gumy oporowe, kółko na brzuch, paraletki, hantelki i Tatę jako partnera na macie). Odpowiedz po polsku, motywująco i konkretnie: " + q }];
-
-      const vid = document.getElementById('fightVideoPlayer');
-      if (vid && vid.videoWidth > 0) {
-        const c = document.createElement('canvas');
-        c.width = 480; c.height = Math.round(vid.videoHeight * (480 / vid.videoWidth));
-        c.getContext('2d').drawImage(vid, 0, 0, c.width, c.height);
-        const base64 = c.toDataURL('image/jpeg', 0.8).split(',')[1];
-        parts.push({ inline_data: { mime_type: "image/jpeg", data: base64 } });
-      }
-
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts }] })
       });
-      if (!res.ok) throw new Error("Kod HTTP " + res.status);
       const data = await res.json();
       out.innerText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Brak odpowiedzi.";
       addExp(25);
     } catch (err) {
-      out.innerText = "❌ Błąd wywołania Gemini API (" + err.message + "). Sprawdź klucz w '⚙️ Klucz AI'.";
+      out.innerText = "❌ Błąd połączenia z Gemini API: " + err.message;
     }
   }
 
@@ -1246,17 +1521,14 @@
     { name: "🌾 Owsianka Mistrza na mleku (Śniadanie w dzień turnieju)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
     { name: "🍗 Kurczak z ryżem (Obiad budujący siłę Uchi-maty)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
     { name: "🥚 Jajecznica / Jajka (Siła chwytu Kumi-kata)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
+    { name: "🥞 Naleśniki z twarogiem (Doładowanie po szkole)", kcal: 215, p: 11.5, c: 28.0, f: 6.0 },
     { name: "🧀 Twaróg chudy (Nocna regeneracja mięśni)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
-    { name: "🐟 Śledzie w oleju odsączone (Omega-3 & Białko)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
     { name: "🍯 Domowy Izotonik (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
   let foods = JSON.parse(localStorage.getItem('tymon_only_foods')) || JUDOKA_FUEL_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
-  const GOALS_MAP = {
-    tymon: { kcal: 2100, p: 85, c: 285, f: 65 },
-    jerry: { kcal: 2250, p: 175, c: 190, f: 85 }
-  };
+  const TYMON_GOALS = { kcal: 2100, p: 85, c: 285, f: 65 };
 
   function initFoodSelect() {
     const s = document.getElementById('calcFoodSelect');
@@ -1291,8 +1563,7 @@
       f: +(f.f * r).toFixed(1)
     });
     localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
-    addExp(15);
-    renderMealLog();
+    addExp(15); renderMealLog(); autoSyncCloudSilent();
   }
 
   function saveCustomFood() {
@@ -1310,45 +1581,33 @@
   function removeMeal(i) {
     mealLog.splice(i, 1);
     localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
-    renderMealLog();
+    renderMealLog(); autoSyncCloudSilent();
   }
 
   function resetMealLog() {
     mealLog = [];
     localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
-    renderMealLog();
+    renderMealLog(); autoSyncCloudSilent();
   }
 
   function renderMealLog() {
-    const mode = document.getElementById('calcProfileMode') ? document.getElementById('calcProfileMode').value : 'tymon';
-    const gTarget = GOALS_MAP[mode] || GOALS_MAP.tymon;
     const tb = document.getElementById('mealLogTable');
     tb.innerHTML = '';
     let tk = 0, tp = 0, tc = 0, tf = 0;
-
     mealLog.forEach((m, i) => {
       tk += m.kcal; tp += m.p; tc += m.c; tf += m.f;
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${m.name}</td><td>${m.g}g</td><td><strong>${m.kcal}</strong></td><td>${m.p}/${m.c}/${m.f}g</td><td><button class="btn btn-ghost" style="padding:2px 7px;" onclick="removeMeal(${i})">✕</button></td>`;
       tb.appendChild(tr);
     });
-
-    document.getElementById('goalKcal').innerText = gTarget.kcal;
-    document.getElementById('goalP').innerText = gTarget.p;
-    document.getElementById('goalC').innerText = gTarget.c;
-    document.getElementById('goalF').innerText = gTarget.f;
-
     document.getElementById('sumKcal').innerText = Math.round(tk);
     document.getElementById('sumP').innerText = tp.toFixed(1);
     document.getElementById('sumC').innerText = tc.toFixed(1);
     document.getElementById('sumF').innerText = tf.toFixed(1);
-
-    const pctKcal = Math.min(100, Math.round((tk / gTarget.kcal) * 100));
-    document.getElementById('barKcal').style.width = pctKcal + '%';
-    document.getElementById('barP').style.width = Math.min(100, (tp / gTarget.p) * 100) + '%';
-    document.getElementById('barC').style.width = Math.min(100, (tc / gTarget.c) * 100) + '%';
-    document.getElementById('barF').style.width = Math.min(100, (tf / gTarget.f) * 100) + '%';
-    document.getElementById('heroBatteryText').innerText = (pctKcal > 0 ? pctKcal : 100) + '% Gaz';
+    document.getElementById('barKcal').style.width = Math.min(100, (tk / TYMON_GOALS.kcal) * 100) + '%';
+    document.getElementById('barP').style.width = Math.min(100, (tp / TYMON_GOALS.p) * 100) + '%';
+    document.getElementById('barC').style.width = Math.min(100, (tc / TYMON_GOALS.c) * 100) + '%';
+    document.getElementById('barF').style.width = Math.min(100, (tf / TYMON_GOALS.f) * 100) + '%';
   }
 
   function switchTab(paneId, btn) {
@@ -1361,6 +1620,7 @@
   window.onload = function() {
     document.getElementById('daySelect').value = new Date().getDay();
     updateHud();
+    renderMasteryGoals();
     initHeroVfxEngine();
     selectCardSlot(1);
     renderDailyQuests();
