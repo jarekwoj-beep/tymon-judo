@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v9.0</title>
+  <title>TYMON: IPPON HERO – KODOKAN AWAKENING v9.1</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -33,7 +33,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Wstrząs ekranu podczas Ataku Specjalnego Ippon! */
     body.screen-shake {
       animation: ipponShake 0.45s cubic-bezier(.36,.07,.19,.97) both;
     }
@@ -49,7 +48,6 @@
       pointer-events: none; z-index: 9999;
     }
 
-    /* GÓRNY PASEK HUD GRY - 100% DOPASOWANY DO TELEFONU */
     header.game-hud {
       background: linear-gradient(90deg, #090d16 0%, #1e1b4b 50%, #090d16 100%);
       border-bottom: 3px solid var(--neon-gold);
@@ -80,7 +78,6 @@
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.5);
     }
 
-    /* KARTA BOHATERA Z ANIMACJĄ POSTACI 2.5D (FIGHTING STANCE BREATHING & ATTACK) */
     .hero-banner { max-width: 1120px; margin: 12px auto; padding: 0 10px; }
     .hero-card {
       background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
@@ -100,12 +97,13 @@
       background: radial-gradient(circle at 50% 35%, #1e3a8a 0%, #090d16 100%);
       box-shadow: 0 0 28px var(--neon-blue), inset 0 0 20px var(--neon-gold);
       transition: transform 0.15s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
     }
     .avatar-stage.form-thunder { border-color: var(--neon-blue); box-shadow: 0 0 28px var(--neon-blue); }
     .avatar-stage.form-fire { border-color: var(--neon-orange); box-shadow: 0 0 34px var(--neon-red); }
     .avatar-stage.form-ultra { border-color: var(--neon-purple); box-shadow: 0 0 34px var(--neon-purple); }
 
-    /* Żywa animacja "oddychania bojowego" i kołysania w pozycji judo 2.5D */
+    /* Żywa animacja oddychania bojowego i kołysania w pozycji judo 2.5D */
     #fighterSprite {
       width: 100%; height: 100%; object-fit: cover; object-position: center top;
       position: absolute; top: 0; left: 0; z-index: 2;
@@ -129,13 +127,11 @@
       100% { transform: scale(1.03) translateY(0px) rotate(0deg); filter: contrast(1.08) saturate(1.18); }
     }
 
-    /* Warstwa efektów cząsteczkowych 60 FPS (Pioruny / Płomienie / Linie Mocy) */
     #heroVfxCanvas {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none; z-index: 3;
     }
 
-    /* Rozbłysk napisu IPPON! na karcie */
     #ipponFlashBanner {
       position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%) scale(0);
       background: linear-gradient(135deg, var(--neon-gold), var(--neon-red));
@@ -176,7 +172,6 @@
       box-shadow: 2px 2px 0 #000;
     }
 
-    /* Overlay podpowiedzi wczytania Kart Bojowych Anime */
     #uploadHintOverlay {
       position: absolute; inset: 0; z-index: 5; background: rgba(6, 9, 20, 0.88);
       display: none; flex-direction: column; align-items: center; justify-content: center;
@@ -191,7 +186,6 @@
     }
     .slot-btn.active { border-color: var(--neon-gold); background: rgba(250,204,21,0.22); color: var(--neon-gold); }
 
-    /* PASKI CELÓW DO RANGI MASTER - ZERO UCINANIA TEKSTU NA TELEFONIE */
     .mastery-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 12px;
     }
@@ -217,7 +211,6 @@
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;
     }
 
-    /* NAWIGACJA ZAKŁADEK */
     nav.game-tabs {
       display: flex; overflow-x: auto; background: var(--bg-card);
       border-bottom: 2px solid rgba(0, 240, 255, 0.25);
@@ -305,7 +298,6 @@
 
 <canvas id="confettiCanvas"></canvas>
 
-<!-- GÓRNY PASEK HUD -->
 <header class="game-hud">
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
@@ -321,7 +313,6 @@
   </div>
 </header>
 
-<!-- MODAL KONFIGURACJI CHMURY GOOGLE APPS SCRIPT, BACKUPU I KLUCZA GEMINI API -->
 <div class="container" id="configModal" style="display:none;">
   <div class="card" style="border:2px solid var(--neon-gold);">
     <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
@@ -352,7 +343,7 @@
   </div>
 </div>
 
-<!-- KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D + PASKI CELÓW DO RANGI MASTER -->
+<!-- KARTA BOHATERA Z ŻYWYM RUCHEM 2.5D + OBSŁUGA TWOICH PLIKÓW .JPEG -->
 <section class="hero-banner">
   <div class="hero-card">
     <div class="holo-card-wrap">
@@ -362,18 +353,17 @@
         <div id="ipponFlashBanner">⚡ IPPON!</div>
         <div class="holo-shine"></div>
 
-        <!-- Żywa, oddychająca i atakująca postać Anime Tymona -->
-        <img id="fighterSprite" src="tymon1.jpg" onerror="handleMissingSlotImage()" onload="hideMissingOverlay()" alt="Tymon Anime Fighter">
+        <!-- Domyślnie ładuje Twoje wgrane pliki tymon1.jpeg / tymon2.jpeg / tymon3.jpeg -->
+        <img id="fighterSprite" src="tymon1.jpeg" onerror="handleMissingSlotImage()" onload="hideMissingOverlay()" alt="Tymon Anime Fighter">
         <canvas id="heroVfxCanvas" width="250" height="330"></canvas>
 
-        <!-- Podpowiedź pierwszego wczytania wygenerowanych Kart Bojowych Anime -->
         <div id="uploadHintOverlay">
           <div style="font-size:2rem;">🥋⚡</div>
           <strong style="color:var(--neon-gold); font-size:0.88rem;">AKTYWUJ KARTĘ BOJOWĄ ANIME (SLOT #<span id="overlaySlotNum">1</span>)</strong>
           <p style="font-size:0.75rem; color:var(--text-dim);">
-            Wybierz z galerii telefonu zapisaną z naszego czatu Kartę Bojową Anime Tymona (z pozycją judo i nastroszoną fryzurą) – ożyje w ruchu 60 FPS!
+            Wybierz z galerii telefonu Kartę Bojową Anime Tymona lub swoje zdjęcie – ożyje w ruchu 60 FPS!
           </p>
-          <label class="btn btn-gold" style="cursor:pointer; width:100%;">
+          <label class="btn btn-gold" style="cursor:pointer; width:100%;" onclick="event.stopPropagation()">
             📸 Wczytaj Kartę Anime do Slotu
             <input type="file" accept="image/*" style="display:none;" onchange="uploadHeroCardToSlot(event)">
           </label>
@@ -396,13 +386,12 @@
           <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; width:100%;">
             <button class="btn" onclick="triggerHeroAttackAnimation()">💥 ODPAL ATAK UCHI-MATA! (RUCH)</button>
             <label class="btn btn-gold" style="margin:0; cursor:pointer;">
-              📸 Wgraj Kartę Anime / Zdjęcie (Slot #<span id="activeSlotText">1</span>)
+              📸 Zmień Grafikę w Slocie #<span id="activeSlotText">1</span>
               <input type="file" accept="image/*" style="display:none;" onchange="uploadHeroCardToSlot(event)">
             </label>
           </div>
         </div>
 
-        <!-- Wybór Aury i Ruchu Bojowego -->
         <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
           <select id="heroFormSelect" onchange="changeHeroForm()" style="margin:0; font-weight:800;">
             <option value="thunder">⚡ Styl 1: Błyskawica Kodokanu (Pozycja Bojowa Kumi-kata)</option>
@@ -411,14 +400,12 @@
           </select>
         </div>
 
-        <!-- CZYTELNE PASKI CELÓW DO RANGI MASTER -->
         <div class="mastery-grid" id="masteryGoalsContainer"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
   <button class="active" onclick="switchTab('pane-daily', this)">📅 Trening Dnia (Krok po Kroku)</button>
   <button onclick="switchTab('pane-kodokan', this)">🥋 Szkoła Kodokan (Wideo)</button>
@@ -429,7 +416,6 @@
 
 <div class="container">
 
-  <!-- ZAKŁADKA 1: TRENING DNIA Z WIZUALNYMI INSTRUKCJAMI KROK PO KROKU -->
   <div id="pane-daily" class="tab-pane active">
     <div class="grid-2">
       <div class="card">
@@ -481,7 +467,6 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 2: OFICJALNA SZKOŁA KODOKAN (KDKJUDO.ORG + BEZPOŚREDNIE FILMY) -->
   <div id="pane-kodokan" class="tab-pane">
     <div class="card">
       <h2>🥋 Oficjalna Baza Kodokan Judo Institute (Tokio) – Wideo & Instrukcje</h2>
@@ -507,7 +492,6 @@
     <div id="techDetailContainer" class="card"></div>
   </div>
 
-  <!-- ZAKŁADKA 3: WYBÓR DODATKOWYCH CELÓW + EGZAMIN DO PASA -->
   <div id="pane-belts" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -531,7 +515,6 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 4: ANALIZA WALKI Z BOCHNI + ODTWARZACZ SLOW-MO & AI SENSEI -->
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -573,7 +556,7 @@
           <button class="btn btn-ghost" onclick="setVideoSpeed(0.25)">🐢 0.25x</button>
           <button class="btn btn-ghost" onclick="setVideoSpeed(0.5)">⚡ 0.5x</button>
           <button class="btn btn-ghost" onclick="setVideoSpeed(1.0)">▶️ 1.0x</button>
-          <button class="btn btn-gold" onclick="captureVideoFrameToSlot()">📸 Zapisz ten kadr w Slocie #<span id="vidSlotNum">4</span></button>
+          <button class="btn btn-gold" onclick="captureVideoFrameToSlot()">📸 Zapisz ten kadr w Slocie #4</button>
         </div>
 
         <textarea id="aiFightQuestion" rows="2" placeholder="Zadaj pytanie AI Senseiowi o walkę lub technikę..."></textarea>
@@ -587,7 +570,6 @@
     </div>
   </div>
 
-  <!-- ZAKŁADKA 5: KALKULATOR MOCY I NAJPOPULARNIEJSZYCH PRODUKTÓW -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -676,9 +658,6 @@
 </div>
 
 <script>
-  /*************************************************************************
-   * 1. SYSTEM PASKÓW OPANOWANIA DO RANGI MASTER (MASTERY TRACKER)
-   *************************************************************************/
   const DEFAULT_MASTERY_GOALS = [
     { id: 'uchimata', title: '🔥 Master Uchi-maty (Bochnia 1:12)', current: 4, target: 20, unit: 'sesji' },
     { id: 'newaza', title: '🛡️ Ucieczka Kesa-gatame (Most+Krewetka)', current: 2, target: 15, unit: 'ucieczek' },
@@ -738,15 +717,13 @@
     autoSyncCloudSilent();
   }
 
-  /*************************************************************************
-   * 2. SILNIK ŻYWEGO RUCHU POSTACI ANIME 2.5D + SLOTY HD (BEZ KROPEK!)
-   *************************************************************************/
   let currentSlot = 1;
   let currentForm = 'thunder';
+  let fallbackAttempt = 0;
 
   function openPhotoDB() {
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open('TymonFighterCardsDB_v9', 1);
+      const req = indexedDB.open('TymonFighterCardsDB_v91', 1);
       req.onupgradeneeded = e => { e.target.result.createObjectStore('cards'); };
       req.onsuccess = e => resolve(e.target.result);
       req.onerror = e => reject(e);
@@ -775,15 +752,16 @@
     }
   }
 
+  // Obsługa Twoich wgranych na GitHuba plików tymon1.jpeg, tymon2.jpeg, tymon3.jpeg + fallback na .jpg/.png
   async function selectCardSlot(slot) {
     currentSlot = slot;
+    fallbackAttempt = 0;
     document.getElementById('activeSlotText').innerText = slot;
     document.getElementById('overlaySlotNum').innerText = slot;
     [1, 2, 3, 4].forEach(s => {
       document.getElementById('slotBtn' + s).classList.toggle('active', s === slot);
     });
 
-    // Automatyczne dopasowanie aury do wybranego slotu bojowego
     if (slot === 1) { document.getElementById('heroFormSelect').value = 'thunder'; changeHeroForm(false); }
     if (slot === 2) { document.getElementById('heroFormSelect').value = 'fire'; changeHeroForm(false); }
     if (slot === 3) { document.getElementById('heroFormSelect').value = 'ultra'; changeHeroForm(false); }
@@ -794,17 +772,19 @@
       sprite.src = saved;
       hideMissingOverlay();
     } else {
-      sprite.src = `tymon${slot}.jpg`;
+      sprite.src = `tymon${slot}.jpeg`;
     }
   }
 
   function handleMissingSlotImage() {
     const sprite = document.getElementById('fighterSprite');
-    if (!sprite.src.endsWith('tymon.jpg')) {
-      sprite.src = 'tymon.jpg';
-      sprite.onerror = () => {
-        document.getElementById('uploadHintOverlay').style.display = 'flex';
-      };
+    fallbackAttempt++;
+    if (fallbackAttempt === 1) {
+      sprite.src = `tymon${currentSlot}.jpg`;
+    } else if (fallbackAttempt === 2) {
+      sprite.src = `tymon${currentSlot}.png`;
+    } else if (fallbackAttempt === 3) {
+      sprite.src = 'tymon1.jpeg';
     } else {
       document.getElementById('uploadHintOverlay').style.display = 'flex';
     }
@@ -831,7 +811,6 @@
     reader.readAsDataURL(file);
   }
 
-  // Dynamiczny Atak Postaci 2.5D (Wyskok + Wstrząs Ekranu + Rozbłysk IPPON!)
   function triggerHeroAttackAnimation() {
     const sprite = document.getElementById('fighterSprite');
     const banner = document.getElementById('ipponFlashBanner');
@@ -909,9 +888,6 @@
     loop();
   }
 
-  /*************************************************************************
-   * 3. WIZUALNE RYSUNKI TECHNICZNE KROK PO KROKU
-   *************************************************************************/
   const EXERCISE_DIAGRAMS = {
     uchimata_triangle: `<svg viewBox="0 0 100 100" width="90" height="90"><polygon points="50,18 20,82 80,82" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4,2"/><circle cx="25" cy="22" r="7" fill="#ef4444"/><circle cx="75" cy="22" r="7" fill="#ef4444"/><ellipse cx="50" cy="44" rx="7" ry="12" fill="#facc15"/><text x="34" y="66" fill="#facc15" font-size="8" font-weight="bold">1.Krok w ▲</text><path d="M50 44 L82 15" stroke="#10b981" stroke-width="4" stroke-linecap="round"/><text x="48" y="94" fill="#10b981" font-size="8" font-weight="bold">2.Noga w górę!</text></svg>`,
     ab_wheel: `<svg viewBox="0 0 100 100" width="90" height="90"><rect x="86" y="15" width="6" height="70" fill="#ef4444"/><text x="58" y="25" fill="#ef4444" font-size="8" font-weight="bold">Ściana</text><line x1="10" y1="85" x2="92" y2="85" stroke="#94a3b8" stroke-width="3"/><circle cx="68" cy="76" r="8" fill="none" stroke="#00f0ff" stroke-width="3"/><path d="M22 82 L38 62 L68 76" stroke="#facc15" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="45" cy="54" r="6" fill="#facc15"/><text x="12" y="40" fill="#10b981" font-size="8" font-weight="bold">Brzuch napięty!</text></svg>`,
