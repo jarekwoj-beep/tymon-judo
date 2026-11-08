@@ -13,7 +13,7 @@
   <link id="appleTouchIconPre" rel="apple-touch-icon-precomposed" href="tymon1.jpeg">
   <link id="standardFavicon" rel="icon" type="image/jpeg" href="tymon1.jpeg">
 
-  <title>TYMON: IPPON HERO – SOLO DOJO ENGINE v21.1</title>
+  <title>TYMON: IPPON HERO – SOLO DOJO ENGINE v21.2</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -375,8 +375,8 @@
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON: IPPON HERO – SOLO DOJO v21.1</h1>
-      <span>42 Techniki (6➔3 Kyu): Trening Solo na Sucho, Gumy, Podłoga, Mobilność, Blok i Kontra</span>
+      <h1>TYMON: IPPON HERO – SOLO DOJO v21.2</h1>
+      <span>42 Techniki (6➔4.5➔3 Kyu): Trening Solo na Sucho, Gumy, Podłoga, Mobilność, Blok i Kontra</span>
     </div>
   </div>
   <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
@@ -456,7 +456,7 @@
     <div style="display:flex; flex-direction:column; justify-content:space-between; min-width:0;">
       <div>
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <h2 style="font-size:1.06rem; color:#fff; margin:0;">🥋 BOHATER: <span style="color:var(--neon-gold);">TYMON (11 LAT)</span> — TRENING PAMIĘCI MIĘŚNIOWEJ SOLO</h2>
+          <h2 style="font-size:1.06rem; color:#fff; margin:0;">🥋 BOHATER: <span style="color:var(--neon-gold);">TYMON (PAS ŻÓŁTY 5 KYU ➔ CEL 4.5 KYU)</span></h2>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="btn" onclick="triggerHeroAttackAnimation()">💥 ODPAL ATAK!</button>
             <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📋 Mój Plan Ćwiczeń (<span id="planCounterTop">0</span>)</button>
@@ -480,25 +480,28 @@
 <div class="container">
 
   <!-- =========================================================================
-       ZAKŁADKA 1: KOMPLETNA BAZA 42 TECHNIK (OD 6 KYU DO 3 KYU, KUMULATYWNIE)
+       ZAKŁADKA 1: KOMPLETNA BAZA 42 TECHNIK Z PODZIAŁEM NA PÓŁPASY DZIECIĘCE
+       (6 Kyu -> 5 Kyu Żółty -> 4.5 Kyu Żółto-Pomarańczowy -> 4 Kyu Pomarańczowy -> 3.5 Kyu -> 3 Kyu)
        ========================================================================= -->
   <div id="pane-kodokan" class="tab-pane active">
     <div class="card">
       <h2>
         <span>🥋 Wybierz Pas i Technikę – Wszystko do Nauki na Pamięć w Jednym Miejscu!</span>
-        <span style="font-size:0.75rem; color:var(--neon-green);" id="techCountBadge">Dostępne techniki: 42</span>
+        <span style="font-size:0.75rem; color:var(--neon-green);" id="techCountBadge">Dostępne techniki: 26</span>
       </h2>
       <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:10px;">
-        Wybierz pas, a zobaczysz <strong>wszystkie techniki wymagane na ten pas ORAZ z poprzednich pasów</strong>. Kliknij wybraną technikę – od razu pod spodem masz jej <strong>opis na matę, Blokowanie i Kontrę/Wyjście</strong> ORAZ <strong>rozebrane na 4 części ćwiczenia w domu (1. Na sucho nogi, 2. Gumy wychylenie, 3. Gumy całe wejście, 4. Podłoga & Rozciąganie pod ten rzut)</strong>. Kliknij <strong>„➕ Dodaj do mojego planu”</strong> przy 2–3 technikach, które chcesz dzisiaj wyćwiczyć!
+        Skoro Tymon ma teraz <strong>Żółty Pas (5 Kyu)</strong>, lista jest domyślnie ustawiona na jego najbliższy cel: <strong>🟡🟠 4.5 Kyu – Żółto-Pomarańczowy Pas</strong> (zawiera powtórkę z 6 i 5 Kyu oraz 6 nowych technik na pas Żółto-Pomarańczowy!). Możesz też przełączyć na wszystkie 42 techniki aż do Zielonego pasa. Każda technika ma <strong>Blokadę, Kontrę/Wyjście</strong> oraz <strong>4 stacje ćwiczeń solo w domu</strong>!
       </p>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap:9px;">
         <div>
-          <label>1. Wybierz Pas (Kumulatywnie zawiera niższe pasy!):</label>
+          <label>1. Wybierz Pas (Kumulatywnie zawiera też niższe pasy!):</label>
           <select id="kdkBeltSelect" onchange="populateKodokanTechList()">
-            <option value="3">🟠🟢 Do 3 Kyu – Pomarańczowo-Zielony & Zielony (Wszystkie 42 techniki!)</option>
-            <option value="4">🟠 Do 4 Kyu – Pomarańczowy Pas (6+5+4 Kyu = 31 technik)</option>
-            <option value="5">🟡 Do 5 Kyu – Żółty Pas (6+5 Kyu = 20 technik)</option>
+            <option value="4.5" selected>🟡🟠 Do 4.5 Kyu – Żółto-Pomarańczowy Pas (Najbliższy cel Tymka! = 26 technik)</option>
+            <option value="5">🟡 Do 5 Kyu – Żółty Pas (Aktualny pas Tymka: 6+5 Kyu = 20 technik)</option>
+            <option value="4">🟠 Do 4 Kyu – Pomarańczowy Pas (6+5+4.5+4 Kyu = 31 technik)</option>
+            <option value="3.5">🟠🟢 Do 3.5 Kyu – Pomarańczowo-Zielony Pas (Zawiera Uchi-matę! = 37 technik)</option>
+            <option value="3">🟢 Do 3 Kyu – Pełny Zielony Pas (Wszystkie 42 techniki!)</option>
             <option value="6">⚪ 6 Kyu – Biały Pas (Fundamenty = 10 technik)</option>
           </select>
         </div>
@@ -515,9 +518,9 @@
         <div>
           <label>3. Kolejność / Trudność ćwiczenia solo:</label>
           <select id="kdkSortSelect" onchange="populateKodokanTechList()">
-            <option value="belt_order">📚 Kolejno według pasów (Od 6 Kyu do 3 Kyu)</option>
+            <option value="belt_order">📚 Kolejno według pasów (Od 6 Kyu wzwyż)</option>
             <option value="easy_first">🟢 Od najłatwiejszych do ćwiczenia solo (🟢 ➔ 🟡 ➔ 🔴)</option>
-            <option value="only_selected_belt">🎯 Pokaż tylko nowe techniki z wybranego pasa</option>
+            <option value="only_selected_belt">🎯 Pokaż TYLKO nowe techniki z wybranego wyżej pasa</option>
           </select>
         </div>
       </div>
@@ -545,7 +548,7 @@
           </div>
         </h2>
         <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:10px;">
-          Tutaj trafiają wszystkie techniki, przy których kliknąłeś <strong>„➕ Dodaj do mojego planu”</strong>. Każda wybrana technika jest podzielona dla Ciebie na <strong>3 proste części do odhaczenia</strong>: <strong>1. Wejścia na sucho (Nogi)</strong>, <strong>2. Praca na Gumach (Ręce + Wejście)</strong> oraz <strong>3. Podłoga, Siła i Rozciąganie pod ten rzut</strong>!
+          Tutaj trafiają wszystkie techniki, przy których kliknąłeś <strong>„➕ Dodaj do mojego planu”</strong>. Każda wybrana technika jest podzielona dla Ciebie na <strong>3 proste części do odhaczenia</strong>: <strong>1. Wejścia na sucho (Nogi)</strong>, <strong>2. Praca na Gumach (Ręce + Wejście)</strong> oraz <strong>3. Podłoga, Siła, Rozciąganie, Blok i Kontra</strong>!
         </p>
 
         <div id="customPlanContainer"></div>
@@ -637,7 +640,7 @@
             • <strong>Wariant Główny (Lewy – jak w domu `0:05`, `0:15`, `0:31`):</strong> LEWA ręka łapie kołnierz, PRAWA rękaw ➔ ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, obracasz się W PRAWO, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!<br>
             • <strong>Wariant Specjalny z Walki na Sali (`0:05` i `1:08` – Obrót w lewo z lewego kołnierza):</strong> Jeśli trzymasz lewy kołnierz, a chcesz zakręcić się w lewo i wyrzucić PRAWĄ nogę, to LEWA ręka na kołnierzu musi ciągnąć do LEWEGO ucha, a PRAWA ręka musi wejść wysoko pod prawą pachę rywala!
           </p>
-          <button class="btn btn-green" style="width:100%; margin-top:6px;" onclick="addTechniqueToMyPlan('t3_uchimata')">
+          <button class="btn btn-green" style="width:100%; margin-top:6px;" onclick="addTechniqueToMyPlan('t35_uchimata')">
             ➕ Dodaj Uchi-matę (z 4 stacjami domowymi) do Mojego Planu Ćwiczeń!
           </button>
         </div>
@@ -665,7 +668,7 @@
           <span>⚡ Kalkulator Najpopularniejszych Produktów & Bilansu Mocy</span>
           <select id="calcProfileMode" onchange="onProfileModeChange()" style="width:auto; margin:0; font-size:0.75rem; font-weight:800; border-color:var(--neon-gold);">
             <option value="tymon">🥋 Profil 1: Młody Judoka Tymon (2100 kcal | 85g Białka)</option>
-            <option value="redukcja">🔥 Profil 2: Redukcja / Cel 85 kg (2250 kcal | 175g Białka)</option>
+            <option value="redukcja">🔥 Profil 2: JERRY BYKU ULTIMATE OS (Redukcja 85 kg: 2250 kcal | 175g Białka)</option>
           </select>
         </h2>
 
@@ -779,12 +782,10 @@
       canvas.height = 180;
       const ctx = canvas.getContext('2d');
 
-      // Wycina kwadrat z górnej części zdjęcia (twarz i garda Tymona)
       const side = Math.min(imgEl.naturalWidth, imgEl.naturalHeight);
       const sx = Math.max(0, (imgEl.naturalWidth - side) / 2);
       ctx.drawImage(imgEl, sx, 0, side, side, 0, 0, 180, 180);
 
-      // Subtelna złota ramka wokół ikony na pulpicie iOS
       ctx.strokeStyle = '#facc15';
       ctx.lineWidth = 8;
       ctx.strokeRect(4, 4, 172, 172);
@@ -794,9 +795,7 @@
         const link = document.getElementById(id);
         if (link) link.href = iconDataUrl;
       });
-    } catch (e) {
-      // Jeśli przeglądarka zablokuje canvas, iOS użyje bezpośrednio href="tymon1.jpeg" z <head>
-    }
+    } catch (e) {}
   }
 
   /*************************************************************************
@@ -1021,7 +1020,15 @@
   }
 
   /*************************************************************************
-   * 3. KOMPLETNA BAZA WSZYSTKICH 42 TECHNIK KODOKAN & PZJUDO (6 KYU -> 3 KYU)
+   * 3. KOMPLETNA BAZA WSZYSTKICH 42 TECHNIK KODOKAN & PZJUDO
+   *    Z DOKŁADNYM PODZIAŁEM NA:
+   *    - 6 Kyu (Biały – 10 technik)
+   *    - 5 Kyu (Żółty – 10 technik, razem 20)
+   *    - 4.5 Kyu (Żółto-Pomarańczowy – 6 technik, razem 26)
+   *    - 4 Kyu (Pomarańczowy – 5 technik, razem 31)
+   *    - 3.5 Kyu (Pomarańczowo-Zielony – 6 technik, razem 37)
+   *    - 3 Kyu (Zielony – 5 technik, razem 42)
+   *    Każda z 42 technik posiada Blokadę i Kontrę/Wyjście!
    *************************************************************************/
   function makeTech(id, kyuNum, beltBadge, group, diffLevel, name, ytQueryName, diagramType, gripL, gripR, kuzushiL, kuzushiR, feetL, feetR, blockTxt, counterTxt, customSoloObj) {
     const defaultDry = group === 'ashi'
@@ -1078,8 +1085,8 @@
       "🟡 GŁOWA I BRODA: Wzrok wbity we własny pas, szyja napięta.",
       "🟩 PRACA NÓG: W Yoko-ukemi nogi nie krzyżują się; w przewrocie Zempo-kaiten toczysz się po przekątnej od barku do przeciwnego biodra!",
       "🟩 PRACA NÓG: Płynna kołyska po łuku pleców.",
-      "🛡️ ZASADA BEZPIECZEŃSTWA: Nigdy nie podpieraj się wyprostowaną ręką ani łokciem o matę podczas lotu!",
-      "⚡ ZASTOSOWANIE W WALCE: Perfekcyjne Ukemi pozwala natychmiast po rzucie skręcić się w powietrze lub przejść do obrony w parterze!"
+      "🛡️ BLOKOWANIE KONTUZJI: Nigdy nie podpieraj się wyprostowaną ręką ani łokciem o matę podczas lotu!",
+      "⚡ KONTRA / PRZEJŚCIE W WALCE: Perfekcyjne Ukemi pozwala natychmiast po rzucie skręcić się w powietrze, uniknąć Ipponu i przejść do ataku w parterze!"
     ),
     makeTech("t6_deashi", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 1, "De-ashi-barai (Wycięcie postępującej stopy – Szybkie Stopy)", "De-ashi-barai Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu (3 dolne palce!), prawa dłoń na rękawie przy łokciu.",
@@ -1274,8 +1281,8 @@
       "🔓 WYJŚCIE: Wsuń przedramiona pod pachy/podbródek rywala ➔ wysoki Most ze skrętem na jeden bark i zarzuć nogi w przód!"
     ),
 
-    // ==================== 4 KYU (POMARAŃCZOWY PAS – 11 NOWYCH TECHNIK, RAZEM 31) ====================
-    makeTech("t4_sasae", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 2, "Sasae-tsuri-komi-ashi (Blokada stopy przyciąganego rywala)", "Sasae-tsuri-komi-ashi Kodokan Judo", "foot_sweep",
+    // ==================== 4.5 KYU (ŻÓŁTO-POMARAŃCZOWY PAS – NAJBLIŻSZY CEL TYMKA: 6 NOWYCH TECHNIK, RAZEM 26) ====================
+    makeTech("t45_sasae", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ashi", 2, "Sasae-tsuri-komi-ashi (Blokada stopy przyciąganego rywala)", "Sasae-tsuri-komi-ashi Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
       "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wyciągnij rywala wysoko w przód i przekręć ręce jak kierownicę roweru!",
@@ -1285,7 +1292,7 @@
       "🛡️ BLOKOWANIE: Ugnij kolana i przestaw blokowaną stopę ponad stopą rywala!",
       "⚡ KONTRA (KOUCHI-GARI / TSUBAME-GAESHI): Przeskocz nad blokującą stopą i wytnij rywala od środka!"
     ),
-    makeTech("t4_kosotogake", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 2, "Ko-soto-gake (Zewnętrzne zahaczenie nogi z wejściem klatką)", "Ko-soto-gake Kodokan Judo", "foot_sweep",
+    makeTech("t45_kosotogake", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ashi", 2, "Ko-soto-gake (Zewnętrzne zahaczenie nogi z wejściem klatką)", "Ko-soto-gake Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Głęboki chwyt lewą ręką za kołnierz/plecy i prawą za rękaw.",
       "🖐️ UCHWYT (PRAWY): Głęboki chwyt prawą ręką za kołnierz i lewą za rękaw.",
       "🟡 WYCHYLENIE: Ściągnij rywala ostro w dół na jedną piętę i przyklej klatkę do jego klatki!",
@@ -1295,6 +1302,48 @@
       "🛡️ BLOKOWANIE: Rozluźnij zahaczoną nogę i oprzyj ciężar na rękach!",
       "⚡ KONTRA (UCHI-MATA): Wyrzuć zahaczającego z boku rywala Uchi-matą!"
     ),
+    makeTech("t45_seoiotoshi", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "te", 2, "Seoi-otoshi (Rzut przez plecy z niskim zejściem na kolano)", "Seoi-otoshi Kodokan Judo", "two_leg_throw",
+      "🖐️ UCHWYT (LEWY): Jak w Ippon lub Morote-seoi-nage (lewy łokieć pod pachą, prawa dłoń na rękawie).",
+      "🖐️ UCHWYT (PRAWY): Prawy łokieć pod pachą, lewa dłoń na rękawie.",
+      "🟡 WYCHYLENIE: Gwałtowne pociągnięcie rękawa i kołnierza ostro w przód-dół!",
+      "🟡 WYCHYLENIE: Szarpnięcie rękawa i kołnierza w przód-dół!",
+      "🟩 PRACA NÓG: Po obrocie o 180° schodzisz nisko na jedno (lub oba) kolana z szeroko rozstawionymi stopami i ściągasz rywala przez bark!",
+      "🟩 PRACA NÓG: Niskie zejście poniżej kolan rywala i rzut w przód!",
+      "🛡️ BLOKOWANIE: Cofnięcie bioder i wbicie dłoni w plecy/pas rywala!",
+      "⚡ KONTRA (ATAK NA ŻÓŁWIA): Gdy rywal rzuci się na kolana bez wychylenia, natychmiast wchodzisz na jego plecy w parterze!"
+    ),
+    makeTech("t45_haraigoshi", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "koshi", 2, "Harai-goshi (Zamiatający rzut biodrowy – Bliźniak Uchi-maty po zewnętrznej stronie uda!)", "Harai-goshi Kodokan Judo", "one_leg_throw",
+      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu za szyją/łopatką, prawa ręka mocno na rękawie.",
+      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
+      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw wysoko do PRAWEGO ucha ('spójrz na zegarek')!",
+      "🟡 WYCHYLENIE: LEWA ręka ciągnie rękaw wysoko do LEWEGO ucha!",
+      "🟩 PRACA NÓG: Stoisz na PRAWEJ nodze podporowej w trójkącie (▲), a LEWA noga zamiata po zewnętrznej stronie uda/łydki rywala w tył-górę!",
+      "🟩 PRACA NÓG: Stoisz na LEWEJ nodze podporowej, a PRAWA noga zamiata po zewnętrznej stronie nogi rywala!",
+      "🛡️ BLOKOWANIE: Zablokuj biodro dłonią, ugnij kolana i cofnij atakowaną nogę!",
+      "⚡ KONTRA (UTSURI-GOSHI / TANI-OTOSHI): Przejście za biodro rywala i rzut kontrujący!"
+    ),
+    makeTech("t45_tateshiho", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ne", 1, "Tate-shiho-gatame & Kuzure-tate-shiho (Dosiad z góry) ⇄ Wyjście Kleszczami!", "Tate-shiho-gatame Kodokan Judo", "parter_pin_escape",
+      "🖐️ PRACA RĄK: Siedzisz okrakiem na brzuchu rywala i zamykasz jego głowę oraz ramię w trójkąt!",
+      "🖐️ PRACA RĄK: Szczelny splot rąk wokół głowy i barku rywala.",
+      "🟡 KONTROLA: Rozpłaszcz klatkę piersiową nisko i zabierz rywalowi przestrzeń pod łokciem.",
+      "🟡 KONTROLA: Niski środek ciężkości na klatce rywala.",
+      "🟩 PRACA NÓG: Kolana ściskają boki rywala, a Twoje stopy są zahaczone pod jego udami!",
+      "🟩 PRACA NÓG: Zahaczenie stóp pod kolanami/udami rywala.",
+      "🛡️ BLOKOWANIE: Chroń przestrzeń między swoimi kolanami a łokciami – nie wpuść rywala do dosiadu!",
+      "🔓 WYJŚCIE Z TATE-SHIHO-GATAME:\n1. Złap swoimi dwiema stopami jedną stopę rywala i zamknij ją w kleszcze!\n2. Zablokuj dłońmi jego ramię po tej samej stronie.\n3. Zrób potężny Most przez bark w stronę zablokowanej ręki i nogi!"
+    ),
+    makeTech("t45_turtle1", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ne", 1, "Obracanie Żółwia #1 (Metoda za dalszy łokieć z boku) ⇄ Szczelny Żółw", "Judo turtle turnover elbow Kodokan", "parter_pin_escape",
+      "🖐️ PRACA RĄK: Wbij kolano w bok Żółwia, wsuń rękę pod jego bliższą pachę, złap DALSZY ŁOKIEĆ i wciągnij go pod jego brzuch!",
+      "🖐️ PRACA RĄK: Druga dłoń trzyma pas na plecach i pcha Żółwia w bok.",
+      "🟡 KONTROLA: Zabierz rywalowi punkt podparcia (jego dalszy łokieć), a sam przewróci się na plecy!",
+      "🟡 KONTROLA: Ciągnij łokieć po macie do siebie i pchaj klatką!",
+      "🟩 PRACA NÓG: Twoje kolano działa jak klin wbity między łokieć a kolano Żółwia!",
+      "🟩 PRACA NÓG: Zaparcie palcami stóp o matę.",
+      "🛡️ OBRONA W ŻÓŁWIU: Wbij oba łokcie głęboko w dołki swoich kolan, a dłońmi chroń kołnierz – zero szpary pod pachą!",
+      "🔓 KONTRA Z ŻÓŁWIA: Gdy rywal sięga za głęboko pod pachę, zaciśnij jego ramię swoim łokciem i zroluj go pod siebie (Makikomi)!"
+    ),
+
+    // ==================== 4 KYU (PEŁNY POMARAŃCZOWY PAS – 5 NOWYCH TECHNIK, RAZEM 31) ====================
     makeTech("t4_osotoguruma", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 2, "O-soto-guruma (Duże koło przez obie nogi rywala)", "O-soto-guruma Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu, prawa ściąga rękaw do brzucha.",
       "🖐️ UCHWYT (PRAWY): Prawa ręka na kołnierzu, lewa ściąga rękaw.",
@@ -1325,16 +1374,6 @@
       "🛡️ BLOKOWANIE: Unieś cofającą się stopę i obniż biodra!",
       "⚡ KONTRA (O-UCHI-GARI): Wykorzystaj pęd idącego na Ciebie rywala i wejdź w O-uchi-gari!"
     ),
-    makeTech("t4_seoiotoshi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "te", 2, "Seoi-otoshi (Rzut przez plecy z niskim zejściem na kolano)", "Seoi-otoshi Kodokan Judo", "two_leg_throw",
-      "🖐️ UCHWYT (LEWY): Jak w Ippon lub Morote-seoi-nage (lewy łokieć pod pachą, prawa dłoń na rękawie).",
-      "🖐️ UCHWYT (PRAWY): Prawy łokieć pod pachą, lewa dłoń na rękawie.",
-      "🟡 WYCHYLENIE: Gwałtowne pociągnięcie rękawa i kołnierza ostro w przód-dół!",
-      "🟡 WYCHYLENIE: Szarpnięcie rękawa i kołnierza w przód-dół!",
-      "🟩 PRACA NÓG: Po obrocie o 180° schodzisz nisko na jedno (lub oba) kolana z szeroko rozstawionymi stopami i ściągasz rywala przez bark!",
-      "🟩 PRACA NÓG: Niskie zejście poniżej kolan rywala i rzut w przód!",
-      "🛡️ BLOKOWANIE: Cofnięcie bioder i wbicie dłoni w plecy/pas rywala!",
-      "⚡ KONTRA (ATAK NA ŻÓŁWIA): Gdy rywal rzuci się na kolana bez wychylenia, natychmiast wchodzisz na jego plecy w parterze!"
-    ),
     makeTech("t4_ukiotoshi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "te", 2, "Uki-otoshi (Rzut ręczny przez pociągnięcie w przód-bok)", "Uki-otoshi Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
       "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
@@ -1344,36 +1383,6 @@
       "🟩 PRACA NÓG: Zejście nisko w tył-bok połączone ze skrętem kierownicy!",
       "🛡️ BLOKOWANIE: Obniżenie środka ciężkości i krok wyprzedzający!",
       "⚡ KONTRA (TAI-OTOSHI / KOUCHI-GARI): Wejście w rzut w kierunku ciągnięcia!"
-    ),
-    makeTech("t4_haraigoshi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "koshi", 2, "Harai-goshi (Zamiatający rzut biodrowy – Bliźniak Uchi-maty po zewnętrznej stronie uda!)", "Harai-goshi Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu za szyją/łopatką, prawa ręka mocno na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
-      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw wysoko do PRAWEGO ucha ('spójrz na zegarek')!",
-      "🟡 WYCHYLENIE: LEWA ręka ciągnie rękaw wysoko do LEWEGO ucha!",
-      "🟩 PRACA NÓG: Stoisz na PRAWEJ nodze podporowej w trójkącie (▲), a LEWA noga zamiata po zewnętrznej stronie uda/łydki rywala w tył-górę!",
-      "🟩 PRACA NÓG: Stoisz na LEWEJ nodze podporowej, a PRAWA noga zamiata po zewnętrznej stronie nogi rywala!",
-      "🛡️ BLOKOWANIE: Zablokuj biodro dłonią, ugnij kolana i cofnij atakowaną nogę!",
-      "⚡ KONTRA (UTSURI-GOSHI / TANI-OTOSHI): Przejście za biodro rywala i rzut kontrujący!"
-    ),
-    makeTech("t4_tateshiho", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ne", 1, "Tate-shiho-gatame & Kuzure-tate-shiho (Dosiad z góry) ⇄ Wyjście Kleszczami!", "Tate-shiho-gatame Kodokan Judo", "parter_pin_escape",
-      "🖐️ PRACA RĄK: Siedzisz okrakiem na brzuchu rywala i zamykasz jego głowę oraz ramię w trójkąt!",
-      "🖐️ PRACA RĄK: Szczelny splot rąk wokół głowy i barku rywala.",
-      "🟡 KONTROLA: Rozpłaszcz klatkę piersiową nisko i zabierz rywalowi przestrzeń pod łokciem.",
-      "🟡 KONTROLA: Niski środek ciężkości na klatce rywala.",
-      "🟩 PRACA NÓG: Kolana ściskają boki rywala, a Twoje stopy są zahaczone pod jego udami!",
-      "🟩 PRACA NÓG: Zahaczenie stóp pod kolanami/udami rywala.",
-      "🛡️ BLOKOWANIE: Chroń przestrzeń między swoimi kolanami a łokciami – nie wpuść rywala do dosiadu!",
-      "🔓 WYJŚCIE Z TATE-SHIHO-GATAME:\n1. Złap swoimi dwiema stopami jedną stopę rywala i zamknij ją w kleszcze!\n2. Zablokuj dłońmi jego ramię po tej samej stronie.\n3. Zrób potężny Most przez bark w stronę zablokowanej ręki i nogi!"
-    ),
-    makeTech("t4_turtle1", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ne", 1, "Obracanie Żółwia #1 (Metoda za dalszy łokieć z boku) ⇄ Szczelny Żółw", "Judo turtle turnover elbow Kodokan", "parter_pin_escape",
-      "🖐️ PRACA RĄK: Wbij kolano w bok Żółwia, wsuń rękę pod jego bliższą pachę, złap DALSZY ŁOKIEĆ i wciągnij go pod jego brzuch!",
-      "🖐️ PRACA RĄK: Druga dłoń trzyma pas na plecach i pcha Żółwia w bok.",
-      "🟡 KONTROLA: Zabierz rywalowi punkt podparcia (jego dalszy łokieć), a sam przewróci się na plecy!",
-      "🟡 KONTROLA: Ciągnij łokieć po macie do siebie i pchaj klatką!",
-      "🟩 PRACA NÓG: Twoje kolano działa jak klin wbity między łokieć a kolano Żółwia!",
-      "🟩 PRACA NÓG: Zaparcie palcami stóp o matę.",
-      "🛡️ OBRONA W ŻÓŁWIU: Wbij oba łokcie głęboko w dołki swoich kolan, a dłońmi chroń kołnierz – zero szpary pod pachą!",
-      "🔓 KONTRA Z ŻÓŁWIA: Gdy rywal sięga za głęboko pod pachę, zaciśnij jego ramię swoim łokciem i zroluj go pod siebie (Makikomi)!"
     ),
     makeTech("t4_turtle2", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ne", 2, "Obracanie Żółwia #2 (Metoda od głowy 'Buldożer' oraz za Rękaw i Pas)", "Judo turtle turnover front Kodokan", "parter_pin_escape",
       "🖐️ PRACA RĄK: Od głowy: wsuń dłonie pod pachy Żółwia i złap jego łokcie/kołnierz; z boku: złap pas i rękaw!",
@@ -1386,8 +1395,8 @@
       "🔓 WYJŚCIE DO GARDY: Zamiast czekać w Żółwiu, wsuń jedno kolano do środka i wróć do gardy!"
     ),
 
-    // ==================== 3.5 / 3 KYU (POMARAŃCZOWO-ZIELONY & ZIELONY PAS – 11 NOWYCH, RAZEM 42) ====================
-    makeTech("t3_uchimata", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ashi", 3, "🔥 UCHI-MATA (Wewnętrzne podcięcie udem – Koronny Rzut Tymka + Wariant z Sali 0:05!)", "Uchi-mata Kodokan Judo", "one_leg_throw",
+    // ==================== 3.5 KYU (POMARAŃCZOWO-ZIELONY PAS – 6 NOWYCH TECHNIK, RAZEM 37) ====================
+    makeTech("t35_uchimata", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 3, "🔥 UCHI-MATA (Wewnętrzne podcięcie udem – Koronny Rzut Tymka + Wariant z Sali 0:05!)", "Uchi-mata Kodokan Judo", "one_leg_throw",
       "🖐️ UCHWYT (LEWA UCHI-MATA – Ulubiony chwyt Tymka): LEWA dłoń trzyma kołnierz (3 dolne palce!), PRAWA dłoń trzyma rękaw!\n💡 WARIANT Z SALI (0:05): Jeśli trzymasz lewy kołnierz i kręcisz się w lewo na PRAWĄ nogę – LEWA ręka z kołnierzem ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę!",
       "🖐️ UCHWYT (PRAWA UCHI-MATA): PRAWA dłoń trzyma kołnierz za szyją, LEWA dłoń trzyma rękaw przy łokciu!",
       "🟡 WYCHYLENIE ('ZEGAREK' PRZED OBROTEM): PRAWA ręka ciągnie rękaw po łuku wysoko do PRAWEGO ucha ('spójrz na zegarek'!), a LEWA podbija kołnierz w górę!",
@@ -1397,17 +1406,7 @@
       "🛡️ BLOKOWANIE: Natychmiast ugnij kolana (obniż biodra poniżej pasa rywala!), wbij dłoń w jego biodro/pas i zejdź biodrem w bok z linii jego unoszonej nogi!",
       "⚡ KONTRA NA UCHI-MATĘ (UCHI-MATA-SUKASHI / TE-GURUMA / KO-SOTO-GARI): Zejdź biodrem w bok, przepuść jego nogę w powietrzu i przekręć go rękoma na matę (Sukashi) albo wytnij mu nogę podporową od tyłu!"
     ),
-    makeTech("t3_ashiguruma", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ashi", 3, "Ashi-guruma (Koło wokół długiej wyprostowanej nogi)", "Ashi-guruma Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
-      "🟡 WYCHYLENIE: Dalekie wyciągnięcie rękawa i kołnierza po kole w przód!",
-      "🟡 WYCHYLENIE: Wyciągnięcie rywala na palce stóp po łuku!",
-      "🟩 PRACA NÓG: Obrót na nodze podporowej i wystawienie długiej, wyprostowanej LEWEJ nogi w poprzek przed prawym kolanem rywala jako osi obrotu!",
-      "🟩 PRACA NÓG: Wystawienie długiej PRAWEJ nogi przed lewym kolanem rywala!",
-      "🛡️ BLOKOWANIE: Ugnij kolana i przeskocz nad wystawioną nogą rywala!",
-      "⚡ KONTRA (O-SOTO-GARI / UTSURI-GOSHI): Kontra po zablokowaniu obrotu!"
-    ),
-    makeTech("t3_tsubame", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ashi", 2, "Tsubame-gaeshi (Jaskółczy Zwrot – Błyskawiczna kontra stopą na podcięcie!)", "Tsubame-gaeshi Kodokan Judo", "foot_sweep",
+    makeTech("t35_tsubame", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 2, "Tsubame-gaeshi (Jaskółczy Zwrot – Błyskawiczna kontra stopą na podcięcie!)", "Tsubame-gaeshi Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT: Stabilny chwyt na rękawie i kołnierzu jak kierownica.",
       "🖐️ UCHWYT: Kontrola dystansu rękoma.",
       "🟡 WYCHYLENIE: Gdy rywal wycina Twoją stopę, przekręć kierownicę rąk w przeciwną stronę!",
@@ -1417,7 +1416,7 @@
       "🛡️ JAK NIE DAĆ SIĘ SKONTROWAĆ: Nigdy nie podcinaj samą nogą z daleka bez wcześniejszego wciśnięcia rękawa w dół!",
       "⚡ ZASTOSOWANIE: Najpiękniejsza kontra z grupy Ashi-waza!"
     ),
-    makeTech("t3_ouchigaeshi", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ashi", 2, "O-uchi-gaeshi & O-soto-gaeshi (Kontry na duże podcięcia)", "O-uchi-gaeshi Kodokan Judo", "block_counter",
+    makeTech("t35_ouchigaeshi", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 2, "O-uchi-gaeshi & O-soto-gaeshi (Kontry na duże podcięcia)", "O-uchi-gaeshi Kodokan Judo", "block_counter",
       "🖐️ UCHWYT: Mocny chwyt kołnierza i rękawa.",
       "🖐️ UCHWYT: Przejęcie dominacji na kołnierzu.",
       "🟡 WYCHYLENIE: W O-uchi-gaeshi skręcasz kierownicą rąk w stronę uniesionej nogi rywala; w O-soto-gaeshi wciskasz go na jego nogę podporową!",
@@ -1427,17 +1426,7 @@
       "🛡️ BLOKOWANIE: Zawsze wchodź w podcięcia z pełnym wychyleniem rękoma!",
       "⚡ ZASTOSOWANIE: Obowiązkowe kontry na egzamin i zawody!"
     ),
-    makeTech("t3_kouchimaki", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ashi", 3, "Ko-uchi-makikomi / Ko-uchi-gake (Podcięcie wewnętrzne z wejściem całym ciałem)", "Kouchi-makikomi Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Zarzuć lewe ramię głęboko jak w Ippon-seoi-nage i trzymaj ciasno rękaw!",
-      "🖐️ UCHWYT (PRAWY): Zarzuć prawe ramię i zamknij rękaw!",
-      "🟡 WYCHYLENIE: Wbij ciężar swojego ciała w klatkę/bark rywala w dół-tył!",
-      "🟡 WYCHYLENIE: Zamknięcie rękawa i wjazd barkiem w przód!",
-      "🟩 PRACA NÓG: Jednocześnie z wejściem ramienia zahacz LEWĄ nogą od wewnątrz piętę/łydkę tej samej nogi rywala!",
-      "🟩 PRACA NÓG: Zahaczenie PRAWĄ nogą od wewnątrz z dynamicznym doskokiem!",
-      "🛡️ BLOKOWANIE: Wyrwanie zahaczanej nogi i zejście w bok!",
-      "⚡ KONTRA: Obejście za plecy do parteru!"
-    ),
-    makeTech("t3_kouchigaeshi", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "te", 2, "Kouchi-gaeshi & Uchi-mata-sukashi (Ręczne kontry przez unik i kierownicę)", "Uchi-mata-sukashi Kodokan Judo", "block_counter",
+    makeTech("t35_kouchigaeshi", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "te", 2, "Kouchi-gaeshi & Uchi-mata-sukashi (Ręczne kontry przez unik i kierownicę)", "Uchi-mata-sukashi Kodokan Judo", "block_counter",
       "🖐️ UCHWYT: Mocny uchwyt na kołnierzu i rękawie.",
       "🖐️ UCHWYT: Kontrola kierownicy rąk.",
       "🟡 WYCHYLENIE: Gdy rywal wchodzi bez wychylenia, przekręć gwałtownie rękoma jak kierownicą w kierunku jego lotu!",
@@ -1447,7 +1436,7 @@
       "🛡️ ZASADA: Timing i niska pozycja na ugiętych nogach!",
       "⚡ ZASTOSOWANIE: Czysty Ippon samymi rękoma i unikiem!"
     ),
-    makeTech("t3_sukuinage", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "te", 2, "Sukui-nage / Te-guruma (Zagarnięcie bioder rękoma jako kontra)", "Sukui-nage Kodokan Judo", "block_counter",
+    makeTech("t35_sukuinage", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "te", 2, "Sukui-nage / Te-guruma (Zagarnięcie bioder rękoma jako kontra)", "Sukui-nage Kodokan Judo", "block_counter",
       "🖐️ UCHWYT: Jedna ręka kontroluje rękaw/kołnierz, druga obejmuje biodra/udo wchodzącego rywala z boku!",
       "🖐️ UCHWYT: Głębokie objęcie pasa i uda zablokowanego rywala.",
       "🟡 WYCHYLENIE: Zatrzymaj obrót rywala swoim biodrem i wynieś go z ugiętych kolan w górę-tył!",
@@ -1457,7 +1446,39 @@
       "🛡️ BLOKOWANIE: Nie wchodź w rzuty obrotowe z daleka na prostych nogach!",
       "⚡ ZASTOSOWANIE: Najgroźniejsza kontra na słabe wejście w Uchi-matę, Harai-goshi lub O-goshi!"
     ),
-    makeTech("t3_sumiotoshi", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "te", 3, "Sumi-otoshi (Rzut rękoma w tylny narożnik równowagi)", "Sumi-otoshi Kodokan Judo", "foot_sweep",
+    makeTech("t35_ushirokesa", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ne", 2, "Ushiro-kesa-gatame (Odwrotne trzymanie opasaniem twarzą do nóg) ⇄ Wyjścia", "Ushiro-kesa-gatame Kodokan Judo", "parter_pin_escape",
+      "🖐️ PRACA RĄK: Siedzisz przy barku rywala twarzą w stronę jego nóg, trzymając jego ramię pod pachą i chwytając pas!",
+      "🖐️ PRACA RĄK: Kontrola barku pod pachą i chwyt za pas lub spodnie.",
+      "🟡 KONTROLA: Mocny docisk barku rywala do maty i kontrola jego bioder.",
+      "🟡 KONTROLA: Niski środek ciężkości przy głowie rywala.",
+      "🟩 PRACA NÓG: Szeroka baza nóg jak cyrkiel i chód pająka po macie!",
+      "🟩 PRACA NÓG: Aktywna praca stóp po macie.",
+      "🛡️ BLOKOWANIE: Chroń kołnierz i nie daj zamknąć swojego łokcia!",
+      "🔓 WYJŚCIE Z USHIRO-KESA: Most (Upa) ze skrętem przez bark w stronę głowy rywala i wyrwanie uwięzionego łokcia!"
+    ),
+
+    // ==================== 3 KYU (ZIELONY PAS – 5 NOWYCH TECHNIK, RAZEM 42) ====================
+    makeTech("t3_ashiguruma", 3, "🟢 3 Kyu (Zielony Pas)", "ashi", 3, "Ashi-guruma (Koło wokół długiej wyprostowanej nogi)", "Ashi-guruma Kodokan Judo", "one_leg_throw",
+      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu, prawa na rękawie.",
+      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
+      "🟡 WYCHYLENIE: Dalekie wyciągnięcie rękawa i kołnierza po kole w przód!",
+      "🟡 WYCHYLENIE: Wyciągnięcie rywala na palce stóp po łuku!",
+      "🟩 PRACA NÓG: Obrót na nodze podporowej i wystawienie długiej, wyprostowanej LEWEJ nogi w poprzek przed prawym kolanem rywala jako osi obrotu!",
+      "🟩 PRACA NÓG: Wystawienie długiej PRAWEJ nogi przed lewym kolanem rywala!",
+      "🛡️ BLOKOWANIE: Ugnij kolana i przeskocz nad wystawioną nogą rywala!",
+      "⚡ KONTRA (O-SOTO-GARI / UTSURI-GOSHI): Kontra po zablokowaniu obrotu!"
+    ),
+    makeTech("t3_kouchimaki", 3, "🟢 3 Kyu (Zielony Pas)", "ashi", 3, "Ko-uchi-makikomi / Ko-uchi-gake (Podcięcie wewnętrzne z wejściem całym ciałem)", "Kouchi-makikomi Judo", "foot_sweep",
+      "🖐️ UCHWYT (LEWY): Zarzuć lewe ramię głęboko jak w Ippon-seoi-nage i trzymaj ciasno rękaw!",
+      "🖐️ UCHWYT (PRAWY): Zarzuć prawe ramię i zamknij rękaw!",
+      "🟡 WYCHYLENIE: Wbij ciężar swojego ciała w klatkę/bark rywala w dół-tył!",
+      "🟡 WYCHYLENIE: Zamknięcie rękawa i wjazd barkiem w przód!",
+      "🟩 PRACA NÓG: Jednocześnie z wejściem ramienia zahacz LEWĄ nogą od wewnątrz piętę/łydkę tej samej nogi rywala!",
+      "🟩 PRACA NÓG: Zahaczenie PRAWĄ nogą od wewnątrz z dynamicznym doskokiem!",
+      "🛡️ BLOKOWANIE: Wyrwanie zahaczanej nogi i zejście w bok!",
+      "⚡ KONTRA: Obejście za plecy do parteru!"
+    ),
+    makeTech("t3_sumiotoshi", 3, "🟢 3 Kyu (Zielony Pas)", "te", 3, "Sumi-otoshi (Rzut rękoma w tylny narożnik równowagi)", "Sumi-otoshi Kodokan Judo", "foot_sweep",
       "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
       "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wbicie ciężaru rywala rękoma prosto w jego tylny narożnik (za jego piętę)!",
@@ -1467,7 +1488,7 @@
       "🛡️ BLOKOWANIE: Krok podporowy w tył!",
       "⚡ KONTRA (O-UCHI-GARI / TAI-OTOSHI): Wykorzystanie pchnięcia do wejścia w rzut przedni!"
     ),
-    makeTech("t3_sodetsurikomi", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "koshi", 3, "Sode-tsuri-komi-goshi (Rzut biodrowy trzymając za OBA RĘKAWY – Super Broń!)", "Sode-tsuri-komi-goshi Kodokan Judo", "two_leg_throw",
+    makeTech("t3_sodetsurikomi", 3, "🟢 3 Kyu (Zielony Pas)", "koshi", 3, "Sode-tsuri-komi-goshi (Rzut biodrowy trzymając za OBA RĘKAWY – Super Broń!)", "Sode-tsuri-komi-goshi Kodokan Judo", "two_leg_throw",
       "🖐️ UCHWYT: Obie Twoje dłonie trzymają DWA RĘKAWY rywala (przy łokciach/mankietach)! Rzut działa symetrycznie w obie strony!",
       "🖐️ UCHWYT: Chwyt za oba rękawy – rywal nie może zablokować Cię ręką na kołnierzu!",
       "🟡 WYCHYLENIE: Jedna ręka wypycha rękaw rywala wysoko nad jego głowę (jakbyś zakładał mu czapkę!), a druga ciągnie drugi rękaw w przód-dół!",
@@ -1477,7 +1498,7 @@
       "🛡️ BLOKOWANIE: Ugnij kolana i wyrwij rękaw wypychany do góry, schodząc biodrem w dół!",
       "⚡ KONTRA (TANI-OTOSHI / KO-SOTO-GAKE): Zejście na bok za plecy rywala!"
     ),
-    makeTech("t3_hanegoshi", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "koshi", 3, "Hane-goshi & Utsuri-goshi (Sprężynujący rzut biodrowo-nożny i kontra biodrowa)", "Hane-goshi Kodokan Judo", "one_leg_throw",
+    makeTech("t3_hanegoshi", 3, "🟢 3 Kyu (Zielony Pas)", "koshi", 3, "Hane-goshi & Utsuri-goshi (Sprężynujący rzut biodrowo-nożny i kontra biodrowa)", "Hane-goshi Kodokan Judo", "one_leg_throw",
       "🖐️ UCHWYT (LEWY): Lewa ręka na kołnierzu/plecach, prawa na rękawie.",
       "🖐️ UCHWYT (PRAWY): Prawa ręka na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Przyklej rywala ciasno do swojego biodra i wyciągnij rękaw w górę!",
@@ -1486,16 +1507,6 @@
       "🟩 PRACA NÓG: Sprężynujące podbicie nogą ugiętą w kolanie!",
       "🛡️ BLOKOWANIE: Obniżenie bioder i blok dłonią w pas!",
       "⚡ KONTRA (UTSURI-GOSHI / USHIRO-GOSHI): Wynieś zablokowanego rywala biodrem w górę, przesuń swoje biodro przed niego i rzuć!"
-    ),
-    makeTech("t3_ushirokesa", 3, "🟠🟢 3.5–3 Kyu (Pomarańczowo-Zielony / Zielony)", "ne", 2, "Ushiro-kesa-gatame & Sankaku-gatame (Odwrotne trzymanie i Trójkąt nogami) ⇄ Wyjścia", "Ushiro-kesa-gatame Kodokan Judo", "parter_pin_escape",
-      "🖐️ PRACA RĄK: W Ushiro-kesa siedzisz przy barku rywala twarzą w stronę jego nóg, trzymając jego ramię pod pachą i chwytając pas!",
-      "🖐️ PRACA RĄK: W Sankaku-gatame zamykasz głowę i jedno ramię rywala swoimi nogami w trójkąt (stopa pod kolano drugiej nogi)!",
-      "🟡 KONTROLA: Mocny docisk barku rywala do maty i kontrola jego bioder.",
-      "🟡 KONTROLA: Ściśnięcie kolan w trójkącie i przyciągnięcie uwięzionego ramienia.",
-      "🟩 PRACA NÓG: Szeroka baza nóg jak cyrkiel (w Ushiro-kesa) lub zamek trójkątny nogami (w Sankaku)!",
-      "🟩 PRACA NÓG: Aktywna praca stóp po macie.",
-      "🛡️ BLOKOWANIE: Chroń kołnierz i nie zostawiaj jednej ręki w środku, a drugiej na zewnątrz ud rywala!",
-      "🔓 WYJŚCIE Z USHIRO-KESA: Most (Upa) ze skrętem przez bark w stronę głowy rywala i wyrwanie uwięzionego łokcia!"
     )
   ];
 
@@ -1504,7 +1515,8 @@
   let currentAnatomyTab = 0;
 
   function populateKodokanTechList() {
-    const maxKyu = parseInt(document.getElementById('kdkBeltSelect').value) || 3;
+    // Obsługa ułamkowych stopni Kyu (np. 4.5 Kyu Żółto-Pomarańczowy oraz 3.5 Kyu Pomarańczowo-Zielony!)
+    const maxKyu = parseFloat(document.getElementById('kdkBeltSelect').value) || 4.5;
     const groupFilter = document.getElementById('kdkGroupSelect').value;
     const sortMode = document.getElementById('kdkSortSelect').value;
 
@@ -1671,9 +1683,9 @@
     const saved = localStorage.getItem('tymon_custom_plan_v21');
     if (saved) return JSON.parse(saved);
     return [
-      { techId: 't6_deashi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't5_ipponseoi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't3_uchimata', doneDry: false, doneBands: false, doneFloor: false }
+      { techId: 't45_sasae', doneDry: false, doneBands: false, doneFloor: false },
+      { techId: 't45_haraigoshi', doneDry: false, doneBands: false, doneFloor: false },
+      { techId: 't35_uchimata', doneDry: false, doneBands: false, doneFloor: false }
     ];
   }
 
@@ -1691,15 +1703,15 @@
     }
     renderCustomPlan();
     addExp(25);
-    alert("✅ Dodano technikę wraz z jej ćwiczeniami (1. Na sucho nogi, 2. Gumy, 3. Podłoga & Mobilność) do zakładki '📋 2. Mój Plan Ćwiczeń na Dziś'!");
+    alert("✅ Dodano technikę wraz z jej ćwiczeniami (1. Na sucho nogi, 2. Gumy, 3. Podłoga, Mobilność, Blok i Kontra) do zakładki '📋 2. Mój Plan Ćwiczeń na Dziś'!");
   }
 
   function loadStarterPlanForTymon() {
     const starter = [
-      { techId: 't6_deashi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't6_ouchi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't3_uchimata', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't6_kesa', doneDry: false, doneBands: false, doneFloor: false }
+      { techId: 't45_sasae', doneDry: false, doneBands: false, doneFloor: false },
+      { techId: 't45_seoiotoshi', doneDry: false, doneBands: false, doneFloor: false },
+      { techId: 't45_haraigoshi', doneDry: false, doneBands: false, doneFloor: false },
+      { techId: 't45_tateshiho', doneDry: false, doneBands: false, doneFloor: false }
     ];
     saveMyPlanList(starter);
     renderCustomPlan();
@@ -1740,9 +1752,9 @@
         <div class="quest-item" style="text-align:center;">
           <strong style="color:var(--neon-gold); font-size:0.95rem;">Twój plan na dziś jest jeszcze pusty!</strong>
           <p style="font-size:0.82rem; color:var(--text-dim); margin:8px 0;">
-            Wejdź w zakładkę <strong>„🥋 1. Wybierz Technikę”</strong> i kliknij zielony przycisk <strong>„➕ Dodaj tę technikę do Mojego Planu”</strong> przy 2 lub 3 technikach, które chcesz dzisiaj wyćwiczyć (albo kliknij poniżej gotowy zestaw startowy)!
+            Wejdź w zakładkę <strong>„🥋 1. Wybierz Technikę”</strong> i kliknij zielony przycisk <strong>„➕ Dodaj tę technikę do Mojego Planu”</strong> przy 2 lub 3 technikach, które chcesz dzisiaj wyćwiczyć (albo kliknij poniżej gotowy zestaw na pas Żółto-Pomarańczowy)!
           </p>
-          <button class="btn btn-gold" onclick="loadStarterPlanForTymon()">⚡ Załaduj gotowy trening 4 technik na dziś</button>
+          <button class="btn btn-gold" onclick="loadStarterPlanForTymon()">⚡ Załaduj zestaw 4 technik na pas Żółto-Pomarańczowy (4.5 Kyu)</button>
         </div>
       `;
       return;
@@ -1779,7 +1791,7 @@
 
           <div class="plan-sub-task ${item.doneFloor ? 'done' : ''}">
             <div style="flex:1;">
-              <strong style="color:var(--neon-purple); font-size:0.83rem; display:block;">💪🧘‍♂️ 3. Podłoga, Siła, Mobilność i Obrona pod tę technikę:</strong>
+              <strong style="color:var(--neon-purple); font-size:0.83rem; display:block;">💪🧘‍♂️ 3. Podłoga, Siła, Mobilność oraz Blok & Kontra pod tę technikę:</strong>
               <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.floorMob}\n🛡️ Blok & Kontra: ${tech.details.block()} ➔ ${tech.details.counter()}</span>
             </div>
             <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneFloor ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneFloor', this.checked)">
@@ -1841,7 +1853,6 @@
 
   /*************************************************************************
    * 6. PRZYWRÓCONA INTEGRACJA Z GEMINI API (4-KLATKOWY SILNIK WIDEO & AI)
-   *    Klucz API wczytywany wyłącznie z bezpiecznego localStorage lub ENV!
    *************************************************************************/
   function getSafeGeminiApiKey() {
     return (window.ENV_GEMINI_API_KEY || localStorage.getItem('TYMON_SAFE_GEMINI_KEY') || '').trim();
@@ -2014,7 +2025,7 @@ Pytanie: ${q}`;
   const DEFAULT_MASTERY_GOALS = [
     { id: 'kuzushi', title: '🔵 Master Wychyleń & Chwytu (Gumy Rękaw/Kołnierz)', current: 5, target: 20, unit: 'sesji' },
     { id: 'ashiwaza', title: '🦵 Master Szybkich Stóp & Podcięć na Sucho', current: 4, target: 20, unit: 'sesji' },
-    { id: 'uchimata', title: '🔥 Master Rzutów (Uchi-mata, Seoi-nage, O-goshi)', current: 5, target: 20, unit: 'sesji' },
+    { id: 'uchimata', title: '🔥 Master Rzutów (Uchi-mata, Seoi-nage, Harai-goshi)', current: 5, target: 20, unit: 'sesji' },
     { id: 'newaza', title: '🛡️ Master Trzymań, Wyjść i Kontr', current: 3, target: 15, unit: 'sesji' },
     { id: 'core', title: '🧘‍♂️ Master Mobilności, Rozciągania & Siły (Kółko/Paraletki)', current: 4, target: 15, unit: 'sesji' }
   ];
@@ -2093,7 +2104,7 @@ Pytanie: ${q}`;
     const mode = document.getElementById('calcProfileMode').value;
     const banner = document.getElementById('profileInfoBanner');
     if (mode === 'redukcja') {
-      banner.innerHTML = `🔥 <strong>Profil Redukcyjny (Cel 85 kg | 2250 kcal | 175 g Białka):</strong> Wysoka podaż białka (Skyr, chudy twaróg, śledzie odsączone z oleju, kurczak, jajka) gwarantuje sytość i pełną ochronę mięśni.`;
+      banner.innerHTML = `🔥 <strong>JERRY BYKU: ULTIMATE OS (Cel 85 kg | 2250 kcal | 175 g Białka):</strong> Wysoka podaż białka (Skyr, chudy twaróg, śledzie odsączone z oleju, kurczak, jajka) gwarantuje sytość i pełną ochronę mięśni.`;
     } else {
       banner.innerHTML = `🥋 <strong>Paliwo Młodego Judoki (2100 kcal | 85 g Białka):</strong> Lekkostrawne węglowodany na 60 min przed treningiem (zero bólu brzucha przy padach <em>Ukemi</em>!) oraz szybka regeneracja po zejściu z maty.`;
     }
@@ -2208,7 +2219,7 @@ Pytanie: ${q}`;
 
     try {
       const res = await callGeminiWithFallback([
-        { text: `Jesteś dietetykiem sportowym specjalizującym się w żywieniu w sportach walki (Judo: 2100 kcal, 85g białka dla 11-latka oraz profil redukcyjny 2250 kcal, 175g białka, cel 85 kg). Odpowiedz konkretnie po polsku: ${q}` }
+        { text: `Jesteś dietetykiem sportowym specjalizującym się w żywieniu w sportach walki (Judo: 2100 kcal, 85g białka dla 11-latka oraz profil redukcyjny JERRY BYKU ULTIMATE OS 2250 kcal, 175g białka, cel 85 kg). Odpowiedz konkretnie po polsku: ${q}` }
       ], apiKey);
       out.innerText = res.text;
       addExp(15);
@@ -2375,7 +2386,7 @@ Pytanie: ${q}`;
   function exportSaveFile() {
     const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v21.json'; a.click();
+    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v21.2.json'; a.click();
   }
 
   function importSaveFile(e) {
