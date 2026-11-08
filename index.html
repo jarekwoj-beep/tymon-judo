@@ -13,7 +13,10 @@
   <link id="appleTouchIconPre" rel="apple-touch-icon-precomposed" href="tymon1.jpeg">
   <link id="standardFavicon" rel="icon" type="image/jpeg" href="tymon1.jpeg">
 
-  <title>TYMON: IPPON HERO – SOLO DOJO ENGINE v21.2</title>
+  <!-- Opcjonalny zewnętrzny plik konfiguracyjny (np. window.ENV_GEMINI_API_KEY) -->
+  <script src="config.js" onerror="/* Brak zewnętrznego pliku config.js - używamy bezpiecznego localStorage */"></script>
+
+  <title>TYMON: IPPON HERO & ULTIMATE OS v21.3</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -265,7 +268,7 @@
     .diff-badge-3 { color: var(--neon-orange); }
     .tech-pill-name { font-size: 0.81rem; font-weight: 800; color: #fff; line-height: 1.22; }
 
-    /* 4 STACJE TRENINGU SOLO POD KAŻDĄ TECHNIKĄ */
+    /* STACJE TRENINGU SOLO POD KAŻDĄ TECHNIKĄ */
     .solo-stations-box {
       background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(20,30,55,0.96));
       border: 2px solid var(--neon-green); border-radius: 16px;
@@ -273,7 +276,7 @@
       box-shadow: 0 0 26px rgba(16, 185, 129, 0.15);
     }
     .station-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 10px; margin-top: 10px;
     }
     .station-card {
@@ -281,6 +284,7 @@
       border-top: 4px solid var(--neon-gold); border-radius: 12px;
       padding: 12px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;
     }
+    .station-card.st-grip { border-top-color: var(--neon-orange); }
     .station-card.st-dry { border-top-color: var(--neon-green); }
     .station-card.st-bands { border-top-color: var(--neon-blue); }
     .station-card.st-full { border-top-color: var(--neon-gold); }
@@ -314,7 +318,7 @@
     }
 
     .anatomy-6-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 7px; margin: 10px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 7px; margin: 10px 0;
     }
 
     .svg-pulse-foot { animation: footPulse 1.3s infinite ease-in-out alternate; transform-origin: center; }
@@ -336,6 +340,22 @@
       display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;
     }
     .plan-sub-task.done { border-color: var(--neon-green); opacity: 0.68; }
+
+    /* PASEK DNI TYGODNIA W ZAKŁADCE PLANU */
+    .week-days-bar {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+      gap: 6px; margin-bottom: 12px;
+    }
+    .day-pill-btn {
+      background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text-light); padding: 9px 8px; border-radius: 10px;
+      font-size: 0.77rem; font-weight: 800; cursor: pointer; text-align: center;
+      transition: all 0.18s;
+    }
+    .day-pill-btn.active {
+      background: linear-gradient(135deg, var(--neon-gold), var(--neon-orange));
+      color: #000; border-color: #fff; box-shadow: 0 0 14px rgba(250, 204, 21, 0.5);
+    }
 
     .kodokan-video-hub {
       background: linear-gradient(135deg, #060913 0%, #111827 100%);
@@ -375,8 +395,8 @@
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON: IPPON HERO – SOLO DOJO v21.2</h1>
-      <span>42 Techniki (6➔4.5➔3 Kyu): Trening Solo na Sucho, Gumy, Podłoga, Mobilność, Blok i Kontra</span>
+      <h1>TYMON: IPPON HERO – SOLO DOJO v21.3</h1>
+      <span>42 Techniki (6➔4.5➔3 Kyu): Wpięcia w Kołnierz, Plan Tygodnia, Gumy, Podłoga, Blok i Kontra</span>
     </div>
   </div>
   <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
@@ -391,10 +411,10 @@
   <div class="stance-box">
     <div style="flex:1; min-width:240px;">
       <strong style="color:var(--neon-gold); font-size:0.86rem; display:block;" id="stanceBannerTitle">
-        🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Ulubiona Tymka: Lewa ręka Kołnierz!)
+        🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Ulubiona Tymka: Lewa ręka Wpina Kołnierz!)
       </strong>
       <span style="font-size:0.77rem; color:var(--text-light);" id="stanceBannerRule">
-        🖐️ <strong>LEWA ręka = KOŁNIERZ</strong> | <strong>PRAWA ręka = RĘKAW</strong> ➔ 🧭 Zasada: <strong>„Trzymasz kołnierz LEWĄ ręką = ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, stoisz na PRAWEJ nodze i wyrzucasz w sufit LEWĄ nogę!”</strong>
+        🖐️ <strong>1. PRAWA dłoń łapie RĘKAW ➔ 2. LEWA dłoń WPINA KOŁNIERZ przy obojczyku (3 dolne palce, łokieć w dół!)</strong> ➔ 🧭 Ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!
       </span>
     </div>
     <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -413,7 +433,7 @@
   <div class="card" style="border:2px solid var(--neon-gold);">
     <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Bezpieczny Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
     <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy i plan treningowy między iPhonem a komputerem.
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy i plan tygodnia między iPhonem a komputerem.
     </p>
     <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
@@ -428,7 +448,7 @@
 
     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
     <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>2. Bezpieczny Klucz Gemini API (do Analizy Wideo i Asystenta AI):</strong> Klucz jest wczytywany wyłącznie ze zmiennej konfiguracyjnej (`window.ENV_GEMINI_API_KEY`) lub bezpiecznej pamięci lokalnej przeglądarki (`localStorage` pod kluczem `TYMON_SAFE_GEMINI_KEY`). Nigdy nie wpisuj klucza na stałe w kodzie źródłowym i chroń go przed niepowołanym dostępem!
+      <strong>2. Bezpieczny Klucz Gemini API (do Analizy Wideo i Asystenta AI):</strong> Klucz jest wczytywany wyłącznie ze zmiennej konfiguracyjnej (`window.ENV_GEMINI_API_KEY`) lub bezpiecznej pamięci lokalnej przeglądarki (`localStorage` pod kluczem `TYMON_SAFE_GEMINI_KEY`). Nigdy nie wpisuj klucza na stałe w kodzie źródłowym i nie udostępniaj go publicznie!
     </p>
     <input type="password" id="apiKeyField" placeholder="Wklej swój klucz Gemini API (AIzaSy...)">
     <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -459,7 +479,7 @@
           <h2 style="font-size:1.06rem; color:#fff; margin:0;">🥋 BOHATER: <span style="color:var(--neon-gold);">TYMON (PAS ŻÓŁTY 5 KYU ➔ CEL 4.5 KYU)</span></h2>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="btn" onclick="triggerHeroAttackAnimation()">💥 ODPAL ATAK!</button>
-            <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📋 Mój Plan Ćwiczeń (<span id="planCounterTop">0</span>)</button>
+            <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📋 Plan Tygodnia & Wpięcia (<span id="planCounterTop">0</span>)</button>
           </div>
         </div>
         <div class="mastery-grid" id="masteryGoalsContainer"></div>
@@ -470,18 +490,17 @@
 
 <!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
-  <button class="active" id="tabBtn-pane-kodokan" onclick="switchTab('pane-kodokan', this)">🥋 1. Wybierz Technikę & Ćwicz Solo (42 Techniki: 6➔3 Kyu)</button>
-  <button id="tabBtn-pane-plan" onclick="switchTab('pane-plan', this)">📋 2. Mój Plan Ćwiczeń na Dziś (Na Sucho / Gumy / Podłoga)</button>
+  <button class="active" id="tabBtn-pane-kodokan" onclick="switchTab('pane-kodokan', this)">🥋 1. Wybierz Technikę & Ćwicz Solo (42 Techniki: 6➔4.5➔3 Kyu)</button>
+  <button id="tabBtn-pane-plan" onclick="switchTab('pane-plan', this)">📋 2. Plan Tygodnia & Wpięcia w Kołnierz (Poniedziałek–Niedziela)</button>
   <button id="tabBtn-pane-mobility" onclick="switchTab('pane-mobility', this)">🧘‍♂️ 3. Mobilność & Rozciąganie pod Judo</button>
   <button id="tabBtn-pane-video" onclick="switchTab('pane-video', this)">🎥 4. Analiza Wideo AI (Wnioski z 3 Filmów)</button>
-  <button id="tabBtn-pane-fuel" onclick="switchTab('pane-fuel', this)">⚡ 5. Kalkulator Produktów & Mocy</button>
+  <button id="tabBtn-pane-fuel" onclick="switchTab('pane-fuel', this)">⚡ 5. Kalkulator Najpopularniejszych Produktów</button>
 </nav>
 
 <div class="container">
 
   <!-- =========================================================================
        ZAKŁADKA 1: KOMPLETNA BAZA 42 TECHNIK Z PODZIAŁEM NA PÓŁPASY DZIECIĘCE
-       (6 Kyu -> 5 Kyu Żółty -> 4.5 Kyu Żółto-Pomarańczowy -> 4 Kyu Pomarańczowy -> 3.5 Kyu -> 3 Kyu)
        ========================================================================= -->
   <div id="pane-kodokan" class="tab-pane active">
     <div class="card">
@@ -490,7 +509,7 @@
         <span style="font-size:0.75rem; color:var(--neon-green);" id="techCountBadge">Dostępne techniki: 26</span>
       </h2>
       <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:10px;">
-        Skoro Tymon ma teraz <strong>Żółty Pas (5 Kyu)</strong>, lista jest domyślnie ustawiona na jego najbliższy cel: <strong>🟡🟠 4.5 Kyu – Żółto-Pomarańczowy Pas</strong> (zawiera powtórkę z 6 i 5 Kyu oraz 6 nowych technik na pas Żółto-Pomarańczowy!). Możesz też przełączyć na wszystkie 42 techniki aż do Zielonego pasa. Każda technika ma <strong>Blokadę, Kontrę/Wyjście</strong> oraz <strong>4 stacje ćwiczeń solo w domu</strong>!
+        Skoro Tymon ma teraz <strong>Żółty Pas (5 Kyu)</strong>, lista jest domyślnie ustawiona na jego najbliższy cel: <strong>🟡🟠 4.5 Kyu – Żółto-Pomarańczowy Pas</strong>. Kliknij dowolną technikę poniżej – od razu masz jej <strong>Wpięcie w Kołnierz, Wychylenie, Stopy, Blokadę, Kontrę/Wyjście</strong> oraz <strong>rozebrane na części ćwiczenia solo w domu</strong>! Kliknij <strong>„➕ Dodaj do mojego planu”</strong>, aby dopisać technikę do dzisiejszego dnia tygodnia.
       </p>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap:9px;">
@@ -535,49 +554,68 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 2: MÓJ PLAN ĆWICZEŃ NA DZIŚ
+       ZAKŁADKA 2: ROZKŁAD NA CAŁY TYDZIEŃ (PONIEDZIAŁEK – NIEDZIELA)
+       + CODZIENNE ĆWICZENIA NA WPIĘCIE KOŁNIERZA I TRIKI KUMI-KATA
+       + WŁASNE TECHNIKI DODANE PRZEZ TYMONA!
        ========================================================================= -->
   <div id="pane-plan" class="tab-pane">
-    <div class="grid-2">
-      <div class="card">
-        <h2>
-          <span>📋 Mój Plan Ćwiczeń na Dziś (Wybrane Techniki Tymona)</span>
-          <div style="display:flex; gap:6px;">
-            <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="loadStarterPlanForTymon()">⚡ Wgraj zestaw 4 technik</button>
-            <button class="btn btn-ghost" style="padding:5px 10px; font-size:0.74rem;" onclick="clearMyPlan()">🗑️ Wyczyść plan</button>
-          </div>
-        </h2>
-        <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:10px;">
-          Tutaj trafiają wszystkie techniki, przy których kliknąłeś <strong>„➕ Dodaj do mojego planu”</strong>. Każda wybrana technika jest podzielona dla Ciebie na <strong>3 proste części do odhaczenia</strong>: <strong>1. Wejścia na sucho (Nogi)</strong>, <strong>2. Praca na Gumach (Ręce + Wejście)</strong> oraz <strong>3. Podłoga, Siła, Rozciąganie, Blok i Kontra</strong>!
-        </p>
+    <div class="card" style="border:2px solid var(--neon-gold);">
+      <h2>
+        <span>📅 Wybierz Dzień Tygodnia – Wpięcia w Kołnierz, Triki Kumi-kata & Techniki Dnia</span>
+        <button class="btn btn-ghost" style="padding:5px 10px; font-size:0.74rem;" onclick="resetCurrentDayToDefault()">🔄 Przywróć domyślny plan dnia</button>
+      </h2>
+      <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:10px;">
+        Każdy dzień zaczyna się od <strong>3-minutowego treningu Wpięcia w Kołnierz i Triku Uchwytu (Kumi-kata)</strong>, bo bez wpiętego kołnierza nie ma rzutu! Pod spodem masz techniki zaplanowane na ten dzień (podzielone na: <strong>1. Na sucho Nogi | 2. Gumy (Wpięcie + Wejście) | 3. Podłoga, Rozciąganie, Blok i Kontra</strong>). W każdej chwili możesz dodać do wybranego dnia kolejne techniki z Zakładki 1!
+      </p>
 
-        <div id="customPlanContainer"></div>
+      <div class="week-days-bar" id="weekDaysBar"></div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <!-- KARTA OBOWIĄZKOWEGO WPIĘCIA W KOŁNIERZ I TRIKU DNIA -->
+        <div id="dailyKumiKataCard" class="card" style="border:2px solid var(--neon-orange);"></div>
+
+        <!-- LISTA TECHNIK NA WYBRANY DZIEŃ TYGODNIA -->
+        <div class="card">
+          <h2>
+            <span>🥋 Techniki do Przećwiczenia na Wybrany Dzień</span>
+            <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="switchTabById('pane-kodokan')">➕ Dodaj kolejną technikę z listy</button>
+          </h2>
+          <div id="customPlanContainer"></div>
+        </div>
       </div>
 
       <div>
         <div class="card" style="border: 2px solid var(--neon-gold);">
-          <h2>⏱️ Zegar Dojo + Metronom Rytmu Wejść i Wychyleń</h2>
+          <h2>⏱️ Zegar Dojo + Metronom Wpięć i Wejść</h2>
           <div class="dojo-timer" id="dojoTimerDisplay">00:30</div>
           <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:10px;">
-            <button class="btn btn-ghost" onclick="setDojoTimer(20)">20s (Gumy / Chwyt)</button>
+            <button class="btn btn-ghost" onclick="setDojoTimer(20)">20s (Szybkie Wpięcia)</button>
             <button class="btn btn-ghost" onclick="setDojoTimer(30)">30s (Wejścia na sucho)</button>
             <button class="btn btn-ghost" onclick="setDojoTimer(45)">45s (Mobilność / Parter)</button>
           </div>
           <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
             <button class="btn btn-green" onclick="startDojoTimer()">▶ HAJIME! (Start)</button>
             <button class="btn btn-gold" onclick="pauseDojoTimer()">⏸ MATE (Stop)</button>
-            <button class="btn btn-blue" id="metronomeBtn" onclick="toggleFootworkMetronome()">🥁 Rytm Wejść (1/sek)</button>
+            <button class="btn btn-blue" id="metronomeBtn" onclick="toggleFootworkMetronome()">🥁 Rytm Wpięć (1/sek)</button>
           </div>
         </div>
 
         <div class="card" style="border: 2px solid var(--neon-green);">
-          <h2>🏆 Pokaz Wybranych Technik przed Tatą (+100 EXP!)</h2>
-          <p style="font-size:0.82rem; color:var(--text-light); margin-bottom:10px;">
-            Gdy odhaczysz ćwiczenia na sucho, na gumach i na podłodze dla wybranych dziś technik, pokaż Tacie po 5 czystych wejść na lewą i prawą stronę!
+          <h2>🏆 Pokaz Wpięcia Kołnierza i Technik przed Tatą (+100 EXP!)</h2>
+          <p style="font-size:0.82rem; color:var(--text-light); margin-bottom:10px;" id="bossDayChallengeText">
+            Pokaż Tacie dzisiejszy Trik Wpięcia Kołnierza na gumach oraz po 5 czystych wejść z planu dnia!
           </p>
           <button class="btn btn-gold" style="width:100%; padding:12px; font-size:0.9rem;" onclick="completeBossPresentation()">
-            🔥 TATA ZATWIERDZA TRENING! (+100 EXP & +1 DO MASTERA!)
+            🔥 TATA ZATWIERDZA TRENING DNIA! (+100 EXP & +1 DO MASTERA!)
           </button>
+        </div>
+
+        <!-- BIBLIOTEKA WSZYSTKICH 5 FUNDAMENTALNYCH TRIKÓW WPIĘCIA KOŁNIERZA -->
+        <div class="card">
+          <h2>🖐️ Ściąga Mistrza: 5 Złotych Trików Wpięcia Kołnierza (Kumi-kata)</h2>
+          <div id="allKumiKataTricksBox" style="font-size:0.79rem; display:flex; flex-direction:column; gap:8px;"></div>
         </div>
       </div>
     </div>
@@ -590,7 +628,7 @@
     <div class="card">
       <h2>
         <span>🧘‍♂️ Mobilność, Rozciąganie i Przygotowanie Ciała pod Judo (8 Minut na Dywanie)</span>
-        <button class="btn btn-green" onclick="addAllMobilityToPlan()">➕ Dodaj Rozciąganie do Planu Dnia</button>
+        <button class="btn btn-green" onclick="addAllMobilityToPlan()">➕ Dodaj Pady & Mobilność do Dzisiejszego Planu</button>
       </h2>
       <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:12px;">
         Żeby noga w <em>Uchi-macie</em> i <em>Harai-goshi</em> strzelała wysoko pod sufit, żeby wchodzić nisko na ugiętych kolanach w <em>Seoi-nage</em> i nie dać się przygnieść w parterze – judoka musi mieć luźne biodra, elastyczne mięśnie dwugłowe uda, mocny kark i otwarte barki!
@@ -621,7 +659,7 @@
 
         <div id="capturedFramesStrip" class="frame-strip-grid" style="display:none;"></div>
 
-        <textarea id="aiFightQuestion" rows="2" placeholder="Wpisz pytanie (np. Sprawdź czy Tymek ciągnie rękaw do ucha przed obrotem i czy nie krzyżuje rąk z nogami)..."></textarea>
+        <textarea id="aiFightQuestion" rows="2" placeholder="Wpisz pytanie (np. Sprawdź czy Tymek dobrze wpina lewy kołnierz i ciągnie rękaw do ucha przed obrotem)..."></textarea>
         <button class="btn" id="analyzeVideoBtn" style="width:100%; padding:11px; font-size:0.88rem;" onclick="analyzeFightWithGemini()">
           🤖 ANALIZUJ SEKWENCJĘ WIDEO Z AI SENSEIEM (GEMINI API)
         </button>
@@ -635,23 +673,23 @@
         <h2>📊 Gotowa Diagnoza z Waszych 3 Filmów (Dom + Randori na Sali)</h2>
 
         <div class="quest-item" style="border-left-color:var(--neon-gold);">
-          <strong>✅ ODKRYCIE #1 (Filmy 1–3): Zgranie Lewego Kołnierza Tymka z Nogami!</strong>
+          <strong>✅ ODKRYCIE #1 (Filmy 1–3): Wpięcie Lewego Kołnierza Tymka i Zgranie z Nogami!</strong>
           <p style="font-size:0.79rem; color:var(--text-dim); margin:6px 0;">
-            • <strong>Wariant Główny (Lewy – jak w domu `0:05`, `0:15`, `0:31`):</strong> LEWA ręka łapie kołnierz, PRAWA rękaw ➔ ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, obracasz się W PRAWO, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!<br>
+            • <strong>Wariant Główny (Lewy – jak w domu `0:05`, `0:15`, `0:31`):</strong> LEWA ręka wpina się twardo w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!), PRAWA łapie rękaw ➔ ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, obracasz się W PRAWO, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!<br>
             • <strong>Wariant Specjalny z Walki na Sali (`0:05` i `1:08` – Obrót w lewo z lewego kołnierza):</strong> Jeśli trzymasz lewy kołnierz, a chcesz zakręcić się w lewo i wyrzucić PRAWĄ nogę, to LEWA ręka na kołnierzu musi ciągnąć do LEWEGO ucha, a PRAWA ręka musi wejść wysoko pod prawą pachę rywala!
           </p>
           <button class="btn btn-green" style="width:100%; margin-top:6px;" onclick="addTechniqueToMyPlan('t35_uchimata')">
-            ➕ Dodaj Uchi-matę (z 4 stacjami domowymi) do Mojego Planu Ćwiczeń!
+            ➕ Dodaj Uchi-matę (z treningiem Wpięcia Kołnierza) do Dzisiejszego Planu!
           </button>
         </div>
 
         <div class="quest-item" style="border-left-color:var(--neon-red);">
-          <strong>🔧 ODKRYCIE #2 (Film 3 `1:25`): Podcięcia Stóp zaczynamy od Rąk (Kierownica w dół!)</strong>
+          <strong>🔧 ODKRYCIE #2 (Film 3 `1:25`): Podcięcia Stóp zaczynamy od Wpięcia i Kierownicy w dół!</strong>
           <p style="font-size:0.79rem; color:var(--text-dim); margin:6px 0;">
-            Zanim stopa ruszy do podcięcia (<em>De-ashi-barai / O-uchi-gari</em>), dłonie na rękawie i kołnierzu muszą wcisnąć kierownicę ostro w dół, żeby dociążyć stopę rywala!
+            Zanim stopa ruszy do podcięcia (<em>De-ashi-barai / O-uchi-gari</em>), musisz mieć wpięty kołnierz i wcisnąć rękaw ostro w dół, żeby dociążyć stopę rywala!
           </p>
           <button class="btn btn-green" style="width:100%; margin-top:6px;" onclick="addTechniqueToMyPlan('t6_deashi')">
-            ➕ Dodaj De-ashi-barai (Szybkie Stopy + Kierownica) do Mojego Planu!
+            ➕ Dodaj De-ashi-barai (Szybkie Stopy + Kierownica) do Dzisiejszego Planu!
           </button>
         </div>
       </div>
@@ -676,16 +714,20 @@
           🥋 <strong>Paliwo Młodego Judoki (2100 kcal / 85g B):</strong> Lekkostrawne węglowodany na 60 min przed treningiem (banan, wafle ryżowe z miodem, mus owocowy – zero bólu brzucha przy padach <em>Ukemi</em>!) oraz szybkie białko (Skyr, kurczak, twaróg, jajka) po zejściu z maty.
         </div>
 
+        <label>🔍 Filtruj lub wyszukaj produkt w bazie:</label>
+        <input type="text" id="calcSearchInput" placeholder="Wpisz np. Skyr, śledzie, twaróg, banan, kurczak..." oninput="initFoodSelect()">
+
         <label>1. Wybierz produkt z bazy najpopularniejszych produktów funkcjonalnych:</label>
         <select id="calcFoodSelect" onchange="updateFoodPreview()"></select>
 
         <div class="grid-2" style="gap:8px;">
           <div>
             <label>2. Ilość (gramy lub szybki przycisk porcji):</label>
-            <input type="number" id="calcGramsInput" value="150" min="1" max="2000" oninput="updateFoodPreview()">
+            <input type="number" id="calcGramsInput" value="150" min="1" max="2500" oninput="updateFoodPreview()">
             <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:6px;">
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(100)">100g</button>
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(150)">150g (1 Skyr)</button>
+              <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(200)">200g (Porcja)</button>
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(250)">250g (Kostka)</button>
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(360)">360g (Skyr Pitny)</button>
             </div>
@@ -703,13 +745,13 @@
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
         <h3>🤖 Zapytaj Asystenta Żywieniowego AI (Gemini API)</h3>
         <div style="display:flex; gap:6px; margin-top:6px;">
-          <input type="text" id="aiDietInput" placeholder="Np. Co najlepiej zjeść na 60 minut przed treningiem Judo, a co po treningu?" style="margin:0;">
+          <input type="text" id="aiDietInput" placeholder="Np. Jak wkomponować śledzie odsączone lub Skyr w dzisiejszy bilans?" style="margin:0;">
           <button class="btn btn-blue" onclick="askAiDietitian()">Zapytaj AI</button>
         </div>
         <div id="aiDietOutput" style="margin-top:8px; padding:10px; background:var(--bg-panel); border-radius:8px; font-size:0.81rem; white-space:pre-wrap; display:none;"></div>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
-        <h3>➕ Dodaj własny ulubiony produkt do bazy</h3>
+        <h3>➕ Dodaj własny produkt do bazy kalkulatora</h3>
         <div class="grid-2" style="gap:6px;">
           <input type="text" id="newFoodName" placeholder="Nazwa produktu">
           <input type="number" id="newFoodKcal" placeholder="Kcal / 100g">
@@ -736,7 +778,7 @@
 
         <div style="margin-bottom:10px;">
           <div style="display:flex; justify-content:space-between; font-size:0.82rem;">
-            <span>💪 Białko (Siła chwytu Kumi-kata i regeneracja mięśni)</span>
+            <span>💪 Białko (Siła chwytu Kumi-kata i ochrona mięśni)</span>
             <span><strong id="sumP">0</strong> / <span id="goalP">85</span> g</span>
           </div>
           <div class="macro-bar-bg"><div id="barP" class="macro-bar-fill" style="width:0%; background:var(--neon-blue);"></div></div>
@@ -818,17 +860,17 @@
     if (side === 'hidari') {
       btnH.className = 'stance-pill-btn active-hidari';
       btnM.className = 'stance-pill-btn';
-      title.innerHTML = `🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Ulubiona Tymka: Lewa ręka Kołnierz!)`;
-      rule.innerHTML = `🖐️ <strong>LEWA ręka = KOŁNIERZ</strong> | <strong>PRAWA ręka = RĘKAW</strong> ➔ 🧭 Zasada: <strong>„Trzymasz kołnierz LEWĄ ręką = ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, stoisz na PRAWEJ nodze i wyrzucasz w sufit LEWĄ nogę!”</strong>`;
+      title.innerHTML = `🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Ulubiona Tymka: Lewa ręka Wpina Kołnierz!)`;
+      rule.innerHTML = `🖐️ <strong>1. PRAWA dłoń łapie RĘKAW ➔ 2. LEWA dłoń WPINA KOŁNIERZ przy obojczyku (3 dolne palce, łokieć w dół!)</strong> ➔ 🧭 Ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!`;
     } else {
       btnH.className = 'stance-pill-btn';
       btnM.className = 'stance-pill-btn active-migi';
       title.innerHTML = `⚡ AKTYWNA STRONA: PRAWA STRONA (MIGI – Druga strona pod wymagania trenera i egzaminy!)`;
-      rule.innerHTML = `🖐️ <strong>PRAWA ręka = KOŁNIERZ</strong> | <strong>LEWA ręka = RĘKAW</strong> ➔ 🧭 Zasada: <strong>„Trzymasz kołnierz PRAWĄ ręką = ciągniesz rękaw LEWĄ ręką do LEWEGO ucha, stoisz na LEWEJ nodze i wyrzucasz w sufit PRAWĄ nogę!”</strong>`;
+      rule.innerHTML = `🖐️ <strong>1. LEWA dłoń łapie RĘKAW ➔ 2. PRAWA dłoń WPINA KOŁNIERZ przy obojczyku</strong> ➔ 🧭 Ciągniesz rękaw LEWĄ ręką do LEWEGO ucha, stoisz na LEWEJ nodze i wyrzucasz PRAWĄ nogę!`;
     }
 
     renderKodokanMasterCard(currentAnatomyTab, currentSimStep);
-    renderCustomPlan();
+    renderWeeklyPlanView();
     playSound('exp');
   }
 
@@ -845,19 +887,19 @@
 
     if (diagramType === 'one_leg_throw') {
       if (stepNum === 1) {
-        stepTitle = S_TXT("KROK 1 z 4: Pozycja wyjściowa przed trójkątem + Chwyt 3 dolnymi palcami", "KROK 1 z 4: Pozycja Prawa przed trójkątem + Chwyt");
-        stepDesc = S_TXT("Stań przed czubkiem trójkąta (▲). LEWA dłoń łapie KOŁNIERZ gumy, PRAWA dłoń łapie RĘKAW (zaciśnij mały, serdeczny i środkowy palec!).", "Stań przed trójkątem (▲). PRAWA dłoń łapie KOŁNIERZ gumy, LEWA dłoń łapie RĘKAW!");
+        stepTitle = S_TXT("KROK 1 z 4: Dwuklik Uchwytu! 1. Rękaw ➔ 2. Wpięcie Lewego Kołnierza (3 dolne palce!)", "KROK 1 z 4: Dwuklik Uchwytu! 1. Rękaw ➔ 2. Wpięcie Prawego Kołnierza");
+        stepDesc = S_TXT("Stań przed czubkiem trójkąta (▲). Najpierw PRAWA dłoń kontroluje RĘKAW, a ułamek sekundy później LEWA dłoń WPINA SIĘ w KOŁNIERZ przy obojczyku (zaciśnij 3 dolne palce, łokieć w dół!).", "Najpierw LEWA dłoń łapie RĘKAW, a potem PRAWA dłoń WPINA SIĘ w KOŁNIERZ przy obojczyku!");
         svgInner = `
           <polygon points="150,75 330,75 240,195" fill="rgba(0,240,255,0.06)" stroke="#00f0ff" stroke-width="2.5" stroke-dasharray="6,4"/>
           <circle cx="160" cy="75" r="21" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="160" y="79" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK 1</text>
           <circle cx="320" cy="75" r="21" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="320" y="79" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK 2</text>
           <circle class="svg-pulse-foot" cx="195" cy="205" r="22" fill="#0284c7" stroke="#fff" stroke-width="2.5"/><text x="195" y="209" fill="#fff" font-size="11" font-weight="900" text-anchor="middle">LEWA</text>
           <circle class="svg-pulse-foot" cx="285" cy="205" r="22" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="285" y="209" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PRAWA</text>
-          <text x="240" y="38" fill="#facc15" font-size="13" font-weight="900" text-anchor="middle">KROK 1: STÓJ PRZED TRÓJKĄTEM + ZACIŚNIJ 3 DOLNE PALCE NA GUMIE!</text>
+          <text x="240" y="38" fill="#facc15" font-size="12.5" font-weight="900" text-anchor="middle">KROK 1: DWUKLIK! RĘKAW ➔ WEPNIJ KOŁNIERZ (3 DOLNE PALCE, ŁOKIEĆ W DÓŁ)!</text>
         `;
       } else if (stepNum === 2) {
         stepTitle = S_TXT("KROK 2 z 4: Wejście w czubek trójkąta (▲) + Wychylenie Rękawa do Ucha ('Zegarek'!)", "KROK 2 z 4: Prawa stopa w trójkąt + Rękaw do Lewego Ucha!");
-        stepDesc = S_TXT("Wskocz LEWĄ stopą w czubek trójkąta (▲) na ugiętym kolanie i w tym samym ułamku sekundy wyrwij PRAWĄ ręką rękaw do PRAWEGO ucha!", "Wskocz PRAWĄ stopą w czubek trójkąta i wyrwij LEWĄ ręką rękaw do LEWEGO ucha!");
+        stepDesc = S_TXT("Wskocz LEWĄ stopą w czubek trójkąta (▲) na ugiętym kolanie, wyrwij PRAWĄ ręką rękaw do PRAWEGO ucha, a wpiętym LEWYM kołnierzem podbij rywala w górę!", "Wskocz PRAWĄ stopą w czubek trójkąta, wyrwij LEWĄ ręką rękaw do LEWEGO ucha i podbij kołnierz!");
         svgInner = `
           <polygon points="150,75 330,75 240,195" fill="rgba(0,240,255,0.12)" stroke="#00f0ff" stroke-width="3"/>
           <circle cx="160" cy="75" r="21" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="160" y="79" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK 1</text>
@@ -898,23 +940,23 @@
       }
     } else if (diagramType === 'foot_sweep') {
       if (stepNum === 1) {
-        stepTitle = "KROK 1 z 4: Ustawienie 2 klapków na podłodze + Chwyt jak Kierownica";
-        stepDesc = "Połóż 2 klapki przed sobą (jako stopy rywala). Stań lekko na śródstopiu, złap rękaw i kołnierz gumy na wysokości klatki piersiowej.";
+        stepTitle = "KROK 1 z 4: Ustawienie 2 klapków na podłodze + Wpięcie Kołnierza i Rękawa";
+        stepDesc = "Połóż 2 klapki przed sobą. Wepnij twardo kołnierz przy obojczyku (3 dolne palce, ciężki łokieć w dół!) i złap rękaw.";
         svgInner = `
           <circle cx="160" cy="85" r="24" fill="#ef4444" stroke="#fff" stroke-width="3"/><text x="160" y="89" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK #1</text>
           <circle cx="320" cy="85" r="24" fill="#ef4444" stroke="#fff" stroke-width="3"/><text x="320" y="89" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK #2</text>
           <circle class="svg-pulse-foot" cx="200" cy="195" r="21" fill="#0284c7" stroke="#fff" stroke-width="2.5"/><text x="200" y="199" fill="#fff" font-size="11" font-weight="900" text-anchor="middle">LEWA</text>
           <circle class="svg-pulse-foot" cx="280" cy="195" r="21" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="280" y="199" fill="#000" font-size="11" font-weight="900" text-anchor="middle">PRAWA</text>
-          <text x="240" y="38" fill="#facc15" font-size="13" font-weight="900" text-anchor="middle">KROK 1: 2 KLAPKI PRZED TOBĄ – STÓJ SPRĘŻYŚCIE NA ŚRÓDSTOPIU!</text>
+          <text x="240" y="38" fill="#facc15" font-size="13" font-weight="900" text-anchor="middle">KROK 1: WEPNIJ TWARDO KOŁNIERZ + STÓJ LEKKO NA ŚRÓDSTOPIU!</text>
         `;
       } else if (stepNum === 2) {
-        stepTitle = S_TXT("KROK 2 z 4: Najpierw Ręce! Kierownica wciska Rękaw ostro w dół!", "KROK 2 z 4: Kierownica wciska Lewy Rękaw ostro w dół!");
-        stepDesc = S_TXT("Zanim ruszysz stopą do podcięcia, przekręć ręce jak kierownicę – PRAWA dłoń wciska rękaw ostro w dół, żeby przykleić stopę rywala do maty!", "LEWA dłoń wciska rękaw ostro w dół przed ruchem stopy!");
+        stepTitle = S_TXT("KROK 2 z 4: Najpierw Ręce! Wpięty Kołnierz i Rękaw wciskają Kierownicę w dół!", "KROK 2 z 4: Kierownica wciska Lewy Rękaw ostro w dół!");
+        stepDesc = S_TXT("Zanim ruszysz stopą do podcięcia, przekręć ręce jak kierownicę – PRAWA dłoń wciska rękaw ostro w dół, a wpięty LEWY kołnierz dociąża bark rywala!", "LEWA dłoń wciska rękaw ostro w dół przed ruchem stopy!");
         svgInner = `
           <circle cx="160" cy="85" r="24" fill="#ef4444" stroke="#fff" stroke-width="3"/><text x="160" y="89" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK #1</text>
           <circle cx="320" cy="85" r="24" fill="#ef4444" stroke="#fff" stroke-width="3"/><text x="320" y="89" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">KLAPEK #2</text>
           <path class="svg-dash-flow" d="M 240 95 L 240 175" fill="none" stroke="#f97316" stroke-width="6" marker-end="url(#arrowOrange)"/>
-          <text x="240" y="210" fill="#f97316" font-size="12.5" font-weight="900" text-anchor="middle">🟠 WCIŚNIJ RĘKAW I KOŁNIERZ W DÓŁ (DOCIĄŻ KLAPEK)!</text>
+          <text x="240" y="210" fill="#f97316" font-size="12.5" font-weight="900" text-anchor="middle">🟠 WCIŚNIJ RĘKAW I WPIĘTY KOŁNIERZ W DÓŁ (DOCIĄŻ KLAPEK)!</text>
           <text x="240" y="38" fill="#facc15" font-size="13" font-weight="900" text-anchor="middle">KROK 2: NAJPIERW RĘCE W DÓŁ (NAPRAWA BŁĘDU Z FILMU 1:25)!</text>
         `;
       } else if (stepNum === 3) {
@@ -939,16 +981,16 @@
       }
     } else if (diagramType === 'two_leg_throw') {
       if (stepNum === 1) {
-        stepTitle = S_TXT("KROK 1 z 4: Chwyt Lewy (Rękaw + Kołnierz) przed trójkątem", "KROK 1 z 4: Chwyt Prawy przed trójkątem");
-        stepDesc = S_TXT("Stań przed trójkątem (▲). PRAWA dłoń trzyma rękaw przy łokciu, LEWA dłoń trzyma kołnierz na wysokości obojczyka (luźny nadgarstek!).", "PRAWA dłoń trzyma kołnierz, LEWA dłoń trzyma rękaw!");
+        stepTitle = S_TXT("KROK 1 z 4: Dwuklik! Rękaw + Wpięcie Lewego Kołnierza przed trójkątem", "KROK 1 z 4: Rękaw + Wpięcie Prawego Kołnierza przed trójkątem");
+        stepDesc = S_TXT("Stań przed trójkątem (▲). PRAWA dłoń łapie rękaw przy łokciu, LEWA dłoń WPINA SIĘ w kołnierz na wysokości obojczyka (3 dolne palce, luźny nadgarstek!).", "PRAWA dłoń wpina kołnierz, LEWA dłoń łapie rękaw!");
       } else if (stepNum === 2) {
-        stepTitle = S_TXT("KROK 2 z 4: Wyciągnięcie Rękawa w górę + Wbicie Lewego Łokcia pod pachę!", "KROK 2 z 4: Wyciągnięcie Rękawa + Wbicie Prawego Łokcia pod pachę!");
-        stepDesc = S_TXT("Wskocz LEWĄ stopą w czubek trójkąta (▲), wyrwij PRAWĄ ręką rękaw wysoko w górę i wkręć LEWY łokieć głęboko pod pachę!", "Wskocz PRAWĄ stopą w trójkąt, wyrwij rękaw i wkręć PRAWY łokieć pod pachę!");
+        stepTitle = S_TXT("KROK 2 z 4: Wyciągnięcie Rękawa w górę + Wkręcenie Lewego Łokcia pod pachę!", "KROK 2 z 4: Wyciągnięcie Rękawa + Wkręcenie Prawego Łokcia pod pachę!");
+        stepDesc = S_TXT("Wskocz LEWĄ stopą w czubek trójkąta (▲), wyrwij PRAWĄ ręką rękaw wysoko w górę i wkręć LEWY łokieć (bez puszczania wpiętego kołnierza!) głęboko pod pachę!", "Wskocz PRAWĄ stopą w trójkąt, wyrwij rękaw i wkręć PRAWY łokieć pod pachę!");
       } else if (stepNum === 3) {
         stepTitle = S_TXT("KROK 3 z 4: Obrót 180° W PRAWO i niski przysiad na OBU ugiętych kolanach!", "KROK 3 z 4: Obrót 180° W LEWO na OBU ugiętych kolanach!");
         stepDesc = S_TXT("Dostaw PRAWĄ stopę – stoisz na dwóch równoległych stopach wewnątrz trójkąta na mocno ugiętych kolanach (biodra niżej niż pas rywala!).", "Dostaw LEWĄ stopę – stoisz na dwóch mocno ugiętych kolanach!");
       } else {
-        stepTitle = "KROK 4 z 4: Wyprost kolan jak sprężyna + pociągnięcie rękawa do podłogi!";
+        stepTitle = "KROK 4 z 4: Wyprost kolan jak sprężyna + pociągnięcie rękawa i kołnierza do podłogi!";
         stepDesc = "Wyprostuj dynamicznie oba kolana, zrób skłon głową w przód i ściągnij obie ręce z gumą w dół przed swoje stopy!";
       }
       svgInner = `
@@ -1001,7 +1043,7 @@
           🎯 <strong>${stepTitle}:</strong> ${stepDesc}
         </div>
         <div class="sim-controls-grid">
-          <button class="cam-btn ${stepNum === 1 ? 'active' : ''}" onclick="setSimStep(1)">1️⃣ Krok 1: Pozycja & Chwyt</button>
+          <button class="cam-btn ${stepNum === 1 ? 'active' : ''}" onclick="setSimStep(1)">1️⃣ Krok 1: Wpięcie Kołnierza</button>
           <button class="cam-btn ${stepNum === 2 ? 'active' : ''}" onclick="setSimStep(2)">2️⃣ Krok 2: Wychylenie Rąk</button>
           <button class="cam-btn ${stepNum === 3 ? 'active' : ''}" onclick="setSimStep(3)">3️⃣ Krok 3: Wejście Nóg</button>
           <button class="cam-btn ${stepNum === 4 ? 'active' : ''}" onclick="setSimStep(4)">4️⃣ Krok 4: Rzut / Finisz!</button>
@@ -1021,16 +1063,13 @@
 
   /*************************************************************************
    * 3. KOMPLETNA BAZA WSZYSTKICH 42 TECHNIK KODOKAN & PZJUDO
-   *    Z DOKŁADNYM PODZIAŁEM NA:
-   *    - 6 Kyu (Biały – 10 technik)
-   *    - 5 Kyu (Żółty – 10 technik, razem 20)
-   *    - 4.5 Kyu (Żółto-Pomarańczowy – 6 technik, razem 26)
-   *    - 4 Kyu (Pomarańczowy – 5 technik, razem 31)
-   *    - 3.5 Kyu (Pomarańczowo-Zielony – 6 technik, razem 37)
-   *    - 3 Kyu (Zielony – 5 technik, razem 42)
-   *    Każda z 42 technik posiada Blokadę i Kontrę/Wyjście!
+   *    Każda technika generuje teraz RÓWNIEŻ instrukcję Wpięcia w Kołnierz!
    *************************************************************************/
   function makeTech(id, kyuNum, beltBadge, group, diffLevel, name, ytQueryName, diagramType, gripL, gripR, kuzushiL, kuzushiR, feetL, feetR, blockTxt, counterTxt, customSoloObj) {
+    const defaultKumiKata = group === 'ne'
+      ? `🖐️ WPIĘCIE W PARTERZE (3x 12 powt.):\nZamiast łapać luźno materiał jednym palcem, wsuń dłoń głęboko pod pachę/za szyję i wepnij 4 palce w kołnierz lub pas rywala (łokcie przyklejone ciasno do własnych żeber!).`
+      : `🖐️ DRILL WPIĘCIA KOŁNIERZA POD TEN RZUT (3x 15 powt. na gumach):\nStań przed drzwiami z rękami w gardzie. Na sygnał zrób 'Dwuklik': 1. Chwyć materiałowy rękaw gumy ➔ 2. Wstrzel drugą dłoń od dołu i WEPNIJ KOŁNIERZ na wysokości obojczyka (zaciśnij 3 dolne palce, schowaj łokieć w dół na mostek!) i od razu przejdź do wychylenia pod "${name}"!`;
+
     const defaultDry = group === 'ashi'
       ? `👣 1. NA SUCHO (Szybkie Nogi & Klapki – 3x 15 powt.):\nPołóż 2 klapki przed sobą. Bez gumy ćwicz samą pracę stóp dla "${name}": podejdź krokiem dostawnym (Tsugi-ashi) i wykonaj dokładny ruch podcinający/blokujący stopą przy klapku (10x na lewą i 10x na prawą stronę!).`
       : (group === 'ne'
@@ -1038,19 +1077,19 @@
         : `👣 1. NA SUCHO (Wejścia Stóp w Trójkąt – 3x 12 powt.):\nUłóż 2 klapki jako stopy rywala. Wskakuj stopą #1 w czubek trójkąta (▲), dostawiaj stopę #2 z obrotem o 180° i łap idealną równowagę w końcowej pozycji "${name}" (bez przewracania się!).`);
 
     const defaultBandsKuzushi = group === 'ashi'
-      ? `🔵 2. NA GUMACH – SAMO WYCHYLENIE (Izolacja Rąk – 3x 15 powt.):\nZaczep gumę w drzwiach na wysokości klatki/barków. Złap rękaw i kołnierz (3 dolne palce!). Nie ruszaj stopami – wykonaj 15 dynamicznych szarpnięć rękoma ('Kierownica w dół / na piętę') dokładnie tak, jak wymaga "${name}", zatrzymując napięcie na 2 sekundy!`
+      ? `🔵 2. NA GUMACH – WPIĘCIE KOŁNIERZA + KIEROWNICA W DÓŁ (3x 15 powt.):\nZaczep gumę w drzwiach na wysokości barków. Wepnij twardo kołnierz i złap rękaw (3 dolne palce!). Wykonaj 15 dynamicznych szarpnięć rękoma ('Kierownica w dół / na piętę') dokładnie tak, jak wymaga "${name}", zatrzymując napięcie na 2 sekundy!`
       : (group === 'ne'
-        ? `🔵 2. NA GUMACH – SIŁA PRZYCIĄGANIA DO PARTERU (3x 15 powt.):\nUsiądź lub uklęknij przed drzwiami z gumą. Przyciągaj rękaw i kołnierz gumy ciasno do swoich żeber i pachy, budując żelazny docisk pod "${name}"!`
-        : `🔵 2. NA GUMACH – SAMO WYCHYLENIE 'ZEGAREK' (Izolacja Rąk – 3x 15 powt.):\nZaczep gumę na wysokości mostka. Złap rękaw i kołnierz. Zrób 15 wyrwań rękawa wysoko do ucha i podbić kołnierza z 2-sekundową pauzą przy uchu (zanim obrócisz biodra!).`);
+        ? `🔵 2. NA GUMACH – SIŁA PRZYCIĄGANIA DO PARTERU (3x 15 powt.):\nUsiądź lub uklęknij przed drzwiami z gumą. Wepnij dłonie w rękaw i kołnierz gumy i przyciągaj je ciasno do swoich żeber i pachy, budując żelazny docisk pod "${name}"!`
+        : `🔵 2. NA GUMACH – WPIĘCIE KOŁNIERZA + WYCHYLENIE 'ZEGAREK' (3x 15 powt.):\nZaczep gumę na wysokości mostka. Wepnij dłoń w kołnierz (łokieć w dół!), drugą złap rękaw. Zrób 15 wyrwań rękawa wysoko do ucha i podbić wpiętego kołnierza z 2-sekundową pauzą przy uchu!`);
 
     const defaultBandsFull = group === 'ne'
       ? `🌪️ 3. KOMBINACJA SOLO (Stójka ➔ Parter ➔ Ucieczka – 3x 45s):\nZrób wejście na gumach, padnij w szczelnego Żółwia (1s), odwróć się na plecy, zrób wysoki Most (Upa) + 3 Krewetki (Ebi) i zapnij trzymanie "${name}"!`
-      : `🌪️ 3. NA GUMACH – PEŁNE WEJŚCIE POŁĄCZONE (Uchi-komi Solo – 4x 12 powt.):\nPołącz Ręce + Stopy + Głowę pod oporem gumy: 1. Szarpnij rękaw i kołnierz ➔ 2. Wskocz w trójkąt (▲) ➔ 3. Wykonaj pełne wejście "${name}" na lewą (10x) oraz prawą (6x) stronę!`;
+      : `🌪️ 3. NA GUMACH – PEŁNE WEJŚCIE POŁĄCZONE (Wpięcie + Ręce + Nogi – 4x 12 powt.):\n1. Dwuklik (Rękaw ➔ Wepnij kołnierz!) ➔ 2. Szarpnij gumę ➔ 3. Wskocz w trójkąt (▲) ➔ 4. Wykonaj pełne wejście "${name}" na lewą (10x) oraz prawą (6x) stronę!`;
 
     const defaultFloorMob = diagramType === 'one_leg_throw'
       ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & ROZCIĄGANIE POD TEN RZUT:\n• Rozciąganie: 2x 30s Siad płotkarski i skłony do prostej nogi + 15 wysokich wymachów nogą w górę przy ścianie ('Jaskółka' – otwiera biodro i dwugłowy uda!).\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel do ściany (70 cm).`
       : (group === 'ashi'
-        ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD PODCIĘCIA:\n• Mobilność: 2x 40s Pozycja 90/90 na dywanie (rotacja bioder) + krążenia stawów skokowych ('Kierownica Stopą').\n• Siła: 3x 20s szybkie wyrzuty hantelek na wysokość kołnierza + przysiady wyskokowe.`
+        ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD PODCIĘCIA:\n• Mobilność: 2x 40s Pozycja 90/90 na dywanie (rotacja bioder) + krążenia stawów skokowych ('Kierownica Stopą').\n• Siła: 3x 20s szybkie wyrzuty hantelek na wysokość kołnierza (pod szybkie wpięcia!).`
         : (group === 'ne'
           ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ PARTEROWA:\n• Mobilność: 10 Mostów zapaśniczych z wypychaniem bioder + Kołyska judocka z przenoszeniem stóp za głowę ('Pług' na elastyczny kręgosłup!).\n• Siła: 3x 10 pompek i wznosów kolan na paraletkach.`
           : `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD RZUTY OBROTOWE:\n• Mobilność: 60s Głęboki Przysiad Słowiański (otwieranie bioder łokciami) + 15 przekładań gumy nad głową na luźne barki.\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel + 10 pompek na paraletkach.`));
@@ -1068,6 +1107,7 @@
         counter: () => counterTxt
       },
       soloStations: {
+        kumiKata: defaultKumiKata,
         dry: (customSoloObj && customSoloObj.dry) ? customSoloObj.dry : defaultDry,
         bandsKuzushi: (customSoloObj && customSoloObj.bandsKuzushi) ? customSoloObj.bandsKuzushi : defaultBandsKuzushi,
         bandsFull: (customSoloObj && customSoloObj.bandsFull) ? customSoloObj.bandsFull : defaultBandsFull,
@@ -1089,8 +1129,8 @@
       "⚡ KONTRA / PRZEJŚCIE W WALCE: Perfekcyjne Ukemi pozwala natychmiast po rzucie skręcić się w powietrze, uniknąć Ipponu i przejść do ataku w parterze!"
     ),
     makeTech("t6_deashi", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 1, "De-ashi-barai (Wycięcie postępującej stopy – Szybkie Stopy)", "De-ashi-barai Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu (3 dolne palce!), prawa dłoń na rękawie przy łokciu.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa dłoń na rękawie przy łokciu.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): 1. Prawa dłoń łapie rękaw przy łokciu ➔ 2. Lewa dłoń WPINA SIĘ w kołnierz przy obojczyku (3 dolne palce!).",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): 1. Lewa dłoń łapie rękaw ➔ 2. Prawa dłoń wpina się w kołnierz.",
       "🟡 WYCHYLENIE (KIEROWNICA W DÓŁ): Przekręć ręce jak kierownicę roweru – PRAWA dłoń wciska rękaw ostro w dół, a LEWA prowadzi kołnierz!",
       "🟡 WYCHYLENIE (KIEROWNICA W DÓŁ): LEWA dłoń wciska rękaw ostro w dół w stronę wycinanej stopy!",
       "🟩 PRACA NÓG: Skręć LEWĄ stopę bokiem (jak łyżwa/miotła) i szoruj małym palcem po macie, wycinając kostkę rywala w kierunku jego palców!",
@@ -1099,8 +1139,8 @@
       "⚡ KONTRA (TSUBAME-GAESHI – Jaskółczy Zwrot): Przepuść wycinającą stopę pod swoją stopą i natychmiast drugą nogą wytnij jego nogę atakującą!"
     ),
     makeTech("t6_osoto", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 1, "O-soto-gari (Duże zewnętrzne podcięcie)", "O-soto-gari Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń wysoko na kołnierzu przy szyi rywala, prawa przyciąga rękaw ciasno do piersi.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń wysoko na kołnierzu, lewa przyciąga rękaw do klatki.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpina się wysoko w kołnierz przy szyi rywala (łokieć dociska mostek!), prawa przyciąga rękaw ciasno do piersi.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń wpina się wysoko w kołnierz, lewa przyciąga rękaw do klatki.",
       "🟡 WYCHYLENIE: Prawa ręka ściąga rękaw do brzucha, a lewa wbija bark rywala w dół-tył na jedną piętę!",
       "🟡 WYCHYLENIE: Lewa ręka ściąga rękaw do brzucha, prawa dociska kołnierz w dół-tył!",
       "🟩 PRACA NÓG: Głęboki krok PRAWĄ stopą obok stopy rywala, a LEWA noga wycina jego udo od tyłu jak potężne wahadło!",
@@ -1109,9 +1149,9 @@
       "⚡ KONTRA (O-SOTO-GAESHI): Zablokuj wejście ugięciem kolan, przejmij kołnierz i wytnij jego zaczepioną nogę tym samym ruchem!"
     ),
     makeTech("t6_ouchi", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 1, "O-uchi-gari (Duże wewnętrzne podcięcie po półkolu)", "O-uchi-gari Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
-      "🟡 WYCHYLENIE: Wciśnij rywala kołnierzem i rękawem w dół i w tył (na obie pięty) – nie ciągnij go na siebie!",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta twardo w kołnierz przy obojczyku, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń wpięta w kołnierz, lewa na rękawie.",
+      "🟡 WYCHYLENIE: Wciśnij rywala wpiętym kołnierzem i rękawem w dół i w tył (na obie pięty) – nie ciągnij go na siebie!",
       "🟡 WYCHYLENIE: Dociśnij rękaw i kołnierz w dół-tył!",
       "🟩 PRACA NÓG: Krok dostawny prawą stopą, a LEWA noga wchodzi między nogi rywala i rysuje wielkie półkole po macie!",
       "🟩 PRACA NÓG: Krok dostawny lewą stopą, a PRAWA noga rysuje wielkie półkole po macie!",
@@ -1119,8 +1159,8 @@
       "⚡ KONTRA (O-UCHI-GAESHI): Przekręć gwałtownie rękoma jak kierownicą w stronę uniesionej nogi rywala!"
     ),
     makeTech("t6_hizaguruma", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 2, "Hiza-guruma (Koło wokół kolana)", "Hiza-guruma Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie (trzymaj dystans!).",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz, prawa na rękawie (trzymaj dystans!).",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wyciągnij rywala wysoko w przód-bok, kręcąc rękoma jak wielką kierownicą!",
       "🟡 WYCHYLENIE: Wyciągnij rękaw i kołnierz po łuku w przód-lewo!",
       "🟩 PRACA NÓG: Przyłóż podeszwę LEWEJ stopy (mały palec!) do zewnętrznej strony prawego kolana rywala i przekręć go rękoma!",
@@ -1149,7 +1189,7 @@
       "⚡ KONTRA (USHIRO-GOSHI / UTSURI-GOSHI): Złap rywala w pasie od tyłu, wynieś biodrem w górę i rzuć!"
     ),
     makeTech("t6_kesa", 6, "⚪ 6 Kyu (Biały Pas)", "ne", 1, "Hon-kesa-gatame (Zasadnicze trzymanie opasaniem) ⇄ 3 Wyjścia", "Kesa-gatame Kodokan Judo", "parter_pin_escape",
-      "🖐️ PRACA RĄK: Jedna ręka wciąga rękaw rywala głęboko pod Twoją pachę, druga obejmuje szyję i chwyta kołnierz.",
+      "🖐️ PRACA RĄK: Jedna ręka wciąga rękaw rywala głęboko pod Twoją pachę, druga obejmuje szyję i wpina się w kołnierz.",
       "🖐️ PRACA RĄK: Zamknij ramię rywala pod swoją pachą i chwyć kołnierz za szyją.",
       "🟡 KONTROLA: Unieś uwięziony łokieć rywala o 5 cm nad matę (odbierasz mu możliwość zrobienia Mostu!).",
       "🟡 KONTROLA: Unieś jego łokieć nad matę i schowaj głowę nisko.",
@@ -1181,9 +1221,9 @@
 
     // ==================== 5 KYU (ŻÓŁTY PAS – 10 NOWYCH TECHNIK, RAZEM 20) ====================
     makeTech("t5_kouchi", 5, "🟡 5 Kyu (Żółty Pas)", "ashi", 1, "Kouchi-gari (Małe wewnętrzne podcięcie pięty – Otwieracz pod Rzuty!)", "Kouchi-gari Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
-      "🟡 WYCHYLENIE: Wciśnij rywala kołnierzem w dół-tył, aby dociążył piętę swojej przedniej nogi!",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń twardo wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń wpięta w kołnierz, lewa na rękawie.",
+      "🟡 WYCHYLENIE: Wciśnij rywala wpiętym kołnierzem w dół-tył, aby dociążył piętę swojej przedniej nogi!",
       "🟡 WYCHYLENIE: Prawa ręka dociska kołnierz w dół-tył na piętę!",
       "🟩 PRACA NÓG: Krok dostawny prawą stopą, a LEWA stopa skręcona w 'łyżeczkę' wycina piętę od wewnątrz w kierunku palców!",
       "🟩 PRACA NÓG: Krok dostawny lewą stopą, a PRAWA stopa wycina piętę od wewnątrz!",
@@ -1191,8 +1231,8 @@
       "⚡ KONTRA (SASAE-TSURI-KOMI-ASHI / UCHI-MATA): Gdy cofniesz nogę, a rywal ruszy za nią – zablokuj jego kostkę (Sasae) albo wejdź w Uchi-matę!"
     ),
     makeTech("t5_kosotogari", 5, "🟡 5 Kyu (Żółty Pas)", "ashi", 2, "Ko-soto-gari (Małe zewnętrzne podcięcie pięty od tyłu)", "Ko-soto-gari Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Ściągnij rękaw i kołnierz ostro w dół na tylną piętę rywala!",
       "🟡 WYCHYLENIE: Osadź ciężar rywala na jego pięcie!",
       "🟩 PRACA NÓG: Zejdź krokiem w bok poza stopę rywala i wytnij jego piętę od tyłu podeszwą LEWEJ stopy!",
@@ -1201,8 +1241,8 @@
       "⚡ KONTRA (UCHI-MATA): Obróć się plecami i wyrzuć stojącego z boku rywala Uchi-matą!"
     ),
     makeTech("t5_osotootoshi", 5, "🟡 5 Kyu (Żółty Pas)", "ashi", 1, "O-soto-otoshi (Duże zewnętrzne wbicie nogi z góry)", "O-soto-otoshi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń wysoko na kołnierzu, prawa ściąga rękaw w dół.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa ściąga rękaw.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wysoko wpięta w kołnierz, prawa ściąga rękaw w dół.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa ściąga rękaw.",
       "🟡 WYCHYLENIE: Mocne wciśnięcie rywala na tylną piętę!",
       "🟡 WYCHYLENIE: Osadzenie rywala na pięcie!",
       "🟩 PRACA NÓG: Unieś LEWĄ nogę wysoko za udo rywala i wbij stopę z góry w matę za jego piętą, jadąc klatką w przód!",
@@ -1220,10 +1260,10 @@
       "🛡️ BLOKOWANIE: Ugnij kolana (zejdź niżej niż biodra rywala!) i wbij dłonie w jego pas!",
       "⚡ KONTRA (KO-SOTO-GARI / TANI-OTOSHI): Obejdź zablokowanego rywala z boku od strony pleców i wytnij go w tył!"
     ),
-    makeTech("t5_moroteseoi", 5, "🟡 5 Kyu (Żółty Pas)", "te", 3, "Morote-seoi-nage (Rzut przez plecy oburącz z wkręceniem łokcia – Z filmu 0:15 i 0:31!)", "Morote-seoi-nage Kodokan Judo", "two_leg_throw",
-      "🖐️ UCHWYT (LEWY – z filmu 0:15 i 0:31!): LEWA dłoń trzyma kołnierz na wysokości obojczyka, PRAWA dłoń trzyma rękaw przy łokciu!",
-      "🖐️ UCHWYT (PRAWY – z filmu 0:37): PRAWA dłoń trzyma kołnierz, LEWA dłoń trzyma rękaw!",
-      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw wysoko do góry, a LEWY łokieć zgina się i wkręca pod lewą pachę rywala bez puszczania kołnierza!",
+    makeTech("t5_moroteseoi", 5, "🟡 5 Kyu (Żółty Pas)", "te", 3, "Morote-seoi-nage (Rzut przez plecy oburącz z wkręceniem wpiętego kołnierza – Z filmu 0:15 i 0:31!)", "Morote-seoi-nage Kodokan Judo", "two_leg_throw",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY – z filmu 0:15 i 0:31!): LEWA dłoń wpina się w kołnierz na wysokości obojczyka (luźny nadgarstek!), PRAWA dłoń trzyma rękaw przy łokciu!",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY – z filmu 0:37): PRAWA dłoń wpina kołnierz, LEWA dłoń trzyma rękaw!",
+      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw wysoko do góry, a LEWY łokieć zgina się i wkręca pod lewą pachę rywala BEZ PUSZCZANIA wpiętego kołnierza!",
       "🟡 WYCHYLENIE: LEWA ręka ciągnie rękaw w górę, PRAWY łokieć wkręca się pod prawą pachę!",
       "🟩 PRACA NÓG: Skoro trzymasz rękaw PRAWĄ ręką, obracasz się W PRAWO i stajesz na dwóch ugiętych kolanach w trójkącie (▲)!",
       "🟩 PRACA NÓG: Obrót W LEWO na dwóch ugiętych kolanach w trójkącie!",
@@ -1231,9 +1271,9 @@
       "⚡ KONTRA: Obejście za plecy (Tani-otoshi) lub natychmiastowe obracanie Żółwia w parterze!"
     ),
     makeTech("t5_taiotoshi", 5, "🟡 5 Kyu (Żółty Pas)", "te", 2, "Tai-otoshi (Obniżenie tułowia z szeroką zaporą nogą na palcach)", "Tai-otoshi Kodokan Judo", "two_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
-      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw daleko w przód-dół, a LEWA wypycha kołnierz jak tłok (rzut samymi rękoma przez zaporę z nogi!).",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw daleko w przód-dół, a LEWA wypycha wpięty kołnierz jak tłok (rzut samymi rękoma przez zaporę z nogi!).",
       "🟡 WYCHYLENIE: LEWA ręka ciągnie rękaw daleko w przód-dół, PRAWA wypycha kołnierz!",
       "🟩 PRACA NÓG: Obrót i wystawienie LEWEJ nogi szeroko przed lewą kostką rywala (stopa na palcach, pięta w górze, kolano w dół!).",
       "🟩 PRACA NÓG: Wystawienie PRAWEJ nogi szeroko przed prawą kostką rywala na palcach!",
@@ -1250,9 +1290,9 @@
       "🛡️ BLOKOWANIE: Zejdź nisko i wysuń własne biodro przed biodro rywala!",
       "⚡ KONTRA (USHIRO-GOSHI / TANI-OTOSHI): Złap biodra rywala z tyłu i wynieś go lub rzuć w tył!"
     ),
-    makeTech("t5_tsurikomigoshi", 5, "🟡 5 Kyu (Żółty Pas)", "koshi", 2, "Tsuri-komi-goshi (Rzut biodrowy z wyciągnięciem za kołnierz)", "Tsuri-komi-goshi Kodokan Judo", "two_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń trzyma wysoko kołnierz, prawa dłoń trzyma rękaw.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń wysoko na kołnierzu, lewa na rękawie.",
+    makeTech("t5_tsurikomigoshi", 5, "🟡 5 Kyu (Żółty Pas)", "koshi", 2, "Tsuri-komi-goshi (Rzut biodrowy z wyciągnięciem za wpięty kołnierz)", "Tsuri-komi-goshi Kodokan Judo", "two_leg_throw",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpina się wysoko w kołnierz, prawa dłoń trzyma rękaw.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń wysoko na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wyciągnij rękaw i kołnierz wysoko w górę-przód, a sam zejdź bardzo nisko biodrami pod środek ciężkości rywala!",
       "🟡 WYCHYLENIE: Obie ręce windują rywala na palce stóp!",
       "🟩 PRACA NÓG: Głęboki przysiad na dwóch nogach w trójkącie (▲) ➔ wyprost kolan i rzut przez biodro!",
@@ -1261,7 +1301,7 @@
       "⚡ KONTRA (USHIRO-GOSHI / TANI-OTOSHI): Przejście za biodro rywala i kontra w tył!"
     ),
     makeTech("t5_yokoshiho", 5, "🟡 5 Kyu (Żółty Pas)", "ne", 1, "Yoko-shiho-gatame (Trzymanie boczne) ⇄ Wyjście Mostem i Krewetką", "Yoko-shiho-gatame Kodokan Judo", "parter_pin_escape",
-      "🖐️ PRACA RĄK: Jedna ręka pod głową chwyta kołnierz rywala, druga przechodzi między jego udami i łapie pas!",
+      "🖐️ PRACA RĄK: Jedna ręka pod głową wpina się w kołnierz rywala, druga przechodzi między jego udami i łapie pas!",
       "🖐️ PRACA RĄK: Chwyt za kołnierz pod głową i za pas między nogami.",
       "🟡 KONTROLA: Ściągaj oba łokcie do siebie i dociskaj klatką żebra rywala.",
       "🟡 KONTROLA: Ciągły docisk klatki piersiowej pod kątem 90 stopni.",
@@ -1283,8 +1323,8 @@
 
     // ==================== 4.5 KYU (ŻÓŁTO-POMARAŃCZOWY PAS – NAJBLIŻSZY CEL TYMKA: 6 NOWYCH TECHNIK, RAZEM 26) ====================
     makeTech("t45_sasae", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ashi", 2, "Sasae-tsuri-komi-ashi (Blokada stopy przyciąganego rywala)", "Sasae-tsuri-komi-ashi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta twardo w kołnierz przy obojczyku, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wyciągnij rywala wysoko w przód i przekręć ręce jak kierownicę roweru!",
       "🟡 WYCHYLENIE: Lewa z rękawem ciągnie w dół, prawa z kołnierzem wypycha w górę-bok!",
       "🟩 PRACA NÓG: Krok w bok i przyłożenie podeszwy LEWEJ stopy do kostki/piszczela przedniej nogi rywala!",
@@ -1293,8 +1333,8 @@
       "⚡ KONTRA (KOUCHI-GARI / TSUBAME-GAESHI): Przeskocz nad blokującą stopą i wytnij rywala od środka!"
     ),
     makeTech("t45_kosotogake", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "ashi", 2, "Ko-soto-gake (Zewnętrzne zahaczenie nogi z wejściem klatką)", "Ko-soto-gake Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Głęboki chwyt lewą ręką za kołnierz/plecy i prawą za rękaw.",
-      "🖐️ UCHWYT (PRAWY): Głęboki chwyt prawą ręką za kołnierz i lewą za rękaw.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Głębokie wpięcie lewą ręką w kołnierz/na karku i prawą za rękaw.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Głęboki chwyt prawą ręką za kołnierz i lewą za rękaw.",
       "🟡 WYCHYLENIE: Ściągnij rywala ostro w dół na jedną piętę i przyklej klatkę do jego klatki!",
       "🟡 WYCHYLENIE: Mocne osadzenie ciężaru rywala na tylnej nodze.",
       "🟩 PRACA NÓG: Zahacz LEWĄ nogą (zgiętą jak hak!) łydkę rywala od zewnątrz i pojedź na nodze podporowej w przód!",
@@ -1303,8 +1343,8 @@
       "⚡ KONTRA (UCHI-MATA): Wyrzuć zahaczającego z boku rywala Uchi-matą!"
     ),
     makeTech("t45_seoiotoshi", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "te", 2, "Seoi-otoshi (Rzut przez plecy z niskim zejściem na kolano)", "Seoi-otoshi Kodokan Judo", "two_leg_throw",
-      "🖐️ UCHWYT (LEWY): Jak w Ippon lub Morote-seoi-nage (lewy łokieć pod pachą, prawa dłoń na rękawie).",
-      "🖐️ UCHWYT (PRAWY): Prawy łokieć pod pachą, lewa dłoń na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz (wkręca łokieć pod pachę!), prawa dłoń na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawy łokieć pod pachą, lewa dłoń na rękawie.",
       "🟡 WYCHYLENIE: Gwałtowne pociągnięcie rękawa i kołnierza ostro w przód-dół!",
       "🟡 WYCHYLENIE: Szarpnięcie rękawa i kołnierza w przód-dół!",
       "🟩 PRACA NÓG: Po obrocie o 180° schodzisz nisko na jedno (lub oba) kolana z szeroko rozstawionymi stopami i ściągasz rywala przez bark!",
@@ -1313,8 +1353,8 @@
       "⚡ KONTRA (ATAK NA ŻÓŁWIA): Gdy rywal rzuci się na kolana bez wychylenia, natychmiast wchodzisz na jego plecy w parterze!"
     ),
     makeTech("t45_haraigoshi", 4.5, "🟡🟠 4.5 Kyu (Żółto-Pomarańczowy Pas)", "koshi", 2, "Harai-goshi (Zamiatający rzut biodrowy – Bliźniak Uchi-maty po zewnętrznej stronie uda!)", "Harai-goshi Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu za szyją/łopatką, prawa ręka mocno na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa ręka wpięta wysoko w kołnierz za szyją/łopatką, prawa ręka mocno na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: PRAWA ręka ciągnie rękaw wysoko do PRAWEGO ucha ('spójrz na zegarek')!",
       "🟡 WYCHYLENIE: LEWA ręka ciągnie rękaw wysoko do LEWEGO ucha!",
       "🟩 PRACA NÓG: Stoisz na PRAWEJ nodze podporowej w trójkącie (▲), a LEWA noga zamiata po zewnętrznej stronie uda/łydki rywala w tył-górę!",
@@ -1345,8 +1385,8 @@
 
     // ==================== 4 KYU (PEŁNY POMARAŃCZOWY PAS – 5 NOWYCH TECHNIK, RAZEM 31) ====================
     makeTech("t4_osotoguruma", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 2, "O-soto-guruma (Duże koło przez obie nogi rywala)", "O-soto-guruma Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu, prawa ściąga rękaw do brzucha.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka na kołnierzu, lewa ściąga rękaw.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa ręka wysoko wpięta w kołnierz, prawa ściąga rękaw do brzucha.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa ręka na kołnierzu, lewa ściąga rękaw.",
       "🟡 WYCHYLENIE: Wbicie rywala w dół-tył na obie pięty!",
       "🟡 WYCHYLENIE: Osadzenie rywala na obu piętach!",
       "🟩 PRACA NÓG: Twoja LEWA noga przechodzi za OBIE nogi rywala jak długi szlaban i wycina je razem!",
@@ -1355,8 +1395,8 @@
       "⚡ KONTRA (O-SOTO-GAESHI): Skontrowanie tym samym rzutem!"
     ),
     makeTech("t4_okuriashi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 3, "Okuri-ashi-barai (Podcięcie obu stóp w ruchu bocznym)", "Okuri-ashi-barai Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Poruszaj się z rywalem bokiem (Tsugi-ashi) i w momencie wycięcia poderwij rękoma jego górną część ciała jak falę!",
       "🟡 WYCHYLENIE: Fala rękoma w górę-bok w rytmie kroków bocznych!",
       "🟩 PRACA NÓG: Gdy rywal dostawia stopę do stopy, Twoja LEWA stopa uderza w jego kostkę i zmiata obie stopy naraz!",
@@ -1365,8 +1405,8 @@
       "⚡ KONTRA (TSUBAME-GAESHI): Przepuść wycinającą stopę pod swoją uniesioną nogą i natychmiast wytnij nogę rywala w drugą stronę!"
     ),
     makeTech("t4_haraitsurikomi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "ashi", 3, "Harai-tsuri-komi-ashi (Zamiatanie cofającej się stopy)", "Harai-tsuri-komi-ashi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wypchnij rywala do tyłu, aby cofnął nogę, i przekręć ręce jak kierownicę!",
       "🟡 WYCHYLENIE: Kierownica rąk wyciąga barki rywala w przód, podczas gdy jego stopa cofa się w tył!",
       "🟩 PRACA NÓG: Twoja LEWA stopa zamiata cofającą się kostkę rywala w tył (jak miotła)!",
@@ -1375,8 +1415,8 @@
       "⚡ KONTRA (O-UCHI-GARI): Wykorzystaj pęd idącego na Ciebie rywala i wejdź w O-uchi-gari!"
     ),
     makeTech("t4_ukiotoshi", 4, "🟠 4 Kyu (Pomarańczowy Pas)", "te", 2, "Uki-otoshi (Rzut ręczny przez pociągnięcie w przód-bok)", "Uki-otoshi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wykorzystaj ruch rywala w przód i ściągnij go obiema rękoma po łuku do maty!",
       "🟡 WYCHYLENIE: Długie pociągnięcie rękawa i kołnierza w dół-bok!",
       "🟩 PRACA NÓG: Krok w tył-bok i przyklęknięcie na jedno kolano z jednoczesnym rzutem rękoma!",
@@ -1397,9 +1437,9 @@
 
     // ==================== 3.5 KYU (POMARAŃCZOWO-ZIELONY PAS – 6 NOWYCH TECHNIK, RAZEM 37) ====================
     makeTech("t35_uchimata", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 3, "🔥 UCHI-MATA (Wewnętrzne podcięcie udem – Koronny Rzut Tymka + Wariant z Sali 0:05!)", "Uchi-mata Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWA UCHI-MATA – Ulubiony chwyt Tymka): LEWA dłoń trzyma kołnierz (3 dolne palce!), PRAWA dłoń trzyma rękaw!\n💡 WARIANT Z SALI (0:05): Jeśli trzymasz lewy kołnierz i kręcisz się w lewo na PRAWĄ nogę – LEWA ręka z kołnierzem ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę!",
-      "🖐️ UCHWYT (PRAWA UCHI-MATA): PRAWA dłoń trzyma kołnierz za szyją, LEWA dłoń trzyma rękaw przy łokciu!",
-      "🟡 WYCHYLENIE ('ZEGAREK' PRZED OBROTEM): PRAWA ręka ciągnie rękaw po łuku wysoko do PRAWEGO ucha ('spójrz na zegarek'!), a LEWA podbija kołnierz w górę!",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWA UCHI-MATA – Ulubiony chwyt Tymka): 1. PRAWA dłoń łapie rękaw ➔ 2. LEWA dłoń WPINA SIĘ w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!)!\n💡 WARIANT Z SALI (0:05): Jeśli trzymasz lewy kołnierz i kręcisz się w lewo na PRAWĄ nogę – LEWA ręka z kołnierzem ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę!",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWA UCHI-MATA): PRAWA dłoń wpina się w kołnierz za szyją, LEWA dłoń trzyma rękaw przy łokciu!",
+      "🟡 WYCHYLENIE ('ZEGAREK' PRZED OBROTEM): PRAWA ręka ciągnie rękaw po łuku wysoko do PRAWEGO ucha ('spójrz na zegarek'!), a LEWA podbija wpięty kołnierz w górę!",
       "🟡 WYCHYLENIE ('ZEGAREK'): LEWA ręka ciągnie rękaw wysoko do LEWEGO ucha, PRAWA wynosi kołnierz!",
       "🟩 PRACA NÓG (KTÓRA RĘKA NA KOŁNIERZU = TA NOGA LECI W GÓRĘ!): 1. LEWA stopa w czubek trójkąta (▲) ➔ 2. PRAWA stopa staje jako OŚ OBROTU ➔ 3. Głowa do kolana, a LEWA noga strzela w sufit!",
       "🟩 PRACA NÓG: 1. PRAWA stopa w trójkąt (▲) ➔ 2. LEWA stopa staje jako OŚ OBROTU ➔ 3. Głowa do kolana, a PRAWA noga strzela w sufit!",
@@ -1407,8 +1447,8 @@
       "⚡ KONTRA NA UCHI-MATĘ (UCHI-MATA-SUKASHI / TE-GURUMA / KO-SOTO-GARI): Zejdź biodrem w bok, przepuść jego nogę w powietrzu i przekręć go rękoma na matę (Sukashi) albo wytnij mu nogę podporową od tyłu!"
     ),
     makeTech("t35_tsubame", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 2, "Tsubame-gaeshi (Jaskółczy Zwrot – Błyskawiczna kontra stopą na podcięcie!)", "Tsubame-gaeshi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT: Stabilny chwyt na rękawie i kołnierzu jak kierownica.",
-      "🖐️ UCHWYT: Kontrola dystansu rękoma.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Stabilnie wpięty kołnierz i rękaw trzymane jak kierownica.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Kontrola dystansu rękoma.",
       "🟡 WYCHYLENIE: Gdy rywal wycina Twoją stopę, przekręć kierownicę rąk w przeciwną stronę!",
       "🟡 WYCHYLENIE: Zmiana kierunku kierownicy rąk w ułamku sekundy!",
       "🟩 PRACA NÓG: 1. Unieś atakowaną stopę o 5 cm nad matę (przepuść podcięcie rywala pod stopą!) ➔ 2. Natychmiast wytnij jego nogę atakującą w drugą stronę!",
@@ -1417,8 +1457,8 @@
       "⚡ ZASTOSOWANIE: Najpiękniejsza kontra z grupy Ashi-waza!"
     ),
     makeTech("t35_ouchigaeshi", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "ashi", 2, "O-uchi-gaeshi & O-soto-gaeshi (Kontry na duże podcięcia)", "O-uchi-gaeshi Kodokan Judo", "block_counter",
-      "🖐️ UCHWYT: Mocny chwyt kołnierza i rękawa.",
-      "🖐️ UCHWYT: Przejęcie dominacji na kołnierzu.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Mocny chwyt kołnierza i rękawa.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Przejęcie dominacji na kołnierzu.",
       "🟡 WYCHYLENIE: W O-uchi-gaeshi skręcasz kierownicą rąk w stronę uniesionej nogi rywala; w O-soto-gaeshi wciskasz go na jego nogę podporową!",
       "🟡 WYCHYLENIE: Wykorzystanie pędu atakującego rywala.",
       "🟩 PRACA NÓG: Cofnij podcinaną nogę, obniż biodra w Jigotai i wytnij nogę rywala!",
@@ -1427,8 +1467,8 @@
       "⚡ ZASTOSOWANIE: Obowiązkowe kontry na egzamin i zawody!"
     ),
     makeTech("t35_kouchigaeshi", 3.5, "🟠🟢 3.5 Kyu (Pomarańczowo-Zielony Pas)", "te", 2, "Kouchi-gaeshi & Uchi-mata-sukashi (Ręczne kontry przez unik i kierownicę)", "Uchi-mata-sukashi Kodokan Judo", "block_counter",
-      "🖐️ UCHWYT: Mocny uchwyt na kołnierzu i rękawie.",
-      "🖐️ UCHWYT: Kontrola kierownicy rąk.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Mocny uchwyt na kołnierzu i rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA: Kontrola kierownicy rąk.",
       "🟡 WYCHYLENIE: Gdy rywal wchodzi bez wychylenia, przekręć gwałtownie rękoma jak kierownicą w kierunku jego lotu!",
       "🟡 WYCHYLENIE: Pociągnięcie rękawa i wypchnięcie kołnierza po łuku!",
       "🟩 PRACA NÓG: Cofnij atakowaną nogę / zejdź biodrem w bok, przepuszczając nogę rywala w powietrzu!",
@@ -1459,8 +1499,8 @@
 
     // ==================== 3 KYU (ZIELONY PAS – 5 NOWYCH TECHNIK, RAZEM 42) ====================
     makeTech("t3_ashiguruma", 3, "🟢 3 Kyu (Zielony Pas)", "ashi", 3, "Ashi-guruma (Koło wokół długiej wyprostowanej nogi)", "Ashi-guruma Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa ręka wysoko na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa ręka wysoko wpięta w kołnierz, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa ręka wysoko na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Dalekie wyciągnięcie rękawa i kołnierza po kole w przód!",
       "🟡 WYCHYLENIE: Wyciągnięcie rywala na palce stóp po łuku!",
       "🟩 PRACA NÓG: Obrót na nodze podporowej i wystawienie długiej, wyprostowanej LEWEJ nogi w poprzek przed prawym kolanem rywala jako osi obrotu!",
@@ -1479,8 +1519,8 @@
       "⚡ KONTRA: Obejście za plecy do parteru!"
     ),
     makeTech("t3_sumiotoshi", 3, "🟢 3 Kyu (Zielony Pas)", "te", 3, "Sumi-otoshi (Rzut rękoma w tylny narożnik równowagi)", "Sumi-otoshi Kodokan Judo", "foot_sweep",
-      "🖐️ UCHWYT (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa dłoń na kołnierzu, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa dłoń na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Wbicie ciężaru rywala rękoma prosto w jego tylny narożnik (za jego piętę)!",
       "🟡 WYCHYLENIE: Pchnięcie kołnierzem i ściągnięcie rękawem w tylny róg!",
       "🟩 PRACA NÓG: Zejście krokiem po łuku z linii i obniżenie tułowia!",
@@ -1499,8 +1539,8 @@
       "⚡ KONTRA (TANI-OTOSHI / KO-SOTO-GAKE): Zejście na bok za plecy rywala!"
     ),
     makeTech("t3_hanegoshi", 3, "🟢 3 Kyu (Zielony Pas)", "koshi", 3, "Hane-goshi & Utsuri-goshi (Sprężynujący rzut biodrowo-nożny i kontra biodrowa)", "Hane-goshi Kodokan Judo", "one_leg_throw",
-      "🖐️ UCHWYT (LEWY): Lewa ręka na kołnierzu/plecach, prawa na rękawie.",
-      "🖐️ UCHWYT (PRAWY): Prawa ręka na kołnierzu, lewa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (LEWY): Lewa ręka wpięta w kołnierz/plecy, prawa na rękawie.",
+      "🖐️ WPIĘCIE KOŁNIERZA (PRAWY): Prawa ręka na kołnierzu, lewa na rękawie.",
       "🟡 WYCHYLENIE: Przyklej rywala ciasno do swojego biodra i wyciągnij rękaw w górę!",
       "🟡 WYCHYLENIE: Mocne wyciągnięcie rękawa do ucha!",
       "🟩 PRACA NÓG: Stoisz na nodze podporowej, a druga noga ugięta w kolanie sprężynuje pod udem/piszczelem rywala w górę!",
@@ -1515,7 +1555,6 @@
   let currentAnatomyTab = 0;
 
   function populateKodokanTechList() {
-    // Obsługa ułamkowych stopni Kyu (np. 4.5 Kyu Żółto-Pomarańczowy oraz 3.5 Kyu Pomarańczowo-Zielony!)
     const maxKyu = parseFloat(document.getElementById('kdkBeltSelect').value) || 4.5;
     const groupFilter = document.getElementById('kdkGroupSelect').value;
     const sortMode = document.getElementById('kdkSortSelect').value;
@@ -1567,7 +1606,7 @@
     const tech = filteredTechList[selectedTechIdx] || KODOKAN_CURRICULUM[0];
 
     const anatomyTabs = [
-      { title: "🔵 1. Uchwyt (Ręce)", text: tech.details.grip() },
+      { title: "🖐️ 1. Wpięcie Kołnierza", text: `${tech.details.grip()}\n\n${tech.soloStations.kumiKata}` },
       { title: "🟡 2. Wychylenie (Kuzushi)", text: tech.details.kuzushi() },
       { title: "🟩 3. Wejście Stóp", text: tech.details.feet() },
       { title: "🏠 4. Ćwiczenia Solo w Domu", text: `${tech.soloStations.dry}\n\n${tech.soloStations.bandsKuzushi}` },
@@ -1598,7 +1637,7 @@
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button class="btn btn-blue" onclick="speakInstruction('${voiceFull}')">🔊 Sensei, przeczytaj na głos!</button>
-          <button class="btn btn-green" onclick="addTechniqueToMyPlan('${tech.id}')">➕ Dodaj tę technikę do Mojego Planu!</button>
+          <button class="btn btn-green" onclick="addTechniqueToMyPlan('${tech.id}')">➕ Dodaj do Mojego Planu Tygodnia!</button>
         </div>
       </div>
 
@@ -1616,15 +1655,23 @@
       <div class="solo-stations-box">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div>
-            <strong style="color:var(--neon-gold); font-size:0.96rem; display:block;">🏠 JAK ĆWICZYĆ TĘ TECHNIKĘ SAMEMU W DOMU (4 STACJE PAMIĘCI MIĘŚNIOWEJ SOLO)</strong>
-            <span style="font-size:0.78rem; color:var(--text-dim);">Wszystkie 4 ćwiczenia poniżej są ułożone specjalnie pod: <strong>${tech.name}</strong></span>
+            <strong style="color:var(--neon-gold); font-size:0.96rem; display:block;">🏠 JAK ĆWICZYĆ TĘ TECHNIKĘ SAMEMU W DOMU (WPIĘCIE KOŁNIERZA + 4 STACJE SOLO)</strong>
+            <span style="font-size:0.78rem; color:var(--text-dim);">Wszystkie ćwiczenia poniżej są ułożone specjalnie pod: <strong>${tech.name}</strong></span>
           </div>
           <button class="btn btn-gold" style="padding:10px 14px; font-size:0.84rem;" onclick="addTechniqueToMyPlan('${tech.id}')">
-            ➕ DODAJ CAŁY PAKIET TEJ TECHNIKI DO PLANU ĆWICZEŃ!
+            ➕ DODAJ CAŁY PAKIET TEJ TECHNIKI DO PLANU DNIA!
           </button>
         </div>
 
         <div class="station-grid">
+          <div class="station-card st-grip">
+            <div>
+              <h4>🖐️ STACJA 0: Wpięcie w Kołnierz & Chwyt (Kumi-kata)</h4>
+              <p>${tech.soloStations.kumiKata}</p>
+            </div>
+            <button class="btn" style="width:100%;" onclick="incrementMastery('kuzushi', 1)">✅ Zaliczyłem Wpięcia (+35 EXP)</button>
+          </div>
+
           <div class="station-card st-dry">
             <div>
               <h4>🥇 STACJA 1: Ćwiczenie Główne na Sucho (Szybkie Nogi & Trójkąt)</h4>
@@ -1635,7 +1682,7 @@
 
           <div class="station-card st-bands">
             <div>
-              <h4>🔵 STACJA 2: Na Gumach – Samo Wychylenie i Chwyt (Izolacja Rąk)</h4>
+              <h4>🔵 STACJA 2: Na Gumach – Wpięcie + Samo Wychylenie</h4>
               <p>${tech.soloStations.bandsKuzushi}</p>
             </div>
             <button class="btn btn-blue" style="width:100%;" onclick="incrementMastery('kuzushi', 1)">✅ Zaliczyłem wychylenia (+35 EXP)</button>
@@ -1643,7 +1690,7 @@
 
           <div class="station-card st-full">
             <div>
-              <h4>🌪️ STACJA 3: Na Gumach – Pełne Wejście Połączone (Ręce + Nogi)</h4>
+              <h4>🌪️ STACJA 3: Na Gumach – Pełne Wejście Połączone</h4>
               <p>${tech.soloStations.bandsFull}</p>
             </div>
             <button class="btn btn-gold" style="width:100%;" onclick="incrementMastery('uchimata', 1)">✅ Zaliczyłem pełne wejścia (+35 EXP)</button>
@@ -1651,7 +1698,7 @@
 
           <div class="station-card st-mob">
             <div>
-              <h4>💪🧘‍♂️ STACJA 4: Podłoga – Siła, Mobilność i Rozciąganie pod ten rzut</h4>
+              <h4>💪🧘‍♂️ STACJA 4: Podłoga – Siła, Mobilność i Rozciąganie</h4>
               <p>${tech.soloStations.floorMob}</p>
             </div>
             <button class="btn btn-purple" style="width:100%;" onclick="incrementMastery('core', 1)">✅ Zaliczyłem siłę i mobilność (+35 EXP)</button>
@@ -1677,128 +1724,283 @@
   }
 
   /*************************************************************************
-   * 4. KONSTRUKTOR WŁASNEGO PLANU ĆWICZEŃ TYMONA ("MÓJ PLAN ĆWICZEŃ")
+   * 4. HYBRYDOWY PLAN TYGODNIA (PONIEDZIAŁEK – NIEDZIELA)
+   *    + CODZIENNE ĆWICZENIA NA WPIĘCIE KOŁNIERZA I TRIKI KUMI-KATA
+   *    + WŁASNE TECHNIKI DODAWANE PRZEZ TYMONA!
    *************************************************************************/
-  function getMyPlanList() {
-    const saved = localStorage.getItem('tymon_custom_plan_v21');
-    if (saved) return JSON.parse(saved);
-    return [
-      { techId: 't45_sasae', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't45_haraigoshi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't35_uchimata', doneDry: false, doneBands: false, doneFloor: false }
-    ];
+  const KUMIKATA_TRICKS_LIBRARY = [
+    {
+      title: "⚡ Trik #1: „Dwuklik: Najpierw Rękaw ➔ Potem Wpięcie Kołnierza!”",
+      desc: "Nigdy nie sięgaj z daleka samą ręką po kołnierz! 1. Najpierw łapiesz/kontrolujesz rękaw rywala ➔ 2. Ułamek sekundy później wstrzeliwujesz drugą dłoń od dołu i WPINASZ SIĘ W KOŁNIERZ na wysokości obojczyka (zaciskając 3 dolne palce!)."
+    },
+    {
+      title: "🔒 Trik #2: „Ciężki Łokieć na Mostku (Tarcza Obojczyka)”",
+      desc: "Gdy wepniesz lewą dłoń w kołnierz, Twój lewy łokieć NIE MOŻE sterczeć w bok jak skrzydełko! Opuść łokieć ciężko w dół na mostek rywala – zamykasz mu wtedy wejście pod Twoją pachę i masz gotową dźwignię do podbicia go w górę!"
+    },
+    {
+      title: "🛡️ Trik #3: „Wycieraczka – Zerwanie Kołnierza Rywala w Dół”",
+      desc: "Jeśli przeciwnik pierwszy wpiął się w Twój kołnierz: złap oburącz jego rękaw przy nadgarstku i zrób ostre cięcie w dół ze skrętem swojego barku ('Wycieraczka'), a w tej samej sekundzie wepnij swój lewy kołnierz!"
+    },
+    {
+      title: "🔄 Trik #4: „Pompka Przechwytów 20 Sekund (Szybkie Palce)”",
+      desc: "Stań przed gumami z materiałowym rękawem i kołnierzem. Przez 20 sekund na przemian puszczaj i błyskawicznie wpinaj dłonie w kołnierz i rękaw z głośnym klaśnięciem w materiał – aż dłoń sama trafia z zamkniętymi oczami!"
+    },
+    {
+      title: "🎯 Trik #5: „Wpięcie Kołnierza + Podcięcie w 1 Sekundzie!”",
+      desc: "W ułamku sekundy, w którym Twoja dłoń wpina się twardo w kołnierz, rywal na moment sztywnieje – dokładnie w tej samej sekundzie wciśnij rękaw w dół i wytnij mu stopę (De-ashi-barai lub Kouchi-gari)!"
+    }
+  ];
+
+  const WEEKLY_KUMIKATA_SCHEDULE = {
+    1: {
+      dayName: "Poniedziałek",
+      shortName: "Pon",
+      gripTitle: "🖐️ PONIEDZIAŁEK – WPIĘCIE #1: „Dwuklik: Rękaw ➔ Wpięcie Lewego Kołnierza (3x 15 na gumach)”",
+      gripDesc: "Stań przed drzwiami z rękami w gardzie. Klik 1: Prawa dłoń łapie rękaw gumy ➔ Klik 2: Lewa dłoń strzela od dołu i WPINA SIĘ w kołnierz na wysokości obojczyka (zaciśnij 3 dolne palce, opuść łokieć w dół!) ➔ od razu wytnij klapek stopą!",
+      bossTxt: "Pokaż Tacie 10 szybkich 'Dwuklików' (Rękaw ➔ Wpięcie Kołnierza) na gumach oraz dzisiejsze podcięcia!",
+      defaultTechIds: ["t6_deashi", "t45_sasae", "t5_kouchi"]
+    },
+    2: {
+      dayName: "Wtorek",
+      shortName: "Wt",
+      gripTitle: "🖐️ WTOREK – WPIĘCIE #2: „Wpięcie w Kołnierz + Wkręcenie Łokcia pod Pachę (3x 12 na gumach)”",
+      gripDesc: "Wepnij lewą dłoń w kołnierz gumy, prawą w rękaw. Bez puszczania wpiętego kołnierza wyrwij rękaw w górę i wkręć lewy łokieć głęboko pod swoją pachę z przysiadem w trójkącie (pod Seoi-otoshi, Morote-seoi i Harai-goshi)!",
+      bossTxt: "Pokaż Tacie wpięcie kołnierza z wkręceniem łokcia oraz wejścia na pas Żółto-Pomarańczowy (4.5 Kyu)!",
+      defaultTechIds: ["t45_seoiotoshi", "t5_moroteseoi", "t45_haraigoshi"]
+    },
+    3: {
+      dayName: "Środa",
+      shortName: "Śr",
+      gripTitle: "🖐️ ŚRODA – WPIĘCIE #3: „Zerwanie Uchwytu Wycieraczką ➔ Wpięcie & Parter (3x 12)”",
+      gripDesc: "Ćwicz zrywanie uchwytu rywala oburącz w dół ('Wycieraczka'), natychmiastowe wpięcie własnego kołnierza, zejście w niskie Jigotai (blok biodrem) oraz przejście do trzymania i obracania Żółwia!",
+      bossTxt: "Pokaż Tacie zerwanie uchwytu, obrócenie Żółwia za dalszy łokieć i wyjście kleszczami z Tate-shiho!",
+      defaultTechIds: ["t45_tateshiho", "t45_turtle1", "t5_yokoshiho"]
+    },
+    4: {
+      dayName: "Czwartek",
+      shortName: "Czw",
+      gripTitle: "🖐️ CZWARTEK – WPIĘCIE #4: „Ciężki Łokieć na Kołnierzu + Kierownica w Dół na Piętę (3x 15)”",
+      gripDesc: "Wepnij twardo kołnierz i wciśnij nim (razem z rękawem) wyobrażonego rywala w dół-tył na piętę, łącząc to z dużym półkolem O-uchi-gari, zahaczeniem Ko-soto-gake i kontrą Tsubame-gaeshi!",
+      bossTxt: "Pokaż Tacie wpięcie kołnierza z wciśnięciem w dół oraz podcięcia O-uchi-gari i Ko-soto-gake!",
+      defaultTechIds: ["t6_ouchi", "t45_kosotogake", "t35_tsubame"]
+    },
+    5: {
+      dayName: "Piątek",
+      shortName: "Pt",
+      gripTitle: "🖐️ PIĄTEK – WPIĘCIE #5: „Wpięcie Lewego Kołnierza ➔ Zegarek do Ucha pod Uchi-matę! (4x 12)”",
+      gripDesc: "Dzień koronnego rzutu Tymka! 1. Wepnij lewy kołnierz i prawy rękaw ➔ 2. Zaczep stopę Kouchi-gari ➔ 3. Wyrwij rękaw do prawego ucha ('Zegarek' z 2s pauzą!) i wystrzel lewą nogę w Uchi-macie!",
+      bossTxt: "Pokaż Tacie kombinację: Wpięcie Kołnierza ➔ Kouchi-gari ➔ Uchi-mata na lewą i prawą stronę!",
+      defaultTechIds: ["t35_uchimata", "t5_ipponseoi", "t6_osoto"]
+    },
+    6: {
+      dayName: "Sobota",
+      shortName: "Sob",
+      gripTitle: "🖐️ SOBOTA – TEST MISTRZA: „20s Pompka Szybkich Wpięć w Kołnierz + Obwód z Tatą!”",
+      gripDesc: "Włącz Zegar Dojo na 20 sekund i zrób maksymalną liczbę głośnych wpięć w kołnierz i rękaw gumy, a potem przećwicz cały zestaw egzaminacyjny na pas Żółto-Pomarańczowy (4.5 Kyu)!",
+      bossTxt: "Sobota Boss Fight z Tatą: 20s Pompka Wpięć + 3 rzuty w stójce + 2 wyjścia z trzymań (+100 EXP)!",
+      defaultTechIds: ["t45_sasae", "t45_haraigoshi", "t35_uchimata", "t6_kesa"]
+    },
+    0: {
+      dayName: "Niedziela",
+      shortName: "Nd",
+      gripTitle: "🧘‍♂️ NIEDZIELA – REGENERACJA (YASUMI): „Luźne Techniki Wpięć + 8 Minut Mobilności Judoki”",
+      gripDesc: "Dzień na rozciąganie bioder, dwugłowych uda i kręgosłupa oraz spokojne powtórzenie padów Ukemi i ulubionych przejść w parterze.",
+      bossTxt: "Wykonaj z Tatą 8-minutowy rytuał rozciągania pod Judo (+100 EXP)!",
+      defaultTechIds: ["t6_ukemi", "t6_ogoshi"]
+    }
+  };
+
+  let activePlanDay = new Date().getDay();
+
+  function getWeeklyStateMap() {
+    const raw = localStorage.getItem('tymon_weekly_plan_v213');
+    if (raw) {
+      try { return JSON.parse(raw); } catch (e) {}
+    }
+    const initMap = {};
+    [1, 2, 3, 4, 5, 6, 0].forEach(d => {
+      initMap[d] = {
+        gripDone: false,
+        items: WEEKLY_KUMIKATA_SCHEDULE[d].defaultTechIds.map(id => ({
+          techId: id, doneDry: false, doneBands: false, doneFloor: false
+        }))
+      };
+    });
+    localStorage.setItem('tymon_weekly_plan_v213', JSON.stringify(initMap));
+    return initMap;
   }
 
-  function saveMyPlanList(list) {
-    localStorage.setItem('tymon_custom_plan_v21', JSON.stringify(list));
-    document.getElementById('planCounterTop').innerText = list.length;
+  function saveWeeklyStateMap(map) {
+    localStorage.setItem('tymon_weekly_plan_v213', JSON.stringify(map));
+    const curList = (map[activePlanDay] && map[activePlanDay].items) ? map[activePlanDay].items : [];
+    document.getElementById('planCounterTop').innerText = curList.length;
     autoSyncCloudSilent();
   }
 
-  function addTechniqueToMyPlan(techId) {
-    const list = getMyPlanList();
-    if (!list.some(x => x.techId === techId)) {
-      list.push({ techId, doneDry: false, doneBands: false, doneFloor: false });
-      saveMyPlanList(list);
-    }
-    renderCustomPlan();
-    addExp(25);
-    alert("✅ Dodano technikę wraz z jej ćwiczeniami (1. Na sucho nogi, 2. Gumy, 3. Podłoga, Mobilność, Blok i Kontra) do zakładki '📋 2. Mój Plan Ćwiczeń na Dziś'!");
-  }
-
-  function loadStarterPlanForTymon() {
-    const starter = [
-      { techId: 't45_sasae', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't45_seoiotoshi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't45_haraigoshi', doneDry: false, doneBands: false, doneFloor: false },
-      { techId: 't45_tateshiho', doneDry: false, doneBands: false, doneFloor: false }
-    ];
-    saveMyPlanList(starter);
-    renderCustomPlan();
+  function selectPlanDay(dayNum) {
+    activePlanDay = dayNum;
+    renderWeeklyPlanView();
     playSound('exp');
   }
 
-  function clearMyPlan() {
-    saveMyPlanList([]);
-    renderCustomPlan();
+  function resetCurrentDayToDefault() {
+    const map = getWeeklyStateMap();
+    map[activePlanDay] = {
+      gripDone: false,
+      items: WEEKLY_KUMIKATA_SCHEDULE[activePlanDay].defaultTechIds.map(id => ({
+        techId: id, doneDry: false, doneBands: false, doneFloor: false
+      }))
+    };
+    saveWeeklyStateMap(map);
+    renderWeeklyPlanView();
+  }
+
+  function toggleDailyGripTrick(isChecked) {
+    const map = getWeeklyStateMap();
+    if (!map[activePlanDay]) return;
+    map[activePlanDay].gripDone = isChecked;
+    saveWeeklyStateMap(map);
+    if (isChecked) incrementMastery('kuzushi', 1);
+    renderWeeklyPlanView();
+  }
+
+  function addTechniqueToMyPlan(techId) {
+    const map = getWeeklyStateMap();
+    if (!map[activePlanDay]) map[activePlanDay] = { gripDone: false, items: [] };
+    if (!map[activePlanDay].items.some(x => x.techId === techId)) {
+      map[activePlanDay].items.push({ techId, doneDry: false, doneBands: false, doneFloor: false });
+      saveWeeklyStateMap(map);
+    }
+    renderWeeklyPlanView();
+    addExp(25);
+    const dayLabel = WEEKLY_KUMIKATA_SCHEDULE[activePlanDay].dayName;
+    alert(`✅ Dodano technikę wraz z ćwiczeniami Wpięcia Kołnierza, na sucho, na gumach i na podłodze do dnia: ${dayLabel} (w zakładce '📋 2. Plan Tygodnia & Wpięcia')!`);
   }
 
   function removeTechFromPlan(idx) {
-    const list = getMyPlanList();
-    list.splice(idx, 1);
-    saveMyPlanList(list);
-    renderCustomPlan();
+    const map = getWeeklyStateMap();
+    if (!map[activePlanDay]) return;
+    map[activePlanDay].items.splice(idx, 1);
+    saveWeeklyStateMap(map);
+    renderWeeklyPlanView();
   }
 
   function togglePlanSubTask(idx, partKey, isChecked) {
-    const list = getMyPlanList();
+    const map = getWeeklyStateMap();
+    const list = map[activePlanDay] ? map[activePlanDay].items : [];
     if (!list[idx]) return;
     list[idx][partKey] = isChecked;
-    saveMyPlanList(list);
+    saveWeeklyStateMap(map);
     if (isChecked) {
       const mKey = partKey === 'doneDry' ? 'ashiwaza' : (partKey === 'doneBands' ? 'kuzushi' : 'core');
       incrementMastery(mKey, 1);
     }
-    renderCustomPlan();
+    renderWeeklyPlanView();
   }
 
-  function renderCustomPlan() {
-    const list = getMyPlanList();
-    document.getElementById('planCounterTop').innerText = list.length;
-    const box = document.getElementById('customPlanContainer');
+  function renderWeeklyPlanView() {
+    const map = getWeeklyStateMap();
+    const dayCfg = WEEKLY_KUMIKATA_SCHEDULE[activePlanDay] || WEEKLY_KUMIKATA_SCHEDULE[1];
+    const dayState = map[activePlanDay] || { gripDone: false, items: [] };
+    document.getElementById('planCounterTop').innerText = dayState.items.length;
 
-    if (!list.length) {
-      box.innerHTML = `
-        <div class="quest-item" style="text-align:center;">
-          <strong style="color:var(--neon-gold); font-size:0.95rem;">Twój plan na dziś jest jeszcze pusty!</strong>
-          <p style="font-size:0.82rem; color:var(--text-dim); margin:8px 0;">
-            Wejdź w zakładkę <strong>„🥋 1. Wybierz Technikę”</strong> i kliknij zielony przycisk <strong>„➕ Dodaj tę technikę do Mojego Planu”</strong> przy 2 lub 3 technikach, które chcesz dzisiaj wyćwiczyć (albo kliknij poniżej gotowy zestaw na pas Żółto-Pomarańczowy)!
-          </p>
-          <button class="btn btn-gold" onclick="loadStarterPlanForTymon()">⚡ Załaduj zestaw 4 technik na pas Żółto-Pomarańczowy (4.5 Kyu)</button>
-        </div>
-      `;
-      return;
-    }
-
-    box.innerHTML = list.map((item, idx) => {
-      const tech = KODOKAN_CURRICULUM.find(t => t.id === item.techId) || KODOKAN_CURRICULUM[0];
-      const allDone = item.doneDry && item.doneBands && item.doneFloor;
+    // 1. Pasek wyboru dni tygodnia (Poniedziałek - Niedziela)
+    const daysOrder = [1, 2, 3, 4, 5, 6, 0];
+    document.getElementById('weekDaysBar').innerHTML = daysOrder.map(d => {
+      const cfg = WEEKLY_KUMIKATA_SCHEDULE[d];
+      const st = map[d] || { items: [] };
       return `
-        <div class="quest-item" style="border-left-color:${allDone ? 'var(--neon-green)' : 'var(--neon-gold)'};">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
-            <div>
-              <span style="font-size:0.72rem; color:var(--neon-blue); font-weight:900;">${tech.beltBadge} | ${tech.groupBadge}</span>
-              <strong style="font-size:0.96rem; color:var(--neon-gold); display:block;">🎯 TECHNIKA #${idx + 1}: ${tech.name}</strong>
-            </div>
-            <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.73rem;" onclick="removeTechFromPlan(${idx})">✕ Usuń z planu</button>
-          </div>
-
-          <div class="plan-sub-task ${item.doneDry ? 'done' : ''}">
-            <div style="flex:1;">
-              <strong style="color:var(--neon-green); font-size:0.83rem; display:block;">🥇 1. Ćwiczenie Główne na Sucho (Wejścia Nogami / Trójkąt / Klapki):</strong>
-              <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.dry}</span>
-            </div>
-            <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneDry ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneDry', this.checked)">
-          </div>
-
-          <div class="plan-sub-task ${item.doneBands ? 'done' : ''}">
-            <div style="flex:1;">
-              <strong style="color:var(--neon-blue); font-size:0.83rem; display:block;">🔵 2. Ćwiczenie na Gumach pod tę technikę (Wychylenie Rękaw/Kołnierz + Pełne Wejście):</strong>
-              <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.bandsKuzushi}\n\n${tech.soloStations.bandsFull}</span>
-            </div>
-            <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneBands ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneBands', this.checked)">
-          </div>
-
-          <div class="plan-sub-task ${item.doneFloor ? 'done' : ''}">
-            <div style="flex:1;">
-              <strong style="color:var(--neon-purple); font-size:0.83rem; display:block;">💪🧘‍♂️ 3. Podłoga, Siła, Mobilność oraz Blok & Kontra pod tę technikę:</strong>
-              <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.floorMob}\n🛡️ Blok & Kontra: ${tech.details.block()} ➔ ${tech.details.counter()}</span>
-            </div>
-            <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneFloor ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneFloor', this.checked)">
-          </div>
-        </div>
+        <button class="day-pill-btn ${d === activePlanDay ? 'active' : ''}" onclick="selectPlanDay(${d})">
+          📅 ${cfg.dayName}<br>
+          <span style="font-size:0.68rem; opacity:0.85;">(${st.items.length} techn. + Wpięcie)</span>
+        </button>
       `;
     }).join('');
+
+    // 2. Karta Obowiązkowego Wpięcia w Kołnierz na dany dzień
+    const gripVoice = `${dayCfg.gripTitle}. ${dayCfg.gripDesc}`.replace(/'/g, "");
+    document.getElementById('dailyKumiKataCard').innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+        <div style="flex:1;">
+          <span style="background:rgba(249,115,22,0.2); color:var(--neon-orange); padding:3px 8px; border-radius:6px; font-size:0.72rem; font-weight:900;">
+            🔥 OBOWIĄZKOWY FUNDAMENT DNIA (3 MINUTY NA START)
+          </span>
+          <h2 style="margin-top:6px; color:var(--neon-gold);">${dayCfg.gripTitle}</h2>
+          <p style="font-size:0.83rem; color:var(--text-light); margin-top:4px;">${dayCfg.gripDesc}</p>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn btn-blue" style="padding:6px 10px; font-size:0.74rem;" onclick="speakInstruction('${gripVoice}')">🔊 Czytaj</button>
+          <input type="checkbox" style="width:26px; height:26px; cursor:pointer;" ${dayState.gripDone ? 'checked' : ''} onchange="toggleDailyGripTrick(this.checked)">
+        </div>
+      </div>
+    `;
+
+    document.getElementById('bossDayChallengeText').innerText = dayCfg.bossTxt;
+
+    // 3. Lista technik przypisanych do wybranego dnia
+    const box = document.getElementById('customPlanContainer');
+    if (!dayState.items.length) {
+      box.innerHTML = `
+        <div class="quest-item" style="text-align:center;">
+          <strong style="color:var(--neon-gold); font-size:0.95rem;">Brak technik w dniu: ${dayCfg.dayName}</strong>
+          <p style="font-size:0.82rem; color:var(--text-dim); margin:8px 0;">
+            Kliknij poniżej, aby przywrócić domyślny zestaw na ${dayCfg.dayName} lub dodaj dowolną technikę z Zakładki 1!
+          </p>
+          <button class="btn btn-gold" onclick="resetCurrentDayToDefault()">⚡ Wgraj zestaw na ${dayCfg.dayName}</button>
+        </div>
+      `;
+    } else {
+      box.innerHTML = dayState.items.map((item, idx) => {
+        const tech = KODOKAN_CURRICULUM.find(t => t.id === item.techId) || KODOKAN_CURRICULUM[0];
+        const allDone = item.doneDry && item.doneBands && item.doneFloor;
+        return `
+          <div class="quest-item" style="border-left-color:${allDone ? 'var(--neon-green)' : 'var(--neon-gold)'};">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+              <div>
+                <span style="font-size:0.72rem; color:var(--neon-blue); font-weight:900;">${tech.beltBadge} | ${tech.groupBadge}</span>
+                <strong style="font-size:0.95rem; color:var(--neon-gold); display:block;">🎯 TECHNIKA #${idx + 1} (${dayCfg.dayName}): ${tech.name}</strong>
+              </div>
+              <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.73rem;" onclick="removeTechFromPlan(${idx})">✕ Usuń</button>
+            </div>
+
+            <div class="plan-sub-task ${item.doneDry ? 'done' : ''}">
+              <div style="flex:1;">
+                <strong style="color:var(--neon-green); font-size:0.83rem; display:block;">🥇 1. Ćwiczenie Główne na Sucho (Wejścia Nogami / Trójkąt / Klapki):</strong>
+                <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.dry}</span>
+              </div>
+              <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneDry ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneDry', this.checked)">
+            </div>
+
+            <div class="plan-sub-task ${item.doneBands ? 'done' : ''}">
+              <div style="flex:1;">
+                <strong style="color:var(--neon-blue); font-size:0.83rem; display:block;">🔵 2. Na Gumach: Wpięcie Kołnierza + Wychylenie + Pełne Wejście:</strong>
+                <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.kumiKata}\n\n${tech.soloStations.bandsFull}</span>
+              </div>
+              <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneBands ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneBands', this.checked)">
+            </div>
+
+            <div class="plan-sub-task ${item.doneFloor ? 'done' : ''}">
+              <div style="flex:1;">
+                <strong style="color:var(--neon-purple); font-size:0.83rem; display:block;">💪🧘‍♂️ 3. Podłoga, Siła, Mobilność oraz Blok & Kontra pod tę technikę:</strong>
+                <span style="font-size:0.79rem; white-space:pre-line;">${tech.soloStations.floorMob}\n🛡️ Blok & Kontra: ${tech.details.block()} ➔ ${tech.details.counter()}</span>
+              </div>
+              <input type="checkbox" style="width:24px; height:24px; cursor:pointer; flex-shrink:0;" ${item.doneFloor ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneFloor', this.checked)">
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 4. Renderowanie ściągi 5 Trików Wpięcia Kołnierza
+    const tricksBox = document.getElementById('allKumiKataTricksBox');
+    if (tricksBox) {
+      tricksBox.innerHTML = KUMIKATA_TRICKS_LIBRARY.map(tr => `
+        <div style="background:rgba(0,0,0,0.4); border-left:3px solid var(--neon-orange); padding:8px 10px; border-radius:8px;">
+          <strong style="color:var(--neon-gold); display:block;">${tr.title}</strong>
+          <span style="color:var(--text-light);">${tr.desc}</span>
+        </div>
+      `).join('');
+    }
   }
 
   /*************************************************************************
@@ -1826,8 +2028,8 @@
       desc: "• Zrób głęboki wykrok w przód, oprzyj jedną dłoń na podłodze obok stopy, a drugą ręką sięgnij wysoko w stronę sufitu, skręcając mocno klatkę piersiową (10 razy na lewą i prawą stronę).\n🎯 Cel: Błyskawiczny skręt barków w Uki-goshi, O-goshi i Koshi-guruma!"
     },
     {
-      title: "🦶 6. „Kierownica Stopą & Modlitewnik Nadgarstków” (Pod De-ashi-barai i Kumi-kata)",
-      desc: "• Krążenia kostek z dociskaniem zewnętrznej krawędzi stopy (ustawienie stopy w 'łyżwę' pod De-ashi-barai i Sasae).\n• Rozciąganie zginaczy i prostowników przedramion na kolanach (40 sekund) po treningu uchwytu na gumach!"
+      title: "🦶 6. „Kierownica Stopą & Modlitewnik Nadgarstków” (Pod De-ashi-barai i Wpięcia)",
+      desc: "• Krążenia kostek z dociskaniem zewnętrznej krawędzi stopy (ustawienie stopy w 'łyżwę' pod De-ashi-barai i Sasae).\n• Rozciąganie zginaczy i prostowników przedramion na kolanach (40 sekund) po treningu wpięć w kołnierz na gumach!"
     }
   ];
 
@@ -1853,6 +2055,7 @@
 
   /*************************************************************************
    * 6. PRZYWRÓCONA INTEGRACJA Z GEMINI API (4-KLATKOWY SILNIK WIDEO & AI)
+   *    Klucz API wczytywany wyłącznie ze zmiennej środowiskowej lub localStorage!
    *************************************************************************/
   function getSafeGeminiApiKey() {
     return (window.ENV_GEMINI_API_KEY || localStorage.getItem('TYMON_SAFE_GEMINI_KEY') || '').trim();
@@ -1974,7 +2177,7 @@
   }
 
   async function analyzeFightWithGemini() {
-    const q = document.getElementById('aiFightQuestion').value.trim() || "Oceń: 1. Chwyt (lewy kołnierz / rękaw) i Wychylenie Kuzushi, 2. Wejście stóp w trójkąt i oś obrotu, 3. Pracę głowy i bioder, 4. Zadanie naprawcze na sucho i na gumach w domu.";
+    const q = document.getElementById('aiFightQuestion').value.trim() || "Oceń: 1. Wpięcie w kołnierz i pracę rękawa (Kumi-kata) oraz Wychylenie Kuzushi, 2. Wejście stóp w trójkąt i oś obrotu, 3. Pracę głowy i bioder, 4. Zadanie naprawcze na sucho i na gumach w domu.";
     const out = document.getElementById('aiVideoOutput');
     const btn = document.getElementById('analyzeVideoBtn');
     const apiKey = getSafeGeminiApiKey();
@@ -1992,17 +2195,17 @@
       if (!apiKey) {
         btn.disabled = false;
         btn.innerText = "🤖 ANALIZUJ SEKWENCJĘ WIDEO Z AI SENSEIEM (GEMINI API)";
-        out.innerText = `✅ Wycięto 4 klatki ruchu (${frames.map(f => f.timeLabel).join(' ➔ ')})!\n\nℹ️ Aby uruchomić pełną analizę AI przez Gemini API, kliknij na górze "⚙️ Chmura & Klucz AI" i zapisz swój klucz API.\n\n🥋 Lokalna lista kontrolna dla tych 4 klatek:\n1. KLATKA #1 (${frames[0].timeLabel}): Która ręka trzyma kołnierz, a która rękaw?\n2. KLATKA #2 (${frames[1].timeLabel}): Czy ręka z rękawem ciągnie wysoko do ucha ZANIM stopy się obrócą?\n3. KLATKA #3 (${frames[2].timeLabel}): Czy stopa ląduje w wierzchołku trójkąta na ugiętym kolanie?\n4. KLATKA #4 (${frames[3].timeLabel}): Czy głowa nurkuje nisko do kolana?`;
+        out.innerText = `✅ Wycięto 4 klatki ruchu (${frames.map(f => f.timeLabel).join(' ➔ ')})!\n\nℹ️ Aby uruchomić pełną analizę AI przez Gemini API, kliknij na górze "⚙️ Chmura & Klucz AI" i zapisz swój klucz API.\n\n🥋 Lokalna lista kontrolna dla tych 4 klatek:\n1. KLATKA #1 (${frames[0].timeLabel}): Czy lewa dłoń jest twardo wpięta w kołnierz przy obojczyku (łokieć w dół), a prawa kontroluje rękaw?\n2. KLATKA #2 (${frames[1].timeLabel}): Czy ręka z rękawem ciągnie wysoko do ucha ZANIM stopy się obrócą?\n3. KLATKA #3 (${frames[2].timeLabel}): Czy stopa ląduje w wierzchołku trójkąta na ugiętym kolanie?\n4. KLATKA #4 (${frames[3].timeLabel}): Czy głowa nurkuje nisko do kolana?`;
         return;
       }
 
       btn.innerText = "⏳ AI Sensei analizuje 4 klatki...";
-      const promptText = `Jesteś głównym trenerem Kodokan Judo analizującym 4 kolejne klatki poklatkowe 11-letniego judoki Tymona (naturalnie łapie lewą ręką za kołnierz).
+      const promptText = `Jesteś głównym trenerem Kodokan Judo analizującym 4 kolejne klatki poklatkowe 11-letniego judoki Tymona (ma pas żółty 5 Kyu, zdaje na 4.5 Kyu, naturalnie wpina lewą rękę w kołnierz).
 Oceń po polsku w 4 konkretnych punktach:
-1. 🔵🟡 CHWYT I WYCHYLENIE (Rękaw/Kołnierz i zgodność kierunku obrotu),
+1. 🖐️🟡 WPIĘCIE W KOŁNIERZ (KUMI-KATA) I WYCHYLENIE (Rękaw/Kołnierz i zgodność kierunku obrotu),
 2. 🟩 PRACA NÓG (Trójkąt wejścia i noga podporowa),
 3. 🔥 BIODRA I GŁOWA,
-4. 🏠 ĆWICZENIE NAPRAWCZE W DOMU (na sucho na stopach, na gumach z rękawem/kołnierzem oraz rozciąganie).
+4. 🏠 ĆWICZENIE NAPRAWCZE W DOMU (wpięcia na gumach, praca stóp na sucho i rozciąganie).
 Pytanie: ${q}`;
 
       const parts = [{ text: promptText }];
@@ -2023,7 +2226,7 @@ Pytanie: ${q}`;
    * 7. PASKI OPANOWANIA DO RANGI MASTER
    *************************************************************************/
   const DEFAULT_MASTERY_GOALS = [
-    { id: 'kuzushi', title: '🔵 Master Wychyleń & Chwytu (Gumy Rękaw/Kołnierz)', current: 5, target: 20, unit: 'sesji' },
+    { id: 'kuzushi', title: '🖐️ Master Wpięć w Kołnierz & Wychyleń (Gumy)', current: 5, target: 20, unit: 'sesji' },
     { id: 'ashiwaza', title: '🦵 Master Szybkich Stóp & Podcięć na Sucho', current: 4, target: 20, unit: 'sesji' },
     { id: 'uchimata', title: '🔥 Master Rzutów (Uchi-mata, Seoi-nage, Harai-goshi)', current: 5, target: 20, unit: 'sesji' },
     { id: 'newaza', title: '🛡️ Master Trzymań, Wyjść i Kontr', current: 3, target: 15, unit: 'sesji' },
@@ -2075,25 +2278,27 @@ Pytanie: ${q}`;
   }
 
   /*************************************************************************
-   * 8. KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW FUNKCJONALNYCH
+   * 8. W PEŁNI FUNKCJONALNY KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW
    *************************************************************************/
   const POPULAR_FUNCTIONAL_FOODS_DB = [
     { name: "🥛 Skyr naturalny Piątnica / Zott (Nr 1 High-Protein – 12g B / 0% T)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
     { name: "🥤 Skyr pitny owocowy/naturalny (Szybka regeneracja po treningu Judo)", kcal: 63, p: 11.0, c: 4.2, f: 0.2 },
-    { name: "🐟 Śledzie w oleju (odsączone z oleju – bogate źródło Omega-3 i białka!)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
+    { name: "🐟 Śledzie w oleju (odsączone z oleju – Klasyk Redukcji: Omega-3 i Białko!)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
+    { name: "🧀 Twaróg chudy (Kostka kazeinowa na odbudowę mięśni i chwytu – 18g B)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
+    { name: "🍗 Pierś z kurczaka pieczona/gotowana (Czyste białko – 21.5g B)", kcal: 99, p: 21.5, c: 0.0, f: 1.3 },
+    { name: "🥚 Jajka całe / Jajecznica (Siła chwytu Kumi-kata i aminokwasy)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
+    { name: "⚡ Odżywka białkowa WPC (Szybki szejk po treningu – 78g B/100g)", kcal: 390, p: 78.0, c: 6.0, f: 6.0 },
     { name: "🍌 Banan (Lekkostrawny Turbo-Gaz na 60 min przed walkami Randori)", kcal: 89, p: 1.1, c: 22.8, f: 0.3 },
     { name: "🍘 Wafle ryżowe z miodem (Lekki brzuch do padów Ukemi przed matą)", kcal: 365, p: 7.0, c: 81.5, f: 2.2 },
     { name: "🍎 Mus owocowy 100% w tubce (Szybki glikogen między walkami)", kcal: 55, p: 0.5, c: 12.5, f: 0.2 },
-    { name: "🧀 Twaróg chudy (Odbudowa mięśni i siły chwytu – 18g B)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
     { name: "🌾 Płatki owsiane górskie (Owsianka Mistrza – energia długofalowa)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
-    { name: "🍗 Pierś z kurczaka pieczona/gotowana (Czyste białko – 21.5g B)", kcal: 99, p: 21.5, c: 0.0, f: 1.3 },
+    { name: "🥔 Ziemniaki gotowane (Najwyższy indeks sytości na redukcji!)", kcal: 77, p: 1.9, c: 17.5, f: 0.1 },
     { name: "🍚 Kurczak z ryżem i warzywami (Pełny obiad potreningowy)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
-    { name: "🥚 Jajka całe / Jajecznica (Siła chwytu Kumi-kata i aminokwasy)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
     { name: "🥞 Naleśniki białkowe z twarogiem (Doładowanie po szkole)", kcal: 215, p: 13.5, c: 26.0, f: 5.5 },
     { name: "🍯 Domowy Izotonik Judoki (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
-  let foods = JSON.parse(localStorage.getItem('tymon_foods_v21')) || POPULAR_FUNCTIONAL_FOODS_DB;
+  let foods = JSON.parse(localStorage.getItem('tymon_foods_v213')) || POPULAR_FUNCTIONAL_FOODS_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
   const GOALS_MAP = {
     tymon: { kcal: 2100, p: 85, c: 285, f: 65 },
@@ -2118,17 +2323,29 @@ Pytanie: ${q}`;
 
   function initFoodSelect() {
     const s = document.getElementById('calcFoodSelect');
+    const q = (document.getElementById('calcSearchInput')?.value || '').toLowerCase().trim();
     s.innerHTML = '';
     foods.forEach((f, i) => {
-      const o = document.createElement('option');
-      o.value = i; o.innerText = `${f.name} (${f.kcal} kcal | B:${f.p}g / 100g)`;
-      s.appendChild(o);
+      if (!q || f.name.toLowerCase().includes(q)) {
+        const o = document.createElement('option');
+        o.value = i;
+        o.innerText = `${f.name} (${f.kcal} kcal | B:${f.p}g / 100g)`;
+        s.appendChild(o);
+      }
     });
+    if (!s.options.length) {
+      foods.forEach((f, i) => {
+        const o = document.createElement('option');
+        o.value = i; o.innerText = `${f.name} (${f.kcal} kcal | B:${f.p}g / 100g)`;
+        s.appendChild(o);
+      });
+    }
     updateFoodPreview();
   }
 
   function updateFoodPreview() {
-    const f = foods[document.getElementById('calcFoodSelect').value || 0];
+    const idx = parseInt(document.getElementById('calcFoodSelect').value) || 0;
+    const f = foods[idx] || foods[0];
     const g = parseFloat(document.getElementById('calcGramsInput').value) || 0;
     if (!f) return;
     const r = g / 100;
@@ -2137,9 +2354,10 @@ Pytanie: ${q}`;
   }
 
   function addMealToLog() {
-    const f = foods[document.getElementById('calcFoodSelect').value || 0];
+    const idx = parseInt(document.getElementById('calcFoodSelect').value) || 0;
+    const f = foods[idx] || foods[0];
     const g = parseFloat(document.getElementById('calcGramsInput').value);
-    if (isNaN(g) || g <= 0) return;
+    if (!f || isNaN(g) || g <= 0) return;
     const r = g / 100;
     mealLog.push({
       name: f.name, g,
@@ -2158,9 +2376,9 @@ Pytanie: ${q}`;
     const p = parseFloat(document.getElementById('newFoodP').value) || 0;
     const c = parseFloat(document.getElementById('newFoodC').value) || 0;
     const f = parseFloat(document.getElementById('newFoodF').value) || 0;
-    if (!name || isNaN(kcal)) { alert("Podaj nazwę i kalorie na 100g!"); return; }
+    if (!name || isNaN(kcal) || kcal < 0) { alert("Podaj poprawną nazwę i kalorie na 100g!"); return; }
     foods.push({ name: "⭐ " + name, kcal, p, c, f });
-    localStorage.setItem('tymon_foods_v21', JSON.stringify(foods));
+    localStorage.setItem('tymon_foods_v213', JSON.stringify(foods));
     document.getElementById('newFoodName').value = '';
     initFoodSelect();
   }
@@ -2246,7 +2464,7 @@ Pytanie: ${q}`;
     const btn = document.getElementById('metronomeBtn');
     if (metroInt) {
       clearInterval(metroInt); metroInt = null;
-      btn.innerText = "🥁 Rytm Wejść (1/sek)";
+      btn.innerText = "🥁 Rytm Wpięć (1/sek)";
       return;
     }
     btn.innerText = "⏹ Wyłącz Rytm";
@@ -2331,7 +2549,7 @@ Pytanie: ${q}`;
       exp: totalExp,
       stance: currentStance,
       masteryGoals: masteryGoals,
-      customPlan: getMyPlanList(),
+      weeklyPlan: getWeeklyStateMap(),
       mealLog: mealLog
     };
   }
@@ -2341,9 +2559,9 @@ Pytanie: ${q}`;
     if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp', totalExp); }
     if (state.stance) setJudoStance(state.stance);
     if (Array.isArray(state.masteryGoals)) { masteryGoals = state.masteryGoals; localStorage.setItem('tymon_mastery_goals_v21', JSON.stringify(masteryGoals)); }
-    if (Array.isArray(state.customPlan)) saveMyPlanList(state.customPlan);
+    if (state.weeklyPlan) saveWeeklyStateMap(state.weeklyPlan);
     if (Array.isArray(state.mealLog)) { mealLog = state.mealLog; localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog)); }
-    updateHud(); renderMasteryGoals(); populateKodokanTechList(); renderCustomPlan(); renderMealLog();
+    updateHud(); renderMasteryGoals(); populateKodokanTechList(); renderWeeklyPlanView(); renderMealLog();
   }
 
   async function syncWithCloud(direction = 'save') {
@@ -2386,7 +2604,7 @@ Pytanie: ${q}`;
   function exportSaveFile() {
     const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v21.2.json'; a.click();
+    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v21.3.json'; a.click();
   }
 
   function importSaveFile(e) {
@@ -2482,7 +2700,7 @@ Pytanie: ${q}`;
     renderMasteryGoals();
     initHeroVfxEngine();
     populateKodokanTechList();
-    renderCustomPlan();
+    renderWeeklyPlanView();
     renderMobilityGrid();
     initFoodSelect();
     renderMealLog();
