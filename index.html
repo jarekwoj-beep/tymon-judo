@@ -6,7 +6,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
-  <title>TYMON: IPPON HERO – SOLO DOJO ENGINE v21.0</title>
+
+  <!-- OFICJALNA IKONA APLIKACJI NA PULPIT IPHONE'A (tymon1.jpeg) -->
+  <link id="appleTouchIcon1" rel="apple-touch-icon" href="tymon1.jpeg">
+  <link id="appleTouchIcon2" rel="apple-touch-icon" sizes="180x180" href="tymon1.jpeg">
+  <link id="appleTouchIconPre" rel="apple-touch-icon-precomposed" href="tymon1.jpeg">
+  <link id="standardFavicon" rel="icon" type="image/jpeg" href="tymon1.jpeg">
+
+  <title>TYMON: IPPON HERO – SOLO DOJO ENGINE v21.1</title>
   <style>
     :root {
       --bg-deep: #050811;
@@ -281,7 +288,7 @@
     .station-card h4 { font-size: 0.86rem; color: var(--neon-gold); }
     .station-card p { font-size: 0.8rem; color: var(--text-light); white-space: pre-line; }
 
-    /* 4-KROKOWY DETERMINISTYCZNY SYMULATOR RUCHU SVG (ZERO BŁĘDNYCH OBRAZKÓW AI!) */
+    /* 4-KROKOWY DETERMINISTYCZNY SYMULATOR RUCHU SVG */
     .step-simulator-card {
       background: #060913; border: 2px solid var(--neon-blue);
       border-radius: 14px; padding: 12px; margin: 12px 0;
@@ -368,7 +375,7 @@
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON: IPPON HERO – SOLO DOJO v21.0</h1>
+      <h1>TYMON: IPPON HERO – SOLO DOJO v21.1</h1>
       <span>42 Techniki (6➔3 Kyu): Trening Solo na Sucho, Gumy, Podłoga, Mobilność, Blok i Kontra</span>
     </div>
   </div>
@@ -406,7 +413,7 @@
   <div class="card" style="border:2px solid var(--neon-gold);">
     <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Bezpieczny Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
     <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy i plan treningowy Tymona między telefonem a komputerem.
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy i plan treningowy między iPhonem a komputerem.
     </p>
     <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
@@ -441,7 +448,7 @@
         <div class="comic-nameplate">TYMON</div>
         <div class="comic-quirk" id="quirkBadge">HIDARI-GUMI MASTER</div>
         <div id="ipponFlashBanner">⚡ IPPON!</div>
-        <img id="fighterSprite" src="tymon1.jpeg" onerror="this.style.display='none'" alt="Tymon Judo Fighter">
+        <img id="fighterSprite" src="tymon1.jpeg" crossorigin="anonymous" onload="initAppleTouchIconHD(this)" onerror="this.style.display='none'" alt="Tymon Judo Fighter">
         <canvas id="heroVfxCanvas" width="245" height="320"></canvas>
       </div>
     </div>
@@ -461,24 +468,19 @@
   </div>
 </section>
 
-<!-- NAWIGACJA ZAKŁADEK (PROSTA I LOGICZNA DLA 11-LATKA) -->
+<!-- NAWIGACJA ZAKŁADEK -->
 <nav class="game-tabs">
   <button class="active" id="tabBtn-pane-kodokan" onclick="switchTab('pane-kodokan', this)">🥋 1. Wybierz Technikę & Ćwicz Solo (42 Techniki: 6➔3 Kyu)</button>
   <button id="tabBtn-pane-plan" onclick="switchTab('pane-plan', this)">📋 2. Mój Plan Ćwiczeń na Dziś (Na Sucho / Gumy / Podłoga)</button>
   <button id="tabBtn-pane-mobility" onclick="switchTab('pane-mobility', this)">🧘‍♂️ 3. Mobilność & Rozciąganie pod Judo</button>
   <button id="tabBtn-pane-video" onclick="switchTab('pane-video', this)">🎥 4. Analiza Wideo AI (Wnioski z 3 Filmów)</button>
-  <button id="tabBtn-pane-fuel" onclick="switchTab('pane-fuel', this)">⚡ 5. Kalkulator Mocy Judoki (2100 kcal)</button>
+  <button id="tabBtn-pane-fuel" onclick="switchTab('pane-fuel', this)">⚡ 5. Kalkulator Produktów & Mocy</button>
 </nav>
 
 <div class="container">
 
   <!-- =========================================================================
        ZAKŁADKA 1: KOMPLETNA BAZA 42 TECHNIK (OD 6 KYU DO 3 KYU, KUMULATYWNIE)
-       WSZYSTKO W JEDNYM MIEJSCU POD WYBRANĄ TECHNIKĄ:
-       - Opis na matę (Uchwyt, Wychylenie, Stopy, Głowa/Biodra, Blokowanie, Kontra/Wyjście)
-       - 4 Stacje Treningu SOLO w domu tylko pod tę technikę (1. Nogi na sucho, 2. Gumy wychylenia, 3. Gumy pełne wejście, 4. Siła i Mobilność na podłodze)
-       - 4-krokowy Symulator SVG (zero zmyślonych obrazków AI!)
-       - Przycisk "➕ Dodaj tę technikę do mojego planu ćwiczeń"
        ========================================================================= -->
   <div id="pane-kodokan" class="tab-pane active">
     <div class="card">
@@ -526,16 +528,11 @@
       </div>
     </div>
 
-    <!-- KARTA GŁÓWNA WYBRANEJ TECHNIKI (OPIS + 4 STACJE SOLO + SYMULATOR 4 KROKÓW + WIDEO) -->
     <div id="kodokanMasterContainer" class="card"></div>
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 2: MÓJ PLAN ĆWICZEŃ NA DZIŚ (SKŁADANY PRZEZ TYMONA Z WYBRANYCH TECHNIK!)
-       Każda dodana technika jest podzielona czytelnie na 3 części:
-       1. Ćwiczenie Główne na Sucho (Wejścia nogami / Trójkąt / Klapki)
-       2. Ćwiczenie na Gumach (Wychylenie + Pełne wejście pod tę technikę)
-       3. Ćwiczenie na Podłodze (Siła, Mobilność i Rozciąganie pod tę technikę)
+       ZAKŁADKA 2: MÓJ PLAN ĆWICZEŃ NA DZIŚ
        ========================================================================= -->
   <div id="pane-plan" class="tab-pane">
     <div class="grid-2">
@@ -543,7 +540,7 @@
         <h2>
           <span>📋 Mój Plan Ćwiczeń na Dziś (Wybrane Techniki Tymona)</span>
           <div style="display:flex; gap:6px;">
-            <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="loadStarterPlanForTymon()">⚡ Wgraj zestaw 3 technik</button>
+            <button class="btn btn-blue" style="padding:5px 10px; font-size:0.74rem;" onclick="loadStarterPlanForTymon()">⚡ Wgraj zestaw 4 technik</button>
             <button class="btn btn-ghost" style="padding:5px 10px; font-size:0.74rem;" onclick="clearMyPlan()">🗑️ Wyczyść plan</button>
           </div>
         </h2>
@@ -584,7 +581,7 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 3: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO (PRZYGOTOWANIE CIAŁA)
+       ZAKŁADKA 3: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO
        ========================================================================= -->
   <div id="pane-mobility" class="tab-pane">
     <div class="card">
@@ -659,21 +656,24 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 5: KALKULATOR MOCY MŁODEGO JUDOKI TYMONA (2100 KCAL / 85G BIAŁKA)
+       ZAKŁADKA 5: W PEŁNI FUNKCJONALNY KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW
        ========================================================================= -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>⚡ Kalkulator Najpopularniejszych Produktów Młodego Judoki</span>
-          <span style="font-size:0.75rem; color:var(--neon-green);">Cel Tymona: 2100 kcal | 85g Białka</span>
+          <span>⚡ Kalkulator Najpopularniejszych Produktów & Bilansu Mocy</span>
+          <select id="calcProfileMode" onchange="onProfileModeChange()" style="width:auto; margin:0; font-size:0.75rem; font-weight:800; border-color:var(--neon-gold);">
+            <option value="tymon">🥋 Profil 1: Młody Judoka Tymon (2100 kcal | 85g Białka)</option>
+            <option value="redukcja">🔥 Profil 2: Redukcja / Cel 85 kg (2250 kcal | 175g Białka)</option>
+          </select>
         </h2>
 
-        <div style="background:rgba(0,240,255,0.08); border:1px solid rgba(0,240,255,0.3); border-radius:9px; padding:8px 10px; margin-bottom:10px; font-size:0.78rem;">
+        <div style="background:rgba(0,240,255,0.08); border:1px solid rgba(0,240,255,0.3); border-radius:9px; padding:8px 10px; margin-bottom:10px; font-size:0.78rem;" id="profileInfoBanner">
           🥋 <strong>Paliwo Młodego Judoki (2100 kcal / 85g B):</strong> Lekkostrawne węglowodany na 60 min przed treningiem (banan, wafle ryżowe z miodem, mus owocowy – zero bólu brzucha przy padach <em>Ukemi</em>!) oraz szybkie białko (Skyr, kurczak, twaróg, jajka) po zejściu z maty.
         </div>
 
-        <label>1. Wybierz produkt z bazy najpopularniejszych produktów dla sportowca:</label>
+        <label>1. Wybierz produkt z bazy najpopularniejszych produktów funkcjonalnych:</label>
         <select id="calcFoodSelect" onchange="updateFoodPreview()"></select>
 
         <div class="grid-2" style="gap:8px;">
@@ -683,7 +683,7 @@
             <div style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:6px;">
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(100)">100g</button>
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(150)">150g (1 Skyr)</button>
-              <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(250)">250g (Porcja)</button>
+              <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(250)">250g (Kostka)</button>
               <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="setQuickGrams(360)">360g (Skyr Pitny)</button>
             </div>
           </div>
@@ -694,7 +694,7 @@
         </div>
 
         <button class="btn btn-green" style="width:100%; margin-top:4px; padding:11px;" onclick="addMealToLog()">
-          ➕ Dodaj Produkt do Dzisiejszego Bilansu Tymona (+15 EXP)
+          ➕ Dodaj Produkt do Dzisiejszego Bilansu (+15 EXP)
         </button>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;">
@@ -719,7 +719,7 @@
 
       <div class="card">
         <h2>
-          <span>🔋 Dzisiejszy Bilans Mocy Tymona</span>
+          <span>🔋 Dzisiejszy Bilans Makroskładników</span>
           <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.72rem;" onclick="resetMealLog()">🔄 Wyczyść dzień</button>
         </h2>
 
@@ -769,6 +769,37 @@
 
 <script>
   /*************************************************************************
+   * 0. GENERATOR KWADRATOWEJ IKONY HD (180x180) NA PULPIT IPHONE'A Z tymon1.jpeg
+   *************************************************************************/
+  function initAppleTouchIconHD(imgEl) {
+    try {
+      if (!imgEl || !imgEl.naturalWidth) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = 180;
+      canvas.height = 180;
+      const ctx = canvas.getContext('2d');
+
+      // Wycina kwadrat z górnej części zdjęcia (twarz i garda Tymona)
+      const side = Math.min(imgEl.naturalWidth, imgEl.naturalHeight);
+      const sx = Math.max(0, (imgEl.naturalWidth - side) / 2);
+      ctx.drawImage(imgEl, sx, 0, side, side, 0, 0, 180, 180);
+
+      // Subtelna złota ramka wokół ikony na pulpicie iOS
+      ctx.strokeStyle = '#facc15';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(4, 4, 172, 172);
+
+      const iconDataUrl = canvas.toDataURL('image/png');
+      ['appleTouchIcon1', 'appleTouchIcon2', 'appleTouchIconPre', 'standardFavicon'].forEach(id => {
+        const link = document.getElementById(id);
+        if (link) link.href = iconDataUrl;
+      });
+    } catch (e) {
+      // Jeśli przeglądarka zablokuje canvas, iOS użyje bezpośrednio href="tymon1.jpeg" z <head>
+    }
+  }
+
+  /*************************************************************************
    * 1. GLOBALNY PRZEŁĄCZNIK STRONY TYMKA (LEWA HIDARI vs PRAWA MIGI)
    *************************************************************************/
   let currentStance = localStorage.getItem('tymon_stance_v21') || 'hidari';
@@ -804,7 +835,6 @@
 
   /*************************************************************************
    * 2. DETERMINISTYCZNY 4-KROKOWY SYMULATOR RUCHU SVG (KROK 1 -> 2 -> 3 -> 4)
-   *    Zastępuje w 100% zewnętrzne obrazki .jpg (zero błędów z parterem!)
    *************************************************************************/
   let currentSimStep = 1;
 
@@ -815,7 +845,6 @@
     let stepDesc = '';
 
     if (diagramType === 'one_leg_throw') {
-      // UCHI-MATA / HARAI-GOSHI / HANE-GOSHI / ASHI-GURUMA
       if (stepNum === 1) {
         stepTitle = S_TXT("KROK 1 z 4: Pozycja wyjściowa przed trójkątem + Chwyt 3 dolnymi palcami", "KROK 1 z 4: Pozycja Prawa przed trójkątem + Chwyt");
         stepDesc = S_TXT("Stań przed czubkiem trójkąta (▲). LEWA dłoń łapie KOŁNIERZ gumy, PRAWA dłoń łapie RĘKAW (zaciśnij mały, serdeczny i środkowy palec!).", "Stań przed trójkątem (▲). PRAWA dłoń łapie KOŁNIERZ gumy, LEWA dłoń łapie RĘKAW!");
@@ -869,7 +898,6 @@
         `;
       }
     } else if (diagramType === 'foot_sweep') {
-      // PODCIĘCIA ASHI-WAZA (DE-ASHI, O-UCHI, KOUCHI, O-SOTO, SASAE, OKURI)
       if (stepNum === 1) {
         stepTitle = "KROK 1 z 4: Ustawienie 2 klapków na podłodze + Chwyt jak Kierownica";
         stepDesc = "Połóż 2 klapki przed sobą (jako stopy rywala). Stań lekko na śródstopiu, złap rękaw i kołnierz gumy na wysokości klatki piersiowej.";
@@ -911,7 +939,6 @@
         `;
       }
     } else if (diagramType === 'two_leg_throw') {
-      // SEOI-NAGE / TAI-OTOSHI / O-GOSHI / KOSHI-GURUMA / SODE
       if (stepNum === 1) {
         stepTitle = S_TXT("KROK 1 z 4: Chwyt Lewy (Rękaw + Kołnierz) przed trójkątem", "KROK 1 z 4: Chwyt Prawy przed trójkątem");
         stepDesc = S_TXT("Stań przed trójkątem (▲). PRAWA dłoń trzyma rękaw przy łokciu, LEWA dłoń trzyma kołnierz na wysokości obojczyka (luźny nadgarstek!).", "PRAWA dłoń trzyma kołnierz, LEWA dłoń trzyma rękaw!");
@@ -936,7 +963,6 @@
         <text x="240" y="38" fill="#facc15" font-size="12.5" font-weight="900" text-anchor="middle">SYMULATOR WEJŚCIA NA 2 NOGI (SEOI-NAGE / O-GOSHI / TAI-OTOSHI)</text>
       `;
     } else {
-      // PARTER / OBRONA
       stepTitle = `KROK ${stepNum} z 4: Sekwencja Parterowa (Trzymanie ⇄ Most Upa & Krewetka Ebi)`;
       stepDesc = stepNum === 1 ? "KROK 1: Szeroka baza nóg w trójkącie i wbicie kolana w biodro (lub na dole: schowanie łokci do żeber i pięt pod pośladki)." :
                  stepNum === 2 ? "KROK 2: Eksplozywny Most (Upa) biodrami wysoko w górę przez bark!" :
@@ -996,11 +1022,6 @@
 
   /*************************************************************************
    * 3. KOMPLETNA BAZA WSZYSTKICH 42 TECHNIK KODOKAN & PZJUDO (6 KYU -> 3 KYU)
-   *    Każda technika automatycznie generuje 4 dedykowane stacje domowe:
-   *    1. Na sucho (Nogi/Trójkąt/Klapki)
-   *    2. Gumy – Samo Wychylenie i Chwyt
-   *    3. Gumy – Pełne Wejście połączone
-   *    4. Podłoga – Siła, Mobilność i Rozciąganie pod tę konkretną technikę!
    *************************************************************************/
   function makeTech(id, kyuNum, beltBadge, group, diffLevel, name, ytQueryName, diagramType, gripL, gripR, kuzushiL, kuzushiR, feetL, feetR, blockTxt, counterTxt, customSoloObj) {
     const defaultDry = group === 'ashi'
@@ -1569,7 +1590,6 @@
         </div>
       </div>
 
-      <!-- CZĘŚĆ 1: OPIS NA MATĘ (6 PRZYCISKÓW: UCHWYT / WYCHYLENIE / NOGI / DOM / BLOK / KONTRA) -->
       <div class="anatomy-6-grid">
         ${btnsHtml}
       </div>
@@ -1579,10 +1599,8 @@
         ${activeAnatomy.text}
       </div>
 
-      <!-- 4-KROKOWY DETERMINISTYCZNY SYMULATOR RUCHU SVG (KROK 1 -> 2 -> 3 -> 4) -->
       ${buildFourStepSimulatorSVG(tech.diagramType, currentSimStep)}
 
-      <!-- CZĘŚĆ 2: 4 STACJE TRENINGU SOLO W DOMU DEDYKOWANE WYŁĄCZNIE POD TĘ TECHNIKĘ! -->
       <div class="solo-stations-box">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div>
@@ -1629,7 +1647,6 @@
         </div>
       </div>
 
-      <!-- CENTRUM WIDEO KODOKAN (3 PRZYCISKI YOUTUBE) -->
       <div class="kodokan-video-hub">
         <strong style="color:var(--neon-gold); font-size:0.88rem; display:block; margin-bottom:4px;">🎥 Pokaz Wideo na YouTube dla: ${tech.name}</strong>
         <div class="video-launchers-grid">
@@ -1649,10 +1666,6 @@
 
   /*************************************************************************
    * 4. KONSTRUKTOR WŁASNEGO PLANU ĆWICZEŃ TYMONA ("MÓJ PLAN ĆWICZEŃ")
-   *    Podział każdej dodanej techniki na:
-   *    1. Ćwiczenie Główne na sucho (Nogi/Trójkąt/Klapki)
-   *    2. Ćwiczenie na Gumach (Wychylenie + Pełne wejście)
-   *    3. Ćwiczenie na Podłodze (Siła, Mobilność i Rozciąganie pod tę technikę)
    *************************************************************************/
   function getMyPlanList() {
     const saved = localStorage.getItem('tymon_custom_plan_v21');
@@ -1748,7 +1761,6 @@
             <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.73rem;" onclick="removeTechFromPlan(${idx})">✕ Usuń z planu</button>
           </div>
 
-          <!-- PODZIAŁ NA 3 CZĘŚCI DLA TYMONA: 1. GŁÓWNE NA SUCHO | 2. GUMY | 3. PODŁOGA & MOBILNOŚĆ -->
           <div class="plan-sub-task ${item.doneDry ? 'done' : ''}">
             <div style="flex:1;">
               <strong style="color:var(--neon-green); font-size:0.83rem; display:block;">🥇 1. Ćwiczenie Główne na Sucho (Wejścia Nogami / Trójkąt / Klapki):</strong>
@@ -1809,7 +1821,7 @@
 
   function renderMobilityGrid() {
     const box = document.getElementById('mobilityCardsGrid');
-    box.innerHTML = JUDO_MOBILITY_DRILLS.map((m, i) => `
+    box.innerHTML = JUDO_MOBILITY_DRILLS.map(m => `
       <div class="station-card st-mob">
         <div>
           <h4>${m.title}</h4>
@@ -2052,11 +2064,12 @@ Pytanie: ${q}`;
   }
 
   /*************************************************************************
-   * 8. KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW MŁODEGO JUDOKI (2100 KCAL)
+   * 8. KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW FUNKCJONALNYCH
    *************************************************************************/
   const POPULAR_FUNCTIONAL_FOODS_DB = [
     { name: "🥛 Skyr naturalny Piątnica / Zott (Nr 1 High-Protein – 12g B / 0% T)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
     { name: "🥤 Skyr pitny owocowy/naturalny (Szybka regeneracja po treningu Judo)", kcal: 63, p: 11.0, c: 4.2, f: 0.2 },
+    { name: "🐟 Śledzie w oleju (odsączone z oleju – bogate źródło Omega-3 i białka!)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
     { name: "🍌 Banan (Lekkostrawny Turbo-Gaz na 60 min przed walkami Randori)", kcal: 89, p: 1.1, c: 22.8, f: 0.3 },
     { name: "🍘 Wafle ryżowe z miodem (Lekki brzuch do padów Ukemi przed matą)", kcal: 365, p: 7.0, c: 81.5, f: 2.2 },
     { name: "🍎 Mus owocowy 100% w tubce (Szybki glikogen między walkami)", kcal: 55, p: 0.5, c: 12.5, f: 0.2 },
@@ -2065,14 +2078,27 @@ Pytanie: ${q}`;
     { name: "🍗 Pierś z kurczaka pieczona/gotowana (Czyste białko – 21.5g B)", kcal: 99, p: 21.5, c: 0.0, f: 1.3 },
     { name: "🍚 Kurczak z ryżem i warzywami (Pełny obiad potreningowy)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
     { name: "🥚 Jajka całe / Jajecznica (Siła chwytu Kumi-kata i aminokwasy)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
-    { name: "🐟 Śledzie odsączone / Ryba (Bogate źródło Omega-3 na stawy i koncentrację)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
     { name: "🥞 Naleśniki białkowe z twarogiem (Doładowanie po szkole)", kcal: 215, p: 13.5, c: 26.0, f: 5.5 },
     { name: "🍯 Domowy Izotonik Judoki (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
   let foods = JSON.parse(localStorage.getItem('tymon_foods_v21')) || POPULAR_FUNCTIONAL_FOODS_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
-  const TYMON_GOAL = { kcal: 2100, p: 85, c: 285, f: 65 };
+  const GOALS_MAP = {
+    tymon: { kcal: 2100, p: 85, c: 285, f: 65 },
+    redukcja: { kcal: 2250, p: 175, c: 190, f: 85 }
+  };
+
+  function onProfileModeChange() {
+    const mode = document.getElementById('calcProfileMode').value;
+    const banner = document.getElementById('profileInfoBanner');
+    if (mode === 'redukcja') {
+      banner.innerHTML = `🔥 <strong>Profil Redukcyjny (Cel 85 kg | 2250 kcal | 175 g Białka):</strong> Wysoka podaż białka (Skyr, chudy twaróg, śledzie odsączone z oleju, kurczak, jajka) gwarantuje sytość i pełną ochronę mięśni.`;
+    } else {
+      banner.innerHTML = `🥋 <strong>Paliwo Młodego Judoki (2100 kcal | 85 g Białka):</strong> Lekkostrawne węglowodany na 60 min przed treningiem (zero bólu brzucha przy padach <em>Ukemi</em>!) oraz szybka regeneracja po zejściu z maty.`;
+    }
+    renderMealLog();
+  }
 
   function setQuickGrams(val) {
     document.getElementById('calcGramsInput').value = val;
@@ -2141,6 +2167,8 @@ Pytanie: ${q}`;
   }
 
   function renderMealLog() {
+    const mode = document.getElementById('calcProfileMode') ? document.getElementById('calcProfileMode').value : 'tymon';
+    const gTarget = GOALS_MAP[mode] || GOALS_MAP.tymon;
     const tb = document.getElementById('mealLogTable');
     tb.innerHTML = '';
     let tk = 0, tp = 0, tc = 0, tf = 0;
@@ -2150,15 +2178,19 @@ Pytanie: ${q}`;
       tr.innerHTML = `<td>${m.name}</td><td>${m.g}g</td><td><strong>${m.kcal}</strong></td><td>${m.p}/${m.c}/${m.f}g</td><td><button class="btn btn-ghost" style="padding:2px 7px;" onclick="removeMeal(${i})">✕</button></td>`;
       tb.appendChild(tr);
     });
-    document.getElementById('remKcal').innerText = Math.max(0, TYMON_GOAL.kcal - Math.round(tk));
+    document.getElementById('goalKcal').innerText = gTarget.kcal;
+    document.getElementById('remKcal').innerText = Math.max(0, gTarget.kcal - Math.round(tk));
+    document.getElementById('goalP').innerText = gTarget.p;
+    document.getElementById('goalC').innerText = gTarget.c;
+    document.getElementById('goalF').innerText = gTarget.f;
     document.getElementById('sumKcal').innerText = Math.round(tk);
     document.getElementById('sumP').innerText = tp.toFixed(1);
     document.getElementById('sumC').innerText = tc.toFixed(1);
     document.getElementById('sumF').innerText = tf.toFixed(1);
-    document.getElementById('barKcal').style.width = Math.min(100, (tk / TYMON_GOAL.kcal) * 100) + '%';
-    document.getElementById('barP').style.width = Math.min(100, (tp / TYMON_GOAL.p) * 100) + '%';
-    document.getElementById('barC').style.width = Math.min(100, (tc / TYMON_GOAL.c) * 100) + '%';
-    document.getElementById('barF').style.width = Math.min(100, (tf / TYMON_GOAL.f) * 100) + '%';
+    document.getElementById('barKcal').style.width = Math.min(100, (tk / gTarget.kcal) * 100) + '%';
+    document.getElementById('barP').style.width = Math.min(100, (tp / gTarget.p) * 100) + '%';
+    document.getElementById('barC').style.width = Math.min(100, (tc / gTarget.c) * 100) + '%';
+    document.getElementById('barF').style.width = Math.min(100, (tf / gTarget.f) * 100) + '%';
   }
 
   async function askAiDietitian() {
@@ -2170,13 +2202,13 @@ Pytanie: ${q}`;
     const apiKey = getSafeGeminiApiKey();
 
     if (!apiKey) {
-      out.innerText = "ℹ️ [Podpowiedź Lokalna – dodaj klucz Gemini API w ⚙️ Chmura & Klucz AI, aby uzyskać odpowiedź z modelu AI]:\n• Na 60 min przed treningiem Judo: Banan, mus owocowy lub wafle ryżowe z miodem.\n• Po treningu (regeneracja 2100 kcal / 85g B): Skyr naturalny Piątnica, chudy twaróg, kurczak z ryżem lub jajka.";
+      out.innerText = "ℹ️ [Podpowiedź Lokalna – dodaj klucz Gemini API w ⚙️ Chmura & Klucz AI, aby uzyskać odpowiedź z modelu AI]:\n• Na 60 min przed treningiem Judo: Banan, mus owocowy lub wafle ryżowe z miodem.\n• Po treningu (regeneracja 2100 kcal / 85g B lub redukcja 2250 kcal / 175g B): Skyr naturalny Piątnica, chudy twaróg, kurczak z ryżem lub odsączone śledzie w oleju.";
       return;
     }
 
     try {
       const res = await callGeminiWithFallback([
-        { text: `Jesteś dietetykiem sportowym specjalizującym się w żywieniu 11-letniego zawodnika Judo (Tymon, cel: 2100 kcal, 85g białka, lekkostrawne posiłki przed treningiem i regeneracja po macie). Odpowiedz konkretnie po polsku: ${q}` }
+        { text: `Jesteś dietetykiem sportowym specjalizującym się w żywieniu w sportach walki (Judo: 2100 kcal, 85g białka dla 11-latka oraz profil redukcyjny 2250 kcal, 175g białka, cel 85 kg). Odpowiedz konkretnie po polsku: ${q}` }
       ], apiKey);
       out.innerText = res.text;
       addExp(15);
@@ -2434,7 +2466,6 @@ Pytanie: ${q}`;
   }
 
   window.onload = function() {
-    // Automatyczne wyczyszczenie starej bazy obrazków AI, która pokazywała "Żółwia"
     try { indexedDB.deleteDatabase('TymonFighterCardsDB_v19'); indexedDB.deleteDatabase('TymonFighterCardsDB_v20'); } catch (e) {}
     updateHud();
     renderMasteryGoals();
@@ -2445,6 +2476,8 @@ Pytanie: ${q}`;
     initFoodSelect();
     renderMealLog();
     setJudoStance(currentStance);
+    const heroImg = document.getElementById('fighterSprite');
+    if (heroImg && heroImg.complete) initAppleTouchIconHD(heroImg);
   };
 </script>
 </body>
