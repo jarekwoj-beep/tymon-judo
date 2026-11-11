@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="TYMON JUDO">
   <meta name="theme-color" content="#050811">
 
-  <!-- OFICJALNA IKONA APLIKACJI NA PULPIT IPHONE'A (tymon1.jpeg) -->
+  <!-- IKONA APLIKACJI NA PULPIT IPHONE'A (iOS) ORAZ ANDROIDA (tymon1.jpeg) -->
   <link id="appleTouchIcon1" rel="apple-touch-icon" href="tymon1.jpeg">
   <link id="appleTouchIcon2" rel="apple-touch-icon" sizes="180x180" href="tymon1.jpeg">
   <link id="appleTouchIconPre" rel="apple-touch-icon-precomposed" href="tymon1.jpeg">
@@ -17,11 +18,11 @@
   <!-- Opcjonalny zewnętrzny plik konfiguracyjny (np. window.ENV_GEMINI_API_KEY) -->
   <script src="config.js" onerror="/* Używamy bezpiecznego localStorage */"></script>
 
-  <title>TYMON JUDO – SOLO DOJO v22.0 (iOS Edition)</title>
+  <title>TYMON JUDO – SOLO DOJO v22.1 (iOS & Android Edition)</title>
   <style>
     :root {
       --bg-deep: #050811;
-      --bg-card: rgba(15, 23, 42, 0.92);
+      --bg-card: rgba(15, 23, 42, 0.94);
       --bg-panel: #1e293b;
       --neon-blue: #00f0ff;
       --neon-gold: #facc15;
@@ -52,7 +53,7 @@
       color: var(--text-light);
       line-height: 1.45;
       padding-top: var(--safe-top);
-      padding-bottom: calc(92px + var(--safe-bottom));
+      padding-bottom: calc(94px + var(--safe-bottom));
       overscroll-behavior-y: none;
       -webkit-user-select: none;
       user-select: none;
@@ -76,9 +77,8 @@
       pointer-events: none; z-index: 9999;
     }
 
-    /* GÓRNY PASEK STATUSU JAK W NATYWNEJ APLIKACJI Z APP STORE */
     header.game-hud {
-      background: rgba(9, 13, 22, 0.86);
+      background: rgba(9, 13, 22, 0.88);
       -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(250, 204, 21, 0.35);
@@ -104,29 +104,18 @@
     }
     .hud-title { min-width: 0; }
     .hud-title h1 {
-      font-size: 0.98rem; font-weight: 900; letter-spacing: 0.3px;
+      font-size: 0.96rem; font-weight: 900; letter-spacing: 0.3px;
       background: linear-gradient(90deg, #fff, var(--neon-gold), var(--neon-orange));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .hud-title span { font-size: 0.69rem; color: var(--neon-blue); font-weight: 700; display: block; }
+    .hud-title span { font-size: 0.68rem; color: var(--neon-blue); font-weight: 700; display: block; }
     .lvl-pill {
       background: linear-gradient(135deg, var(--neon-orange), var(--neon-red));
       color: #fff; padding: 5px 11px; border-radius: 99px; font-weight: 900; font-size: 0.76rem;
       box-shadow: 0 0 12px rgba(249, 115, 22, 0.45);
     }
 
-    /* BANER INSTALACJI NA EKRANIE POCZĄTKOWYM IPHONE'A (Pokazuje się tylko w zwykłej przeglądarce) */
-    .ios-install-prompt {
-      max-width: 1140px; margin: 8px auto 0; padding: 0 10px; display: none;
-    }
-    .ios-install-box {
-      background: linear-gradient(90deg, rgba(2,132,199,0.22), rgba(37,99,235,0.22));
-      border: 1px solid var(--neon-blue); border-radius: 14px; padding: 9px 12px;
-      display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.76rem;
-    }
-
-    /* PRZEŁĄCZNIK STRONY TYMKA (LEWA HIDARI vs PRAWA MIGI) */
     .stance-switcher-bar { max-width: 1140px; margin: 10px auto 0; padding: 0 10px; }
     .stance-box {
       background: linear-gradient(90deg, rgba(15,23,42,0.96), rgba(30,27,75,0.96));
@@ -238,13 +227,13 @@
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;
     }
 
-    /* DOLNY PASEK NAWIGACJI JAK W NATYWNEJ APLIKACJI Z APP STORE (iOS Tab Bar) */
+    /* DOLNY PASEK NAWIGACJI JAK W NATYWNEJ APLIKACJI Z APP STORE / GOOGLE PLAY */
     nav.ios-bottom-dock {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(10, 15, 28, 0.92);
+      background: rgba(10, 15, 28, 0.94);
       -webkit-backdrop-filter: blur(24px);
       backdrop-filter: blur(24px);
       border-top: 1px solid rgba(255, 255, 255, 0.14);
@@ -277,7 +266,7 @@
     }
     nav.ios-bottom-dock button.active {
       color: var(--neon-gold);
-      background: rgba(250, 204, 21, 0.12);
+      background: rgba(250, 204, 21, 0.14);
     }
 
     .container { max-width: 1140px; margin: 12px auto; padding: 0 10px; }
@@ -325,7 +314,6 @@
     .btn-purple { background: linear-gradient(135deg, #7e22ce, #a855f7); color: #fff; }
     .btn-ghost { background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
 
-    /* SIATKA KAFELKÓW 42 TECHNIK Z POZIOMEM TRUDNOŚCI SOLO */
     .tech-pills-grid {
       display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
       gap: 8px; margin-top: 10px; max-height: 310px; overflow-y: auto;
@@ -350,7 +338,6 @@
     .diff-badge-3 { color: var(--neon-orange); }
     .tech-pill-name { font-size: 0.81rem; font-weight: 800; color: #fff; line-height: 1.22; }
 
-    /* STACJE TRENINGU SOLO POD KAŻDĄ TECHNIKĄ */
     .solo-stations-box {
       background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(20,30,55,0.96));
       border: 2px solid var(--neon-green); border-radius: 16px;
@@ -374,7 +361,6 @@
     .station-card h4 { font-size: 0.86rem; color: var(--neon-gold); }
     .station-card p { font-size: 0.8rem; color: var(--text-light); white-space: pre-line; }
 
-    /* 4-KROKOWY DETERMINISTYCZNY SYMULATOR RUCHU SVG */
     .step-simulator-card {
       background: #060913; border: 2px solid var(--neon-blue);
       border-radius: 16px; padding: 12px; margin: 12px 0;
@@ -423,7 +409,6 @@
     }
     .plan-sub-task.done { border-color: var(--neon-green); opacity: 0.68; }
 
-    /* PASEK DNI TYGODNIA W ZAKŁADCE PLANU */
     .week-days-bar {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
       gap: 6px; margin-bottom: 12px;
@@ -477,24 +462,16 @@
   <div class="hud-brand">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON JUDO – SOLO DOJO</h1>
-      <span>Prywatna Apka Treningowa iOS (6➔4.5➔3 Kyu)</span>
+      <h1>TYMON JUDO – SOLO DOJO v22.1</h1>
+      <span>Apka Treningowa iOS & Android (6➔4.5➔3 Kyu)</span>
     </div>
   </div>
   <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-    <div class="lvl-pill">⚡ LVL <span id="lvlNumber">5</span> (<span id="expNumber">470</span> EXP)</div>
+    <div class="lvl-pill">⚡ LVL <span id="lvlNumber">1</span> (<span id="expNumber">0</span> EXP)</div>
     <button class="btn btn-blue" style="padding:6px 10px; font-size:0.74rem;" onclick="syncWithCloud('save')" id="cloudSyncBtn">☁️ Zapisz</button>
-    <button class="btn btn-ghost" style="padding:6px 10px; font-size:0.74rem;" onclick="toggleConfigModal()">⚙️</button>
+    <button class="btn btn-ghost" style="padding:6px 10px; font-size:0.74rem;" onclick="toggleConfigModal()">⚙️ Chmura & Reset</button>
   </div>
 </header>
-
-<!-- BANER POMOCNICZY DLA IPHONE'A (Gdy otwarte w zwykłym Safari zamiast z ikonki na pulpicie) -->
-<div class="ios-install-prompt" id="iosInstallBanner">
-  <div class="ios-install-box">
-    <span>📱 <strong>Tryb App Store na iPhonie:</strong> Kliknij na dole Safari <strong>Udostępnij [↑] ➔ „Dodaj do ekranu początkowego”</strong>, aby uruchamiać aplikację na pełnym ekranie z ikonką Tymona!</span>
-    <button class="btn btn-ghost" style="padding:4px 8px; font-size:0.7rem;" onclick="document.getElementById('iosInstallBanner').style.display='none'">OK</button>
-  </div>
-</div>
 
 <!-- GLOBALNY PRZEŁĄCZNIK STRONY TYMKA (LEWA HIDARI vs PRAWA MIGI) -->
 <div class="stance-switcher-bar">
@@ -518,34 +495,53 @@
   </div>
 </div>
 
-<!-- MODAL KONFIGURACJI CHMURY I BEZPIECZNEGO KLUCZA GEMINI API -->
+<!-- MODAL KONFIGURACJI CHMURY, TRANSFERU KOMPUTER->TELEFON, BEZPIECZNEGO KLUCZA AI ORAZ RESETU DO 0 EXP -->
 <div class="container" id="configModal" style="display:none;">
   <div class="card" style="border:2px solid var(--neon-gold);">
-    <h2>☁️ Chmura Google Apps Script, Kopia Zapisu & Bezpieczny Klucz AI <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
-    <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Synchronizuje postępy i plan tygodnia Tymona między iPhonem a komputerem.
+    <h2>⚙️ Chmura Google, Szybki Transfer na Telefon, Klucz AI & Reset <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
+
+    <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:6px;">
+      <strong>1. Link do Twojego Google Apps Script (Web App URL):</strong> Po zapisaniu aplikacja automatycznie pobiera i synchronizuje postępy między komputerem, iPhonem i Androidem.
     </p>
     <input type="text" id="gasUrlInput" placeholder="Wklej URL Web App z Google Apps Script (https://script.google.com/macros/s/.../exec)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
       <button class="btn btn-green" onclick="saveGasUrl()">💾 Zapisz adres Chmury</button>
       <button class="btn btn-blue" onclick="syncWithCloud('load')">📥 Pobierz z Chmury</button>
-      <button class="btn btn-gold" onclick="exportSaveFile()">📦 Pobierz kopię (.json)</button>
+      <button class="btn btn-gold" onclick="exportSaveFile()">📦 Eksportuj plik (.json)</button>
       <label class="btn btn-ghost" style="cursor:pointer; margin:0;">
-        📂 Wczytaj kopię
+        📂 Wczytaj plik
         <input type="file" accept=".json" style="display:none;" onchange="importSaveFile(event)">
       </label>
     </div>
 
     <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
-    <p style="font-size:0.81rem; color:var(--text-dim); margin-bottom:8px;">
-      <strong>2. Bezpieczny Klucz Gemini API (do Analizy Wideo i Asystenta AI):</strong> Klucz jest wczytywany wyłącznie ze zmiennej konfiguracyjnej (`window.ENV_GEMINI_API_KEY`) lub bezpiecznej pamięci lokalnej przeglądarki (`localStorage` pod kluczem `TYMON_SAFE_GEMINI_KEY`). Nigdy nie wpisuj klucza na stałe w kodzie źródłowym i nie udostępniaj go nikomu!
+    <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:6px;">
+      <strong>2. Bezpieczny Klucz Gemini API (do Analizy Wideo i Asystenta AI):</strong> Klucz jest wczytywany wyłącznie ze zmiennej konfiguracyjnej (`window.ENV_GEMINI_API_KEY`) lub bezpiecznej pamięci przeglądarki (`localStorage`). Nigdy nie wpisuj klucza na stałe w kodzie i chroń go przed niepowołanym dostępem!
     </p>
     <input type="password" id="apiKeyField" placeholder="Wklej swój klucz Gemini API (AIzaSy...)">
-    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
       <button class="btn btn-green" onclick="saveApiKeySafe()">💾 Zapisz klucz AI lokalnie</button>
       <button class="btn btn-blue" onclick="testGeminiConnection()">🔌 Przetestuj połączenie z AI</button>
       <button class="btn btn-ghost" onclick="removeApiKeySafe()">🗑️ Usuń klucz</button>
     </div>
+
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
+    <p style="font-size:0.8rem; color:var(--neon-blue); margin-bottom:6px;">
+      <strong>📲 3. Szybkie przeniesienie ustawień z Komputera na iPhone'a / Androida (1 kliknięcie!):</strong><br>
+      Kliknij na komputerze „Skopiuj Pakiet”, wyślij tekst sobie na telefon (np. Messenger / SMS), wklej poniżej i kliknij „Wczytaj Pakiet” – telefon od razu ustawi Chmurę i Klucz AI!
+    </p>
+    <input type="text" id="bundleTransferInput" placeholder="Tutaj wklej skopiowany Pakiet Konfiguracyjny na telefonie...">
+    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="btn btn-purple" onclick="copyConfigBundle()">📋 1. Skopiuj Pakiet (Link + Klucz)</button>
+      <button class="btn btn-green" onclick="pasteConfigBundle()">📥 2. Wczytaj wklejony Pakiet na Telefonie</button>
+    </div>
+
+    <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+      <span style="font-size:0.8rem; color:var(--neon-red); font-weight:800;">🔄 Chcesz zacząć całkowicie od zera (LVL 1 / 0 EXP / 0% na paskach)?</span>
+      <button class="btn" onclick="resetAllProgressToZero()">🔄 ZRESETUJ WSZYSTKIE POSTĘPY DO ZERA (LVL 1 / 0 EXP)</button>
+    </div>
+
     <p id="configStatusMsg" style="font-size:0.82rem; margin-top:8px; color:var(--neon-green); font-weight:700;"></p>
   </div>
 </div>
@@ -570,6 +566,7 @@
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="btn" onclick="triggerHeroAttackAnimation()">💥 ATAK!</button>
             <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📋 Plan Tygodnia (<span id="planCounterTop">0</span>)</button>
+            <button class="btn btn-ghost" style="padding:7px 10px; font-size:0.74rem;" onclick="resetAllProgressToZero()">🔄 Reset do 0 EXP</button>
           </div>
         </div>
         <div class="mastery-grid" id="masteryGoalsContainer"></div>
@@ -590,7 +587,7 @@
         <span style="font-size:0.75rem; color:var(--neon-green);" id="techCountBadge">Dostępne techniki: 26</span>
       </h2>
       <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:10px;">
-        Lista jest domyślnie ustawiona na najbliższy cel Tymona po Żółtym pasie: <strong>🟡🟠 4.5 Kyu – Żółto-Pomarańczowy Pas</strong>. Kliknij dowolną technikę poniżej – od razu masz jej <strong>Wpięcie w Kołnierz, Wychylenie, Stopy, Blokadę, Kontrę/Wyjście</strong> oraz <strong>5 stacji ćwiczeń solo w domu</strong>!
+        Lista jest domyślnie ustawiona na najbliższy cel Tymona po Żółtym pasie: <strong>🟡🟠 4.5 Kyu – Żółto-Pomarańczowy Pas</strong>. Kliknij dowolny kafelek techniki poniżej – od razu masz jej <strong>Wpięcie w Kołnierz, Wychylenie, Stopy, Blokadę, Kontrę/Wyjście</strong> oraz <strong>5 stacji ćwiczeń solo w domu</strong>!
       </p>
 
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap:9px;">
@@ -626,7 +623,7 @@
       </div>
 
       <div style="margin-top:8px;">
-        <strong style="font-size:0.79rem; color:var(--neon-gold);">👇 Kliknij technikę, którą chcesz teraz przećwiczyć lub dodać do planu:</strong>
+        <strong style="font-size:0.79rem; color:var(--neon-gold);">👇 Kliknij kafelek techniki, którą chcesz teraz przećwiczyć lub dodać do planu:</strong>
         <div id="techPillsGrid" class="tech-pills-grid"></div>
       </div>
     </div>
@@ -722,7 +719,7 @@
       <div class="card">
         <h2>🎥 Odtwarzacz Walk Slow-Mo + 4-Klatkowy Silnik Analizy Wideo AI Sensei</h2>
         <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:8px;">
-          Wybierz nagranie z galerii iPhone'a, ustaw moment wejścia w rzut i kliknij <strong>„🤖 Analizuj Sekwencję Wideo”</strong>. Aplikacja wytnie 4 kolejne klatki ruchu (co 0.35s) i prześle je do modelu Gemini AI!
+          Wybierz nagranie z galerii telefonu, ustaw moment wejścia w rzut i kliknij <strong>„🤖 Analizuj Sekwencję Wideo”</strong>. Aplikacja wytnie 4 kolejne klatki ruchu (co 0.35s) i prześle je do modelu Gemini AI!
         </p>
         <input type="file" id="fightVideoFileInput" accept="video/*" onchange="loadFightVideo(event)">
         <video id="fightVideoPlayer" controls playsinline crossorigin="anonymous" style="width:100%; max-height:240px; background:#000; border-radius:12px; margin-bottom:8px; border:2px solid var(--neon-blue);"></video>
@@ -886,7 +883,7 @@
 
 </div>
 
-<!-- DOLNY PASEK NAWIGACJI JAK W NATYWNEJ APLIKACJI Z APP STORE (iOS Bottom Tab Bar) -->
+<!-- DOLNY PASEK NAWIGACJI (iOS & Android Bottom Dock) -->
 <nav class="ios-bottom-dock">
   <button class="active" id="tabBtn-pane-kodokan" onclick="switchTab('pane-kodokan', this)">
     <span class="dock-icon">🥋</span>
@@ -912,8 +909,7 @@
 
 <script>
   /*************************************************************************
-   * 0. GENERATOR KWADRATOWEJ IKONY HD (180x180) NA PULPIT IPHONE'A Z tymon1.jpeg
-   *    + WYKRYWANIE TRYBU PEŁNOEKRANOWEGO iOS STANDALONE
+   * 0. GENERATOR KWADRATOWEJ IKONY HD (180x180) NA PULPIT IPHONE'A & ANDROIDA
    *************************************************************************/
   function initAppleTouchIconHD(imgEl) {
     try {
@@ -922,15 +918,12 @@
       canvas.width = 180;
       canvas.height = 180;
       const ctx = canvas.getContext('2d');
-
       const side = Math.min(imgEl.naturalWidth, imgEl.naturalHeight);
       const sx = Math.max(0, (imgEl.naturalWidth - side) / 2);
       ctx.drawImage(imgEl, sx, 0, side, side, 0, 0, 180, 180);
-
       ctx.strokeStyle = '#facc15';
       ctx.lineWidth = 8;
       ctx.strokeRect(4, 4, 172, 172);
-
       const iconDataUrl = canvas.toDataURL('image/png');
       ['appleTouchIcon1', 'appleTouchIcon2', 'appleTouchIconPre', 'standardFavicon'].forEach(id => {
         const link = document.getElementById(id);
@@ -939,19 +932,10 @@
     } catch (e) {}
   }
 
-  function checkIosStandaloneMode() {
-    const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const banner = document.getElementById('iosInstallBanner');
-    if (isIOS && !isStandalone && banner) {
-      banner.style.display = 'block';
-    }
-  }
-
   /*************************************************************************
    * 1. GLOBALNY PRZEŁĄCZNIK STRONY TYMKA (LEWA HIDARI vs PRAWA MIGI)
    *************************************************************************/
-  let currentStance = localStorage.getItem('tymon_stance_v21') || 'hidari';
+  let currentStance = localStorage.getItem('tymon_stance_v221') || 'hidari';
 
   function S_TXT(hidariTxt, migiTxt) {
     return currentStance === 'hidari' ? hidariTxt : migiTxt;
@@ -959,7 +943,7 @@
 
   function setJudoStance(side) {
     currentStance = side;
-    localStorage.setItem('tymon_stance_v21', side);
+    localStorage.setItem('tymon_stance_v221', side);
     const btnH = document.getElementById('btnStanceHidari');
     const btnM = document.getElementById('btnStanceMigi');
     const title = document.getElementById('stanceBannerTitle');
@@ -1172,7 +1156,7 @@
   /*************************************************************************
    * 3. KOMPLETNA BAZA WSZYSTKICH 42 TECHNIK KODOKAN & PZJUDO
    *************************************************************************/
-  function makeTech(id, kyuNum, beltBadge, group, diffLevel, name, ytQueryName, diagramType, gripL, gripR, kuzushiL, kuzushiR, feetL, feetR, blockTxt, counterTxt, customSoloObj) {
+  function makeTech(id, kyuNum, beltBadge, group, diffLevel, name, ytQueryName, diagramType, gripL, gripR, kuzushiL, kuzushiR, feetL, feetR, blockTxt, counterTxt) {
     const defaultKumiKata = group === 'ne'
       ? `🖐️ WPIĘCIE W PARTERZE (3x 12 powt.):\nZamiast łapać luźno materiał jednym palcem, wsuń dłoń głęboko pod pachę/za szyję i wepnij 4 palce w kołnierz lub pas rywala (łokcie przyklejone ciasno do własnych żeber!).`
       : `🖐️ DRILL WPIĘCIA KOŁNIERZA POD TEN RZUT (3x 15 powt. na gumach):\nStań przed drzwiami z rękami w gardzie. Na sygnał zrób 'Dwuklik': 1. Chwyć materiałowy rękaw gumy ➔ 2. Wstrzel drugą dłoń od dołu i WEPNIJ KOŁNIERZ na wysokości obojczyka (zaciśnij 3 dolne palce, schowaj łokieć w dół na mostek!) i od razu przejdź do wychylenia pod "${name}"!`;
@@ -1194,12 +1178,12 @@
       : `🌪️ 3. NA GUMACH – PEŁNE WEJŚCIE POŁĄCZONE (Wpięcie + Ręce + Nogi – 4x 12 powt.):\n1. Dwuklik (Rękaw ➔ Wepnij kołnierz!) ➔ 2. Szarpnij gumę ➔ 3. Wskocz w trójkąt (▲) ➔ 4. Wykonaj pełne wejście "${name}" na lewą (10x) oraz prawą (6x) stronę!`;
 
     const defaultFloorMob = diagramType === 'one_leg_throw'
-      ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & ROZCIĄGANIE POD TEN RZUT:\n• Rozciąganie: 2x 30s Siad płotkarski i skłony do prostej nogi + 15 wysokich wymachów nogą w górę przy ścianie ('Jaskółka' – otwiera biodro i dwugłowy uda!).\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel do ściany (70 cm).`
+      ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & ROZCIĄGANIE POD TEN RZUT:\n• Rozciąganie: 2x 30s Siad płotkarski i skłony do prostej nogi + 15 wysokich wymachów nogą w górę przy ścianie ('Jaskółka').\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel do ściany (70 cm).`
       : (group === 'ashi'
-        ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD PODCIĘCIA:\n• Mobilność: 2x 40s Pozycja 90/90 na dywanie (rotacja bioder) + krążenia stawów skokowych ('Kierownica Stopą').\n• Siła: 3x 20s szybkie wyrzuty hantelek na wysokość kołnierza (pod szybkie wpięcia!).`
+        ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD PODCIĘCIA:\n• Mobilność: 2x 40s Pozycja 90/90 na dywanie (rotacja bioder) + krążenia stawów skokowych.\n• Siła: 3x 20s szybkie wyrzuty hantelek na wysokość kołnierza (pod szybkie wpięcia!).`
         : (group === 'ne'
-          ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ PARTEROWA:\n• Mobilność: 10 Mostów zapaśniczych z wypychaniem bioder + Kołyska judocka z przenoszeniem stóp za głowę ('Pług' na elastyczny kręgosłup!).\n• Siła: 3x 10 pompek i wznosów kolan na paraletkach.`
-          : `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD RZUTY OBROTOWE:\n• Mobilność: 60s Głęboki Przysiad Słowiański (otwieranie bioder łokciami) + 15 przekładań gumy nad głową na luźne barki.\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel + 10 pompek na paraletkach.`));
+          ? `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ PARTEROWA:\n• Mobilność: 10 Mostów zapaśniczych z wypychaniem bioder + Kołyska judocka z przenoszeniem stóp za głowę ('Pług').\n• Siła: 3x 10 pompek i wznosów kolan na paraletkach.`
+          : `💪🧘‍♂️ 4. PODŁOGA – SIŁA & MOBILNOŚĆ POD RZUTY OBROTOWE:\n• Mobilność: 60s Głęboki Przysiad Słowiański + 15 przekładań gumy nad głową na luźne barki.\n• Siła: 3x 8 wyjazdów kółkiem Ab Wheel + 10 pompek na paraletkach.`));
 
     return {
       id, kyuNum, beltBadge, group, diffLevel,
@@ -1215,10 +1199,10 @@
       },
       soloStations: {
         kumiKata: defaultKumiKata,
-        dry: (customSoloObj && customSoloObj.dry) ? customSoloObj.dry : defaultDry,
-        bandsKuzushi: (customSoloObj && customSoloObj.bandsKuzushi) ? customSoloObj.bandsKuzushi : defaultBandsKuzushi,
-        bandsFull: (customSoloObj && customSoloObj.bandsFull) ? customSoloObj.bandsFull : defaultBandsFull,
-        floorMob: (customSoloObj && customSoloObj.floorMob) ? customSoloObj.floorMob : defaultFloorMob
+        dry: defaultDry,
+        bandsKuzushi: defaultBandsKuzushi,
+        bandsFull: defaultBandsFull,
+        floorMob: defaultFloorMob
       }
     };
   }
@@ -1227,13 +1211,13 @@
     // ==================== 6 KYU (BIAŁY PAS – 10 TECHNIK) ====================
     makeTech("t6_ukemi", 6, "⚪ 6 Kyu (Biały Pas)", "ne", 1, "Ukemi-waza (4 Pady Judo: w tył, w bok, w przód i przewrót przez bark)", "Ukemi Judo Kodokan", "parter_pin_escape",
       "🖐️ UŁOŻENIE RĄK: Ramiona proste pod kątem 45° od tułowia, otwarta dłoń uderza płasko w matę ułamek sekundy przed kontaktem pleców!",
-      "🖐️ UŁOŻENIE RĄK: Płaskie uderzenie całą dłonią i przedramieniem w matę (amortyzacja fali uderzeniowej).",
+      "🖐️ UŁOŻENIE RĄK: Płaskie uderzenie całą dłonią i przedramieniem w matę.",
       "🟡 GŁOWA I BRODA: Broda wbita ciasno w mostek ('trzymaj jabłko pod brodą') – potylica NIGDY nie dotyka maty!",
       "🟡 GŁOWA I BRODA: Wzrok wbity we własny pas, szyja napięta.",
       "🟩 PRACA NÓG: W Yoko-ukemi nogi nie krzyżują się; w przewrocie Zempo-kaiten toczysz się po przekątnej od barku do przeciwnego biodra!",
       "🟩 PRACA NÓG: Płynna kołyska po łuku pleców.",
       "🛡️ BLOKOWANIE KONTUZJI: Nigdy nie podpieraj się wyprostowaną ręką ani łokciem o matę podczas lotu!",
-      "⚡ KONTRA / PRZEJŚCIE W WALCE: Perfekcyjne Ukemi pozwala natychmiast po rzucie skręcić się w powietrze, uniknąć Ipponu i przejść do ataku w parterze!"
+      "⚡ KONTRA / PRZEJŚCIE W WALCE: Perfekcyjne Ukemi pozwala natychmiast po rzucie skręcić się i przejść do ataku w parterze!"
     ),
     makeTech("t6_deashi", 6, "⚪ 6 Kyu (Biały Pas)", "ashi", 1, "De-ashi-barai (Wycięcie postępującej stopy – Szybkie Stopy)", "De-ashi-barai Kodokan Judo", "foot_sweep",
       "🖐️ WPIĘCIE KOŁNIERZA (LEWY): 1. Prawa dłoń łapie rękaw przy łokciu ➔ 2. Lewa dłoń WPINA SIĘ w kołnierz przy obojczyku (3 dolne palce!).",
@@ -1832,7 +1816,6 @@
 
   /*************************************************************************
    * 4. HYBRYDOWY PLAN TYGODNIA (PONIEDZIAŁEK – NIEDZIELA)
-   *    + CODZIENNE ĆWICZENIA NA WPIĘCIE KOŁNIERZA I TRIKI KUMI-KATA
    *************************************************************************/
   const KUMIKATA_TRICKS_LIBRARY = [
     {
@@ -1849,7 +1832,7 @@
     },
     {
       title: "🔄 Trik #4: „Pompka Przechwytów 20 Sekund (Szybkie Palce)”",
-      desc: "Stań przed gumami z materiałowym rękawem i kołnierzem. Przez 20 sekund na przemian puszczaj i błyskawicznie wpinaj dłonie w kołnierz i rękaw z głośnym klaśnięciem w materiał – aż dłoń sama trafia z zamkniętymi oczami!"
+      desc: "Stań przed gumami z materiałowym rękawem i kołnierzem. Przez 20 sekund na przemian puszczaj i błyskawicznie wpinaj dłonie w kołnierz i rękaw z głośnym klaśnięciem w materiał!"
     },
     {
       title: "🎯 Trik #5: „Wpięcie Kołnierza + Podcięcie w 1 Sekundzie!”",
@@ -1860,7 +1843,6 @@
   const WEEKLY_KUMIKATA_SCHEDULE = {
     1: {
       dayName: "Poniedziałek",
-      shortName: "Pon",
       gripTitle: "🖐️ PONIEDZIAŁEK – WPIĘCIE #1: „Dwuklik: Rękaw ➔ Wpięcie Lewego Kołnierza (3x 15 na gumach)”",
       gripDesc: "Stań przed drzwiami z rękami w gardzie. Klik 1: Prawa dłoń łapie rękaw gumy ➔ Klik 2: Lewa dłoń strzela od dołu i WPINA SIĘ w kołnierz na wysokości obojczyka (zaciśnij 3 dolne palce, opuść łokieć w dół!) ➔ od razu wytnij klapek stopą!",
       bossTxt: "Pokaż Tacie 10 szybkich 'Dwuklików' (Rękaw ➔ Wpięcie Kołnierza) na gumach oraz dzisiejsze podcięcia!",
@@ -1868,7 +1850,6 @@
     },
     2: {
       dayName: "Wtorek",
-      shortName: "Wt",
       gripTitle: "🖐️ WTOREK – WPIĘCIE #2: „Wpięcie w Kołnierz + Wkręcenie Łokcia pod Pachę (3x 12 na gumach)”",
       gripDesc: "Wepnij lewą dłoń w kołnierz gumy, prawą w rękaw. Bez puszczania wpiętego kołnierza wyrwij rękaw w górę i wkręć lewy łokieć głęboko pod swoją pachę z przysiadem w trójkącie (pod Seoi-otoshi, Morote-seoi i Harai-goshi)!",
       bossTxt: "Pokaż Tacie wpięcie kołnierza z wkręceniem łokcia oraz wejścia na pas Żółto-Pomarańczowy (4.5 Kyu)!",
@@ -1876,7 +1857,6 @@
     },
     3: {
       dayName: "Środa",
-      shortName: "Śr",
       gripTitle: "🖐️ ŚRODA – WPIĘCIE #3: „Zerwanie Uchwytu Wycieraczką ➔ Wpięcie & Parter (3x 12)”",
       gripDesc: "Ćwicz zrywanie uchwytu rywala oburącz w dół ('Wycieraczka'), natychmiastowe wpięcie własnego kołnierza, zejście w niskie Jigotai (blok biodrem) oraz przejście do trzymania i obracania Żółwia!",
       bossTxt: "Pokaż Tacie zerwanie uchwytu, obrócenie Żółwia za dalszy łokieć i wyjście kleszczami z Tate-shiho!",
@@ -1884,7 +1864,6 @@
     },
     4: {
       dayName: "Czwartek",
-      shortName: "Czw",
       gripTitle: "🖐️ CZWARTEK – WPIĘCIE #4: „Ciężki Łokieć na Kołnierzu + Kierownica w Dół na Piętę (3x 15)”",
       gripDesc: "Wepnij twardo kołnierz i wciśnij nim (razem z rękawem) wyobrażonego rywala w dół-tył na piętę, łącząc to z dużym półkolem O-uchi-gari, zahaczeniem Ko-soto-gake i kontrą Tsubame-gaeshi!",
       bossTxt: "Pokaż Tacie wpięcie kołnierza z wciśnięciem w dół oraz podcięcia O-uchi-gari i Ko-soto-gake!",
@@ -1892,7 +1871,6 @@
     },
     5: {
       dayName: "Piątek",
-      shortName: "Pt",
       gripTitle: "🖐️ PIĄTEK – WPIĘCIE #5: „Wpięcie Lewego Kołnierza ➔ Zegarek do Ucha pod Uchi-matę! (4x 12)”",
       gripDesc: "Dzień koronnego rzutu Tymka! 1. Wepnij lewy kołnierz i prawy rękaw ➔ 2. Zaczep stopę Kouchi-gari ➔ 3. Wyrwij rękaw do prawego ucha ('Zegarek' z 2s pauzą!) i wystrzel lewą nogę w Uchi-macie!",
       bossTxt: "Pokaż Tacie kombinację: Wpięcie Kołnierza ➔ Kouchi-gari ➔ Uchi-mata na lewą i prawą stronę!",
@@ -1900,7 +1878,6 @@
     },
     6: {
       dayName: "Sobota",
-      shortName: "Sob",
       gripTitle: "🖐️ SOBOTA – TEST MISTRZA: „20s Pompka Szybkich Wpięć w Kołnierz + Obwód z Tatą!”",
       gripDesc: "Włącz Zegar Dojo na 20 sekund i zrób maksymalną liczbę głośnych wpięć w kołnierz i rękaw gumy, a potem przećwicz cały zestaw egzaminacyjny na pas Żółto-Pomarańczowy (4.5 Kyu)!",
       bossTxt: "Sobota Boss Fight z Tatą: 20s Pompka Wpięć + 3 rzuty w stójce + 2 wyjścia z trzymań (+100 EXP)!",
@@ -1908,7 +1885,6 @@
     },
     0: {
       dayName: "Niedziela",
-      shortName: "Nd",
       gripTitle: "🧘‍♂️ NIEDZIELA – REGENERACJA (YASUMI): „Luźne Techniki Wpięć + 8 Minut Mobilności Judoki”",
       gripDesc: "Dzień na rozciąganie bioder, dwugłowych uda i kręgosłupa oraz spokojne powtórzenie padów Ukemi i ulubionych przejść w parterze.",
       bossTxt: "Wykonaj z Tatą 8-minutowy rytuał rozciągania pod Judo (+100 EXP)!",
@@ -1919,7 +1895,7 @@
   let activePlanDay = new Date().getDay();
 
   function getWeeklyStateMap() {
-    const raw = localStorage.getItem('tymon_weekly_plan_v213');
+    const raw = localStorage.getItem('tymon_weekly_plan_v221');
     if (raw) {
       try { return JSON.parse(raw); } catch (e) {}
     }
@@ -1932,12 +1908,12 @@
         }))
       };
     });
-    localStorage.setItem('tymon_weekly_plan_v213', JSON.stringify(initMap));
+    localStorage.setItem('tymon_weekly_plan_v221', JSON.stringify(initMap));
     return initMap;
   }
 
   function saveWeeklyStateMap(map) {
-    localStorage.setItem('tymon_weekly_plan_v213', JSON.stringify(map));
+    localStorage.setItem('tymon_weekly_plan_v221', JSON.stringify(map));
     const curList = (map[activePlanDay] && map[activePlanDay].items) ? map[activePlanDay].items : [];
     document.getElementById('planCounterTop').innerText = curList.length;
     autoSyncCloudSilent();
@@ -2111,23 +2087,23 @@
   const JUDO_MOBILITY_DRILLS = [
     {
       title: "🚀 1. „Jaskółka & Szpagat Uchi-mata” (Tylna taśma uda i otwarcie biodra)",
-      desc: "• Stań bokiem przy ścianie, oprzyj dłoń i zrób 15 dynamicznych wymachów lewą i prawą nogą w tył-górę z jednoczesnym skłonem głowy do kolana!\n• Następnie usiądź w siadzie płotkarskim na dywanie i przytrzymaj skłon do prostej nogi przez 30 sekund na stronę.\n🎯 Cel: Noga w Uchi-macie i Harai-goshi leci o 30 cm wyżej bez odrywania stopy podporowej!"
+      desc: "• Stań bokiem przy ścianie, oprzyj dłoń i zrób 15 dynamicznych wymachów lewą i prawą nogą w tył-górę z jednoczesnym skłonem głowy do kolana!\n• Następnie usiądź w siadzie płotkarskim na dywanie i przytrzymaj skłon do prostej nogi przez 30 sekund na stronę.\n🎯 Cel: Noga w Uchi-macie i Harai-goshi leci o 30 cm wyżej!"
     },
     {
       title: "🐸 2. „Biodra 90/90 & Żabka Judoki” (Rotacja bioder pod trójkąt i podcięcia)",
-      desc: "• Usiądź na podłodze z obiema nogami ugiętymi pod kątem 90 stopni (jedna z przodu, druga z boku).\n• Przekładaj kolana z lewej strony na prawą bez odrywania pięt od podłogi (12 powtórzeń) + 30 sekund rozciągania w pozycji 'Żabki'.\n🎯 Cel: Luźne biodra do głębokich wejść w O-uchi-gari, Kouchi-gari i gardę w parterze!"
+      desc: "• Usiądź na podłodze z obiema nogami ugiętymi pod kątem 90 stopni.\n• Przekładaj kolana z lewej strony na prawą bez odrywania pięt od podłogi (12 powtórzeń) + 30 sekund rozciągania w pozycji 'Żabki'.\n🎯 Cel: Luźne biodra do głębokich wejść w O-uchi-gari, Kouchi-gari i gardę w parterze!"
     },
     {
       title: "🏋️‍♂️ 3. „Głęboki Przysiad Słowiański + Otwieranie Barków z Gumą” (Pod Seoi-nage i Sode)",
-      desc: "• Zejdź w głęboki przysiad na całych stopach (pięty przyklejone do podłogi!) i rozpychaj kolana na boki swoimi łokciami przez 45 sekund.\n• Następnie chwyć gumę szeroko oburącz i przełóż ją 15 razy na prostych łokciach nad głową do tyłu.\n🎯 Cel: Niskie wejście pod środek ciężkości rywala i elastyczne barki do wkręcania łokcia w Morote-seoi-nage!"
+      desc: "• Zejdź w głęboki przysiad na całych stopach i rozpychaj kolana na boki swoimi łokciami przez 45 sekund.\n• Następnie chwyć gumę szeroko oburącz i przełóż ją 15 razy na prostych łokciach nad głową do tyłu.\n🎯 Cel: Niskie wejście pod środek ciężkości rywala i elastyczne barki!"
     },
     {
       title: "🛞 4. „Most Zapaśniczy & Pług Judocki za Głowę” (Elastyczny kręgosłup i kark pod Parter)",
-      desc: "• Połóż się na plecach, podejdź piętami pod pośladki i wypchnij biodra wysoko w górę (10 Mostów Upa ze skrętem przez lewy i prawy bark).\n• Zrób 10 kołysek w tył, dotykając palcami stóp podłogi za swoją głową ('Pług').\n🎯 Cel: Nikt nie przygniecie Cię w Kami-shiho ani Kesa-gatame – uciekasz z każdego trzymania!"
+      desc: "• Połóż się na plecach, podejdź piętami pod pośladki i wypchnij biodra wysoko w górę (10 Mostów Upa ze skrętem przez lewy i prawy bark).\n• Zrób 10 kołysek w tył, dotykając palcami stóp podłogi za swoją głową ('Pług').\n🎯 Cel: Uciekasz z każdego trzymania!"
     },
     {
       title: "🏹 5. „Wykrok Samuraja z Rotacją Klatki” (Skręt tułowia pod rzuty biodrowe)",
-      desc: "• Zrób głęboki wykrok w przód, oprzyj jedną dłoń na podłodze obok stopy, a drugą ręką sięgnij wysoko w stronę sufitu, skręcając mocno klatkę piersiową (10 razy na lewą i prawą stronę).\n🎯 Cel: Błyskawiczny skręt barków w Uki-goshi, O-goshi i Koshi-guruma!"
+      desc: "• Zrób głęboki wykrok w przód, oprzyj jedną dłoń na podłodze obok stopy, a drugą ręką sięgnij wysoko w stronę sufitu, skręcając mocno klatkę piersiową (10 razy na stronę).\n🎯 Cel: Błyskawiczny skręt barków w Uki-goshi, O-goshi i Koshi-guruma!"
     },
     {
       title: "🦶 6. „Kierownica Stopą & Modlitewnik Nadgarstków” (Pod De-ashi-barai i Wpięcia)",
@@ -2297,7 +2273,7 @@
       if (!apiKey) {
         btn.disabled = false;
         btn.innerText = "🤖 ANALIZUJ SEKWENCJĘ WIDEO Z AI SENSEIEM (GEMINI API)";
-        out.innerText = `✅ Wycięto 4 klatki ruchu (${frames.map(f => f.timeLabel).join(' ➔ ')})!\n\nℹ️ Aby uruchomić pełną analizę AI przez Gemini API, kliknij na górze "⚙️" i zapisz swój klucz API.\n\n🥋 Lokalna lista kontrolna dla tych 4 klatek:\n1. KLATKA #1 (${frames[0].timeLabel}): Czy lewa dłoń jest twardo wpięta w kołnierz przy obojczyku (łokieć w dół), a prawa kontroluje rękaw?\n2. KLATKA #2 (${frames[1].timeLabel}): Czy ręka z rękawem ciągnie wysoko do ucha ZANIM stopy się obrócą?\n3. KLATKA #3 (${frames[2].timeLabel}): Czy stopa ląduje w wierzchołku trójkąta na ugiętym kolanie?\n4. KLATKA #4 (${frames[3].timeLabel}): Czy głowa nurkuje nisko do kolana?`;
+        out.innerText = `✅ Wycięto 4 klatki ruchu (${frames.map(f => f.timeLabel).join(' ➔ ')})!\n\nℹ️ Aby uruchomić pełną analizę AI przez Gemini API, kliknij na górze "⚙️ Chmura & Reset" i zapisz swój klucz API.\n\n🥋 Lokalna lista kontrolna dla tych 4 klatek:\n1. KLATKA #1 (${frames[0].timeLabel}): Czy lewa dłoń jest twardo wpięta w kołnierz przy obojczyku (łokieć w dół), a prawa kontroluje rękaw?\n2. KLATKA #2 (${frames[1].timeLabel}): Czy ręka z rękawem ciągnie wysoko do ucha ZANIM stopy się obrócą?\n3. KLATKA #3 (${frames[2].timeLabel}): Czy stopa ląduje w wierzchołku trójkąta na ugiętym kolanie?\n4. KLATKA #4 (${frames[3].timeLabel}): Czy głowa nurkuje nisko do kolana?`;
         return;
       }
 
@@ -2325,17 +2301,49 @@ Pytanie: ${q}`;
   }
 
   /*************************************************************************
-   * 7. PASKI OPANOWANIA DO RANGI MASTER
+   * 7. PASKI OPANOWANIA DO RANGI MASTER (START OD ZERA: 0 / 20 SESJI!)
+   *    + FUNKCJA RESETU WSZYSTKICH POSTĘPÓW DO LVL 1 (0 EXP)
    *************************************************************************/
-  const DEFAULT_MASTERY_GOALS = [
-    { id: 'kuzushi', title: '🖐️ Master Wpięć w Kołnierz & Wychyleń (Gumy)', current: 5, target: 20, unit: 'sesji' },
-    { id: 'ashiwaza', title: '🦵 Master Szybkich Stóp & Podcięć na Sucho', current: 4, target: 20, unit: 'sesji' },
-    { id: 'uchimata', title: '🔥 Master Rzutów (Uchi-mata, Seoi-nage, Harai-goshi)', current: 5, target: 20, unit: 'sesji' },
-    { id: 'newaza', title: '🛡️ Master Trzymań, Wyjść i Kontr', current: 3, target: 15, unit: 'sesji' },
-    { id: 'core', title: '🧘‍♂️ Master Mobilności, Rozciągania & Siły (Kółko/Paraletki)', current: 4, target: 15, unit: 'sesji' }
-  ];
+  function getCleanMasteryGoals() {
+    return [
+      { id: 'kuzushi', title: '🖐️ Master Wpięć w Kołnierz & Wychyleń (Gumy)', current: 0, target: 20, unit: 'sesji' },
+      { id: 'ashiwaza', title: '🦵 Master Szybkich Stóp & Podcięć na Sucho', current: 0, target: 20, unit: 'sesji' },
+      { id: 'uchimata', title: '🔥 Master Rzutów (Uchi-mata, Seoi-nage, Harai-goshi)', current: 0, target: 20, unit: 'sesji' },
+      { id: 'newaza', title: '🛡️ Master Trzymań, Wyjść i Kontr', current: 0, target: 15, unit: 'sesji' },
+      { id: 'core', title: '🧘‍♂️ Master Mobilności, Rozciągania & Siły (Kółko/Paraletki)', current: 0, target: 15, unit: 'sesji' }
+    ];
+  }
 
-  let masteryGoals = JSON.parse(localStorage.getItem('tymon_mastery_goals_v21')) || DEFAULT_MASTERY_GOALS;
+  // Jednorazowa migracja do czystego startu v22.1 (usuwa zablokowane 730 EXP / LVL 8 z poprzednich testów)
+  if (!localStorage.getItem('tymon_clean_init_v221')) {
+    localStorage.setItem('tymon_judo_exp_v221', '0');
+    localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(getCleanMasteryGoals()));
+    localStorage.setItem('tymon_clean_init_v221', 'true');
+  }
+
+  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp_v221'));
+  if (isNaN(totalExp) || totalExp < 0) totalExp = 0;
+
+  let masteryGoals = JSON.parse(localStorage.getItem('tymon_mastery_goals_v221')) || getCleanMasteryGoals();
+
+  function resetAllProgressToZero() {
+    if (!confirm("Czy na pewno chcesz wyzerować punkty Tymona do LVL 1 (0 EXP) i ustawić wszystkie paski Mastera na 0%?")) return;
+    totalExp = 0;
+    localStorage.setItem('tymon_judo_exp_v221', '0');
+    masteryGoals = getCleanMasteryGoals();
+    localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
+    localStorage.removeItem('tymon_weekly_plan_v221');
+    mealLog = [];
+    localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
+
+    updateHud();
+    renderMasteryGoals();
+    renderWeeklyPlanView();
+    renderMealLog();
+    autoSyncCloudSilent();
+    playSound('exp');
+    alert("🔄 Gotowe! Tymon startuje od czystego LVL 1 (0 EXP) i 0% na paskach Mastera!");
+  }
 
   function renderMasteryGoals() {
     const box = document.getElementById('masteryGoalsContainer');
@@ -2365,7 +2373,7 @@ Pytanie: ${q}`;
     const g = masteryGoals.find(x => x.id === goalId) || masteryGoals[0];
     if (g) {
       g.current = Math.min(g.target, g.current + amount);
-      localStorage.setItem('tymon_mastery_goals_v21', JSON.stringify(masteryGoals));
+      localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
       renderMasteryGoals();
       triggerHeroAttackAnimation();
       addExp(35);
@@ -2399,7 +2407,7 @@ Pytanie: ${q}`;
     { name: "🍯 Domowy Izotonik Judoki (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
-  let foods = JSON.parse(localStorage.getItem('tymon_foods_v220')) || POPULAR_FUNCTIONAL_FOODS_DB;
+  let foods = JSON.parse(localStorage.getItem('tymon_foods_v221')) || POPULAR_FUNCTIONAL_FOODS_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
   const TYMON_GOAL = { kcal: 2100, p: 85, c: 285, f: 65 };
 
@@ -2465,7 +2473,7 @@ Pytanie: ${q}`;
     const f = parseFloat(document.getElementById('newFoodF').value) || 0;
     if (!name || isNaN(kcal) || kcal < 0) { alert("Podaj poprawną nazwę i kalorie na 100g!"); return; }
     foods.push({ name: "⭐ " + name, kcal, p, c, f });
-    localStorage.setItem('tymon_foods_v220', JSON.stringify(foods));
+    localStorage.setItem('tymon_foods_v221', JSON.stringify(foods));
     document.getElementById('newFoodName').value = '';
     initFoodSelect();
   }
@@ -2528,7 +2536,7 @@ Pytanie: ${q}`;
   }
 
   /*************************************************************************
-   * 9. DŹWIĘKI, EFEKTY I SYNCHRONIZACJA Z CHMURĄ GOOGLE
+   * 9. DŹWIĘKI, EFEKTY, TRANSFER KONFIGURACJI I SYNCHRONIZACJA Z CHMURĄ
    *************************************************************************/
   function speakInstruction(textToRead) {
     try {
@@ -2625,6 +2633,38 @@ Pytanie: ${q}`;
     document.getElementById('configStatusMsg').innerText = "🗑️ Klucz API został usunięty.";
   }
 
+  // Szybki transfer konfiguracji Komputer -> iPhone / Android w czystym JSON
+  function copyConfigBundle() {
+    const gas = localStorage.getItem('tymon_gas_cloud_url') || document.getElementById('gasUrlInput').value.trim();
+    const key = getSafeGeminiApiKey() || document.getElementById('apiKeyField').value.trim();
+    const bundleStr = JSON.stringify({ gasUrl: gas, apiKey: key });
+    document.getElementById('bundleTransferInput').value = bundleStr;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(bundleStr).catch(() => {});
+    }
+    document.getElementById('configStatusMsg').innerText = "📋 Skopiowano Pakiet Konfiguracyjny! Wyślij go sobie na telefon i wklej w to samo pole.";
+  }
+
+  function pasteConfigBundle() {
+    const raw = document.getElementById('bundleTransferInput').value.trim();
+    if (!raw) { alert("Wklej najpierw skopiowany pakiet w pole tekstowe!"); return; }
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed.gasUrl) {
+        localStorage.setItem('tymon_gas_cloud_url', parsed.gasUrl);
+        document.getElementById('gasUrlInput').value = parsed.gasUrl;
+      }
+      if (parsed.apiKey) {
+        localStorage.setItem('TYMON_SAFE_GEMINI_KEY', parsed.apiKey);
+      }
+      document.getElementById('bundleTransferInput').value = '';
+      document.getElementById('configStatusMsg').innerText = "✅ Pakiet wczytany! Telefon ma już adres Chmury i klucz AI – pobieram dane...";
+      syncWithCloud('load');
+    } catch (e) {
+      alert("❌ Nieprawidłowy format Pakietu Konfiguracyjnego (upewnij się, że skopiowałeś cały tekst JSON).");
+    }
+  }
+
   function collectFullGameState() {
     return {
       exp: totalExp,
@@ -2637,20 +2677,31 @@ Pytanie: ${q}`;
 
   function applyFullGameState(state) {
     if (!state) return;
-    if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp', totalExp); }
+    if (typeof state.exp === 'number') {
+      totalExp = state.exp;
+      localStorage.setItem('tymon_judo_exp_v221', totalExp);
+    }
     if (state.stance) setJudoStance(state.stance);
-    if (Array.isArray(state.masteryGoals)) { masteryGoals = state.masteryGoals; localStorage.setItem('tymon_mastery_goals_v21', JSON.stringify(masteryGoals)); }
+    if (Array.isArray(state.masteryGoals)) {
+      masteryGoals = state.masteryGoals;
+      localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
+    }
     if (state.weeklyPlan) saveWeeklyStateMap(state.weeklyPlan);
-    if (Array.isArray(state.mealLog)) { mealLog = state.mealLog; localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog)); }
+    if (Array.isArray(state.mealLog)) {
+      mealLog = state.mealLog;
+      localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
+    }
     updateHud(); renderMasteryGoals(); populateKodokanTechList(); renderWeeklyPlanView(); renderMealLog();
   }
 
-  async function syncWithCloud(direction = 'save') {
+  async function syncWithCloud(direction = 'save', silent = false) {
     const gasUrl = localStorage.getItem('tymon_gas_cloud_url');
     const btn = document.getElementById('cloudSyncBtn');
     if (!gasUrl) {
-      toggleConfigModal();
-      document.getElementById('configStatusMsg').innerText = "ℹ️ Wklej najpierw link Web App z Google Apps Script.";
+      if (!silent) {
+        toggleConfigModal();
+        document.getElementById('configStatusMsg').innerText = "ℹ️ Wklej najpierw link Web App z Google Apps Script.";
+      }
       return;
     }
     try {
@@ -2666,7 +2717,10 @@ Pytanie: ${q}`;
       } else {
         const res = await fetch(gasUrl + '?action=load');
         const json = await res.json();
-        if (json && json.data) { applyFullGameState(json.data); alert("☁️ Pobrano postępy z Chmury Google!"); }
+        if (json && json.data) {
+          applyFullGameState(json.data);
+          if (!silent) alert("☁️ Pobrano postępy z Chmury Google!");
+        }
         if (btn) btn.innerText = "☁️ Zapisz";
       }
     } catch (e) { if (btn) btn.innerText = "☁️ Zapisz"; }
@@ -2685,7 +2739,7 @@ Pytanie: ${q}`;
   function exportSaveFile() {
     const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v22.json'; a.click();
+    a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v22.1.json'; a.click();
   }
 
   function importSaveFile(e) {
@@ -2733,11 +2787,10 @@ Pytanie: ${q}`;
     step();
   }
 
-  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp')) || 470;
   function addExp(pts) {
     const prevLvl = Math.floor(totalExp / 100) + 1;
     totalExp += pts;
-    localStorage.setItem('tymon_judo_exp', totalExp);
+    localStorage.setItem('tymon_judo_exp_v221', totalExp);
     const nextLvl = Math.floor(totalExp / 100) + 1;
     updateHud();
     if (nextLvl > prevLvl) { playSound('levelup'); launchConfetti(); alert(`🎉 PLUS ULTRA! TYMON WBIJA POZIOM ${nextLvl}!`); }
@@ -2777,8 +2830,6 @@ Pytanie: ${q}`;
   }
 
   window.onload = function() {
-    try { indexedDB.deleteDatabase('TymonFighterCardsDB_v19'); indexedDB.deleteDatabase('TymonFighterCardsDB_v20'); } catch (e) {}
-    checkIosStandaloneMode();
     updateHud();
     renderMasteryGoals();
     initHeroVfxEngine();
@@ -2790,6 +2841,10 @@ Pytanie: ${q}`;
     setJudoStance(currentStance);
     const heroImg = document.getElementById('fighterSprite');
     if (heroImg && heroImg.complete) initAppleTouchIconHD(heroImg);
+    // Automatyczne pobranie postępów z Chmury przy starcie aplikacji (jeśli adres Chmury jest zapisany)
+    if (localStorage.getItem('tymon_gas_cloud_url')) {
+      syncWithCloud('load', true);
+    }
   };
 </script>
 </body>
