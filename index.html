@@ -16,7 +16,7 @@
   <!-- Opcjonalny zewnętrzny plik konfiguracyjny dla klucza API (window.ENV_GEMINI_API_KEY) -->
   <script src="config.js" onerror="/* Klucz wczytywany bezpiecznie z localStorage */"></script>
 
-  <title>TYMON JUDO – KODOKAN & ZAWODY v24.0</title>
+  <title>TYMON JUDO – KODOKAN & ZAWODY v24.1</title>
   <style>
     :root {
       --bg: #050811; --card: #0f172a; --panel: #1e293b;
@@ -35,29 +35,24 @@
     .hud-title span { font-size: 0.64rem; color: var(--blue); font-weight: 700; display: block; }
     .lvl-pill { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; padding: 4px 10px; border-radius: 99px; font-weight: 900; font-size: 0.73rem; }
     .status-pill { background: var(--panel); border: 1px solid rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 99px; font-size: 0.67rem; font-weight: 800; cursor: pointer; }
-
     .container { max-width: 1140px; margin: 10px auto; padding: 0 10px; }
     .card { background: var(--card); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 13px; margin-bottom: 12px; }
     .card h2 { font-size: 0.94rem; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(305px, 1fr)); gap: 12px; }
-
     .stance-box { background: #131c33; border: 1.5px solid var(--gold); border-radius: 14px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
     .stance-btn { background: var(--panel); color: var(--dim); border: 1.5px solid rgba(255,255,255,0.2); padding: 7px 10px; border-radius: 10px; font-weight: 900; font-size: 0.73rem; cursor: pointer; }
     .stance-btn.active-h { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; border-color: var(--gold); }
     .stance-btn.active-m { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; border-color: var(--blue); }
     .stance-btn.active-t { background: linear-gradient(135deg, #059669, #10b981); color: #fff; border-color: #fff; }
-
     .hero-card { background: linear-gradient(135deg, #111827, #1e1b4b); border: 1.5px solid var(--gold); border-radius: 18px; padding: 12px; display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 12px; }
     @media (max-width: 720px) { .hero-card { grid-template-columns: 1fr; text-align: center; } }
-    .avatar-stage { position: relative; width: 175px; height: 215px; margin: 0 auto; border-radius: 14px; overflow: hidden; border: 2.5px solid var(--blue); background: #090d16; cursor: pointer; }
+    .avatar-stage { position: relative; width: 175px; height: 220px; margin: 0 auto; border-radius: 14px; overflow: hidden; border: 2.5px solid var(--blue); background: #090d16; cursor: pointer; box-shadow: 0 0 18px rgba(0,240,255,0.3); }
     #fighterSprite { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    .comic-nameplate { position: absolute; top: 6px; left: 4px; background: var(--gold); color: #000; font-weight: 900; font-size: 0.8rem; padding: 2px 9px; border-radius: 4px; z-index: 4; }
     .mastery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 7px; margin-top: 8px; }
     .mastery-card { background: rgba(9,13,22,0.85); border: 1px solid rgba(0,240,255,0.28); border-radius: 11px; padding: 8px; text-align: left; }
     .mastery-card h4 { font-size: 0.73rem; color: var(--gold); display: flex; justify-content: space-between; }
     .mastery-bar-bg { width: 100%; height: 7px; background: #050811; border-radius: 99px; overflow: hidden; margin: 4px 0; }
     .mastery-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.3s; }
-
     input, select, textarea { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.22); background: var(--panel); color: var(--txt); font-size: 0.82rem; margin-bottom: 7px; }
     .btn { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; border: none; padding: 8px 11px; border-radius: 10px; font-weight: 800; font-size: 0.77rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
     .btn:active { transform: scale(0.97); }
@@ -66,40 +61,33 @@
     .btn-gold { background: linear-gradient(135deg, #eab308, #f59e0b); color: #000; }
     .btn-purple { background: linear-gradient(135deg, #7e22ce, #a855f7); color: #fff; }
     .btn-ghost { background: var(--panel); border: 1px solid rgba(255,255,255,0.22); color: var(--txt); }
-
     .tech-pills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 7px; margin-top: 8px; max-height: 265px; overflow-y: auto; padding: 7px; background: #070b14; border-radius: 12px; border: 1px solid rgba(0,240,255,0.3); }
     .tech-pill-card { background: var(--panel); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .tech-pill-card.active { background: rgba(250,204,21,0.22); border: 2px solid var(--gold); }
     .tech-pill-top { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 900; }
     .tech-pill-name { font-size: 0.78rem; font-weight: 800; color: #fff; }
-
     .anatomy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 6px; margin: 8px 0; }
     .cam-btn { background: var(--panel); border: 1px solid rgba(0,240,255,0.35); color: var(--txt); padding: 8px 9px; border-radius: 9px; font-size: 0.74rem; font-weight: 800; cursor: pointer; text-align: left; }
     .cam-btn.active { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; border-color: #fff; }
-
     .step-simulator-card { background: #060a14; border: 2px solid var(--blue); border-radius: 14px; padding: 11px; margin: 10px 0; }
     .sim-svg-stage { width: 100%; max-width: 560px; margin: 0 auto; background: #091020; border: 2px solid var(--gold); border-radius: 10px; overflow: hidden; cursor: pointer; }
     .sim-controls-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
     @media (max-width: 600px) { .sim-controls-grid { grid-template-columns: repeat(2, 1fr); } }
-
     .station-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 9px; margin-top: 9px; }
     .station-card { background: #070b14; border: 1px solid rgba(255,255,255,0.16); border-top: 4px solid var(--gold); border-radius: 12px; padding: 11px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
     .station-card h4 { font-size: 0.83rem; color: var(--gold); }
     .station-card p { font-size: 0.78rem; color: var(--txt); white-space: pre-line; }
-
     .quest-item { background: #0b1120; border: 1px solid rgba(0,240,255,0.3); border-left: 5px solid var(--gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
     .plan-sub-task { background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 9px 11px; margin-top: 7px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .plan-sub-task.done { border-color: var(--green); opacity: 0.65; }
     .week-days-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 6px; margin-bottom: 10px; }
     .day-pill-btn { background: var(--panel); border: 1px solid rgba(255,255,255,0.18); color: var(--txt); padding: 8px; border-radius: 10px; font-size: 0.73rem; font-weight: 800; cursor: pointer; }
     .day-pill-btn.active { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; border-color: #fff; }
-
     nav.ios-bottom-dock { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,15,28,0.98); border-top: 1.5px solid rgba(250,204,21,0.35); padding: 6px 4px calc(6px + var(--safe-bottom)); display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; z-index: 2000; }
     nav.ios-bottom-dock button { background: transparent; border: none; color: var(--dim); padding: 5px 2px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
     nav.ios-bottom-dock button .dock-icon { font-size: 1.15rem; }
     nav.ios-bottom-dock button .dock-label { font-size: 0.6rem; font-weight: 800; white-space: nowrap; }
     nav.ios-bottom-dock button.active { color: var(--gold); background: rgba(250,204,21,0.16); }
-
     .tab-pane { display: none; scroll-margin-top: 65px; }
     .tab-pane.active { display: block; }
     .dojo-timer { font-size: 2.1rem; font-weight: 900; text-align: center; color: var(--gold); margin: 4px 0; font-variant-numeric: tabular-nums; }
@@ -118,7 +106,7 @@
   <div class="hud-brand" onclick="window.scrollTo({top:0, behavior:'smooth'})">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON JUDO – KODOKAN & ZAWODY v24.0</h1>
+      <h1>TYMON JUDO – KODOKAN & ZAWODY v24.1</h1>
       <span>100% Kodokan + Walka na Zawodach & Anty-Zielony Pas</span>
     </div>
   </div>
@@ -193,11 +181,10 @@
   </div>
 </div>
 
-<!-- KARTA BOHATERA TYMKA -->
+<!-- KARTA BOHATERA TYMKA (Czysta grafika bez nakładającego się podwójnego napisu TYMON!) -->
 <div class="container">
   <div class="hero-card">
     <div class="avatar-stage" onclick="playSound('levelup')">
-      <div class="comic-nameplate">TYMON</div>
       <img id="fighterSprite" src="tymon1.jpeg" crossorigin="anonymous" onload="initAppleTouchIconHD(this)" onerror="this.style.display='none'" alt="Tymon">
     </div>
     <div>
@@ -205,7 +192,7 @@
         <h2 style="font-size:0.92rem; color:#fff; margin:0;">🥋 TYMON – PAS ŻÓŁTY (5 KYU) ➔ CEL: 4.5 KYU & ZAWODY</h2>
         <div style="display:flex; gap:5px; flex-wrap:wrap;">
           <button class="btn btn-green" onclick="switchTabById('pane-tournament')">⚔️ Walka na Zawodach & Anty-Zielony Pas</button>
-          <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📅 Plan Tygodnia (<span id="planCounterTop">0</span>)</button>
+          <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📅 Plan Tygodnia (<span id="planCounterTop">3</span>)</button>
           <button class="btn btn-ghost" style="padding:6px 8px; font-size:0.71rem;" onclick="resetAllProgressToZero()">🔄 Reset 0 EXP</button>
         </div>
       </div>
@@ -216,9 +203,7 @@
 
 <div class="container" id="mainWorkspaceAnchor">
 
-  <!-- =========================================================================
-       ZAKŁADKA 1: 42 TECHNIKI KODOKAN (100% ZWERYFIKOWANA GEOMETRIA LUSTRZANA)
-       ========================================================================= -->
+  <!-- ZAKŁADKA 1: 42 TECHNIKI KODOKAN (100% ZWERYFIKOWANA GEOMETRIA LUSTRZANA) -->
   <div id="pane-kodokan" class="tab-pane active">
     <div class="card">
       <h2>
@@ -261,9 +246,7 @@
     <div id="kodokanMasterContainer" class="card"></div>
   </div>
 
-  <!-- =========================================================================
-       ZAKŁADKA 2 (NOWOŚĆ!): WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (3 KYU)
-       ========================================================================= -->
+  <!-- ZAKŁADKA 2: WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (3 KYU) -->
   <div id="pane-tournament" class="tab-pane">
     <div class="card" style="border:2px solid var(--green);">
       <h2>
@@ -283,9 +266,7 @@
     </div>
   </div>
 
-  <!-- =========================================================================
-       ZAKŁADKA 3: PLAN TYGODNIA KROK PO KROKU
-       ========================================================================= -->
+  <!-- ZAKŁADKA 3: PLAN TYGODNIA KROK PO KROKU -->
   <div id="pane-plan" class="tab-pane">
     <div class="card" style="border:2px solid var(--gold);">
       <h2>
@@ -337,9 +318,7 @@
     </div>
   </div>
 
-  <!-- =========================================================================
-       ZAKŁADKA 4: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO
-       ========================================================================= -->
+  <!-- ZAKŁADKA 4: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO -->
   <div id="pane-mobility" class="tab-pane">
     <div class="card">
       <h2>
@@ -350,9 +329,7 @@
     </div>
   </div>
 
-  <!-- =========================================================================
-       ZAKŁADKA 5: ANALIZA WIDEO AI (4 KLATKI + GEMINI 2.5 FLASH)
-       ========================================================================= -->
+  <!-- ZAKŁADKA 5: ANALIZA WIDEO AI (4 KLATKI + GEMINI 2.5 FLASH) -->
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
@@ -396,18 +373,16 @@
     </div>
   </div>
 
-  <!-- =========================================================================
-       ZAKŁADKA 6: KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW SPORTOWCA
-       ========================================================================= -->
+  <!-- ZAKŁADKA 6: KALKULATOR PALIWA MŁODEGO JUDOKI TYMKA -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>⚡ 6. Kalkulator Najpopularniejszych Produktów Sportowca</span>
+          <span>⚡ 6. Kalkulator Paliwa Młodego Judoki Tymka</span>
           <span style="font-size:0.73rem; color:var(--green);">Cel: 2100 kcal | 85g Białka</span>
         </h2>
         <label>🔍 Wyszukaj produkt:</label>
-        <input type="text" id="calcSearchInput" placeholder="Wpisz np. Skyr, banan, twaróg, kurczak, śledzie, owsianka..." oninput="initFoodSelect()">
+        <input type="text" id="calcSearchInput" placeholder="Wpisz np. Skyr, banan, twaróg, kurczak, ryba, owsianka..." oninput="initFoodSelect()">
         <label>1. Wybierz produkt z bazy:</label>
         <select id="calcFoodSelect" onchange="updateFoodPreview()"></select>
         <div class="grid-2" style="gap:8px;">
@@ -426,7 +401,7 @@
             <div id="calcPreviewBox" style="padding:10px; background:var(--panel); border:1px solid var(--gold); border-radius:10px; font-weight:800; font-size:0.81rem; color:var(--gold);"></div>
           </div>
         </div>
-        <button class="btn btn-green" style="width:100%; margin-top:4px; padding:10px;" onclick="addMealToLog()">➕ Dodaj do Dzisiejszego Bilansu (+15 EXP)</button>
+        <button class="btn btn-green" style="width:100%; margin-top:4px; padding:10px;" onclick="addMealToLog()">➕ Dodaj do Dzisiejszego Bilansu Tymka (+15 EXP)</button>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
         <h3>🤖 Zapytaj Asystenta Żywieniowego AI (Gemini 2.5 API)</h3>
@@ -437,7 +412,7 @@
         <div id="aiDietOutput" style="margin-top:7px; padding:9px; background:var(--panel); border-radius:8px; font-size:0.79rem; white-space:pre-wrap; display:none;"></div>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
-        <h3>➕ Dodaj własny produkt</h3>
+        <h3>➕ Dodaj własny produkt Tymka</h3>
         <div class="grid-2" style="gap:6px;">
           <input type="text" id="newFoodName" placeholder="Nazwa produktu">
           <input type="number" id="newFoodKcal" placeholder="Kcal / 100g">
@@ -449,7 +424,7 @@
       </div>
 
       <div class="card">
-        <h2><span>🔋 Dzisiejszy Bilans Mocy</span><button class="btn btn-ghost" style="padding:4px 8px; font-size:0.71rem;" onclick="resetMealLog()">🔄 Wyczyść dzień</button></h2>
+        <h2><span>🔋 Dzisiejszy Bilans Mocy Tymona</span><button class="btn btn-ghost" style="padding:4px 8px; font-size:0.71rem;" onclick="resetMealLog()">🔄 Wyczyść dzień</button></h2>
         <div style="margin-bottom:9px;">
           <div style="display:flex; justify-content:space-between; font-size:0.79rem;">
             <span>⚡ Kalorie (Cel: <strong id="goalKcal">2100</strong> kcal | Pozostało: <strong id="remKcal" style="color:var(--gold);">2100</strong> kcal)</span>
@@ -458,11 +433,11 @@
           <div class="macro-bar-bg"><div id="barKcal" class="macro-bar-fill" style="width:0%"></div></div>
         </div>
         <div style="margin-bottom:9px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>💪 Białko</span><span><strong id="sumP">0</strong> / 85 g</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>💪 Białko (Siła chwytu Kumi-kata i mięśni)</span><span><strong id="sumP">0</strong> / 85 g</span></div>
           <div class="macro-bar-bg"><div id="barP" class="macro-bar-fill" style="width:0%; background:var(--blue);"></div></div>
         </div>
         <div style="margin-bottom:9px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>🚀 Węglowodany</span><span><strong id="sumC">0</strong> / 285 g</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>🚀 Węglowodany (Energia na matę i Randori)</span><span><strong id="sumC">0</strong> / 285 g</span></div>
           <div class="macro-bar-bg"><div id="barC" class="macro-bar-fill" style="width:0%; background:var(--gold);"></div></div>
         </div>
         <div style="margin-bottom:10px;">
@@ -577,11 +552,11 @@
    * 1. PRZEŁĄCZNIK 3 TRYBÓW WALKI TYMKA:
    *    1. LEWA (Hidari) | 2. PRAWA (Migi) | 3. BOKIEM / 1 RĘKA (Styl z Zawodów!)
    *************************************************************************/
-  let currentStance = localStorage.getItem('tymon_stance_v240') || 'hidari';
+  let currentStance = localStorage.getItem('tymon_stance_v241') || 'hidari';
 
   function setJudoStance(side) {
     currentStance = side;
-    localStorage.setItem('tymon_stance_v240', side);
+    localStorage.setItem('tymon_stance_v241', side);
     document.getElementById('btnStanceHidari').className = side === 'hidari' ? 'stance-btn active-h' : 'stance-btn';
     document.getElementById('btnStanceMigi').className = side === 'migi' ? 'stance-btn active-m' : 'stance-btn';
     document.getElementById('btnStanceTourney').className = side === 'tourney' ? 'stance-btn active-t' : 'stance-btn';
@@ -606,8 +581,8 @@
   /*************************************************************************
    * 2. ZWERYFIKOWANY BOISKOWY SYMULATOR SVG Z LOTU PTAKA (6 BIOMECHANIK)
    *    Perspektywa Lustrzana:
-   *    - Po LEWEJ stronie ekranu (x=155): PRAWA STOPA RYWALA (naprzeciwko Lewej nogi Tymka!)
-   *    - Po PRAWEJ stronie ekranu (x=325): LEWA STOPA RYWALA (naprzeciwko Prawej nogi Tymka!)
+   *    - Po LEWEJ stronie ekranu (x=168): PRAWA STOPA RYWALA (naprzeciwko Lewej nogi Tymka!)
+   *    - Po PRAWEJ stronie ekranu (x=312): LEWA STOPA RYWALA (naprzeciwko Prawej nogi Tymka!)
    *************************************************************************/
   let currentSimStep = 1;
 
@@ -615,10 +590,8 @@
     const isRight = currentStance === 'migi';
     let svgContent = '', stepTitle = '', stepDesc = '';
 
-    // 1. OSOTO (Wykrok NA ZEWNĄTRZ obok atakowanej nogi rywala – 100% poprawna geometria!)
     if (mechType === 'osoto') {
       if (!isRight) {
-        // LEWE O-SOTO-GARI TYMKA (Tymek wycina swoją LEWĄ nogą -> PRAWĄ nogę rywala po lewej stronie ekranu!)
         const titles = [
           "KROK 1/4 (Start): Naprzeciwko Twojej LEWEJ nogi stoi PRAWA noga rywala (po lewej stronie planszy!)",
           "KROK 2/4 (Krok Podporowy): Postaw PRAWĄ stopę na zewnątrz obok PRAWEJ stopy rywala (po lewej stronie!)",
@@ -626,42 +599,22 @@
           "KROK 4/4 (Cięcie Kake): Wytnij swoją LEWĄ nogą PRAWĄ nogę rywala ostro w tył jak wahadło!"
         ];
         const descs = [
-          "Spójrz na planszę: Ty (Tymek) stoisz na dole. Po Twojej LEWEJ ręce znajduje się PRAWA noga rywala (UKE PRAWA). W O-soto-gari NIE wchodzisz w trójkąt między stopy!",
+          "Spójrz na planszę: Ty (Tymek) stoisz na dole. Po Twojej LEWEJ ręce znajduje się PRAWA noga rywala (PRAWA RYWALA). W O-soto-gari NIE wchodzisz w trójkąt między stopy!",
           "Zrób głęboki krok swoją PRAWĄ nogą podporową po skosie w lewo – postaw ją NA ZEWNĄTRZ obok PRAWEJ stopy rywala! Twoja klatka piersiowa klei się do prawego barku rywala.",
           "PRAWĄ ręką ściągnij rękaw do swojego brzucha, a LEWĄ ręką na kołnierzu wbij bark rywala w dół-tył na jego prawą piętę. Jednocześnie przenieś swoją LEWĄ nogę przodem za jego prawe udo!",
           "Machnij swoją LEWĄ nogą ostro w tył (zadzierając palce stopy w dół), wycinając PRAWĄ nogę rywala, a głową i klatką jedź mocno w przód!"
         ];
         stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
         svgContent = `
-          <!-- Stopy Rywala (Lustro: po lewej stronie ekranu jest PRAWA stopa Uke!) -->
-          <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-          <text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
-          <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-          <text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
-
-          <!-- Stopy Startowe Tymka (Widoczne wyraźnie w Kroku 1!) -->
-          <circle cx="195" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/>
-          <text x="195" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
-          <circle cx="285" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/>
-          <text x="285" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
-
-          <!-- Krok 2+: Prawa stopa Tymka idzie na zewnątrz obok PRAWEJ stopy rywala (x=82) -->
-          ${stepNum >= 2 ? `
-            <path d="M 285 165 Q 160 140 85 95" fill="none" stroke="#facc15" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrGold)"/>
-            <rect x="48" y="65" width="74" height="32" rx="10" fill="#eab308" stroke="#fff" stroke-width="2.5"/>
-            <text x="85" y="85" fill="#000" font-size="9" font-weight="900" text-anchor="middle">1.PRAWA OBOK!</text>
-          ` : ''}
-          ${stepNum >= 3 ? `
-            <path d="M 168 65 L 140 28" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/>
-            <text x="165" y="22" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 WBIJ NA PRAWĄ PIĘTĘ!</text>
-          ` : ''}
-          ${stepNum === 4 ? `
-            <path d="M 168 42 L 168 150" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/>
-            <text x="240" y="142" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 LEWA NOGA WYCINA PRAWĄ NOGĘ RYWALA!</text>
-          ` : ''}
+          <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+          <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+          <circle cx="195" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="195" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
+          <circle cx="285" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="285" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
+          ${stepNum >= 2 ? `<path d="M 285 165 Q 160 140 85 95" fill="none" stroke="#facc15" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrGold)"/><rect x="48" y="65" width="74" height="32" rx="10" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="85" y="85" fill="#000" font-size="9" font-weight="900" text-anchor="middle">1.PRAWA OBOK!</text>` : ''}
+          ${stepNum >= 3 ? `<path d="M 168 65 L 140 28" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/><text x="165" y="22" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 WBIJ NA PRAWĄ PIĘTĘ!</text>` : ''}
+          ${stepNum === 4 ? `<path d="M 168 42 L 168 150" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="142" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 LEWA NOGA WYCINA PRAWĄ NOGĘ RYWALA!</text>` : ''}
         `;
       } else {
-        // PRAWE O-SOTO-GARI TYMKA (Tymek wycina swoją PRAWĄ nogą -> LEWĄ nogę rywala po prawej stronie ekranu!)
         stepTitle = `KROK ${stepNum}/4 (Prawe O-soto-gari): LEWA stopa staje na zewnątrz obok LEWEJ stopy rywala, a PRAWA noga wycina!`;
         stepDesc = "W prawym O-soto-gari stawiasz swoją LEWĄ stopę na zewnątrz obok LEWEJ stopy rywala (po prawej stronie planszy), ściągasz rękaw do brzucha i wycinasz swoją PRAWĄ nogą LEWĄ nogę rywala!";
         svgContent = `
@@ -673,9 +626,7 @@
           ${stepNum >= 3 ? `<path d="M 312 42 L 312 150" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="142" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 PRAWA NOGA WYCINA LEWĄ NOGĘ RYWALA!</text>` : ''}
         `;
       }
-    }
-    // 2. OUCHI (Duże wewnętrzne podcięcie po półkolu: Lewa noga Tymka wycina PRAWĄ nogę rywala!)
-    else if (mechType === 'ouchi') {
+    } else if (mechType === 'ouchi') {
       const titles = [
         "KROK 1/4 (Start): Stoisz przed stopami rywala – w O-uchi-gari wchodzisz przodem między jego nogi",
         "KROK 2/4 (Krok Dostawny Tsugi-ashi): Tylna stopa podjeżdża blisko za przednią piętę (nie krzyżuj nóg!)",
@@ -697,12 +648,10 @@
         ${stepNum >= 3 ? `<path d="M 240 65 L 240 25" fill="none" stroke="#f97316" stroke-width="5" marker-end="url(#arrOrange)"/><text x="240" y="20" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 WCIŚNIJ RYWALA W DÓŁ-TYŁ NA PIĘTY!</text>` : ''}
         ${stepNum === 4 ? `<path d="${!isRight ? 'M 240 125 Q 235 65 135 85' : 'M 240 125 Q 245 65 345 85'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="222" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 PÓŁKOLE ${!isRight ? 'LEWĄ NOGĄ ZA PRAWĄ RYWALA' : 'PRAWĄ NOGĄ ZA LEWĄ RYWALA'}!</text>` : ''}
       `;
-    }
-    // 3. SWEEP & KOUCHI (Wycięcia podeszwą stopy: De-ashi-barai, Kouchi-gari, Sasae, Hiza-guruma)
-    else if (mechType === 'sweep') {
+    } else if (mechType === 'sweep') {
       stepTitle = `KROK ${stepNum}/4 (Praca Podeszwą Stopy + Kierownica Rąk): Najpierw dociąż stopę rękoma, potem zamieć podeszwą!`;
       stepDesc = !isRight
-        ? "Zasada Lustra: Twoja LEWA stopa skręca się bokiem (jak łyżwa/miotła) i atakuje PRAWĄ nogę rywala (w De-ashi-barai, Sasae i Hiza-guruma) lub skręcona w łyżeczkę wycina od środka piętę w Kouchi-gari!"
+        ? "Zasada Lustra: Twoja LEWA stopa skręca się bokiem (jak łyżwa/miotła) i atakuje PRAWĄ nogę rywala (w De-ashi-barai, Sasae i Hiza-guruma) lub skręcona w łyżeczkę wycina od środka piętę LEWEJ nogi rywala w Kouchi-gari!"
         : "Twoja PRAWA stopa skręca się bokiem i podeszwą atakuje LEWĄ kostkę/kolano rywala po wcześniejszym wciśnięciu rękawa w dół!";
       svgContent = `
         <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
@@ -712,9 +661,7 @@
         ${stepNum >= 2 ? `<path d="M 185 42 Q 240 22 295 48" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/><text x="240" y="22" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 1. KIEROWNICA RĄK (RĘKAW W DÓŁ)!</text>` : ''}
         ${stepNum >= 3 ? `<path d="${!isRight ? 'M 195 165 Q 130 125 168 97' : 'M 285 165 Q 350 125 312 97'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="222" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 2. PODESZWA STOPY ZAMIATA PO MACIE!</text>` : ''}
       `;
-    }
-    // 4. ROT1 (Rzuty obrotowe na 1 nodze podporowej: Uchi-mata, Harai-goshi, Hane-goshi, Ashi-guruma)
-    else if (mechType === 'rot1') {
+    } else if (mechType === 'rot1') {
       const titles = [
         "KROK 1/4 (Trójkąt przed Stopami Rywala): Stopy rywala tworzą podstawę trójkąta (▲), Ty stoisz na dole",
         !isRight ? "KROK 2/4 (Czubek + Zegarek): LEWA stopa w czubek trójkąta + PRAWA ręka ciągnie rękaw do PRAWEGO ucha!" : "KROK 2/4: PRAWA stopa w czubek trójkąta + LEWA ręka ciągnie rękaw do LEWEGO ucha!",
@@ -735,9 +682,7 @@
         ${stepNum >= 3 ? `<circle cx="${!isRight ? 265 : 215}" cy="148" r="21" fill="#10b981" stroke="#facc15" stroke-width="2.5"/><text x="${!isRight ? 265 : 215}" y="152" fill="#000" font-size="9" font-weight="900" text-anchor="middle">2.OŚ</text>` : ''}
         ${stepNum === 4 ? `<path d="M 240 175 L 240 42" fill="none" stroke="#a855f7" stroke-width="6" marker-end="url(#arrPurple)"/><text x="240" y="226" fill="#a855f7" font-size="10.5" font-weight="900" text-anchor="middle">🚀 GŁOWA DO KOLANA = NOGA W SUFIT!</text>` : ''}
       `;
-    }
-    // 5. ROT2 (Rzuty obrotowe na 2 ugiętych nogach: Seoi-nage, O-goshi, Tai-otoshi, Sode)
-    else if (mechType === 'rot2') {
+    } else if (mechType === 'rot2') {
       stepTitle = `KROK ${stepNum}/4 (Wejście Obrotowe na 2 Ugięte Nogi): Wskok w trójkąt (▲) poniżej pasa rywala + wyprost kolan!`;
       stepDesc = "1. Wyrwij rękaw wysoko w górę (otwierasz pachy rywala!) ➔ 2. Wkręć łokieć głęboko pod pachę (lub obejmij pas w O-goshi) ➔ 3. Wskocz na DWA mocno ugięte kolana (w Tai-otoshi wystaw nogę szeroko na palcach przed kostką rywala!) ➔ 4. Wyprostuj kolana ze skłonem!";
       svgContent = `
@@ -749,9 +694,7 @@
         <path d="M 240 120 L 240 205" fill="none" stroke="#10b981" stroke-width="5.5" marker-end="url(#arrGreen)"/>
         <text x="240" y="225" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 PRZYSIAD NA 2 NOGACH ➔ WYPROST KOLAN!</text>
       `;
-    }
-    // 6. NEWAZA (Parter – 100% na dywanie z poduszką, ZERO gum i ZERO trójkątów stójkowych!)
-    else {
+    } else {
       stepTitle = `KROK ${stepNum}/4 (Parter Ne-waza na Dywanie): 1. Szeroka Baza & Uniesienie Łokcia 5 cm ⇄ 2. Most Upa & Krewetka Ebi!`;
       stepDesc = "W parterze ćwiczymy na dywanie z poduszką. Z góry: unieś łokieć rywala o 5 cm nad matę i chodź stopami jak pająk. Z dołu: wbij pięty pod pośladki, zrób Most (Upa) przez bark, ucieknij biodrami w Krewetkę (Ebi) i wsuń kolano pod brzuch!";
       svgContent = `
@@ -938,7 +881,7 @@
       "TANI-OTOSHI / USHIRO-GOSHI: Zejdź na bok za plecy obróconego rywala i rzuć go w tył!"),
     T("t6_ogoshi", 6, "koshi", 1, "O-goshi (Duży rzut biodrowy z głębokim przysiadem i windą nóg)", "O-goshi Kodokan Judo", "rot2",
       "1. Wskocz w trójkąt (▲) z obrotem o 180° W PRAWO na DWA mocno ugięte kolana (biodra niżej niż pas rywala!) ➔ 2. Wypchnij lewe biodro w bok ➔ 3. Wyprostuj oba kolana jak winda ze skłonem!",
-      "Obrót o 180° W LEWO na dwa ugięte kolana, wystawienie prawego biodra i wyprost nóg!",
+      "Obrót o 180° W LEWO na dwa ugięte kolanach, wystawienie prawego biodra i wyprost nóg!",
       "Wyciągnij rękaw wysoko w przód-górę, ładując brzuch rywala na swoje plecy.",
       "Jedna dłoń na rękawie, druga wchodzi pod pachę i obejmuje pas rywala.",
       "Na zawodach: gdy wyższy pas sięga ręką wysoko nad Twoim barkiem po Twój kark – zanurkuj pod jego uniesioną rękę, obejmij go w pasie i wyrzuć przez O-goshi!",
@@ -1180,7 +1123,7 @@
       "Zejdź bardzo nisko na ugiętych kolanach (Jigotai) z boku rywala i wybij się z nóg w górę!",
       "Niski przysiad obronny z boku i wybicie biodrem w górę.",
       "Zatrzymaj obrót rywala swoim biodrem i wynieś go z ugiętych kolan w górę-tył!",
-      "Jedna ręka kontroluje rękaw/kołnierz, a druga obejmuje z boku biodra wchodzącego rywala (UWAGA: na zawodach łap za PAS/BIODRA powyżej linii spodni, bo chwyt bezpośrednio za nogawke spodni w stójce jest zakazany!).",
+      "Jedna ręka kontroluje rękaw/kołnierz, a druga obejmuje z boku biodra wchodzącego rywala (UWAGA: na zawodach łap za PAS/BIODRA powyżej linii spodni, bo chwyt bezpośrednio za nogawkę spodni w stójce jest zakazany!).",
       "🏆 PRZEPISY IJF NA ZAWODACH: Pamiętaj, aby na zawodach obejmować ręką PAS i BIODRO rywala (nie łap dłonią poniżej pasa za spodnie!), wynieś go brzuchem i rzuć!",
       "Nie wchodź w rzuty obrotowe z daleka na prostych nogach!",
       "Najgroźniejsza kontra na słabe wejście w Uchi-matę, Harai-goshi lub O-goshi!"),
@@ -1235,6 +1178,9 @@
       "Obniżenie bioder i blok dłonią w pas!",
       "UTSURI-GOSHI / USHIRO-GOSHI: Wynieś zablokowanego rywala biodrem w górę i rzuć!")
   ];
+
+  // === KONIEC CZĘŚCI 1 Z 2 (Tutaj wklej Część 2 z następnej wiadomości!) ===
+  // === POCZĄTEK CZĘŚCI 2 Z 2 (Wklej bezpośrednio pod Częścią 1!) ===
 
   let filteredTechList = [];
   let selectedTechIdx = 0;
@@ -1361,7 +1307,7 @@
   }
 
   /*************************************************************************
-   * 4. NOWY DZIAŁ: WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (12 SCENARIUSZY)
+   * 4. DZIAŁ TURNIEJOWY: WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (12 SCENARIUSZY)
    *************************************************************************/
   const TOURNAMENT_TACTICS_DB = [
     {
@@ -1448,7 +1394,7 @@
   }
 
   /*************************************************************************
-   * 5. PLAN TYGODNIA KROK PO KROKU
+   * 5. PLAN TYGODNIA KROK PO KROKU (Z AUTOMATYCZNĄ ODBUDOWĄ GDY CHMURA ZWRÓCI 0)
    *************************************************************************/
   const WEEKLY_KUMIKATA_SCHEDULE = {
     1: {
@@ -1504,9 +1450,7 @@
 
   let activePlanDay = new Date().getDay();
 
-  function getWeeklyStateMap() {
-    const raw = localStorage.getItem('tymon_weekly_plan_v240');
-    if (raw) { try { return JSON.parse(raw); } catch (e) {} }
+  function buildDefaultWeeklyMap() {
     const initMap = {};
     [1, 2, 3, 4, 5, 6, 0].forEach(d => {
       initMap[d] = {
@@ -1514,12 +1458,28 @@
         items: WEEKLY_KUMIKATA_SCHEDULE[d].defaultTechIds.map(id => ({ techId: id, doneDry: false, doneBands: false, doneFloor: false }))
       };
     });
-    localStorage.setItem('tymon_weekly_plan_v240', JSON.stringify(initMap));
     return initMap;
   }
 
+  function getWeeklyStateMap() {
+    const raw = localStorage.getItem('tymon_weekly_plan_v241');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        let valid = true;
+        [1, 2, 3, 4, 5, 6, 0].forEach(d => {
+          if (!parsed[d] || !Array.isArray(parsed[d].items) || parsed[d].items.length === 0) valid = false;
+        });
+        if (valid) return parsed;
+      } catch (e) {}
+    }
+    const fresh = buildDefaultWeeklyMap();
+    localStorage.setItem('tymon_weekly_plan_v241', JSON.stringify(fresh));
+    return fresh;
+  }
+
   function saveWeeklyStateMap(map) {
-    localStorage.setItem('tymon_weekly_plan_v240', JSON.stringify(map));
+    localStorage.setItem('tymon_weekly_plan_v241', JSON.stringify(map));
     const curList = (map[activePlanDay] && map[activePlanDay].items) ? map[activePlanDay].items : [];
     document.getElementById('planCounterTop').innerText = curList.length;
     autoSyncCloudSilent();
@@ -1800,7 +1760,7 @@
   }
 
   /*************************************************************************
-   * 8. PASKI MASTER (START OD 0%) + KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW
+   * 8. PASKI MASTER (START OD 0%) + KALKULATOR PALIWA MŁODEGO JUDOKI TYMKA
    *************************************************************************/
   function getCleanMasteryGoals() {
     return [
@@ -1812,23 +1772,24 @@
     ];
   }
 
-  if (!localStorage.getItem('tymon_clean_init_v221')) {
-    localStorage.setItem('tymon_judo_exp_v221', '0');
-    localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(getCleanMasteryGoals()));
-    localStorage.setItem('tymon_clean_init_v221', 'true');
+  if (!localStorage.getItem('tymon_clean_init_v241')) {
+    localStorage.setItem('tymon_judo_exp_v241', '0');
+    localStorage.setItem('tymon_mastery_goals_v241', JSON.stringify(getCleanMasteryGoals()));
+    localStorage.setItem('tymon_clean_init_v241', 'true');
   }
 
-  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp_v221'));
+  let totalExp = parseInt(localStorage.getItem('tymon_judo_exp_v241'));
   if (isNaN(totalExp) || totalExp < 0) totalExp = 0;
-  let masteryGoals = JSON.parse(localStorage.getItem('tymon_mastery_goals_v221')) || getCleanMasteryGoals();
+  let masteryGoals = JSON.parse(localStorage.getItem('tymon_mastery_goals_v241')) || getCleanMasteryGoals();
 
   function resetAllProgressToZero() {
-    if (!confirm("Czy na pewno chcesz wyzerować punkty Tymona do LVL 1 (0 EXP) i ustawić paski Mastera na 0%?")) return;
+    if (!confirm("Czy na pewno chcesz wyzerować punkty Tymona do LVL 1 (0 EXP), ustawić paski Mastera na 0% i przywrócić pełny Plan Tygodnia?")) return;
     totalExp = 0;
-    localStorage.setItem('tymon_judo_exp_v221', '0');
+    localStorage.setItem('tymon_judo_exp_v241', '0');
     masteryGoals = getCleanMasteryGoals();
-    localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
-    localStorage.removeItem('tymon_weekly_plan_v240');
+    localStorage.setItem('tymon_mastery_goals_v241', JSON.stringify(masteryGoals));
+    const freshPlan = buildDefaultWeeklyMap();
+    localStorage.setItem('tymon_weekly_plan_v241', JSON.stringify(freshPlan));
     mealLog = [];
     localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
     updateHud(); renderMasteryGoals(); renderWeeklyPlanView(); renderMealLog();
@@ -1857,7 +1818,7 @@
     const g = masteryGoals.find(x => x.id === goalId) || masteryGoals[0];
     if (g) {
       g.current = Math.min(g.target, g.current + amount);
-      localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
+      localStorage.setItem('tymon_mastery_goals_v241', JSON.stringify(masteryGoals));
       renderMasteryGoals(); addExp(35); autoSyncCloudSilent();
     }
   }
@@ -1872,16 +1833,16 @@
     { name: "🍎 Mus owocowy 100% w tubce (Szybki glikogen między walkami)", kcal: 55, p: 0.5, c: 12.5, f: 0.2 },
     { name: "🧀 Twaróg chudy (Kostka kazeinowa na odbudowę mięśni – 18g B)", kcal: 86, p: 18.0, c: 3.5, f: 0.5 },
     { name: "🍗 Pierś z kurczaka pieczona/gotowana (Czyste białko – 21.5g B)", kcal: 99, p: 21.5, c: 0.0, f: 1.3 },
-    { name: "🍚 Kurczak z ryżem i warzywami (Pełny obiad potreningowy)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
+    { name: "🍚 Kurczak z ryżem i warzywami (Pełny obiad potreningowy Judoki)", kcal: 145, p: 16.5, c: 18.0, f: 1.2 },
     { name: "🥚 Jajka całe / Jajecznica (Siła chwytu Kumi-kata i aminokwasy)", kcal: 143, p: 12.5, c: 0.7, f: 9.7 },
     { name: "🌾 Płatki owsiane górskie (Owsianka Mistrza – energia długofalowa)", kcal: 366, p: 11.9, c: 62.0, f: 7.2 },
     { name: "🥞 Naleśniki białkowe z twarogiem (Doładowanie po szkole)", kcal: 215, p: 13.5, c: 26.0, f: 5.5 },
-    { name: "🐟 Śledzie w oleju odsączone / Łosoś (Omega-3 na stawy i koncentrację)", kcal: 240, p: 16.5, c: 0.5, f: 19.0 },
-    { name: "🥔 Ziemniaki gotowane / pieczone (Węglowodany o wysokim indeksie sytości)", kcal: 77, p: 1.9, c: 17.5, f: 0.1 },
+    { name: "🐟 Łosoś pieczony / Ryba morska (Omega-3 na stawy i koncentrację)", kcal: 208, p: 20.4, c: 0.0, f: 13.4 },
+    { name: "🥔 Ziemniaki gotowane / pieczone (Lekkostrawne węglowodany)", kcal: 77, p: 1.9, c: 17.5, f: 0.1 },
     { name: "🍯 Domowy Izotonik Judoki (Woda + miód + cytryna + szczypta soli)", kcal: 35, p: 0.1, c: 8.8, f: 0.0 }
   ];
 
-  let foods = JSON.parse(localStorage.getItem('tymon_foods_v221')) || POPULAR_FUNCTIONAL_FOODS_DB;
+  let foods = JSON.parse(localStorage.getItem('tymon_foods_v241')) || POPULAR_FUNCTIONAL_FOODS_DB;
   let mealLog = JSON.parse(localStorage.getItem('tymon_only_meals')) || [];
   const TYMON_GOAL = { kcal: 2100, p: 85, c: 285, f: 65 };
 
@@ -1936,7 +1897,7 @@
     const f = parseFloat(document.getElementById('newFoodF').value) || 0;
     if (!name || isNaN(kcal) || kcal < 0) return;
     foods.push({ name: "⭐ " + name, kcal, p, c, f });
-    localStorage.setItem('tymon_foods_v221', JSON.stringify(foods));
+    localStorage.setItem('tymon_foods_v241', JSON.stringify(foods));
     document.getElementById('newFoodName').value = '';
     initFoodSelect();
   }
@@ -1968,11 +1929,11 @@
     const q = document.getElementById('aiDietInput').value.trim();
     const out = document.getElementById('aiDietOutput');
     if (!q) return;
-    out.style.display = 'block'; out.innerText = "⏳ AI analizuje zapytanie żywieniowe...";
+    out.style.display = 'block'; out.innerText = "⏳ AI analizuje zapytanie żywieniowe dla Tymona...";
     const apiKey = getSafeGeminiApiKey();
     if (!apiKey) { out.innerText = "ℹ️ Dodaj klucz Gemini API w ⚙️ na górze, aby połączyć z AI Senseiem."; return; }
     try {
-      const res = await callGeminiWithFallback([{ text: `Jesteś dietetykiem sportowym zawodnika Judo. Odpowiedz konkretnie po polsku: ${q}` }], apiKey);
+      const res = await callGeminiWithFallback([{ text: `Jesteś dietetykiem sportowym 11-letniego zawodnika Judo Tymona (cel 2100 kcal, 85g białka). Odpowiedz konkretnie po polsku: ${q}` }], apiKey);
       out.innerText = res.text; addExp(15);
     } catch (e) { out.innerText = "❌ Błąd: " + e.message; }
   }
@@ -2071,10 +2032,22 @@
 
   function applyFullGameState(state) {
     if (!state) return;
-    if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp_v221', totalExp); }
+    if (typeof state.exp === 'number') { totalExp = state.exp; localStorage.setItem('tymon_judo_exp_v241', totalExp); }
     if (state.stance) setJudoStance(state.stance);
-    if (Array.isArray(state.masteryGoals)) { masteryGoals = state.masteryGoals; localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals)); }
-    if (state.weeklyPlan) saveWeeklyStateMap(state.weeklyPlan);
+    if (Array.isArray(state.masteryGoals) && state.masteryGoals.length) {
+      masteryGoals = state.masteryGoals;
+      localStorage.setItem('tymon_mastery_goals_v241', JSON.stringify(masteryGoals));
+    }
+    // Strażnik Planu Tygodnia: jeśli w Chmurze był stary/pusty plan (0), automatycznie uzupełnia domyślne techniki!
+    if (state.weeklyPlan) {
+      const defMap = buildDefaultWeeklyMap();
+      [1, 2, 3, 4, 5, 6, 0].forEach(d => {
+        if (!state.weeklyPlan[d] || !Array.isArray(state.weeklyPlan[d].items) || state.weeklyPlan[d].items.length === 0) {
+          state.weeklyPlan[d] = defMap[d];
+        }
+      });
+      saveWeeklyStateMap(state.weeklyPlan);
+    }
     if (Array.isArray(state.mealLog)) { mealLog = state.mealLog; localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog)); }
     updateHud(); renderMasteryGoals(); populateKodokanTechList(); renderWeeklyPlanView(); renderMealLog();
   }
@@ -2106,7 +2079,7 @@
 
   function exportSaveFile() {
     const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v24.json'; a.click();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v24.1.json'; a.click();
   }
 
   function importSaveFile(e) {
@@ -2134,7 +2107,7 @@
   function addExp(pts) {
     const prevLvl = Math.floor(totalExp / 100) + 1;
     totalExp += pts;
-    localStorage.setItem('tymon_judo_exp_v221', totalExp);
+    localStorage.setItem('tymon_judo_exp_v241', totalExp);
     const nextLvl = Math.floor(totalExp / 100) + 1;
     updateHud();
     if (nextLvl > prevLvl) { playSound('levelup'); alert(`🎉 BRAWO TYMON! WBIJASZ POZIOM ${nextLvl}!`); }
