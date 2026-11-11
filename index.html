@@ -14,9 +14,9 @@
   <link id="standardFavicon" rel="icon" type="image/jpeg" href="tymon1.jpeg">
 
   <!-- Opcjonalny zewnętrzny plik konfiguracyjny dla klucza API (window.ENV_GEMINI_API_KEY) -->
-  <script src="config.js" onerror="/* Klucz pobierany bezpiecznie z localStorage */"></script>
+  <script src="config.js" onerror="/* Klucz wczytywany bezpiecznie z localStorage */"></script>
 
-  <title>TYMON JUDO – KODOKAN DOJO v23.0</title>
+  <title>TYMON JUDO – KODOKAN & ZAWODY v24.0</title>
   <style>
     :root {
       --bg: #050811; --card: #0f172a; --panel: #1e293b;
@@ -27,38 +27,39 @@
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    html, body { width: 100%; max-width: 100vw; overflow-x: hidden; background: var(--bg); color: var(--txt); line-height: 1.45; padding-top: var(--safe-top); padding-bottom: calc(92px + var(--safe-bottom)); }
-    header.game-hud { background: rgba(9,13,22,0.95); border-bottom: 1.5px solid rgba(250,204,21,0.4); padding: 9px 12px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+    html, body { width: 100%; max-width: 100vw; overflow-x: hidden; background: var(--bg); color: var(--txt); line-height: 1.45; padding-top: var(--safe-top); padding-bottom: calc(94px + var(--safe-bottom)); }
+    header.game-hud { background: rgba(9,13,22,0.96); border-bottom: 1.5px solid rgba(250,204,21,0.4); padding: 8px 12px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
     .hud-brand { display: flex; align-items: center; gap: 8px; cursor: pointer; }
     .kodokan-crest { width: 34px; height: 34px; border-radius: 9px; background: var(--gold); border: 2px solid var(--red); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; font-size: 16px; }
-    .hud-title h1 { font-size: 0.9rem; font-weight: 900; color: var(--gold); }
-    .hud-title span { font-size: 0.65rem; color: var(--blue); font-weight: 700; display: block; }
-    .lvl-pill { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; padding: 4px 10px; border-radius: 99px; font-weight: 900; font-size: 0.74rem; }
-    .status-pill { background: var(--panel); border: 1px solid rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 99px; font-size: 0.68rem; font-weight: 800; cursor: pointer; }
+    .hud-title h1 { font-size: 0.88rem; font-weight: 900; color: var(--gold); }
+    .hud-title span { font-size: 0.64rem; color: var(--blue); font-weight: 700; display: block; }
+    .lvl-pill { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; padding: 4px 10px; border-radius: 99px; font-weight: 900; font-size: 0.73rem; }
+    .status-pill { background: var(--panel); border: 1px solid rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 99px; font-size: 0.67rem; font-weight: 800; cursor: pointer; }
 
     .container { max-width: 1140px; margin: 10px auto; padding: 0 10px; }
     .card { background: var(--card); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 13px; margin-bottom: 12px; }
-    .card h2 { font-size: 0.95rem; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .card h2 { font-size: 0.94rem; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(305px, 1fr)); gap: 12px; }
 
     .stance-box { background: #131c33; border: 1.5px solid var(--gold); border-radius: 14px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .stance-btn { background: var(--panel); color: var(--dim); border: 1.5px solid rgba(255,255,255,0.2); padding: 7px 11px; border-radius: 10px; font-weight: 900; font-size: 0.75rem; cursor: pointer; }
+    .stance-btn { background: var(--panel); color: var(--dim); border: 1.5px solid rgba(255,255,255,0.2); padding: 7px 10px; border-radius: 10px; font-weight: 900; font-size: 0.73rem; cursor: pointer; }
     .stance-btn.active-h { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; border-color: var(--gold); }
     .stance-btn.active-m { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; border-color: var(--blue); }
+    .stance-btn.active-t { background: linear-gradient(135deg, #059669, #10b981); color: #fff; border-color: #fff; }
 
-    .hero-card { background: linear-gradient(135deg, #111827, #1e1b4b); border: 1.5px solid var(--gold); border-radius: 18px; padding: 12px; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 12px; }
+    .hero-card { background: linear-gradient(135deg, #111827, #1e1b4b); border: 1.5px solid var(--gold); border-radius: 18px; padding: 12px; display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 12px; }
     @media (max-width: 720px) { .hero-card { grid-template-columns: 1fr; text-align: center; } }
-    .avatar-stage { position: relative; width: 185px; height: 225px; margin: 0 auto; border-radius: 14px; overflow: hidden; border: 2.5px solid var(--blue); background: #090d16; cursor: pointer; }
+    .avatar-stage { position: relative; width: 175px; height: 215px; margin: 0 auto; border-radius: 14px; overflow: hidden; border: 2.5px solid var(--blue); background: #090d16; cursor: pointer; }
     #fighterSprite { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    .comic-nameplate { position: absolute; top: 6px; left: 4px; background: var(--gold); color: #000; font-weight: 900; font-size: 0.82rem; padding: 2px 9px; border-radius: 4px; z-index: 4; }
-    .mastery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 7px; margin-top: 8px; }
+    .comic-nameplate { position: absolute; top: 6px; left: 4px; background: var(--gold); color: #000; font-weight: 900; font-size: 0.8rem; padding: 2px 9px; border-radius: 4px; z-index: 4; }
+    .mastery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 7px; margin-top: 8px; }
     .mastery-card { background: rgba(9,13,22,0.85); border: 1px solid rgba(0,240,255,0.28); border-radius: 11px; padding: 8px; text-align: left; }
-    .mastery-card h4 { font-size: 0.74rem; color: var(--gold); display: flex; justify-content: space-between; }
+    .mastery-card h4 { font-size: 0.73rem; color: var(--gold); display: flex; justify-content: space-between; }
     .mastery-bar-bg { width: 100%; height: 7px; background: #050811; border-radius: 99px; overflow: hidden; margin: 4px 0; }
     .mastery-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.3s; }
 
-    input, select, textarea { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.22); background: var(--panel); color: var(--txt); font-size: 0.83rem; margin-bottom: 7px; }
-    .btn { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; border: none; padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 0.78rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
+    input, select, textarea { width: 100%; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.22); background: var(--panel); color: var(--txt); font-size: 0.82rem; margin-bottom: 7px; }
+    .btn { background: linear-gradient(135deg, var(--orange), var(--red)); color: #fff; border: none; padding: 8px 11px; border-radius: 10px; font-weight: 800; font-size: 0.77rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; }
     .btn:active { transform: scale(0.97); }
     .btn-blue { background: linear-gradient(135deg, #0284c7, #2563eb); }
     .btn-green { background: linear-gradient(135deg, #059669, #10b981); }
@@ -66,14 +67,14 @@
     .btn-purple { background: linear-gradient(135deg, #7e22ce, #a855f7); color: #fff; }
     .btn-ghost { background: var(--panel); border: 1px solid rgba(255,255,255,0.22); color: var(--txt); }
 
-    .tech-pills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 7px; margin-top: 8px; max-height: 270px; overflow-y: auto; padding: 7px; background: #070b14; border-radius: 12px; border: 1px solid rgba(0,240,255,0.3); }
+    .tech-pills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 7px; margin-top: 8px; max-height: 265px; overflow-y: auto; padding: 7px; background: #070b14; border-radius: 12px; border: 1px solid rgba(0,240,255,0.3); }
     .tech-pill-card { background: var(--panel); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; }
     .tech-pill-card.active { background: rgba(250,204,21,0.22); border: 2px solid var(--gold); }
     .tech-pill-top { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 900; }
-    .tech-pill-name { font-size: 0.79rem; font-weight: 800; color: #fff; }
+    .tech-pill-name { font-size: 0.78rem; font-weight: 800; color: #fff; }
 
-    .anatomy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; margin: 8px 0; }
-    .cam-btn { background: var(--panel); border: 1px solid rgba(0,240,255,0.35); color: var(--txt); padding: 8px 9px; border-radius: 9px; font-size: 0.75rem; font-weight: 800; cursor: pointer; text-align: left; }
+    .anatomy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 6px; margin: 8px 0; }
+    .cam-btn { background: var(--panel); border: 1px solid rgba(0,240,255,0.35); color: var(--txt); padding: 8px 9px; border-radius: 9px; font-size: 0.74rem; font-weight: 800; cursor: pointer; text-align: left; }
     .cam-btn.active { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; border-color: #fff; }
 
     .step-simulator-card { background: #060a14; border: 2px solid var(--blue); border-radius: 14px; padding: 11px; margin: 10px 0; }
@@ -83,26 +84,26 @@
 
     .station-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 9px; margin-top: 9px; }
     .station-card { background: #070b14; border: 1px solid rgba(255,255,255,0.16); border-top: 4px solid var(--gold); border-radius: 12px; padding: 11px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
-    .station-card h4 { font-size: 0.84rem; color: var(--gold); }
-    .station-card p { font-size: 0.79rem; color: var(--txt); white-space: pre-line; }
+    .station-card h4 { font-size: 0.83rem; color: var(--gold); }
+    .station-card p { font-size: 0.78rem; color: var(--txt); white-space: pre-line; }
 
     .quest-item { background: #0b1120; border: 1px solid rgba(0,240,255,0.3); border-left: 5px solid var(--gold); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
     .plan-sub-task { background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 9px 11px; margin-top: 7px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .plan-sub-task.done { border-color: var(--green); opacity: 0.65; }
-    .week-days-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 6px; margin-bottom: 10px; }
-    .day-pill-btn { background: var(--panel); border: 1px solid rgba(255,255,255,0.18); color: var(--txt); padding: 8px; border-radius: 10px; font-size: 0.74rem; font-weight: 800; cursor: pointer; }
+    .week-days-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 6px; margin-bottom: 10px; }
+    .day-pill-btn { background: var(--panel); border: 1px solid rgba(255,255,255,0.18); color: var(--txt); padding: 8px; border-radius: 10px; font-size: 0.73rem; font-weight: 800; cursor: pointer; }
     .day-pill-btn.active { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; border-color: #fff; }
 
-    nav.ios-bottom-dock { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,15,28,0.97); border-top: 1.5px solid rgba(250,204,21,0.35); padding: 6px 6px calc(6px + var(--safe-bottom)); display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; z-index: 2000; }
-    nav.ios-bottom-dock button { background: transparent; border: none; color: var(--dim); padding: 6px 2px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    nav.ios-bottom-dock button .dock-icon { font-size: 1.2rem; }
-    nav.ios-bottom-dock button .dock-label { font-size: 0.64rem; font-weight: 800; }
+    nav.ios-bottom-dock { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,15,28,0.98); border-top: 1.5px solid rgba(250,204,21,0.35); padding: 6px 4px calc(6px + var(--safe-bottom)); display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; z-index: 2000; }
+    nav.ios-bottom-dock button { background: transparent; border: none; color: var(--dim); padding: 5px 2px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    nav.ios-bottom-dock button .dock-icon { font-size: 1.15rem; }
+    nav.ios-bottom-dock button .dock-label { font-size: 0.6rem; font-weight: 800; white-space: nowrap; }
     nav.ios-bottom-dock button.active { color: var(--gold); background: rgba(250,204,21,0.16); }
 
     .tab-pane { display: none; scroll-margin-top: 65px; }
     .tab-pane.active { display: block; }
-    .dojo-timer { font-size: 2.2rem; font-weight: 900; text-align: center; color: var(--gold); margin: 4px 0; font-variant-numeric: tabular-nums; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 8px; }
+    .dojo-timer { font-size: 2.1rem; font-weight: 900; text-align: center; color: var(--gold); margin: 4px 0; font-variant-numeric: tabular-nums; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.77rem; margin-top: 8px; }
     th, td { padding: 6px 4px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .macro-bar-bg { width: 100%; height: 8px; background: var(--panel); border-radius: 99px; overflow: hidden; margin-top: 3px; }
     .macro-bar-fill { height: 100%; background: var(--green); transition: width 0.3s; }
@@ -117,43 +118,41 @@
   <div class="hud-brand" onclick="window.scrollTo({top:0, behavior:'smooth'})">
     <div class="kodokan-crest">講</div>
     <div class="hud-title">
-      <h1>TYMON JUDO – KODOKAN DOJO v23.0</h1>
-      <span>100% Metodyka Kodokan (Nogi ➔ Wychylenie ➔ Rzut)</span>
+      <h1>TYMON JUDO – KODOKAN & ZAWODY v24.0</h1>
+      <span>100% Kodokan + Walka na Zawodach & Anty-Zielony Pas</span>
     </div>
   </div>
   <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
     <span class="status-pill" id="hudStatusIndicator" onclick="toggleConfigModal()">⚪ Chmura | ⚪ AI</span>
     <div class="lvl-pill">⚡ LVL <span id="lvlNumber">1</span> (<span id="expNumber">0</span> EXP)</div>
-    <button class="btn btn-gold" style="padding:5px 9px; font-size:0.72rem;" onclick="toggleKumiKataModal()">🖐️ 5 Trików Kołnierza</button>
-    <button class="btn btn-blue" style="padding:5px 9px; font-size:0.72rem;" onclick="syncWithCloud('save')" id="cloudSyncBtn">☁️ Zapisz</button>
-    <button class="btn btn-ghost" style="padding:5px 9px; font-size:0.72rem;" onclick="toggleConfigModal()">⚙️</button>
+    <button class="btn btn-gold" style="padding:5px 8px; font-size:0.71rem;" onclick="toggleKumiKataModal()">🖐️ 5 Trików Kołnierza</button>
+    <button class="btn btn-blue" style="padding:5px 8px; font-size:0.71rem;" onclick="syncWithCloud('save')" id="cloudSyncBtn">☁️ Zapisz</button>
+    <button class="btn btn-ghost" style="padding:5px 8px; font-size:0.71rem;" onclick="toggleConfigModal()">⚙️</button>
   </div>
 </header>
 
 <div class="container">
   <div class="stance-box">
-    <div style="flex:1; min-width:230px;">
-      <strong style="color:var(--gold); font-size:0.82rem; display:block;" id="stanceBannerTitle">
-        🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Lewa ręka Wpina Kołnierz, Prawa trzyma Rękaw!)
+    <div style="flex:1; min-width:220px;">
+      <strong style="color:var(--gold); font-size:0.81rem; display:block;" id="stanceBannerTitle">
+        🔥 TRYB 1: LEWA STRONA (HIDARI – Lewa dłoń wpina Kołnierz, Prawa trzyma Rękaw!)
       </strong>
-      <span style="font-size:0.74rem; color:var(--txt);" id="stanceBannerRule">
-        🦵 <strong>Kolejność nauki:</strong> 1. Najpierw ustawienie Nóg na sucho ➔ 2. Wpięcie Lewego Kołnierza (3 dolne palce, łokieć w dół) i Wychylenie PRAWĄ ręką ➔ 3. Połączenie!
+      <span style="font-size:0.73rem; color:var(--txt);" id="stanceBannerRule">
+        🪞 <strong>Zasada Lustra (Tori naprzeciwko Uke):</strong> Naprzeciwko Twojej LEWEJ nogi stoi PRAWA noga rywala! Naprzeciwko Twojej PRAWEJ nogi stoi LEWA noga rywala!
       </span>
     </div>
-    <div style="display:flex; gap:6px;">
-      <button class="stance-btn active-h" id="btnStanceHidari" onclick="setJudoStance('hidari')">🔥 LEWA (Tymka)</button>
-      <button class="stance-btn" id="btnStanceMigi" onclick="setJudoStance('migi')">⚡ PRAWA (Egzamin)</button>
+    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+      <button class="stance-btn active-h" id="btnStanceHidari" onclick="setJudoStance('hidari')">🔥 1. LEWA (Tymka)</button>
+      <button class="stance-btn" id="btnStanceMigi" onclick="setJudoStance('migi')">⚡ 2. PRAWA (Egzamin)</button>
+      <button class="stance-btn" id="btnStanceTourney" onclick="setJudoStance('tourney')">🏆 3. BOKIEM / 1 RĘKA (Zawody)</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL: 5 ZŁOTYCH TRIKÓW WPIĘCIA KOŁNIERZA (ZAWSZE POD RĘKĄ NA GÓRZE!) -->
+<!-- MODAL: 5 ZŁOTYCH TRIKÓW WPIĘCIA KOŁNIERZA -->
 <div class="container" id="kumiKataModal" style="display:none;">
   <div class="card" style="border:2px solid var(--orange);">
-    <h2>🖐️ 5 Złotych Trików Wpięcia Kołnierza i Walki o Uchwyt (Kumi-kata) – Instrukcja Krok po Kroku <button class="btn btn-ghost" onclick="toggleKumiKataModal()">Zamknij</button></h2>
-    <p style="font-size:0.8rem; color:var(--dim); margin-bottom:8px;">
-      Każdy rzut w stójce zaczyna się od wygrania uchwytu. Przeczytaj dokładnie jak wykonać każdy z 5 trików na gumach lub z Tatą:
-    </p>
+    <h2>🖐️ 5 Złotych Trików Wpięcia Kołnierza i Walki o Uchwyt (Kumi-kata) <button class="btn btn-ghost" onclick="toggleKumiKataModal()">Zamknij</button></h2>
     <div id="topKumiKataTricksBox" class="station-grid"></div>
   </div>
 </div>
@@ -162,7 +161,7 @@
 <div class="container" id="configModal" style="display:none;">
   <div class="card" style="border:2px solid var(--gold);">
     <h2>⚙️ Chmura Google, Klucz Gemini AI, Transfer na Telefon & Reset <button class="btn btn-ghost" onclick="toggleConfigModal()">Zamknij</button></h2>
-    <p style="font-size:0.78rem; color:var(--dim); margin-bottom:4px;"><strong>1. Link Web App Google Apps Script:</strong></p>
+    <p style="font-size:0.77rem; color:var(--dim); margin-bottom:4px;"><strong>1. Link Web App Google Apps Script:</strong></p>
     <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/.../exec">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
       <button class="btn btn-green" onclick="saveGasUrl()">💾 Zapisz adres Chmury</button>
@@ -171,7 +170,7 @@
       <label class="btn btn-ghost" style="cursor:pointer; margin:0;">📂 Wczytaj <input type="file" accept=".json" style="display:none;" onchange="importSaveFile(event)"></label>
     </div>
 
-    <p style="font-size:0.78rem; color:var(--dim); margin-bottom:4px;"><strong>2. Bezpieczny Klucz Gemini API (Model 2.5 Flash + Auto-Detekcja):</strong> Klucz jest wczytywany wyłącznie z `window.ENV_GEMINI_API_KEY` lub `localStorage`. Nigdy nie wpisuj klucza w publicznym kodzie!</p>
+    <p style="font-size:0.77rem; color:var(--dim); margin-bottom:4px;"><strong>2. Bezpieczny Klucz Gemini API (Model 2.5 Flash + Auto-Detekcja):</strong> Wczytywany wyłącznie z `window.ENV_GEMINI_API_KEY` lub `localStorage`. Nigdy nie umieszczaj klucza w publicznym kodzie!</p>
     <input type="password" id="apiKeyField" placeholder="Wklej swój klucz Gemini API z Google AI Studio (AIzaSy...)">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
       <button class="btn btn-green" onclick="saveApiKeySafe()">💾 Zapisz klucz AI lokalnie</button>
@@ -179,7 +178,7 @@
       <button class="btn btn-ghost" onclick="removeApiKeySafe()">🗑️ Usuń klucz</button>
     </div>
 
-    <p style="font-size:0.78rem; color:var(--blue); margin-bottom:4px;"><strong>📲 3. Szybki Transfer Ustawień Komputer ➔ Telefon (iPhone / Android):</strong></p>
+    <p style="font-size:0.77rem; color:var(--blue); margin-bottom:4px;"><strong>📲 3. Szybki Transfer Ustawień Komputer ➔ Telefon (iPhone / Android):</strong></p>
     <input type="text" id="bundleTransferInput" placeholder="Wklej tutaj skopiowany Pakiet Konfiguracyjny na telefonie...">
     <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
       <button class="btn btn-purple" onclick="copyConfigBundle()">📋 1. Skopiuj Pakiet (Link + Klucz)</button>
@@ -187,10 +186,10 @@
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">
-      <span style="font-size:0.78rem; color:var(--red); font-weight:800;">🔄 Wyzerować postępy Tymona do LVL 1 (0 EXP)?</span>
+      <span style="font-size:0.77rem; color:var(--red); font-weight:800;">🔄 Wyzerować postępy Tymona do LVL 1 (0 EXP)?</span>
       <button class="btn" onclick="resetAllProgressToZero()">🔄 ZRESETUJ WSZYSTKO DO ZERA (LVL 1 / 0 EXP)</button>
     </div>
-    <p id="configStatusMsg" style="font-size:0.81rem; margin-top:8px; color:var(--green); font-weight:700; white-space:pre-wrap;"></p>
+    <p id="configStatusMsg" style="font-size:0.8rem; margin-top:8px; color:var(--green); font-weight:700; white-space:pre-wrap;"></p>
   </div>
 </div>
 
@@ -203,11 +202,11 @@
     </div>
     <div>
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-        <h2 style="font-size:0.95rem; color:#fff; margin:0;">🥋 TYMON – PAS ŻÓŁTY (5 KYU) ➔ CEL: 4.5 KYU (ŻÓŁTO-POMARAŃCZOWY)</h2>
+        <h2 style="font-size:0.92rem; color:#fff; margin:0;">🥋 TYMON – PAS ŻÓŁTY (5 KYU) ➔ CEL: 4.5 KYU & ZAWODY</h2>
         <div style="display:flex; gap:5px; flex-wrap:wrap;">
-          <button class="btn btn-gold" onclick="toggleKumiKataModal()">🖐️ Pokaż 5 Trików Wpięcia Kołnierza</button>
-          <button class="btn btn-blue" onclick="switchTabById('pane-plan')">📅 Plan Tygodnia (<span id="planCounterTop">0</span>)</button>
-          <button class="btn btn-ghost" style="padding:6px 9px; font-size:0.72rem;" onclick="resetAllProgressToZero()">🔄 Reset 0 EXP</button>
+          <button class="btn btn-green" onclick="switchTabById('pane-tournament')">⚔️ Walka na Zawodach & Anty-Zielony Pas</button>
+          <button class="btn btn-gold" onclick="switchTabById('pane-plan')">📅 Plan Tygodnia (<span id="planCounterTop">0</span>)</button>
+          <button class="btn btn-ghost" style="padding:6px 8px; font-size:0.71rem;" onclick="resetAllProgressToZero()">🔄 Reset 0 EXP</button>
         </div>
       </div>
       <div class="mastery-grid" id="masteryGoalsContainer"></div>
@@ -215,17 +214,16 @@
   </div>
 </div>
 
-<!-- GŁÓWNE ZAKŁADKI APLIKACJI -->
 <div class="container" id="mainWorkspaceAnchor">
 
   <!-- =========================================================================
-       ZAKŁADKA 1: 42 TECHNIKI KODOKAN (KOLEJNOŚĆ: 1. NOGI -> 2. WYCHYLENIE -> 3. POŁĄCZENIE)
+       ZAKŁADKA 1: 42 TECHNIKI KODOKAN (100% ZWERYFIKOWANA GEOMETRIA LUSTRZANA)
        ========================================================================= -->
   <div id="pane-kodokan" class="tab-pane active">
     <div class="card">
       <h2>
-        <span>🥋 1. Baza 42 Technik Kodokan – Wybierz Technikę (1. Nogi ➔ 2. Wychylenie ➔ 3. Rzut)</span>
-        <span style="font-size:0.74rem; color:var(--green);" id="techCountBadge">Dostępne techniki: 26</span>
+        <span>🥋 1. Klasyczny Kodokan (42 Techniki: 1. Nogi ➔ 2. Wychylenie ➔ 3. Rzut & Wariant Bokiem)</span>
+        <span style="font-size:0.73rem; color:var(--green);" id="techCountBadge">Dostępne techniki: 26</span>
       </h2>
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
         <div>
@@ -257,7 +255,6 @@
           </select>
         </div>
       </div>
-
       <div id="techPillsGrid" class="tech-pills-grid"></div>
     </div>
 
@@ -265,15 +262,37 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 2: PLAN TYGODNIA Z DOKŁADNYMI WYJAŚNIENIAMI DLA TYMKA
+       ZAKŁADKA 2 (NOWOŚĆ!): WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (3 KYU)
+       ========================================================================= -->
+  <div id="pane-tournament" class="tab-pane">
+    <div class="card" style="border:2px solid var(--green);">
+      <h2>
+        <span>⚔️ 2. Centrum Walki Turniejowej Tymka – Anty-Chaos, Walka Bokiem & Anty-Zielony Pas!</span>
+        <button class="btn btn-gold" onclick="toggleKumiKataModal()">🖐️ 5 Trików Kołnierza</button>
+      </h2>
+      <p style="font-size:0.8rem; color:var(--dim); margin-bottom:10px;">
+        Na zawodach przeciwnicy rzadko stoją grzecznie: łapią za kark, pchają na sztywnych rękach, wypinają biodra albo – jeśli mają <strong>Pomarańczowy (4 Kyu) lub Zielony Pas (3 Kyu)</strong> – atakują za oba rękawy (<em>Sode</em>), wysoką <em>Uchi-matą</em> lub rzucają się na kolana. Wybierz sytuację poniżej i przećwicz gotową odpowiedź Tymka!
+      </p>
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+        <button class="cam-btn active" id="tourneyFilter_all" onclick="renderTournamentCards('all')">🔥 Wszystkie Scenariusze (12)</button>
+        <button class="cam-btn" id="tourneyFilter_green" onclick="renderTournamentCards('green')">🟢 Jak pokonać Zielony Pas (3 Kyu)</button>
+        <button class="cam-btn" id="tourneyFilter_chaos" onclick="renderTournamentCards('chaos')">🦍 Anty-Chaos (Szarpanie, Kark, Taran)</button>
+        <button class="cam-btn" id="tourneyFilter_side" onclick="renderTournamentCards('side')">🤺 Walka Bokiem (1 Ręka) & Kombinacje</button>
+      </div>
+      <div id="tournamentCardsContainer" class="station-grid"></div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       ZAKŁADKA 3: PLAN TYGODNIA KROK PO KROKU
        ========================================================================= -->
   <div id="pane-plan" class="tab-pane">
     <div class="card" style="border:2px solid var(--gold);">
       <h2>
-        <span>📅 2. Plan Tygodnia Tymona – Instrukcja Krok po Kroku na Każdy Dzień</span>
+        <span>📅 3. Plan Tygodnia Tymona – Instrukcja Krok po Kroku na Każdy Dzień</span>
         <div style="display:flex; gap:6px;">
           <button class="btn btn-gold" style="padding:4px 9px; font-size:0.72rem;" onclick="toggleKumiKataModal()">🖐️ 5 Trików Kołnierza</button>
-          <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.72rem;" onclick="resetCurrentDayToDefault()">🔄 Przywróć domyślny plan dnia</button>
+          <button class="btn btn-ghost" style="padding:4px 9px; font-size:0.72rem;" onclick="resetCurrentDayToDefault()">🔄 Przywróć domyślny plan</button>
         </div>
       </h2>
       <div class="week-days-bar" id="weekDaysBar"></div>
@@ -284,8 +303,8 @@
         <div id="dailyKumiKataCard" class="card" style="border:2px solid var(--orange);"></div>
         <div class="card">
           <h2>
-            <span>🥋 Techniki na Wybrany Dzień (1. Nogi ➔ 2. Wychylenie ➔ 3. Połączenie)</span>
-            <button class="btn btn-blue" style="padding:5px 9px; font-size:0.73rem;" onclick="switchTabById('pane-kodokan')">➕ Dodaj z listy</button>
+            <span>🥋 Techniki na Wybrany Dzień (1. Nogi ➔ 2. Wychylenie ➔ 3. Rzut & Zawody)</span>
+            <button class="btn btn-blue" style="padding:5px 9px; font-size:0.72rem;" onclick="switchTabById('pane-kodokan')">➕ Dodaj z bazy</button>
           </h2>
           <div id="customPlanContainer"></div>
         </div>
@@ -309,8 +328,8 @@
 
         <div class="card" style="border: 2px solid var(--green);">
           <h2>🏆 Sprawdzian Dnia przed Tatą (+100 EXP!)</h2>
-          <p style="font-size:0.81rem; color:var(--txt); margin-bottom:9px; white-space:pre-line;" id="bossDayChallengeText"></p>
-          <button class="btn btn-gold" style="width:100%; padding:11px; font-size:0.86rem;" onclick="completeBossPresentation()">
+          <p style="font-size:0.8rem; color:var(--txt); margin-bottom:9px; white-space:pre-line;" id="bossDayChallengeText"></p>
+          <button class="btn btn-gold" style="width:100%; padding:11px; font-size:0.85rem;" onclick="completeBossPresentation()">
             🔥 TATA ZATWIERDZA TRENING DNIA! (+100 EXP & +1 DO MASTERA!)
           </button>
         </div>
@@ -319,12 +338,12 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 3: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO
+       ZAKŁADKA 4: MOBILNOŚĆ & ROZCIĄGANIE POD JUDO
        ========================================================================= -->
   <div id="pane-mobility" class="tab-pane">
     <div class="card">
       <h2>
-        <span>🧘‍♂️ 3. Mobilność, Rozciąganie i Siła pod Judo – Dokładne Instrukcje</span>
+        <span>🧘‍♂️ 4. Mobilność, Rozciąganie i Siła pod Judo – Dokładne Instrukcje</span>
         <button class="btn btn-green" onclick="addAllMobilityToPlan()">➕ Dodaj Pady & Mobilność do Planu</button>
       </h2>
       <div class="station-grid" id="mobilityCardsGrid"></div>
@@ -332,12 +351,12 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 4: ANALIZA WIDEO AI (4 KLATKI + GEMINI 2.5 FLASH)
+       ZAKŁADKA 5: ANALIZA WIDEO AI (4 KLATKI + GEMINI 2.5 FLASH)
        ========================================================================= -->
   <div id="pane-video" class="tab-pane">
     <div class="grid-2">
       <div class="card">
-        <h2>🎥 4. Odtwarzacz Walk Slow-Mo + 4-Klatkowa Analiza Wideo AI Sensei</h2>
+        <h2>🎥 5. Odtwarzacz Walk Slow-Mo + 4-Klatkowa Analiza Wideo AI Sensei</h2>
         <input type="file" id="fightVideoFileInput" accept="video/*" onchange="loadFightVideo(event)">
         <video id="fightVideoPlayer" controls playsinline crossorigin="anonymous" style="width:100%; max-height:230px; background:#000; border-radius:12px; margin-bottom:8px; border:2px solid var(--blue);"></video>
         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
@@ -351,7 +370,7 @@
         <button class="btn" id="analyzeVideoBtn" style="width:100%; padding:11px;" onclick="analyzeFightWithGemini()">
           🤖 ANALIZUJ SEKWENCJĘ WIDEO Z AI SENSEIEM (GEMINI 2.5 API)
         </button>
-        <div id="aiVideoOutput" style="margin-top:9px; padding:11px; background:var(--panel); border-left:4px solid var(--gold); border-radius:9px; font-size:0.82rem; white-space:pre-wrap;">
+        <div id="aiVideoOutput" style="margin-top:9px; padding:11px; background:var(--panel); border-left:4px solid var(--gold); border-radius:9px; font-size:0.81rem; white-space:pre-wrap;">
           Tutaj pojawi się analiza 4 klatek ruchu od AI Senseia...
         </div>
       </div>
@@ -360,15 +379,15 @@
         <h2>📊 Wnioski Techniczne z Waszych Nagrań (Dom + Sala)</h2>
         <div class="quest-item">
           <strong>✅ Wniosek #1: Zgranie kierunku obrotu z ręką na kołnierzu!</strong>
-          <p style="font-size:0.79rem; color:var(--dim); margin:5px 0;">
+          <p style="font-size:0.78rem; color:var(--dim); margin:5px 0;">
             • Gdy LEWA ręka wpina się w kołnierz przy obojczyku, a PRAWA trzyma rękaw ➔ ciągniesz rękaw PRAWĄ ręką do PRAWEGO ucha, obracasz się W PRAWO, stoisz na PRAWEJ nodze i wyrzucasz LEWĄ nogę!<br>
-            • Gdy w walce trzymasz lewy kołnierz, ale kręcisz się w lewo na PRAWĄ nogę ➔ LEWA ręka na kołnierzu ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę rywala!
+            • Gdy w walce stoisz bokiem i trzymasz lewy kołnierz, ale kręcisz się w lewo na PRAWĄ nogę ➔ LEWA ręka na kołnierzu ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę rywala!
           </p>
           <button class="btn btn-green" style="width:100%;" onclick="addTechniqueToMyPlan('t35_uchimata')">➕ Dodaj Uchi-matę do Planu Dnia</button>
         </div>
         <div class="quest-item" style="border-left-color:var(--red);">
           <strong>🔧 Wniosek #2: W podcięciach (De-ashi-barai / O-uchi-gari) najpierw ręce dociążają stopę!</strong>
-          <p style="font-size:0.79rem; color:var(--dim); margin:5px 0;">
+          <p style="font-size:0.78rem; color:var(--dim); margin:5px 0;">
             Zanim stopa ruszy do podcięcia, musisz wcisnąć rękaw i kołnierz w dół, żeby przenieść ciężar rywala na tę stopę!
           </p>
           <button class="btn btn-green" style="width:100%;" onclick="addTechniqueToMyPlan('t6_deashi')">➕ Dodaj De-ashi-barai do Planu Dnia</button>
@@ -378,14 +397,14 @@
   </div>
 
   <!-- =========================================================================
-       ZAKŁADKA 5: KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW SPORTOWCA
+       ZAKŁADKA 6: KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW SPORTOWCA
        ========================================================================= -->
   <div id="pane-fuel" class="tab-pane">
     <div class="grid-2">
       <div class="card">
         <h2>
-          <span>⚡ 5. Kalkulator Najpopularniejszych Produktów Sportowca</span>
-          <span style="font-size:0.74rem; color:var(--green);">Cel: 2100 kcal | 85g Białka</span>
+          <span>⚡ 6. Kalkulator Najpopularniejszych Produktów Sportowca</span>
+          <span style="font-size:0.73rem; color:var(--green);">Cel: 2100 kcal | 85g Białka</span>
         </h2>
         <label>🔍 Wyszukaj produkt:</label>
         <input type="text" id="calcSearchInput" placeholder="Wpisz np. Skyr, banan, twaróg, kurczak, śledzie, owsianka..." oninput="initFoodSelect()">
@@ -404,7 +423,7 @@
           </div>
           <div>
             <label>Wyliczone makro porcji:</label>
-            <div id="calcPreviewBox" style="padding:10px; background:var(--panel); border:1px solid var(--gold); border-radius:10px; font-weight:800; font-size:0.82rem; color:var(--gold);"></div>
+            <div id="calcPreviewBox" style="padding:10px; background:var(--panel); border:1px solid var(--gold); border-radius:10px; font-weight:800; font-size:0.81rem; color:var(--gold);"></div>
           </div>
         </div>
         <button class="btn btn-green" style="width:100%; margin-top:4px; padding:10px;" onclick="addMealToLog()">➕ Dodaj do Dzisiejszego Bilansu (+15 EXP)</button>
@@ -415,7 +434,7 @@
           <input type="text" id="aiDietInput" placeholder="Np. Co zjeść na 60 min przed treningiem Judo?" style="margin:0;">
           <button class="btn btn-blue" onclick="askAiDietitian()">Zapytaj AI</button>
         </div>
-        <div id="aiDietOutput" style="margin-top:7px; padding:9px; background:var(--panel); border-radius:8px; font-size:0.8rem; white-space:pre-wrap; display:none;"></div>
+        <div id="aiDietOutput" style="margin-top:7px; padding:9px; background:var(--panel); border-radius:8px; font-size:0.79rem; white-space:pre-wrap; display:none;"></div>
 
         <hr style="border:0; border-top:1px solid rgba(255,255,255,0.1); margin:10px 0;">
         <h3>➕ Dodaj własny produkt</h3>
@@ -432,22 +451,22 @@
       <div class="card">
         <h2><span>🔋 Dzisiejszy Bilans Mocy</span><button class="btn btn-ghost" style="padding:4px 8px; font-size:0.71rem;" onclick="resetMealLog()">🔄 Wyczyść dzień</button></h2>
         <div style="margin-bottom:9px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.8rem;">
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;">
             <span>⚡ Kalorie (Cel: <strong id="goalKcal">2100</strong> kcal | Pozostało: <strong id="remKcal" style="color:var(--gold);">2100</strong> kcal)</span>
             <span><strong id="sumKcal">0</strong> kcal</span>
           </div>
           <div class="macro-bar-bg"><div id="barKcal" class="macro-bar-fill" style="width:0%"></div></div>
         </div>
         <div style="margin-bottom:9px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>💪 Białko</span><span><strong id="sumP">0</strong> / 85 g</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>💪 Białko</span><span><strong id="sumP">0</strong> / 85 g</span></div>
           <div class="macro-bar-bg"><div id="barP" class="macro-bar-fill" style="width:0%; background:var(--blue);"></div></div>
         </div>
         <div style="margin-bottom:9px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>🚀 Węglowodany</span><span><strong id="sumC">0</strong> / 285 g</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>🚀 Węglowodany</span><span><strong id="sumC">0</strong> / 285 g</span></div>
           <div class="macro-bar-bg"><div id="barC" class="macro-bar-fill" style="width:0%; background:var(--gold);"></div></div>
         </div>
         <div style="margin-bottom:10px;">
-          <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>🧠 Zdrowe Tłuszcze & Omega-3</span><span><strong id="sumF">0</strong> / 65 g</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:0.79rem;"><span>🧠 Zdrowe Tłuszcze & Omega-3</span><span><strong id="sumF">0</strong> / 65 g</span></div>
           <div class="macro-bar-bg"><div id="barF" class="macro-bar-fill" style="width:0%; background:var(--orange);"></div></div>
         </div>
         <table>
@@ -460,22 +479,25 @@
 
 </div>
 
-<!-- DOLNY PASEK NAWIGACJI (KLIKNIĘCIE PRZEŁĄCZA I OD RAZU PRZEWIJA DO SEKCJI!) -->
+<!-- DOLNY PASEK NAWIGACJI (6 IKON Z AUTOMATYCZNYM PRZEWIJANIEM DO SEKCJI!) -->
 <nav class="ios-bottom-dock">
   <button class="active" id="tabBtn-pane-kodokan" onclick="switchTab('pane-kodokan', this)">
-    <span class="dock-icon">🥋</span><span class="dock-label">1. Techniki (42)</span>
+    <span class="dock-icon">🥋</span><span class="dock-label">1. Kodokan (42)</span>
+  </button>
+  <button id="tabBtn-pane-tournament" onclick="switchTab('pane-tournament', this)">
+    <span class="dock-icon">⚔️</span><span class="dock-label">2. Zawody/Kontry</span>
   </button>
   <button id="tabBtn-pane-plan" onclick="switchTab('pane-plan', this)">
-    <span class="dock-icon">📅</span><span class="dock-label">2. Plan Tygodnia</span>
+    <span class="dock-icon">📅</span><span class="dock-label">3. Plan Tygodnia</span>
   </button>
   <button id="tabBtn-pane-mobility" onclick="switchTab('pane-mobility', this)">
-    <span class="dock-icon">🧘‍♂️</span><span class="dock-label">3. Mobilność</span>
+    <span class="dock-icon">🧘‍♂️</span><span class="dock-label">4. Mobilność</span>
   </button>
   <button id="tabBtn-pane-video" onclick="switchTab('pane-video', this)">
-    <span class="dock-icon">🎥</span><span class="dock-label">4. Wideo AI</span>
+    <span class="dock-icon">🎥</span><span class="dock-label">5. Wideo AI</span>
   </button>
   <button id="tabBtn-pane-fuel" onclick="switchTab('pane-fuel', this)">
-    <span class="dock-icon">⚡</span><span class="dock-label">5. Paliwo</span>
+    <span class="dock-icon">⚡</span><span class="dock-label">6. Paliwo</span>
   </button>
 </nav>
 
@@ -513,23 +535,23 @@
   const KUMIKATA_TRICKS_LIBRARY = [
     {
       title: "⚡ Trik #1: „Dwuklik: 1. Rękaw ➔ 2. Wpięcie Kołnierza”",
-      desc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Nigdy nie sięgaj z daleka samą lewą ręką po kołnierz, bo rywal Cię zablokuje!\n2. KLIK 1: Najpierw PRAWĄ dłonią zbij lub złap prawy rękaw rywala przy łokciu.\n3. KLIK 2: Ułamek sekundy później wstrzel LEWĄ dłoń prosto od dołu i wepnij ją w kołnierz na wysokości obojczyka, zaciskając mocno 3 dolne palce (mały, serdeczny, środkowy)!"
+      desc: "JAK WYKONAĆ KROK PO KROKU:\n1. Nigdy nie sięgaj z daleka samą lewą ręką po kołnierz, bo rywal Cię zablokuje!\n2. KLIK 1: Najpierw PRAWĄ dłonią zbij lub złap prawy rękaw rywala przy łokciu.\n3. KLIK 2: Ułamek sekundy później wstrzel LEWĄ dłoń od dołu i wepnij ją w kołnierz przy obojczyku, zaciskając mocno 3 dolne palce!"
     },
     {
       title: "🔒 Trik #2: „Ciężki Łokieć na Mostku (Tarcza Obojczyka)”",
-      desc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Po wpięciu lewej dłoni w kołnierz NIE trzymaj łokcia uniesionego w bok jak skrzydełko!\n2. Opuść lewy łokieć ciężko w dół, opierając przedramię na mostku/obojczyku rywala.\n3. Dzięki temu rywal nie wejdzie Ci pod pachę, a Ty jednym ruchem nadgarstka możesz go podbić lub wcisnąć w matę!"
+      desc: "JAK WYKONAĆ KROK PO KROKU:\n1. Po wpięciu lewej dłoni w kołnierz NIE trzymaj łokcia uniesionego w bok!\n2. Opuść lewy łokieć ciężko w dół na mostek rywala – zamykasz mu wejście pod Twoją pachę i chronisz swoją szyję przed wyższym pasem!"
     },
     {
       title: "🛡️ Trik #3: „Wycieraczka – Zerwanie Uchwytu Rywala Oburącz w Dół”",
-      desc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Gdy przeciwnik pierwszy złapał Twój kołnierz: nie cofaj głowy do tyłu!\n2. Złap OBURĄCZ (obiema dłońmi) jego rękaw przy swoim kołnierzu.\n3. Zrób krótki krok w tył ze skrętem barku i zerwij jego rękę ostro w dół (jak wycieraczka samochodowa), a w tej samej sekundzie wepnij swój lewy kołnierz!"
+      desc: "JAK WYKONAĆ KROK PO KROKU:\n1. Gdy przeciwnik pierwszy złapał Twój kołnierz lub kark: nie cofaj głowy zgięty w pół!\n2. Złap OBURĄCZ jego rękaw przy swoim kołnierzu, zrób pół kroku w tył ze skrętem barku i zerwij jego rękę ostro w dół, od razu wpinając swój lewy kołnierz!"
     },
     {
       title: "🔄 Trik #4: „Pompka Szybkich Palców 20 Sekund (Na Gumach / Judodze)”",
-      desc: "JAK TO ZROBIĆ W DOMU:\n1. Przewieś pas lub starą bluzę/judogę przez gumę na drzwiach.\n2. Włącz Zegar Dojo na 20 sekund.\n3. Przez 20 sekund z maksymalną szybkością puszczaj i na nowo wpinaj dłonie w rękaw i kołnierz (z głośnym klaśnięciem w materiał), zaciskając 3 dolne palce!"
+      desc: "JAK WYKONAĆ W DOMU:\n1. Przewieś pas lub bluzę przez gumę na drzwiach i włącz Zegar Dojo na 20s.\n2. Przez 20 sekund na przemian puszczaj i błyskawicznie wpinaj dłonie w rękaw i kołnierz z głośnym klaśnięciem w materiał!"
     },
     {
       title: "🎯 Trik #5: „Wpięcie + Podcięcie w Jednej Sekundzie!”",
-      desc: "JAK TO ZROBIĆ W WALCE:\n1. W momencie, gdy Twoja lewa dłoń wpina się w kołnierz, rywal na ułamek sekundy nieruchomieje i patrzy na Twoją rękę.\n2. Nie czekaj ani sekundy – w tym samym momencie wciśnij prawy rękaw w dół i zamieć jego przednią stopę (De-ashi-barai lub Kouchi-gari)!"
+      desc: "JAK WYKONAĆ W WALCE:\n1. W ułamku sekundy, w którym Twoja lewa dłoń wpina się w kołnierz, rywal na moment nieruchomieje.\n2. Dokładnie w tej samej sekundzie wciśnij prawy rękaw w dół i zamieć jego przednią stopę (De-ashi-barai lub Kouchi-gari)!"
     }
   ];
 
@@ -552,216 +574,204 @@
   }
 
   /*************************************************************************
-   * 1. PRZEŁĄCZNIK STRONY TYMKA (LEWA HIDARI vs PRAWA MIGI)
+   * 1. PRZEŁĄCZNIK 3 TRYBÓW WALKI TYMKA:
+   *    1. LEWA (Hidari) | 2. PRAWA (Migi) | 3. BOKIEM / 1 RĘKA (Styl z Zawodów!)
    *************************************************************************/
-  let currentStance = localStorage.getItem('tymon_stance_v230') || 'hidari';
-  function S_TXT(h, m) { return currentStance === 'hidari' ? h : m; }
+  let currentStance = localStorage.getItem('tymon_stance_v240') || 'hidari';
 
   function setJudoStance(side) {
     currentStance = side;
-    localStorage.setItem('tymon_stance_v230', side);
+    localStorage.setItem('tymon_stance_v240', side);
     document.getElementById('btnStanceHidari').className = side === 'hidari' ? 'stance-btn active-h' : 'stance-btn';
     document.getElementById('btnStanceMigi').className = side === 'migi' ? 'stance-btn active-m' : 'stance-btn';
-    document.getElementById('stanceBannerTitle').innerHTML = side === 'hidari'
-      ? `🔥 AKTYWNA STRONA TYMKA: LEWA STRONA (HIDARI – Lewa ręka Wpina Kołnierz, Prawa trzyma Rękaw!)`
-      : `⚡ AKTYWNA STRONA: PRAWA STRONA (MIGI – Prawa ręka Wpina Kołnierz, Lewa trzyma Rękaw!)`;
+    document.getElementById('btnStanceTourney').className = side === 'tourney' ? 'stance-btn active-t' : 'stance-btn';
+
+    const titleEl = document.getElementById('stanceBannerTitle');
+    const ruleEl = document.getElementById('stanceBannerRule');
+    if (side === 'hidari') {
+      titleEl.innerHTML = `🔥 TRYB 1: LEWA STRONA (HIDARI – Lewa dłoń wpina Kołnierz, Prawa trzyma Rękaw!)`;
+      ruleEl.innerHTML = `🪞 <strong>Zasada Lustra:</strong> Naprzeciwko Twojej LEWEJ nogi stoi PRAWA noga rywala (po lewej stronie ekranu)!`;
+    } else if (side === 'migi') {
+      titleEl.innerHTML = `⚡ TRYB 2: PRAWA STRONA (MIGI – Prawa dłoń wpina Kołnierz, Lewa trzyma Rękaw!)`;
+      ruleEl.innerHTML = `🪞 <strong>Zasada Lustra:</strong> Naprzeciwko Twojej PRAWEJ nogi stoi LEWA noga rywala (po prawej stronie ekranu)!`;
+    } else {
+      titleEl.innerHTML = `🏆 TRYB 3: WALKA BOKIEM / 1 RĘKA NA KOŁNIERZU (Styl Turniejowy Tymka z Zawodów!)`;
+      ruleEl.innerHTML = `🤺 <strong>Styl z Zawodów:</strong> Stoisz lewym bokiem z przodu, trzymając LEWĄ ręką kołnierz – atakujesz od razu przednią nogą lub wchodzisz w rzut bez czekania na pełny uchwyt!`;
+    }
     renderKodokanMasterCard(currentAnatomyTab, currentSimStep);
     renderWeeklyPlanView();
     playSound('exp');
   }
 
   /*************************************************************************
-   * 2. PRAWDZIWY BOISKOWY SYMULATOR SVG Z LOTU PTAKA (6 ODRĘBNYCH MECHANIK!)
-   *    Pokazuje dokładnie: Stopy Rywala (UKE L/P), Stopy Tymka (TYMEK L/P),
-   *    tor wejścia nóg oraz kierunek Wychylenia Rąk (Kuzushi)!
+   * 2. ZWERYFIKOWANY BOISKOWY SYMULATOR SVG Z LOTU PTAKA (6 BIOMECHANIK)
+   *    Perspektywa Lustrzana:
+   *    - Po LEWEJ stronie ekranu (x=155): PRAWA STOPA RYWALA (naprzeciwko Lewej nogi Tymka!)
+   *    - Po PRAWEJ stronie ekranu (x=325): LEWA STOPA RYWALA (naprzeciwko Prawej nogi Tymka!)
    *************************************************************************/
   let currentSimStep = 1;
 
   function buildPrecisionSimulatorSVG(mechType, stepNum) {
-    const isL = currentStance === 'hidari';
+    const isRight = currentStance === 'migi';
     let svgContent = '', stepTitle = '', stepDesc = '';
 
-    // 1. MECHANIKA: OSOTO (Wykrok na zewnątrz obok stopy rywala + cięcie z tyłu – ZERO TRÓJKĄTA!)
+    // 1. OSOTO (Wykrok NA ZEWNĄTRZ obok atakowanej nogi rywala – 100% poprawna geometria!)
     if (mechType === 'osoto') {
-      const titles = [
-        "KROK 1/4 (Pozycja Startowa): Stań naprzeciwko 2 klapków (Stóp Rywala) – NIE wchodzisz w trójkąt!",
-        S_TXT("KROK 2/4 (Noga Podporowa): Głęboki krok PRAWĄ stopą NA ZEWNĄTRZ obok prawego klapka rywala!", "KROK 2/4 (Noga Podporowa): Głęboki krok LEWĄ stopą NA ZEWNĄTRZ obok lewego klapka rywala!"),
-        S_TXT("KROK 3/4 (Wychylenie + Zamach): Ściągnij rękaw do brzucha, wbij kołnierz w dół-tył i przenieś LEWĄ nogę za udo rywala!", "KROK 3/4 (Wychylenie + Zamach): Ściągnij rękaw do brzucha, wbij kołnierz w dół-tył i przenieś PRAWĄ nogę za udo!"),
-        S_TXT("KROK 4/4 (Cięcie Kake): Wytnij LEWĄ nogą jak wahadło ostro w tył, jadąc klatką w przód!", "KROK 4/4 (Cięcie Kake): Wytnij PRAWĄ nogą jak wahadło ostro w tył!")
-      ];
-      const descs = [
-        "Ułóż 2 klapki jako stopy rywala. W O-soto-gari stoisz przodem do rywala – tutaj NIE obracasz się plecami i NIE wskakujesz w trójkąt między jego nogi!",
-        S_TXT("Zrób długi krok PRAWĄ stopą na zewnątrz obok prawego klapka rywala (Twoja stopa mija linię jego stóp!). Kolano ugięte, klatka blisko rywala.", "Zrób długi krok LEWĄ stopą na zewnątrz obok lewego klapka rywala!"),
-        S_TXT("PRAWĄ ręką ściągnij rękaw do swojego brzucha, a LEWĄ ręką na kołnierzu wbij bark rywala w dół-tył na jego piętę. Jednocześnie przenieś prostą LEWĄ nogę przodem za klapek!", "LEWĄ ręką ściągnij rękaw do brzucha, PRAWĄ wbij kołnierz w dół-tył i przenieś PRAWĄ nogę za klapek!"),
-        S_TXT("Machnij LEWĄ nogą ostro w tył (zadzierając palce stopy w dół/do siebie), jakbyś chciał przeciąć klapek na pół, a głową i klatką jedź mocno w przód!", "Machnij PRAWĄ nogą ostro w tył, jadąc klatką i głową w przód!")
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
-      const stepFootX = isL ? 105 : 375;
-      const targetUkeX = isL ? 175 : 305;
-      svgContent = `
-        <!-- Stopy Rywala (UKE) -->
-        <rect x="145" y="70" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-        <text x="172" y="90" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE PRAWA</text>
-        <rect x="280" y="70" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-        <text x="307" y="90" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE LEWA</text>
+      if (!isRight) {
+        // LEWE O-SOTO-GARI TYMKA (Tymek wycina swoją LEWĄ nogą -> PRAWĄ nogę rywala po lewej stronie ekranu!)
+        const titles = [
+          "KROK 1/4 (Start): Naprzeciwko Twojej LEWEJ nogi stoi PRAWA noga rywala (po lewej stronie planszy!)",
+          "KROK 2/4 (Krok Podporowy): Postaw PRAWĄ stopę na zewnątrz obok PRAWEJ stopy rywala (po lewej stronie!)",
+          "KROK 3/4 (Wychylenie + Zamach): Ściągnij rękaw do brzucha, wbij kołnierz w dół-tył i przenieś LEWĄ nogę za udo rywala!",
+          "KROK 4/4 (Cięcie Kake): Wytnij swoją LEWĄ nogą PRAWĄ nogę rywala ostro w tył jak wahadło!"
+        ];
+        const descs = [
+          "Spójrz na planszę: Ty (Tymek) stoisz na dole. Po Twojej LEWEJ ręce znajduje się PRAWA noga rywala (UKE PRAWA). W O-soto-gari NIE wchodzisz w trójkąt między stopy!",
+          "Zrób głęboki krok swoją PRAWĄ nogą podporową po skosie w lewo – postaw ją NA ZEWNĄTRZ obok PRAWEJ stopy rywala! Twoja klatka piersiowa klei się do prawego barku rywala.",
+          "PRAWĄ ręką ściągnij rękaw do swojego brzucha, a LEWĄ ręką na kołnierzu wbij bark rywala w dół-tył na jego prawą piętę. Jednocześnie przenieś swoją LEWĄ nogę przodem za jego prawe udo!",
+          "Machnij swoją LEWĄ nogą ostro w tył (zadzierając palce stopy w dół), wycinając PRAWĄ nogę rywala, a głową i klatką jedź mocno w przód!"
+        ];
+        stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
+        svgContent = `
+          <!-- Stopy Rywala (Lustro: po lewej stronie ekranu jest PRAWA stopa Uke!) -->
+          <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+          <text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+          <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+          <text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
 
-        <!-- Stopy Startowe Tymka -->
-        <circle cx="205" cy="195" r="18" fill="rgba(2,132,199,0.35)" stroke="#00f0ff" stroke-dasharray="4,3"/>
-        <text x="205" y="199" fill="#cbd5e1" font-size="9" font-weight="800" text-anchor="middle">START L</text>
-        <circle cx="275" cy="195" r="18" fill="rgba(234,179,8,0.35)" stroke="#facc15" stroke-dasharray="4,3"/>
-        <text x="275" y="199" fill="#cbd5e1" font-size="9" font-weight="800" text-anchor="middle">START P</text>
+          <!-- Stopy Startowe Tymka (Widoczne wyraźnie w Kroku 1!) -->
+          <circle cx="195" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/>
+          <text x="195" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
+          <circle cx="285" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/>
+          <text x="285" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
 
-        <!-- Krok 2+: Stopa Podporowa NA ZEWNĄTRZ obok stopy rywala -->
-        ${stepNum >= 2 ? `
-          <path d="M ${isL ? 275 : 205} 180 Q ${stepFootX} 140 ${stepFootX} 92" fill="none" stroke="#facc15" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrGold)"/>
-          <rect x="${stepFootX - 28}" y="68" width="56" height="32" rx="12" fill="#eab308" stroke="#fff" stroke-width="2.5"/>
-          <text x="${stepFootX}" y="88" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">1.${isL ? 'PRAWA' : 'LEWA'} (OBOK!)</text>
-        ` : ''}
-
-        <!-- Krok 3+: Wychylenie Kuzushi w dół-tył na piętę -->
-        ${stepNum >= 3 ? `
-          <path d="M ${targetUkeX} 70 L ${targetUkeX - (isL ? 25 : -25)} 32" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/>
-          <text x="${targetUkeX}" y="24" fill="#f97316" font-size="10.5" font-weight="900" text-anchor="middle">🟠 WYCHYLENIE NA PIĘTĘ!</text>
-        ` : ''}
-
-        <!-- Krok 4: Wahadłowe cięcie nogą od tyłu -->
-        ${stepNum === 4 ? `
-          <path d="M ${targetUkeX} 42 L ${targetUkeX} 155" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/>
-          <text x="240" y="155" fill="#10b981" font-size="11.5" font-weight="900" text-anchor="middle">🟢 CIĘCIE ${isL ? 'LEWĄ' : 'PRAWĄ'} NOGĄ W TYŁ!</text>
-        ` : ''}
-      `;
+          <!-- Krok 2+: Prawa stopa Tymka idzie na zewnątrz obok PRAWEJ stopy rywala (x=82) -->
+          ${stepNum >= 2 ? `
+            <path d="M 285 165 Q 160 140 85 95" fill="none" stroke="#facc15" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrGold)"/>
+            <rect x="48" y="65" width="74" height="32" rx="10" fill="#eab308" stroke="#fff" stroke-width="2.5"/>
+            <text x="85" y="85" fill="#000" font-size="9" font-weight="900" text-anchor="middle">1.PRAWA OBOK!</text>
+          ` : ''}
+          ${stepNum >= 3 ? `
+            <path d="M 168 65 L 140 28" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/>
+            <text x="165" y="22" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 WBIJ NA PRAWĄ PIĘTĘ!</text>
+          ` : ''}
+          ${stepNum === 4 ? `
+            <path d="M 168 42 L 168 150" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/>
+            <text x="240" y="142" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 LEWA NOGA WYCINA PRAWĄ NOGĘ RYWALA!</text>
+          ` : ''}
+        `;
+      } else {
+        // PRAWE O-SOTO-GARI TYMKA (Tymek wycina swoją PRAWĄ nogą -> LEWĄ nogę rywala po prawej stronie ekranu!)
+        stepTitle = `KROK ${stepNum}/4 (Prawe O-soto-gari): LEWA stopa staje na zewnątrz obok LEWEJ stopy rywala, a PRAWA noga wycina!`;
+        stepDesc = "W prawym O-soto-gari stawiasz swoją LEWĄ stopę na zewnątrz obok LEWEJ stopy rywala (po prawej stronie planszy), ściągasz rękaw do brzucha i wycinasz swoją PRAWĄ nogą LEWĄ nogę rywala!";
+        svgContent = `
+          <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+          <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+          <circle cx="195" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="195" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
+          <circle cx="285" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="285" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
+          ${stepNum >= 2 ? `<path d="M 195 165 Q 320 140 395 95" fill="none" stroke="#00f0ff" stroke-width="3.5" stroke-dasharray="6,4" marker-end="url(#arrGold)"/><rect x="358" y="65" width="74" height="32" rx="10" fill="#0284c7" stroke="#fff" stroke-width="2.5"/><text x="395" y="85" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">1.LEWA OBOK!</text>` : ''}
+          ${stepNum >= 3 ? `<path d="M 312 42 L 312 150" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="142" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 PRAWA NOGA WYCINA LEWĄ NOGĘ RYWALA!</text>` : ''}
+        `;
+      }
     }
-    // 2. MECHANIKA: OUCHI / KOUCHI (Krok dostawny Tsugi-ashi + wycięcie od wewnątrz po półkolu)
+    // 2. OUCHI (Duże wewnętrzne podcięcie po półkolu: Lewa noga Tymka wycina PRAWĄ nogę rywala!)
     else if (mechType === 'ouchi') {
       const titles = [
-        "KROK 1/4 (Pozycja Startowa): Stań w pozycji walki przed 2 klapkami (Stopami Rywala)",
-        S_TXT("KROK 2/4 (Krok Dostawny Tsugi-ashi): Tylna PRAWA stopa podjeżdża blisko za LEWĄ piętę (nie krzyżuj nóg!)", "KROK 2/4 (Krok Dostawny): Tylna LEWA stopa podjeżdża za PRAWĄ piętę!"),
-        S_TXT("KROK 3/4 (Wychylenie w dół-tył): Wciśnij wpiętym kołnierzem i rękawem rywala w dół na pięty!", "KROK 3/4 (Wychylenie w dół-tył): Wciśnij kołnierz i rękaw w dół na pięty!"),
-        S_TXT("KROK 4/4 (Wycięcie od Środka): LEWA stopa wchodzi między klapki i rysuje szerokie półkole po podłodze!", "KROK 4/4 (Wycięcie od Środka): PRAWA stopa wchodzi między klapki i rysuje półkole!")
+        "KROK 1/4 (Start): Stoisz przed stopami rywala – w O-uchi-gari wchodzisz przodem między jego nogi",
+        "KROK 2/4 (Krok Dostawny Tsugi-ashi): Tylna stopa podjeżdża blisko za przednią piętę (nie krzyżuj nóg!)",
+        "KROK 3/4 (Wychylenie w dół-tył): Wciśnij kołnierzem i rękawem rywala w dół-tył na jego pięty!",
+        !isRight
+          ? "KROK 4/4 (Półkole od Środka): Twoja LEWA noga wchodzi między stopy i wycina po półkolu PRAWĄ nogę rywala!"
+          : "KROK 4/4 (Półkole od Środka): Twoja PRAWA noga wchodzi między stopy i wycina po półkolu LEWĄ nogę rywala!"
       ];
-      const descs = [
-        "Ułóż 2 klapki przed sobą. W podcięciach wewnętrznych (O-uchi-gari / Kouchi-gari) wchodzisz przodem między nogi rywala – NIE obracasz się plecami!",
-        S_TXT("Podciągnij tylną (PRAWĄ) stopę tuż za swoją przednią (LEWĄ) piętę krokiem dostawnym Tsugi-ashi. Kolana są ugięte!", "Podciągnij tylną (LEWĄ) stopę tuż za swoją PRAWĄ piętę krokiem dostawnym!"),
-        "Zanim Twoja stopa ruszy do wycięcia, wciśnij kołnierz i rękaw w dół i do tyłu – tak jakbyś chciał wbić stopy rywala w podłogę (nie ciągnij go na siebie!).",
-        S_TXT("Wsuń LEWĄ stopę między klapki i szorując palcami po samej podłodze narysuj duże półkole (w O-uchi-gari za jego lewą nogą, a w Kouchi-gari wytnij piętę małą łyżeczką)!", "Wsuń PRAWĄ stopę między klapki i narysuj półkole po podłodze!")
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
+      stepTitle = titles[stepNum - 1];
+      stepDesc = !isRight
+        ? "W lewym O-uchi-gari: po kroku dostawnym i wciśnięciu rywala na pięty, Twoja LEWA noga wchodzi do środka między nogi rywala i rysuje szerokie półkole po macie w lewo, wycinając PRAWĄ nogę rywala!"
+        : "W prawym O-uchi-gari: Twoja PRAWA noga wchodzi między nogi rywala i rysuje szerokie półkole w prawo, wycinając LEWĄ nogę rywala!";
       svgContent = `
-        <rect x="145" y="70" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="172" y="90" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE PRAWA</text>
-        <rect x="280" y="70" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="307" y="90" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE LEWA</text>
-        <circle cx="240" cy="155" r="20" fill="#eab308" stroke="#fff" stroke-width="2.5"/>
-        <text x="240" y="159" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">1.DOSTAWNA</text>
-        ${stepNum >= 3 ? `<path d="M 240 85 L 240 30" fill="none" stroke="#f97316" stroke-width="5" marker-end="url(#arrOrange)"/><text x="240" y="22" fill="#f97316" font-size="10.5" font-weight="900" text-anchor="middle">🟠 WCIŚNIJ KOŁNIERZ W DÓŁ-TYŁ NA PIĘTY!</text>` : ''}
-        ${stepNum === 4 ? `<path d="${isL ? 'M 240 135 Q 240 70 335 90' : 'M 240 135 Q 240 70 145 90'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="215" fill="#10b981" font-size="11.5" font-weight="900" text-anchor="middle">🟢 PÓŁKOLE ${isL ? 'LEWĄ' : 'PRAWĄ'} STOPĄ OD WEWNĄTRZ!</text>` : ''}
+        <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+        <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+        <circle cx="205" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="205" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
+        <circle cx="275" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="275" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
+        ${stepNum >= 2 ? `<circle cx="240" cy="145" r="19" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="240" y="149" fill="#000" font-size="8.5" font-weight="900" text-anchor="middle">DOSTAWNA</text>` : ''}
+        ${stepNum >= 3 ? `<path d="M 240 65 L 240 25" fill="none" stroke="#f97316" stroke-width="5" marker-end="url(#arrOrange)"/><text x="240" y="20" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 WCIŚNIJ RYWALA W DÓŁ-TYŁ NA PIĘTY!</text>` : ''}
+        ${stepNum === 4 ? `<path d="${!isRight ? 'M 240 125 Q 235 65 135 85' : 'M 240 125 Q 245 65 345 85'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="222" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 PÓŁKOLE ${!isRight ? 'LEWĄ NOGĄ ZA PRAWĄ RYWALA' : 'PRAWĄ NOGĄ ZA LEWĄ RYWALA'}!</text>` : ''}
       `;
     }
-    // 3. MECHANIKA: SWEEP (Boczne podcięcia i blokady stóp: De-ashi-barai, Sasae, Hiza-guruma, Okuri-ashi)
+    // 3. SWEEP & KOUCHI (Wycięcia podeszwą stopy: De-ashi-barai, Kouchi-gari, Sasae, Hiza-guruma)
     else if (mechType === 'sweep') {
-      const titles = [
-        "KROK 1/4 (Dystans i Chwyt): Stań przed 2 klapkami, wepnij kołnierz i trzymaj ręce jak kierownicę",
-        S_TXT("KROK 2/4 (Kierownica Rąk!): Najpierw PRAWA ręka wciska rękaw ostro w dół, a LEWA prowadzi kołnierz!", "KROK 2/4 (Kierownica Rąk!): LEWA ręka wciska rękaw ostro w dół!"),
-        S_TXT("KROK 3/4 (Krok Boczny i Ustawienie Stopy): Skręć LEWĄ stopę bokiem jak łyżwę/miotłę (podeszwa patrzy na klapek!)", "KROK 3/4: Skręć PRAWĄ stopę bokiem jak łyżwę/miotłę!"),
-        S_TXT("KROK 4/4 (Zamiecenie / Blokada): Zamieć klapek podeszwą LEWEJ stopy po samej podłodze!", "KROK 4/4: Zamieć klapek podeszwą PRAWEJ stopy po podłodze!")
-      ];
-      const descs = [
-        "Ustaw 2 klapki przed sobą. Stój lekko na śródstopiu (nie na sztywnych piętach!).",
-        "Kluczowy moment z Twoich filmów: zanim ruszysz nogą, przekręć ręce jak kierownicę roweru – wciśnij rękaw w dół, żeby dociążyć stopę rywala!",
-        S_TXT("Zrób krok boczny PRAWĄ nogą, a LEWĄ stopę skręć bokiem tak, aby mały palec szorował po podłodze, a cała podeszwa była skierowana w bok klapka!", "Zrób krok boczny LEWĄ nogą i skręć PRAWĄ stopę bokiem!"),
-        S_TXT("Przesuń klapek podeszwą LEWEJ stopy po łuku (jakbyś zamiatał miotłą po dywanie, a nie kopał piłkę czubkiem buta)!", "Przesuń klapek podeszwą PRAWEJ stopy po łuku!")
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
+      stepTitle = `KROK ${stepNum}/4 (Praca Podeszwą Stopy + Kierownica Rąk): Najpierw dociąż stopę rękoma, potem zamieć podeszwą!`;
+      stepDesc = !isRight
+        ? "Zasada Lustra: Twoja LEWA stopa skręca się bokiem (jak łyżwa/miotła) i atakuje PRAWĄ nogę rywala (w De-ashi-barai, Sasae i Hiza-guruma) lub skręcona w łyżeczkę wycina od środka piętę w Kouchi-gari!"
+        : "Twoja PRAWA stopa skręca się bokiem i podeszwą atakuje LEWĄ kostkę/kolano rywala po wcześniejszym wciśnięciu rękawa w dół!";
       svgContent = `
-        <rect x="145" y="75" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="172" y="95" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE PRAWA</text>
-        <rect x="280" y="75" width="55" height="32" rx="12" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="307" y="95" fill="#fff" font-size="10" font-weight="900" text-anchor="middle">UKE LEWA</text>
-        <circle cx="${isL ? 285 : 195}" cy="175" r="20" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="${isL ? 285 : 195}" y="179" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">PODPORA</text>
-        ${stepNum >= 2 ? `<path d="M 190 45 Q 240 25 290 55" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/><text x="240" y="24" fill="#f97316" font-size="10.5" font-weight="900" text-anchor="middle">🟠 KIEROWNICA RĄK (RĘKAW W DÓŁ)!</text>` : ''}
-        ${stepNum >= 3 ? `<path d="${isL ? 'M 220 180 Q 130 135 168 95' : 'M 260 180 Q 350 135 312 95'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="222" fill="#10b981" font-size="11.5" font-weight="900" text-anchor="middle">🟢 PODESZWA STOPY ZAMIATA KLAPEK PO ŁUKU!</text>` : ''}
+        <rect x="130" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+        <rect x="274" y="65" width="76" height="32" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="85" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+        <circle cx="195" cy="185" r="20" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="195" y="189" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK L</text>
+        <circle cx="285" cy="185" r="20" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="285" y="189" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">TYMEK P</text>
+        ${stepNum >= 2 ? `<path d="M 185 42 Q 240 22 295 48" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/><text x="240" y="22" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 1. KIEROWNICA RĄK (RĘKAW W DÓŁ)!</text>` : ''}
+        ${stepNum >= 3 ? `<path d="${!isRight ? 'M 195 165 Q 130 125 168 97' : 'M 285 165 Q 350 125 312 97'}" fill="none" stroke="#10b981" stroke-width="6" marker-end="url(#arrGreen)"/><text x="240" y="222" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 2. PODESZWA STOPY ZAMIATA PO MACIE!</text>` : ''}
       `;
     }
-    // 4. MECHANIKA: ROT1 (Rzuty obrotowe na 1 nodze podporowej: Uchi-mata, Harai-goshi, Hane-goshi, Ashi-guruma)
+    // 4. ROT1 (Rzuty obrotowe na 1 nodze podporowej: Uchi-mata, Harai-goshi, Hane-goshi, Ashi-guruma)
     else if (mechType === 'rot1') {
       const titles = [
-        "KROK 1/4 (Trójkąt przed Klapkami): 2 klapki tworzą podstawę trójkąta (▲) – stoisz przed wierzchołkiem",
-        S_TXT("KROK 2/4 (Wskok w Czubek + Zegarek): LEWA stopa w czubek trójkąta (▲) + PRAWA ręka ciągnie rękaw do PRAWEGO ucha!", "KROK 2/4: PRAWA stopa w czubek trójkąta + LEWA ręka ciągnie rękaw do LEWEGO ucha!"),
-        S_TXT("KROK 3/4 (Oś Obrotu): Dostaw PRAWĄ stopę w środku trójkąta i obróć biodra o 180° (stoisz na PRAWEJ nodze!)", "KROK 3/4: Dostaw LEWĄ stopę jako Oś Obrotu i obróć się o 180°!"),
-        S_TXT("KROK 4/4 (Huśtawka Kake): Głowa nurkuje nisko do kolana = LEWA noga strzela wysoko w sufit!", "KROK 4/4: Głowa do kolana = PRAWA noga strzela wysoko w sufit!")
+        "KROK 1/4 (Trójkąt przed Stopami Rywala): Stopy rywala tworzą podstawę trójkąta (▲), Ty stoisz na dole",
+        !isRight ? "KROK 2/4 (Czubek + Zegarek): LEWA stopa w czubek trójkąta + PRAWA ręka ciągnie rękaw do PRAWEGO ucha!" : "KROK 2/4: PRAWA stopa w czubek trójkąta + LEWA ręka ciągnie rękaw do LEWEGO ucha!",
+        !isRight ? "KROK 3/4 (Oś Obrotu): Dostaw PRAWĄ stopę na ugiętym kolanie w środku trójkąta i obróć się o 180°!" : "KROK 3/4: Dostaw LEWĄ stopę jako Oś Obrotu i obróć się o 180°!",
+        !isRight ? "KROK 4/4 (Huśtawka Kake): Głowa nurkuje do kolana = LEWA noga strzela wysoko w sufit!" : "KROK 4/4: Głowa do kolana = PRAWA noga strzela wysoko w sufit!"
       ];
-      const descs = [
-        "Ułóż 2 klapki na szerokość barków, a 30 cm przed nimi wyobraź sobie czubek trójkąta (▲).",
-        S_TXT("Postaw LEWĄ stopę w czubku trójkąta (lekko skręconą) i jednocześnie wyrwij PRAWĄ ręką rękaw wysoko do swojego PRAWEGO ucha ('spójrz na zegarek'!), a LEWĄ ręką podbij kołnierz!", "Postaw PRAWĄ stopę w czubku trójkąta i wyrwij rękaw do LEWEGO ucha!"),
-        S_TXT("Dostaw PRAWĄ stopę w środek trójkąta na ugiętym kolanie i obróć się tyłem do klapków. Cały Twój ciężar spoczywa stabilnie na ugiętej PRAWEJ nodze!", "Dostaw LEWĄ stopę na ugiętym kolanie jako oś obrotu!"),
-        S_TXT("Zasada huśtawki: opuść głowę i barki nisko w dół do prawego kolana, a prostą LEWĄ nogę wystrzel wysoko w tył-górę!", "Opuść głowę do kolana i wystrzel PRAWĄ nogę wysoko w górę!")
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
-      const pivX = isL ? 265 : 215;
+      stepTitle = titles[stepNum - 1];
+      stepDesc = currentStance === 'tourney'
+        ? "🏆 WARIANT Z ZAWODÓW (Stojąc bokiem z 1 ręką na lewym kołnierzu): Jeśli trzymasz lewy kołnierz i kręcisz się w lewo na PRAWĄ nogę – LEWA ręka z kołnierzem ciągnie do LEWEGO ucha, wolna PRAWA ręka uderza pod prawą pachę rywala, stoisz na LEWEJ nodze i wyrzucasz PRAWĄ nogę!"
+        : "Zasada Huśtawki: najpierw wyrwij rękaw wysoko do ucha ('Zegarek'), stań stabilnie na ugiętej nodze podporowej w środku trójkąta, opuść głowę do kolana i wystrzel drugą nogę pod sufit!";
       svgContent = `
-        <polygon points="150,70 330,70 240,185" fill="rgba(0,240,255,0.09)" stroke="#00f0ff" stroke-width="2.5"/>
-        <rect x="135" y="55" width="52" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="161" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">UKE P</text>
-        <rect x="293" y="55" width="52" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="319" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">UKE L</text>
-        <circle cx="240" cy="125" r="19" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="240" y="129" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">1.CZUBEK</text>
-        ${stepNum >= 2 ? `<path d="${isL ? 'M 280 85 Q 375 105 355 180' : 'M 200 85 Q 105 105 125 180'}" fill="none" stroke="#f97316" stroke-width="4.5" marker-end="url(#arrOrange)"/><text x="${isL ? 395 : 85}" y="140" fill="#f97316" font-size="10" font-weight="900" text-anchor="middle">🟠 ZEGAREK!</text>` : ''}
-        ${stepNum >= 3 ? `<circle cx="${pivX}" cy="152" r="22" fill="#10b981" stroke="#facc15" stroke-width="2.5"/><text x="${pivX}" y="156" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">2.OŚ (${isL ? 'P' : 'L'})</text>` : ''}
-        ${stepNum === 4 ? `<path d="M ${isL ? 210 : 270} 195 L 240 45" fill="none" stroke="#a855f7" stroke-width="6" marker-end="url(#arrPurple)"/><text x="240" y="225" fill="#a855f7" font-size="11.5" font-weight="900" text-anchor="middle">🚀 WYSTRZAŁ ${isL ? 'LEWEJ' : 'PRAWEJ'} NOGI W SUFIT!</text>` : ''}
+        <polygon points="150,70 330,70 240,175" fill="rgba(0,240,255,0.09)" stroke="#00f0ff" stroke-width="2.5"/>
+        <rect x="130" y="55" width="76" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+        <rect x="274" y="55" width="76" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+        <circle cx="195" cy="195" r="18" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="195" y="199" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">TYMEK L</text>
+        <circle cx="285" cy="195" r="18" fill="#eab308" stroke="#fff" stroke-width="2"/><text x="285" y="199" fill="#000" font-size="9" font-weight="900" text-anchor="middle">TYMEK P</text>
+        ${stepNum >= 2 ? `<circle cx="240" cy="122" r="18" fill="#0284c7" stroke="#fff" stroke-width="2"/><text x="240" y="126" fill="#fff" font-size="8.5" font-weight="900" text-anchor="middle">1.CZUBEK</text>` : ''}
+        ${stepNum >= 3 ? `<circle cx="${!isRight ? 265 : 215}" cy="148" r="21" fill="#10b981" stroke="#facc15" stroke-width="2.5"/><text x="${!isRight ? 265 : 215}" y="152" fill="#000" font-size="9" font-weight="900" text-anchor="middle">2.OŚ</text>` : ''}
+        ${stepNum === 4 ? `<path d="M 240 175 L 240 42" fill="none" stroke="#a855f7" stroke-width="6" marker-end="url(#arrPurple)"/><text x="240" y="226" fill="#a855f7" font-size="10.5" font-weight="900" text-anchor="middle">🚀 GŁOWA DO KOLANA = NOGA W SUFIT!</text>` : ''}
       `;
     }
-    // 5. MECHANIKA: ROT2 (Rzuty obrotowe na 2 ugiętych nogach: Seoi-nage, O-goshi, Tai-otoshi, Sode)
+    // 5. ROT2 (Rzuty obrotowe na 2 ugiętych nogach: Seoi-nage, O-goshi, Tai-otoshi, Sode)
     else if (mechType === 'rot2') {
-      const titles = [
-        "KROK 1/4 (Trójkąt Wejścia): Stań przed 2 klapkami – przygotuj uchwyt rękawa i kołnierza",
-        S_TXT("KROK 2/4 (Otwarcie + Łokieć pod Pachę): LEWA stopa w czubek trójkąta (▲) + wyrwij rękaw w górę i wkręć LEWY łokieć!", "KROK 2/4: PRAWA stopa w czubek trójkąta + wkręć PRAWY łokieć pod pachę!"),
-        S_TXT("KROK 3/4 (Obrót 180° na 2 Ugięte Kolana): Dostaw PRAWĄ stopę – stoisz na OBU ugiętych nogach tyłem do klapków!", "KROK 3/4: Dostaw LEWĄ stopę – stoisz na OBU ugiętych nogach!"),
-        "KROK 4/4 (Winda + Skłon Kake): Wyprostuj dynamicznie kolana jak sprężynę i ściągnij ręce do podłogi!"
-      ];
-      const descs = [
-        "Ustaw 2 klapki na szerokość barków rywala. Twoje stopy stoją przed wierzchołkiem trójkąta (▲).",
-        S_TXT("Wskocz LEWĄ stopą w czubek trójkąta, PRAWĄ ręką pociągnij rękaw wysoko w górę (otwierasz klatkę rywala!), a LEWY łokieć wbij głęboko pod jego pachę (lub na pas w O-goshi)!", "Wskocz PRAWĄ stopą w trójkąt, pociągnij rękaw w górę i wbij PRAWY łokieć pod pachę!"),
-        "Dostaw drugą stopę równolegle wewnątrz trójkąta (w Tai-otoshi szeroko przed kostką na palcach!). Obie nogi są mocno ugięte w kolanach, a Twoje plecy są wyprostowane!",
-        "Wyprostuj dynamicznie oba kolana w górę i jednocześnie zrób głęboki skłon głową w dół, ściągając obie ręce przed swoje palce stóp!"
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
+      stepTitle = `KROK ${stepNum}/4 (Wejście Obrotowe na 2 Ugięte Nogi): Wskok w trójkąt (▲) poniżej pasa rywala + wyprost kolan!`;
+      stepDesc = "1. Wyrwij rękaw wysoko w górę (otwierasz pachy rywala!) ➔ 2. Wkręć łokieć głęboko pod pachę (lub obejmij pas w O-goshi) ➔ 3. Wskocz na DWA mocno ugięte kolana (w Tai-otoshi wystaw nogę szeroko na palcach przed kostką rywala!) ➔ 4. Wyprostuj kolana ze skłonem!";
       svgContent = `
-        <polygon points="145,70 335,70 240,185" fill="rgba(250,204,21,0.09)" stroke="#facc15" stroke-width="2.5"/>
-        <rect x="135" y="55" width="52" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="161" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">UKE P</text>
-        <rect x="293" y="55" width="52" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="319" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">UKE L</text>
-        <circle cx="205" cy="142" r="21" fill="#0284c7" stroke="#fff" stroke-width="2.5"/><text x="205" y="146" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA</text>
-        <circle cx="275" cy="142" r="21" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="275" y="146" fill="#000" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA</text>
-        <path d="M 240 120 L 240 215" fill="none" stroke="#10b981" stroke-width="5.5" marker-end="url(#arrGreen)"/>
-        <text x="240" y="232" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟢 PRZYSIAD NA 2 NOGACH W TRÓJKĄCIE ➔ WYPROST KOLAN!</text>
+        <polygon points="145,70 335,70 240,175" fill="rgba(250,204,21,0.09)" stroke="#facc15" stroke-width="2.5"/>
+        <rect x="130" y="55" width="76" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="168" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">PRAWA RYWALA</text>
+        <rect x="274" y="55" width="76" height="30" rx="10" fill="#ef4444" stroke="#fff" stroke-width="2"/><text x="312" y="74" fill="#fff" font-size="9.5" font-weight="900" text-anchor="middle">LEWA RYWALA</text>
+        <circle cx="205" cy="138" r="20" fill="#0284c7" stroke="#fff" stroke-width="2.5"/><text x="205" y="142" fill="#fff" font-size="9" font-weight="900" text-anchor="middle">LEWA</text>
+        <circle cx="275" cy="138" r="20" fill="#eab308" stroke="#fff" stroke-width="2.5"/><text x="275" y="142" fill="#000" font-size="9" font-weight="900" text-anchor="middle">PRAWA</text>
+        <path d="M 240 120 L 240 205" fill="none" stroke="#10b981" stroke-width="5.5" marker-end="url(#arrGreen)"/>
+        <text x="240" y="225" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟢 PRZYSIAD NA 2 NOGACH ➔ WYPROST KOLAN!</text>
       `;
     }
-    // 6. MECHANIKA: NEWAZA (Parter – Trzymania, Wyjścia Mostem/Krewetką, Obracanie Żółwia – ZERO TRÓJKĄTA STÓJKOWEGO!)
+    // 6. NEWAZA (Parter – 100% na dywanie z poduszką, ZERO gum i ZERO trójkątów stójkowych!)
     else {
-      const titles = [
-        "KROK 1/4 (Baza na Dywanie): Połóż poduszkę jako rywala – w parterze NIE używamy gum do rzutów stójkowych!",
-        "KROK 2/4 (Kontrola Łokcia i Głowy): Zamknij ramię pod pachą (uniesione 5 cm nad matę!) i schowaj głowę nisko",
-        "KROK 3/4 (Wyjście z Dolu – Most Upa): Wbij pięty pod pośladki i wypchnij biodra wysoko przez bark!",
-        "KROK 4/4 (Krewetka Ebi & Kleszcze): Cofnij biodra w tył i wsuń kolano pod brzuch rywala!"
-      ];
-      const descs = [
-        "W parterze (Ne-waza) ćwiczymy na dywanie lub macie z dużą poduszką/wałkiem. Z góry budujesz szeroką bazę nóg, a z dołu przyklejasz łokcie ciasno do własnych żeber!",
-        "Gdy trzymasz z góry: unieś łokieć rywala o 5 cm nad podłogę (żeby nie mógł zrobić Mostu!) i chodź stopami po dywanie jak pająk!",
-        "Gdy uciekasz z dołu: przyciągnij pięty pod same pośladki, schowaj łokcie i wypchnij biodra eksplozywnie w górę przez bark (Most Upa)!",
-        "Od razu po Moście odepchnij się stopami, wysuń biodra w tył (Krewetka / Ebi) i wbij swoje kolano w powstałą lukę pod brzuch rywala!"
-      ];
-      stepTitle = titles[stepNum - 1]; stepDesc = descs[stepNum - 1];
+      stepTitle = `KROK ${stepNum}/4 (Parter Ne-waza na Dywanie): 1. Szeroka Baza & Uniesienie Łokcia 5 cm ⇄ 2. Most Upa & Krewetka Ebi!`;
+      stepDesc = "W parterze ćwiczymy na dywanie z poduszką. Z góry: unieś łokieć rywala o 5 cm nad matę i chodź stopami jak pająk. Z dołu: wbij pięty pod pośladki, zrób Most (Upa) przez bark, ucieknij biodrami w Krewetkę (Ebi) i wsuń kolano pod brzuch!";
       svgContent = `
-        <rect x="195" y="55" width="90" height="125" rx="18" fill="rgba(239,68,68,0.28)" stroke="#ef4444" stroke-width="2.5"/>
-        <text x="240" y="120" fill="#fff" font-size="11" font-weight="900" text-anchor="middle">PODUSZKA / UKE</text>
-        <polygon points="95,175 195,95 195,170" fill="rgba(0,240,255,0.2)" stroke="#00f0ff" stroke-width="2.5"/>
-        <text x="155" y="150" fill="#00f0ff" font-size="10" font-weight="900" text-anchor="middle">BAZA TYMKA</text>
-        <path d="M 240 155 Q 345 115 305 60" fill="none" stroke="#f97316" stroke-width="5" marker-end="url(#arrOrange)"/>
-        <text x="240" y="222" fill="#10b981" font-size="11" font-weight="900" text-anchor="middle">🟠 1. MOST W GÓRĘ (UPA) ➔ 🟢 2. KREWETKA (EBI) ➔ 3. KOLANO POD BRZUCH!</text>
+        <rect x="195" y="55" width="90" height="120" rx="18" fill="rgba(239,68,68,0.28)" stroke="#ef4444" stroke-width="2.5"/>
+        <text x="240" y="118" fill="#fff" font-size="10.5" font-weight="900" text-anchor="middle">PODUSZKA / UKE</text>
+        <polygon points="95,170 195,95 195,165" fill="rgba(0,240,255,0.2)" stroke="#00f0ff" stroke-width="2.5"/>
+        <text x="155" y="148" fill="#00f0ff" font-size="9.5" font-weight="900" text-anchor="middle">BAZA TYMKA</text>
+        <path d="M 240 150 Q 345 110 305 58" fill="none" stroke="#f97316" stroke-width="5" marker-end="url(#arrOrange)"/>
+        <text x="240" y="222" fill="#10b981" font-size="10.5" font-weight="900" text-anchor="middle">🟠 1. MOST (UPA) ➔ 🟢 2. KREWETKA (EBI) ➔ 3. KOLANO POD BRZUCH!</text>
       `;
     }
 
     return `
       <div class="step-simulator-card">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
-          <strong style="color:var(--gold); font-size:0.86rem;">🎬 Boiskowy Symulator Ruchu z Lotu Ptaka (Krok ${stepNum} z 4)</strong>
-          <span style="font-size:0.73rem; color:var(--blue); font-weight:800;">Dotknij planszy lub przycisku 1➔4 poniżej!</span>
+          <strong style="color:var(--gold); font-size:0.85rem;">🎬 Boiskowy Symulator Ruchu z Lotu Ptaka (Krok ${stepNum} z 4)</strong>
+          <span style="font-size:0.72rem; color:var(--blue); font-weight:800;">Dotknij planszy lub kroku 1➔4!</span>
         </div>
         <div class="sim-svg-stage" onclick="nextSimStep()">
-          <svg viewBox="0 0 480 240" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 480 238" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#10b981"/></marker>
               <marker id="arrOrange" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f97316"/></marker>
@@ -771,16 +781,16 @@
             <line x1="0" y1="60" x2="480" y2="60" stroke="rgba(255,255,255,0.06)"/>
             <line x1="0" y1="120" x2="480" y2="120" stroke="rgba(255,255,255,0.06)"/>
             <line x1="0" y1="180" x2="480" y2="180" stroke="rgba(255,255,255,0.06)"/>
-            <line x1="240" y1="0" x2="240" y2="240" stroke="rgba(255,255,255,0.1)" stroke-dasharray="4,4"/>
+            <line x1="240" y1="0" x2="240" y2="238" stroke="rgba(255,255,255,0.1)" stroke-dasharray="4,4"/>
             ${svgContent}
           </svg>
         </div>
-        <div style="margin-top:8px; padding:10px 12px; background:#0d1528; border-left:4px solid var(--gold); border-radius:8px; font-size:0.83rem;">
+        <div style="margin-top:8px; padding:10px 12px; background:#0d1528; border-left:4px solid var(--gold); border-radius:8px; font-size:0.82rem;">
           🎯 <strong>${stepTitle}:</strong><br>${stepDesc}
         </div>
         <div class="sim-controls-grid">
-          <button class="cam-btn ${stepNum === 1 ? 'active' : ''}" onclick="setSimStep(1)">1️⃣ Krok 1: Start & Dystans</button>
-          <button class="cam-btn ${stepNum === 2 ? 'active' : ''}" onclick="setSimStep(2)">2️⃣ Krok 2: Wejście Stopy #1</button>
+          <button class="cam-btn ${stepNum === 1 ? 'active' : ''}" onclick="setSimStep(1)">1️⃣ Krok 1: Start & Lustro</button>
+          <button class="cam-btn ${stepNum === 2 ? 'active' : ''}" onclick="setSimStep(2)">2️⃣ Krok 2: Stopa Podporowa</button>
           <button class="cam-btn ${stepNum === 3 ? 'active' : ''}" onclick="setSimStep(3)">3️⃣ Krok 3: Wychylenie Rąk</button>
           <button class="cam-btn ${stepNum === 4 ? 'active' : ''}" onclick="setSimStep(4)">4️⃣ Krok 4: Rzut / Finisz!</button>
         </div>
@@ -792,8 +802,7 @@
   function nextSimStep() { currentSimStep = currentSimStep >= 4 ? 1 : currentSimStep + 1; renderKodokanMasterCard(currentAnatomyTab, currentSimStep); }
 
   /*************************************************************************
-   * 3. 100% MERYTORYCZNY GENERATOR 42 TECHNIK KODOKAN (6 ODRĘBNYCH BIOMECHANIK!)
-   *    Kolejność nauki: 1. NOGI NA SUCHO -> 2. WYCHYLENIE & CHWYT -> 3. POŁĄCZENIE -> 4. BLOK & KONTRA
+   * 3. BAZA 42 TECHNIK KODOKAN (ZWERYFIKOWANA GEOMETRIA + TRYB ZAWODÓW BOKIEM!)
    *************************************************************************/
   const BELT_LABELS = {
     6: "⚪ 6 Kyu (Biały Pas)",
@@ -804,343 +813,427 @@
     3: "🟢 3 Kyu (Zielony Pas)"
   };
 
-  function buildTechStations(name, mechType, feetL, kuzushiL, gripL) {
+  function buildTechStations(name, mechType) {
     if (mechType === 'osoto') {
       return {
-        st1_legs: `🦵 STACJA 1 – NAJPIERW NOGI NA SUCHO (3x 12 powt. przy 2 klapkach – BEZ GUMY!):\n1. Połóż 2 klapki jako stopy rywala. Stań przed nimi (w tej technice NIE wchodzisz w trójkąt między stopy!).\n2. Zrób głęboki krok nogą podporową NA ZEWNĄTRZ obok klapka rywala (Twoja stopa mija linię jego stóp!).\n3. Przenieś drugą nogę prosto w przód za klapek i wytnij ostro w tył jak wahadło, pochylając klatkę i głowę w przód!`,
-        st2_kuzushi: `🟡 STACJA 2 – DOKŁADNE WYCHYLENIE (KUZUSHI) & WPIĘCIE KOŁNIERZA NA GUMACH (3x 15 powt.):\n1. Zrób 'Dwuklik': złap rękaw gumy, a drugą dłoń wepnij wysoko w kołnierz przy szyi/obojczyku rywala.\n2. Ręką z rękawem ściągnij gumę mocno w dół do swojego brzucha/biodra!\n3. Jednocześnie ręką na kołnierzu wbij wyobrażony bark rywala w dół-tył (na jego tylną piętę) i przyklej swoją klatkę do jego klatki!`,
-        st3_combo: `🌪️ STACJA 3 – POŁĄCZENIE (NOGI + WYCHYLENIE W CAŁYM RZUCIE – 4x 10 powt.):\nW jednym płynnym ruchu: 1. Wepnij kołnierz i ściągnij rękaw do brzucha ➔ 2. Postaw nogę podporową NA ZEWNĄTRZ obok klapka ➔ 3. Wytnij drugą nogą w tył z pełnym napięciem gumy (10x lewa strona, 6x prawa)!`,
-        st4_mob: `💪🧘‍♂️ STACJA 4 – SIŁA & ROZCIĄGANIE POD TEN RZUT:\n• 15 wysokich wymachów nogą w przód i w tył przy ścianie (wahadło biodra pod O-soto) + 3x 8 wyjazdów kółkiem Ab Wheel!`
+        st1_legs: `🦵 KROK 1 – NOGI NA SUCHO PRZY KLAPKACH (3x 12 powt. – BEZ TRÓJKĄTA!):\n1. Połóż 2 klapki jako stopy rywala. Pamiętaj o lustrze: po Twojej lewej stronie leży PRAWA stopa rywala!\n2. Dla Lewego O-soto-gari: postaw swoją PRAWĄ stopę NA ZEWNĄTRZ obok PRAWEGO klapka rywala (po swojej lewej stronie!).\n3. Przenieś swoją LEWĄ nogę przodem za ten klapek i wytnij ostro w tył jak wahadło, jadąc głową i klatką w przód!`,
+        st2_kuzushi: `🟡 KROK 2 – DOKŁADNE WYCHYLENIE (KUZUSHI) NA GUMACH (3x 15 powt.):\n1. Wepnij lewą dłoń w kołnierz przy szyi rywala, prawą złap rękaw.\n2. PRAWĄ ręką ściągnij rękaw mocno w dół do własnego brzucha!\n3. Jednocześnie LEWĄ ręką na kołnierzu wbij bark rywala w dół-tył na jego prawą piętę i przyklej swoją klatkę do jego klatki!`,
+        st3_combo: `🌪️ KROK 3 – POŁĄCZENIE + WARIANT Z ZAWODÓW (4x 10 powt.):\n• Klasycznie: Dwuklik ➔ Krok podporowy obok klapka + ściągnięcie rękawa do brzucha ➔ Wahadło nogą w tył!\n• 🏆 Na zawodach (stojąc bokiem z 1 ręką na kołnierzu): pociągnij kołnierz w dół, zrób niski przeskok nogą podporową za stopę rywala i od razu zahacz/wytnij nogę!`,
+        st4_mob: `💪🧘‍♂️ KROK 4 – SIŁA & ROZCIĄGANIE:\n• 15 wysokich wymachów nogą w przód i w tył przy ścianie + 3x 8 wyjazdów kółkiem Ab Wheel!`
       };
     }
     if (mechType === 'ouchi') {
       return {
-        st1_legs: `🦵 STACJA 1 – NAJPIERW NOGI NA SUCHO (Krok Dostawny Tsugi-ashi przy klapkach – 3x 15 powt.):\n1. Stań przed 2 klapkami. Podciągnij tylną stopę blisko za swoją przednią piętę (krok dostawny Tsugi-ashi – NIGDY nie krzyżuj nóg!).\n2. Wsuń nogę podcinającą między klapki i szorując palcami stopy po samej podłodze narysuj szerokie półkole (w O-uchi) lub wytnij piętę małą łyżeczką (w Kouchi)!`,
-        st2_kuzushi: `🟡 STACJA 2 – DOKŁADNE WYCHYLENIE (WCIŚNIĘCIE W DÓŁ-TYŁ NA PIĘTY – 3x 15 powt. na gumach):\n1. Wepnij dłoń w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!), drugą złap rękaw.\n2. UWAGA: W tym rzucie NIE ciągnij gumy na siebie! Pchnij i wciśnij kołnierz oraz rękaw ostro w dół-tył, tak jakbyś chciał wbić pięty rywala w podłogę!`,
-        st3_combo: `🌪️ STACJA 3 – POŁĄCZENIE (WCIŚNIĘCIE RĄK + KROK DOSTAWNY + WYCIĘCIE – 4x 12 powt.):\n1. Dwuklik (Rękaw ➔ Wepnij kołnierz) ➔ 2. Wciśnij ręce w dół-tył ➔ 3. Krok dostawny i błyskawiczne półkole stopą po podłodze!`,
-        st4_mob: `💪🧘‍♂️ STACJA 4 – MOBILNOŚĆ BIODER POD PODCIĘCIA WEWNĘTRZNE:\n• 12 przekładań kolan w siadzie 90/90 na dywanie + 30s rozciągania w pozycji 'Żabki' (otwiera biodra do głębokiego O-uchi-gari!).`
+        st1_legs: `🦵 KROK 1 – NOGI NA SUCHO (Krok Dostawny Tsugi-ashi – 3x 15 powt.):\n1. Stań przed 2 klapkami. Podciągnij tylną stopę blisko za swoją przednią piętę (krok dostawny – nie krzyżuj nóg!).\n2. Wsuń LEWĄ stopę między klapki i szorując palcami po podłodze narysuj szerokie półkole w lewo za PRAWYM klapkiem rywala!`,
+        st2_kuzushi: `🟡 KROK 2 – DOKŁADNE WYCHYLENIE (Wciśnięcie w dół-tył na pięty – 3x 15 powt.):\n1. Wepnij lewą dłoń w kołnierz (3 dolne palce, łokieć w dół na mostku!), prawą złap rękaw.\n2. NIE ciągnij gumy na siebie! Wciśnij kołnierz i rękaw ostro w dół i w tył, jakbyś chciał wbić pięty rywala w podłogę!`,
+        st3_combo: `🌪️ KROK 3 – POŁĄCZENIE + WARIANT Z ZAWODÓW BOKIEM (4x 12 powt.):\n• Klasycznie: Wciśnij ręce w dół-tył ➔ Krok dostawny ➔ Półkole stopą po macie.\n• 🏆 Na zawodach (stojąc lewym bokiem z 1 ręką na kołnierzu): Twoja lewa noga jest już z przodu! Wciśnij gwałtownie kołnierz w dół i bez robienia długiego kroku od razu wejdź przednią (lewą) nogą między nogi rywala!`,
+        st4_mob: `💪🧘‍♂️ KROK 4 – MOBILNOŚĆ BIODER:\n• 12 przekładań kolan w siadzie 90/90 na dywanie + 30s rozciągania w pozycji 'Żabki'.`
       };
     }
     if (mechType === 'sweep') {
       return {
-        st1_legs: `🦵 STACJA 1 – NAJPIERW STOPY NA SUCHO („Łyżwa / Miotła” przy klapkach – 3x 15 powt.):\n1. Połóż 2 klapki przed sobą. Podejdź krokiem bocznym na lekko ugiętych kolanach.\n2. Skręć stopę podcinającą bokiem (jak łyżwę!) tak, aby mały palec dotykał podłogi, a cała podeszwa patrzyła w bok klapka.\n3. Przesuwaj klapek całą podeszwą stopy po podłodze (zamiataj jak miotłą, nie kop czubkiem palców!).`,
-        st2_kuzushi: `🟡 STACJA 2 – DOKŁADNE WYCHYLENIE („Kierownica Roweru” na gumach – 3x 15 powt.):\n1. Wepnij kołnierz i złap rękaw na wysokości klatki.\n2. Przekręć obie ręce jak kierownicę roweru: ręka na rękawie wciska ostro w dół (dociąża stopę rywala!), a ręka na kołnierzu prowadzi bark po łuku!`,
-        st3_combo: `🌪️ STACJA 3 – POŁĄCZENIE (NAJPIERW KIEROWNICA W DÓŁ ➔ W TEJ SAMEJ SEKUNDZIE STOPA! – 4x 12 powt.):\nNaprawa błędu z filmu 1:25: w ułamku sekundy najpierw wciśnij rękaw gumy ostro w dół i dokładnie w tym samym momencie zamieć klapek podeszwą stopy!`,
-        st4_mob: `💪🧘‍♂️ STACJA 4 – STAWY SKOKOWE & SZYBKIE PRZEDRAMIONA:\n• Krążenia kostek z dociskaniem krawędzi stopy + 20s szybka 'Pompka Przechwytów' na kołnierzu gumy!`
+        st1_legs: `🦵 KROK 1 – STOPY NA SUCHO („Łyżwa / Miotła” lub „Łyżeczka” – 3x 15 powt.):\n1. Połóż 2 klapki przed sobą. Podejdź krokiem bocznym na ugiętych kolanach.\n2. Skręć LEWĄ stopę bokiem (podeszwa patrzy w prawo, mały palec dotyka podłogi!) i przesuwaj klapek całą podeszwą po dywanie (w Kouchi-gari wycinasz piętę LEWEJ nogi rywala, a w De-ashi-barai/Sasae atakujesz PRAWĄ kostkę rywala!).`,
+        st2_kuzushi: `🟡 KROK 2 – DOKŁADNE WYCHYLENIE („Kierownica Roweru” na gumach – 3x 15 powt.):\n1. Wepnij kołnierz i złap rękaw.\n2. Zanim ruszysz nogą, przekręć ręce jak kierownicę roweru: ręka na rękawie wciska ostro w dół (dociąża stopę rywala!), a ręka na kołnierzu prowadzi bark!`,
+        st3_combo: `🌪️ KROK 3 – POŁĄCZENIE + WARIANT Z ZAWODÓW BOKIEM (4x 12 powt.):\n• Naprawa błędu z filmu 1:25: najpierw wciśnij rękaw w dół, a w tym samym ułamku sekundy zamieć stopą!\n• 🏆 Na zawodach (stojąc bokiem z 1 ręką na kołnierzu): chodź z rywalem po kole, szarpnij samym kołnierzem w dół i w tej samej sekundzie wytnij jego przednią stopę swoją przednią nogą!`,
+        st4_mob: `💪🧘‍♂️ KROK 4 – STAWY SKOKOWE & SZYBKIE PRZEDRAMIONA:\n• Krążenia kostek z dociskaniem krawędzi stopy + 20s szybka 'Pompka Przechwytów' na kołnierzu!`
       };
     }
     if (mechType === 'rot1') {
       return {
-        st1_legs: `🦵 STACJA 1 – NAJPIERW NOGI NA SUCHO (Wejście w Trójkąt + Jaskółka – 3x 12 powt.):\n1. Ułóż 2 klapki, a przed nimi wyobraź sobie czubek trójkąta (▲).\n2. Krok 1: Postaw pierwszą stopę w czubku trójkąta.\n3. Krok 2: Dostaw nogę podporową w środek trójkąta na ugiętym kolanie (obrót 180°).\n4. Krok 3: Pochyl głowę nisko do kolana, a drugą nogę wystrzel wysoko w sufit, utrzymując 2 sekundy równowagi na jednej nodze!`,
-        st2_kuzushi: `🟡 STACJA 2 – DOKŁADNE WYCHYLENIE („Zegarek do Ucha” na gumach – 3x 15 powt.):\n1. Wepnij dłoń w kołnierz przy obojczyku (łokieć w dół!), drugą złap rękaw przy łokciu.\n2. Zanim obrócisz stopy, wyrwij ręką z rękawem gumę wysoko po łuku do własnego ucha ('spójrz która godzina na zegarku'!), a ręką na kołnierzu podbij w górę i przytrzymaj napięcie przez 2 sekundy!`,
-        st3_combo: `🌪️ STACJA 3 – POŁĄCZENIE (WPIĘCIE ➔ ZEGAREK ➔ OBRÓT NA 1 NODZE – 4x 10 powt.):\n1. Dwuklik na gumach ➔ 2. Wskok w czubek trójkąta z wyrwaniem rękawa do ucha ➔ 3. Obrót na nodze podporowej, głowa do kolana i wystrzał nogi pod sufit!`,
-        st4_mob: `💪🧘‍♂️ STACJA 4 – ROZCIĄGANIE POD WYSOKI WYSTRZAŁ NOGI:\n• 15 dynamicznych wymachów nogą w tył-górę przy ścianie ('Jaskółka') + 2x 30s skłony w siadzie płotkarskim na mięsień dwugłowy uda!`
+        st1_legs: `🦵 KROK 1 – NOGI NA SUCHO (Wejście w Trójkąt + Jaskółka – 3x 12 powt.):\n1. Ułóż 2 klapki jako stopy rywala, a przed nimi czubek trójkąta (▲).\n2. Postaw pierwszą stopę w czubku trójkąta ➔ dostaw nogę podporową w środek na ugiętym kolanie (obrót 180°).\n3. Zasada Huśtawki: opuść głowę nisko do kolana, a drugą nogę wystrzel wysoko w sufit!`,
+        st2_kuzushi: `🟡 KROK 2 – DOKŁADNE WYCHYLENIE („Zegarek do Ucha” na gumach – 3x 15 powt.):\n1. Wepnij dłoń w kołnierz przy obojczyku, drugą złap rękaw.\n2. Zanim obrócisz stopy, wyrwij ręką z rękawem gumę wysoko po łuku do własnego ucha ('spójrz na zegarek'!), a ręką na kołnierzu podbij w górę i zatrzymaj na 2 sekundy!`,
+        st3_combo: `🌪️ KROK 3 – POŁĄCZENIE + WARIANT Z ZAWODÓW BOKIEM (4x 10 powt.):\n• Klasycznie (Lewa strona): Prawa ręka ciągnie rękaw do prawego ucha ➔ obrót w prawo na PRAWĄ nogę ➔ LEWA noga strzela w sufit!\n• 🏆 Na zawodach (Wariant Tymka z sali 0:05 – stojąc lewym bokiem z 1 ręką na lewym kołnierzu): pociągnij LEWĄ ręką kołnierz do LEWEGO ucha, wolną PRAWĄ rękę wbij pod prawą pachę rywala, wskocz na LEWĄ nogę i wystrzel PRAWĄ nogę w górę!`,
+        st4_mob: `💪🧘‍♂️ KROK 4 – ROZCIĄGANIE POD WYSOKI WYSTRZAŁ NOGI:\n• 15 wymachów nogą w tył-górę przy ścianie ('Jaskółka') + 2x 30s skłony w siadzie płotkarskim!`
       };
     }
     if (mechType === 'rot2') {
       return {
-        st1_legs: `🦵 STACJA 1 – NAJPIERW NOGI NA SUCHO (Wskok w Trójkąt na 2 Ugięte Kolana – 3x 12 powt.):\n1. Ułóż 2 klapki jako stopy rywala. Wskocz pierwszą stopą w czubek trójkąta (▲).\n2. Dostaw drugą stopę z obrotem o 180° – stoisz na DWÓCH mocno ugiętych kolanach wewnątrz trójkąta (biodra niżej niż pas rywala, plecy proste!).\n3. Wyprostuj dynamicznie kolana jak sprężynę!`,
-        st2_kuzushi: `🟡 STACJA 2 – DOKŁADNE WYCHYLENIE (Otwarcie Rękawa w Górę + Wkręcenie Łokcia – 3x 15 powt. na gumach):\n1. Wepnij dłoń w kołnierz (luźny nadgarstek!), drugą złap rękaw.\n2. Ręką z rękawem pociągnij gumę wysoko w przód-górę (otwierasz okno pod pachą rywala!).\n3. Drugą ręką wkręć łokieć głęboko pod swoją pachę (bez puszczania kołnierza w Morote-seoi lub obejmując pas w O-goshi)!`,
-        st3_combo: `🌪️ STACJA 3 – POŁĄCZENIE (DWUKLIK ➔ ŁOKIEĆ POD PACHĘ ➔ PRZYSIAD W TRÓJKĄCIE – 4x 10 powt.):\nPołącz szybkie wpięcie kołnierza, wyrwanie rękawa w górę, niski wskok na 2 ugięte nogi w trójkącie i końcowy skłon ze ściągnięciem gum do podłogi!`,
-        st4_mob: `💪🧘‍♂️ STACJA 4 – PRZYSIAD SŁOWIAŃSKI & LUŹNE BARKI:\n• 45s głęboki przysiad na całych stopach + 15 przekładań gumy nad głową na elastyczne barki + 3x 8 kółko Ab Wheel!`
+        st1_legs: `🦵 KROK 1 – NOGI NA SUCHO (Wskok w Trójkąt na 2 Ugięte Kolana – 3x 12 powt.):\n1. Wskocz pierwszą stopą w czubek trójkąta (▲) przed klapkami.\n2. Dostaw drugą stopę z obrotem o 180° – stoisz na DWÓCH mocno ugiętych kolanach (biodra niżej niż pas rywala, plecy proste!).\n3. Wyprostuj dynamicznie kolana ze skłonem!`,
+        st2_kuzushi: `🟡 KROK 2 – DOKŁADNE WYCHYLENIE (Otwarcie w Górę + Łokieć pod Pachę – 3x 15 powt.):\n1. Ręką z rękawem pociągnij gumę wysoko w przód-górę (otwierasz pachy rywala!).\n2. Drugą ręką wkręć łokieć głęboko pod pachę (bez puszczania kołnierza w Morote-seoi lub obejmując pas w O-goshi)!`,
+        st3_combo: `🌪️ KROK 3 – POŁĄCZENIE + WARIANT Z ZAWODÓW BOKIEM (4x 10 powt.):\n• Klasycznie: Dwuklik ➔ Wyrwanie rękawa + łokieć pod pachę ➔ Przysiad na 2 nogach i wyprost!\n• 🏆 Na zawodach (Katate-seoi z 1 ręki): gdy trzymasz jedną ręką kołnierz stojąc bokiem, szarpnij kołnierzem w dół, a wolną drugą rękę wbij błyskawicznie pod pachę rywala po tej samej stronie i wejdź w Ippon-seoi-nage!`,
+        st4_mob: `💪🧘‍♂️ KROK 4 – PRZYSIAD SŁOWIAŃSKI & BARKI:\n• 45s głęboki przysiad na całych stopach + 15 przekładań gumy nad głową + 3x 8 kółko Ab Wheel!`
       };
     }
-    // NEWAZA (Parter – 100% na dywanie z poduszką, ZERO gum i ZERO trójkątów stójkowych!)
     return {
-      st1_legs: `🦵 STACJA 1 – PRACA NÓG I BIODER NA DYWANIE (Z poduszką – 3x 10 powt.):\n1. Połóż dużą poduszkę na dywanie (w parterze NIE używamy gum ani trójkąta stójkowego!).\n2. Gdy ćwiczysz TRZYMANIE z góry: rozstaw nogi szeroko i chodź stopami po dywanie wokół poduszki jak pająk, wbijając biodro/kolano ciasno w bok poduszki.\n3. Gdy ćwiczysz UCIECZKĘ z dołu: przyciągnij pięty pod same pośladki!`,
-      st2_kuzushi: `🟡 STACJA 2 – PRACA RĄK, KLATKI I GŁOWY W PARTERZE (3x 10 powt.):\n1. Z góry: wciągnij rękaw głęboko pod swoją pachę, unieś łokieć rywala o 5 cm nad dywan (odbierasz mu punkt podparcia do Mostu!), wepnij 4 palce w kołnierz i schowaj głowę nisko.\n2. Z dołu / w Żółwiu: przyklej oba łokcie ciasno do własnych żeber i wbij brodę w mostek!`,
-      st3_combo: `🌪️ STACJA 3 – PEŁNA SEKWENCJA PARTEROWA NA DYWANIE (3x 45 sekund):\nWykonaj płynnie na dywanie: 1. Zapnij trzymanie "${name}" na poduszce (10s chodu pająka) ➔ 2. Połóż się na plecy, zrób wysoki Most (Upa) przez bark + 3 Krewetki (Ebi) biodrami w tył ➔ 3. Wsuń kolano pod poduszkę i wróć na górę!`,
-      st4_mob: `💪🧘‍♂️ STACJA 4 – SIŁA PARTEROWA & ELASTYCZNY KRĘGOSŁUP:\n• 10 wysokich Mostów zapaśniczych + 10 kołysek z dotknięciem stopami podłogi za głową ('Pług') + 3x 10 pompek na paraletkach!`
+      st1_legs: `🦵 KROK 1 – PRACA NÓG I BIODER NA DYWANIE (Z poduszką – 3x 10 powt.):\n1. Połóż dużą poduszkę na dywanie (w parterze NIE używamy gum ani trójkąta stójkowego!).\n2. Z góry: rozstaw nogi szeroko i chodź stopami po dywanie jak pająk, wbijając biodro/kolano w bok poduszki.\n3. Z dołu: przyciągnij pięty pod same pośladki!`,
+      st2_kuzushi: `🟡 KROK 2 – PRACA RĄK, KLATKI I GŁOWY W PARTERZE (3x 10 powt.):\n1. Z góry: wciągnij rękaw głęboko pod pachę, unieś łokieć rywala o 5 cm nad dywan (odbierasz mu możliwość zrobienia Mostu!) i schowaj głowę nisko.\n2. Z dołu / w Żółwiu: przyklej oba łokcie ciasno do własnych żeber!`,
+      st3_combo: `🌪️ KROK 3 – PEŁNA SEKWENCJA PARTEROWA NA DYWANIE (3x 45 sekund):\n1. Zapnij trzymanie "${name}" na poduszce (10s chodu pająka) ➔ 2. Połóż się na plecy, zrób wysoki Most (Upa) przez bark + 3 Krewetki (Ebi) w tył ➔ 3. Wsuń kolano pod poduszkę i wróć na górę!`,
+      st4_mob: `💪🧘‍♂️ KROK 4 – SIŁA PARTEROWA & KRĘGOSŁUP:\n• 10 wysokich Mostów zapaśniczych + 10 kołysek z dotknięciem stopami podłogi za głową ('Pług') + 3x 10 pompek na paraletkach!`
     };
   }
 
-  function T(id, kyuNum, group, diffLevel, name, ytQueryName, mechType, gripL, kuzushiL, feetL, blockTxt, counterTxt) {
+  function T(id, kyuNum, group, diffLevel, name, ytQueryName, mechType, feetL, feetR, kuzushiTxt, gripTxt, tourneyTxt, blockTxt, counterTxt) {
     const beltBadge = BELT_LABELS[kyuNum];
-    const gripR = gripL.replace(/LEWA/g, "TMP_L").replace(/PRAWA/g, "LEWA").replace(/TMP_L/g, "PRAWA").replace(/Lewa/g, "Tmp_l").replace(/Prawa/g, "Lewa").replace(/Tmp_l/g, "Prawa");
-    const kuzushiR = kuzushiL.replace(/PRAWA/g, "TMP_R").replace(/LEWA/g, "PRAWA").replace(/TMP_R/g, "LEWA").replace(/PRAWEGO/g, "LEWEGO");
-    const feetR = feetL.replace(/LEWĄ/g, "TMP_LA").replace(/PRAWĄ/g, "LEWĄ").replace(/TMP_LA/g, "PRAWĄ").replace(/LEWA/g, "TMP_L").replace(/PRAWA/g, "LEWA").replace(/TMP_L/g, "PRAWA");
-    const stations = buildTechStations(name, mechType, feetL, kuzushiL, gripL);
+    const stations = buildTechStations(name, mechType);
 
     return {
       id, kyuNum, beltBadge, group, diffLevel, mechType,
-      diffBadge: diffLevel === 1 ? '🟢 Fundament' : (diffLevel === 2 ? '🟡 Techniczny' : '🔴 Zaawansowany'),
       groupBadge: group === 'ashi' ? '🦵 Rzut / Podcięcie Nożne' : (group === 'te' ? '✋ Rzut Ręczny' : (group === 'koshi' ? '🌪️ Rzut Biodrowy' : '🔒 Parter (Ne-waza)')),
       name, ytQueryName,
       details: {
-        feet: () => S_TXT("🦵 KROK 1 – DOKŁADNA PRACA NÓG I STÓP:\n" + feetL, "🦵 KROK 1 – PRACA NÓG (PRAWA STRONA):\n" + feetR),
-        kuzushi: () => S_TXT("🟡 KROK 2 – DOKŁADNE WYCHYLENIE (KUZUSHI):\n" + kuzushiL, "🟡 KROK 2 – WYCHYLENIE (PRAWA STRONA):\n" + kuzushiR),
-        grip: () => S_TXT("🖐️ KROK 3 – WPIĘCIE W KOŁNIERZ & UCHWYT (KUMI-KATA):\n" + gripL, "🖐️ KROK 3 – UCHWYT (PRAWA STRONA):\n" + gripR),
-        block: () => "🛡️ KROK 4 – JAK ZABLOKOWAĆ TEN ATAK (OBRONA):\n" + blockTxt,
-        counter: () => "⚡ KROK 5 – KONTRA (KAESHI-WAZA) LUB WYJŚCIE Z TRZYMANIA:\n" + counterTxt
+        feet: () => {
+          if (currentStance === 'migi') return "🦵 KROK 1 – DOKŁADNA PRACA NÓG (PRAWA STRONA):\n" + feetR;
+          if (currentStance === 'tourney') return "🏆 KROK 1 – PRACA NÓG I WEJŚCIE NA ZAWODACH (STOJĄC BOKIEM / 1 RĘKA):\n" + tourneyTxt + "\n\n🦵 Baza Klasyczna (Lewa):\n" + feetL;
+          return "🦵 KROK 1 – DOKŁADNA PRACA NÓG (LEWA STRONA TYMKA – ZASADA LUSTRA):\n" + feetL;
+        },
+        kuzushi: () => "🟡 KROK 2 – DOKŁADNE WYCHYLENIE (KUZUSHI):\n" + kuzushiTxt,
+        grip: () => "🖐️ KROK 3 – WPIĘCIE W KOŁNIERZ & UCHWYT (KUMI-KATA):\n" + gripTxt,
+        tourney: () => "🏆 JAK WYKONAĆ W WALCE NA ZAWODACH (BOKIEM / 1 RĘKA / SZARPANIE):\n" + tourneyTxt,
+        block: () => "🛡️ JAK ZABLOKOWAĆ TEN ATAK (OBRONA):\n" + blockTxt,
+        counter: () => "⚡ KONTRA (KAESHI-WAZA) LUB WYJŚCIE Z TRZYMANIA:\n" + counterTxt
       },
       soloStations: stations
     };
   }
 
   const KODOKAN_CURRICULUM = [
-    // ==================== 6 KYU (BIAŁY PAS – 10 TECHNIK) ====================
+    // ==================== 6 KYU (10 TECHNIK) ====================
     T("t6_ukemi", 6, "ne", 1, "Ukemi-waza (4 Pady Judo: w tył, w bok, w przód i przewrót przez bark)", "Ukemi Judo Kodokan", "newaza",
-      "Ramiona wyprostowane pod kątem 45° od tułowia; cała otwarta dłoń i przedramię uderzają płasko w matę ułamek sekundy przed kontaktem pleców!",
-      "Broda wbita ciasno w mostek ('trzymaj jabłko pod brodą') – potylica NIGDY nie dotyka maty! Wzrok patrzy na własny pas.",
-      "W Yoko-ukemi (pad w bok) nogi nie krzyżują się; w przewrocie Zempo-kaiten wybijasz się z nóg i toczysz po przekątnej pleców od barku do przeciwnego biodra!",
-      "Nigdy nie wystawiaj sztywnej ręki ani łokcia w stronę maty podczas lotu – grozi to kontuzją barku!",
-      "Czyste Ukemi pozwala natychmiast po upadku skręcić biodra i przejść do obrony w parterze!"),
+      "W Yoko-ukemi (pad w bok) nogi nie krzyżują się; w przewrocie Zempo-kaiten wybijasz się z nóg i toczysz po przekątnej pleców od barku do biodra!",
+      "Symetryczna praca na lewy i prawy bark – broda wbita w mostek.",
+      "Broda wbita ciasno w mostek ('trzymaj jabłko pod brodą') – potylica NIGDY nie dotyka maty!",
+      "Ramiona proste pod kątem 45° od tułowia; otwarta dłoń uderza płasko w matę ułamek sekundy przed kontaktem pleców!",
+      "Na zawodach: podczas lotu nigdy nie wystawiaj ręki w matę (grozi to dyskwalifikacją Hansoku-make i kontuzją!). Skręć bark w powietrzu, żeby wylądować na boku i od razu uciec w Żółwia!",
+      "Nigdy nie podpieraj się łokciem ani dłonią o matę podczas rzutu!",
+      "Po czystym Ukemi natychmiast wciągnij kolana do brzucha (garda) lub zwiń się w szczelnego Żółwia!"),
     T("t6_deashi", 6, "ashi", 1, "De-ashi-barai (Wycięcie postępującej stopy – Szybkie Stopy)", "De-ashi-barai Kodokan Judo", "sweep",
-      "1. PRAWA dłoń kontroluje rękaw przy łokciu ➔ 2. LEWA dłoń wpina się w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!).",
-      "Zanim ruszysz stopą, przekręć ręce jak kierownicę roweru: PRAWA dłoń wciska rękaw ostro w dół (dociąża wycinaną stopę!), a LEWA prowadzi kołnierz!",
-      "Podejdź krokiem bocznym, skręć LEWĄ stopę bokiem (jak łyżwę/miotłę – mały palec szoruje po macie!) i zamieć całą podeszwą kostkę rywala w kierunku jego palców!",
-      "Stój lekko na śródstopiu, ugnij kolano i unieś podcinaną stopę o 5 cm w górę, przepuszczając stopę rywala w powietrzu!",
-      "TSUBAME-GAESHI (Jaskółczy Zwrot): Przepuść wycinającą stopę pod swoją uniesioną stopą i w tym samym ułamku sekundy wytnij jego nogę w drugą stronę!"),
-    T("t6_osoto", 6, "ashi", 1, "O-soto-gari (Duże zewnętrzne podcięcie – Wykrok obok stopy i wahadło!)", "O-soto-gari Kodokan Judo", "osoto",
-      "LEWA dłoń wpina się wysoko w kołnierz przy szyi rywala (przedramię dociska jego mostek!), PRAWA dłoń łapie rękaw przy łokciu.",
-      "PRAWA ręka ściąga rękaw mocno w dół do Twojego brzucha/biodra, a LEWA ręka na kołnierzu wbija bark i głowę rywala w dół-tył na jego prawą piętę (zamykasz dystans klatka do klatki!).",
-      "UWAGA: Nie wchodzisz w trójkąt między stopy! 1. Zrób głęboki krok PRAWĄ nogą NA ZEWNĄTRZ obok prawej stopy rywala ➔ 2. Przenieś LEWĄ nogę przodem za jego udo ➔ 3. Wytnij LEWĄ nogą ostro w tył jak potężne wahadło, jadąc głową i klatką w przód!",
+      "Zasada Lustra: Podejdź krokiem bocznym, skręć swoją LEWĄ stopę bokiem (podeszwa patrzy w prawo, mały palec szoruje po macie!) i zamieć PRAWĄ kostkę rywala w ułamku sekundy, zanim postawi ją na macie!",
+      "Skręć swoją PRAWĄ stopę bokiem (podeszwa patrzy w lewo!) i zamieć LEWĄ kostkę rywala w kierunku jego palców!",
+      "Zanim ruszysz stopą, przekręć ręce jak kierownicę roweru: ręka na rękawie wciska ostro w dół, a ręka na kołnierzu prowadzi bark!",
+      "1. Prawa dłoń kontroluje rękaw przy łokciu ➔ 2. Lewa dłoń wpina się w kołnierz przy obojczyku (3 dolne palce!).",
+      "Stojąc bokiem z 1 ręką na kołnierzu: zakręć rywalem po łuku w bok – gdy zrobi krok za Tobą, wciśnij kołnierz w dół i swoją przednią nogą zamieć jego przednią kostkę!",
+      "Stój lekko na śródstopiu, ugnij kolano i unieś podcinaną stopę o 5 cm w górę!",
+      "TSUBAME-GAESHI (Jaskółczy Zwrot): Przepuść wycinającą stopę pod swoją uniesioną stopą i natychmiast wytnij jego nogę w drugą stronę!"),
+    T("t6_osoto", 6, "ashi", 1, "O-soto-gari (Duże zewnętrzne podcięcie – Zweryfikowana Geometria Lustrzana!)", "O-soto-gari Kodokan Judo", "osoto",
+      "ZASADA LUSTRA (NIE WCHODZISZ W TRÓJKĄT!): Po Twojej lewej stronie stoi PRAWA noga rywala. 1. Zrób głęboki krok swoją PRAWĄ stopą NA ZEWNĄTRZ obok PRAWEJ stopy rywala (mijasz jego prawy bok!) ➔ 2. Przenieś swoją LEWĄ nogę przodem za jego prawe udo ➔ 3. Wytnij swoją LEWĄ nogą PRAWĄ nogę rywala ostro w tył jak wahadło!",
+      "PRAWA STRONA: Po Twojej prawej stronie stoi LEWA noga rywala. 1. Postaw swoją LEWĄ stopę podporową NA ZEWNĄTRZ obok LEWEJ stopy rywala ➔ 2. Przenieś swoją PRAWĄ nogę za jego lewe udo i wytnij ostro w tył!",
+      "Ręka z rękawem ściąga rywala mocno w dół do Twojego brzucha/biodra, a ręka na kołnierzu wbija jego bark i głowę w dół-tył na atakowaną piętę!",
+      "Lewa dłoń wpina się wysoko w kołnierz przy szyi rywala (przedramię dociska jego mostek!), prawa dłoń łapie rękaw przy łokciu.",
+      "Na zawodach (stojąc bokiem / z uchwytu za kark): gdy rywal stoi bokiem, ściągnij jego głowę/kołnierz w dół, zrób niski doskok nogą podporową obok jego przedniej stopy i wytnij bliższą nogę (lub zahacz ją hakiem w Ko-soto-gake)!",
       "Natychmiast ugnij oba kolana (niskie Jigotai!), wypchnij biodra w przód i ściągnij rękaw rywala w dół!",
       "O-SOTO-GAESHI: Zablokuj wejście ugięciem kolan, przejmij dominację na kołnierzu i wytnij jego zaczepioną nogę tym samym ruchem!"),
     T("t6_ouchi", 6, "ashi", 1, "O-uchi-gari (Duże wewnętrzne podcięcie po półkolu)", "O-uchi-gari Kodokan Judo", "ouchi",
-      "LEWA dłoń wpięta twardo w kołnierz przy obojczyku, PRAWA dłoń kontroluje rękaw.",
-      "NIE ciągnij rywala na siebie! Wciśnij go wpiętym kołnierzem i rękawem w dół i w tył (tak aby stanął ciężko na obu piętach).",
-      "1. Zrób krok dostawny (Tsugi-ashi): tylna PRAWA stopa podjeżdża tuż za Twoją LEWĄ piętę (nie krzyżuj nóg!) ➔ 2. LEWA noga wchodzi między nogi rywala i szorując palcami po macie rysuje wielkie półkole za jego lewą piętą!",
+      "ZASADA LUSTRA: 1. Krok dostawny (Tsugi-ashi) – Twoja tylna PRAWA stopa podjeżdża blisko za Twoją LEWĄ piętę (nie krzyżuj nóg!) ➔ 2. Twoja LEWA noga wchodzi między nogi rywala i rysuje po macie wielkie półkole w lewo, wycinając PRAWĄ nogę rywala!",
+      "PRAWA STRONA: 1. Krok dostawny LEWĄ stopą za PRAWĄ piętę ➔ 2. Twoja PRAWA noga wchodzi między nogi rywala i rysuje półkole w prawo, wycinając LEWĄ nogę rywala!",
+      "NIE ciągnij rywala na siebie! Wciśnij go wpiętym kołnierzem i rękawem w dół i w tył (osadź go ciężko na obu piętach!).",
+      "Lewa dłoń wpięta twardo w kołnierz przy obojczyku, prawa kontroluje rękaw.",
+      "Na zawodach (stojąc lewym bokiem z 1 ręką na kołnierzu): Twoja lewa noga jest już wysunięta z przodu! Wciśnij kołnierz ostro w dół i od razu wbij lewą nogę między uda rywala, goniąc go klatką!",
       "Odciąż zahaczaną nogę, wycofaj ją w tył i skręć biodra bokiem!",
-      "O-UCHI-GAESHI: Gdy rywal uniesie nogę do O-uchi, przekręć gwałtownie rękoma jak kierownicą w stronę jego uniesionej nogi!"),
+      "O-UCHI-GAESHI: Przekręć gwałtownie rękoma jak kierownicą w stronę uniesionej nogi rywala!"),
     T("t6_hizaguruma", 6, "ashi", 2, "Hiza-guruma (Koło wokół kolana)", "Hiza-guruma Kodokan Judo", "sweep",
-      "LEWA dłoń wpięta w kołnierz, PRAWA na rękawie (utrzymuj średni dystans, nie klej się klatką!).",
+      "ZASADA LUSTRA: Zrób krok PRAWĄ stopą w bok, a podeszwę swojej LEWEJ stopy (mały palec na zewnątrz!) przyłóż jak klocek hamulcowy do zewnętrznej strony PRAWEGO kolana rywala!",
+      "PRAWA STRONA: Krok LEWĄ stopą w bok i przyłożenie podeszwy PRAWEJ stopy do zewnętrznej strony LEWEGO kolana rywala!",
       "Wyciągnij rywala wysoko w przód-bok, kręcąc szeroko obiema rękoma jak wielką kierownicą autobusu!",
-      "Zrób krok PRAWĄ stopą w bok, a podeszwę LEWEJ stopy (mały palec na zewnątrz!) przyłóż jak klocek hamulcowy do zewnętrznej strony prawego kolana rywala!",
+      "Lewa dłoń wpięta w kołnierz, prawa na rękawie (utrzymuj średni dystans!).",
+      "Na zawodach: świetna broń na rywala, który pcha na sztywnych rękach – zrób krok w bok, przyłóż stopę do jego kolana i przekręć go jego własnym pędem!",
       "Ugnij kolana, ściągnij ręce rywala w dół i przestaw blokowaną nogę w przód!",
       "KOUCHI-GARI / O-UCHI-GARI: Wytnij nogę podporową stojącego na jednej nodze rywala!"),
     T("t6_ukigoshi", 6, "koshi", 1, "Uki-goshi (Półbiodrowy rzut przez szybki skręt barków)", "Uki-goshi Kodokan Judo", "rot2",
-      "PRAWA dłoń trzyma rękaw, a LEWA ręka wchodzi pod prawą pachę rywala i chwyta go płasko na plecach/pasie.",
-      "Pociągnij rękaw rywala w przód i przyklej jego brzuch ciasno do swojego lewego biodra!",
-      "Wskocz w trójkąt (▲) przed stopami rywala na lekko ugiętych kolanach – nie wynosisz go wysoko w górę, lecz rzucasz błyskawicznym skrętem swoich barków wokół biodra!",
+      "Wskocz w trójkąt (▲) przed stopami rywala na ugiętych kolanach, wystawiając lewe biodro i rzucając błyskawicznym skrętem barków w prawo!",
+      "Wskocz w trójkąt i rzuć przez prawe biodro skrętem barków w lewo!",
+      "Pociągnij rękaw rywala w przód i przyklej jego brzuch ciasno do swojego biodra!",
+      "Jedna dłoń trzyma rękaw, a druga wchodzi głęboko pod pachę rywala i obejmuje go płasko w pasie.",
+      "Na zawodach: gdy rywal wchodzi z Tobą w zwarcie brzuch w brzuch, wsuń rękę pod jego pachę na plecy i bez pełnego obrotu przekręć go przez biodro!",
       "Obniż biodra i zablokuj pas rywala przedramieniem!",
       "TANI-OTOSHI / USHIRO-GOSHI: Zejdź na bok za plecy obróconego rywala i rzuć go w tył!"),
     T("t6_ogoshi", 6, "koshi", 1, "O-goshi (Duży rzut biodrowy z głębokim przysiadem i windą nóg)", "O-goshi Kodokan Judo", "rot2",
-      "PRAWA dłoń na rękawie, LEWA ręka wchodzi głęboko pod pachę i obejmuje pas rywala na plecach.",
-      "Wyciągnij rękaw wysoko w przód-górę, ładując brzuch i klatkę rywala na swoje plecy.",
-      "1. Wskocz w trójkąt (▲) z obrotem o 180° na DWA mocno ugięte kolana (biodra niżej niż pas rywala!) ➔ 2. Wypchnij biodro w bok ➔ 3. Wyprostuj oba kolana jak winda ze skłonem tułowia!",
+      "1. Wskocz w trójkąt (▲) z obrotem o 180° W PRAWO na DWA mocno ugięte kolana (biodra niżej niż pas rywala!) ➔ 2. Wypchnij lewe biodro w bok ➔ 3. Wyprostuj oba kolana jak winda ze skłonem!",
+      "Obrót o 180° W LEWO na dwa ugięte kolana, wystawienie prawego biodra i wyprost nóg!",
+      "Wyciągnij rękaw wysoko w przód-górę, ładując brzuch rywala na swoje plecy.",
+      "Jedna dłoń na rękawie, druga wchodzi pod pachę i obejmuje pas rywala.",
+      "Na zawodach: gdy wyższy pas sięga ręką wysoko nad Twoim barkiem po Twój kark – zanurkuj pod jego uniesioną rękę, obejmij go w pasie i wyrzuć przez O-goshi!",
       "Zejdź niżej na kolanach niż rywal i wbij dłonie w jego biodra!",
       "USHIRO-GOSHI / UTSURI-GOSHI: Złap rywala w pasie od tyłu, wynieś biodrem w górę i rzuć!"),
     T("t6_kesa", 6, "ne", 1, "Hon-kesa-gatame (Zasadnicze trzymanie opasaniem) ⇄ 3 Sposoby Wyjścia", "Kesa-gatame Kodokan Judo", "newaza",
-      "Siedząc z boku rywala: jedna ręka wciąga jego rękaw głęboko pod Twoją pachę, a druga obejmuje szyję i wpina 4 palce w kołnierz.",
+      "Nogi rozstawione szeroko w trójkąt jak cyrkiel (przednie kolano pod pachą rywala, tylna noga szeroko) – gdy rywal mostuje, chodzisz stopami po macie jak pająk!",
+      "Symetryczna baza cyrkla na drugą stronę ciała.",
       "KLUCZOWY DETAL: Unieś uwięziony łokieć rywala o 5 cm nad matę i przyciśnij do swojego boku (bez łokcia na macie rywal nie zrobi Mostu!). Głowa nisko.",
-      "Nogi rozstawione szeroko w trójkąt jak cyrkiel (kolano przy jego pachwinie, druga noga z tyłu) – gdy rywal mostuje, chodzisz stopami po macie jak pająk!",
-      "Zanim rywal zapnie trzymanie: schowaj oba łokcie ciasno do własnych żeber albo zwiń się w szczelnego Żółwia!",
-      "3 WYJŚCIA Z DOŁU:\n1. Most (Upa) w stronę rywala + Krewetka (Ebi) w tył i włożenie kolana pod jego brzuch.\n2. Złapanie za pas na plecach i przerzut wysokim mostem przez swoją głowę.\n3. Zamknięcie jego tylnej nogi swoimi dwiema stopami w kleszcze!"),
-    T("t6_kuzurekesa", 6, "ne", 1, "Kuzure-kesa-gatame (Trzymanie opasaniem z chwytem pod pachą) ⇄ Wyjścia", "Kuzure-kesa-gatame Kodokan Judo", "newaza",
-      "Zamiast obejmować szyję, wsuń dłoń pod dalszą pachę rywala i złap materiał na jego łopatce; drugą ręką trzymaj jego rękaw pod swoją pachą!",
-      "Dociskaj żebrami mostek rywala, unieś jego bliższy łokieć nad matę i pochyl głowę nisko w przód.",
+      "Jedna ręka wciąga rękaw rywala głęboko pod Twoją pachę, a druga obejmuje szyję i wpina 4 palce w kołnierz.",
+      "Na zawodach: trzymanie trwa 20 sekund na Ippon (lub 10s na Waza-ari) – nigdy nie podnoś głowy do góry, żeby patrzeć na zegar, bo rywal zarzuci nogi na Twoją twarz!",
+      "Zanim rywal zapnie trzymanie: schowaj oba łokcie ciasno do własnych żeber!",
+      "3 WYJŚCIA Z DOŁU: 1. Most (Upa) + Krewetka (Ebi) i kolano pod brzuch. 2. Przerzut mostem przez głowę. 3. Zamknięcie jego tylnej nogi swoimi stopami w kleszcze!"),
+    T("t6_kuzurekesa", 6, "ne", 1, "Kuzure-kesa-gatame (Trzymanie opasaniem pod pachą) ⇄ Wyjścia", "Kuzure-kesa-gatame Kodokan Judo", "newaza",
       "Nogi szeroko na macie jak cyrkiel, dolne biodro klei się ciasno do pachy rywala.",
+      "Szeroka baza nóg na macie.",
+      "Dociskaj żebrami mostek rywala, unieś jego bliższy łokieć nad matę i pochyl głowę nisko w przód.",
+      "Zamiast obejmować szyję, wsuń dłoń pod dalszą pachę rywala i złap materiał na jego łopatce; drugą ręką trzymaj rękaw pod pachą!",
+      "Na zawodach: bezpieczniejsze niż zwykłe Kesa-gatame, bo rywal nie może wyjść na Twoje plecy!",
       "Nie pozwól rywalowi odkleić swojego łokcia od żeber!",
-      "Wyrwij swój uwięziony łokieć do żeber ➔ zrób wysoki Most (Upa) ➔ ucieknij biodrami w Krewetkę (Ebi) i wsuń kolano pod brzuch!"),
-    T("t6_katagatame", 6, "ne", 2, "Kata-gatame (Trzymanie barkowe przez zamknięcie ramienia i głowy) ⇄ Wyjścia", "Kata-gatame Kodokan Judo", "newaza",
-      "Pchnij własne ramię rywala do boku jego szyi i spleć swoje dłonie w zamek (bez kciuka!) za jego karkiem.",
-      "Dociskaj swoim policzkiem i barkiem ramię rywala do jego ucha, zabierając mu całkowicie luz.",
+      "Wyrwij swój uwięziony łokieć do żeber ➔ wysoki Most (Upa) ➔ Krewetka (Ebi) i wsuń kolano pod brzuch!"),
+    T("t6_katagatame", 6, "ne", 2, "Kata-gatame (Trzymanie barkowe) ⇄ Wyjścia", "Kata-gatame Kodokan Judo", "newaza",
       "Jedno kolano wbite ciasno w biodro rywala na macie, a druga noga wyprostowana daleko w bok jako stabilna podpora!",
-      "Trzymaj łokcie przy żebrach i nigdy nie daj narzucić własnej ręki na swoją szyję!",
-      "Uciekaj biodrami w Krewetkę (Ebi) w wolną stronę, wysuń głowę dołem lub zrób most przez bark!"),
+      "Kolano przy biodrze, druga noga wyprostowana w bok jako podpora.",
+      "Dociskaj swoim policzkiem i barkiem ramię rywala do jego ucha, zabierając mu całkowicie luz.",
+      "Pchnij własne ramię rywala do boku jego szyi i spleć swoje dłonie w zamek (bez kciuka!) za jego karkiem.",
+      "Na zawodach: świetne przejście po obróceniu Żółwia, gdy rywal podnosi rękę do obrony kołnierza!",
+      "Trzymaj łokcie przy żebrach i nie daj narzucić własnej ręki na swoją szyję!",
+      "Uciekaj biodrami w Krewetkę (Ebi) w wolną stronę i wysuń głowę dołem!"),
 
-    // ==================== 5 KYU (ŻÓŁTY PAS – 10 NOWYCH TECHNIK, RAZEM 20) ====================
-    T("t5_kouchi", 5, "ashi", 1, "Kouchi-gari (Małe wewnętrzne podcięcie pięty – Otwieracz pod Rzuty!)", "Kouchi-gari Kodokan Judo", "ouchi",
-      "LEWA dłoń twardo wpięta w kołnierz przy obojczyku, PRAWA na rękawie.",
-      "Wciśnij rywala wpiętym kołnierzem w dół-tył, aby dociążył piętę swojej przedniej nogi!",
-      "1. Krok dostawny PRAWĄ stopą pod pośladek ➔ 2. LEWA stopa skręcona w 'łyżeczkę' (podeszwą do środka) wycina piętę rywala od wewnątrz w kierunku jego palców!",
+    // ==================== 5 KYU (10 TECHNIK, RAZEM 20) ====================
+    T("t5_kouchi", 5, "ashi", 1, "Kouchi-gari (Małe wewnętrzne podcięcie pięty – Otwieracz pod Rzuty!)", "Kouchi-gari Kodokan Judo", "sweep",
+      "ZASADA LUSTRA (Różnica wobec O-uchi!): Gdy wycinasz swoją LEWĄ stopą, skręcasz ją w 'łyżeczkę' (podeszwą w prawo!) i wycinasz od środka piętę LEWEJ nogi rywala (stojącej po prawej stronie planszy) w kierunku jego palców!",
+      "PRAWA STRONA: Gdy wycinasz swoją PRAWĄ stopą, skręcasz ją podeszwą w lewo i wycinasz od środka piętę PRAWEJ nogi rywala!",
+      "Wciśnij rywala wpiętym kołnierzem w dół-tył, aby dociążył piętę atakowanej nogi!",
+      "Lewa dłoń twardo wpięta w kołnierz przy obojczyku, prawa na rękawie.",
+      "🏆 NAJLEPSZY OTWIERACZ NA ZAWODACH (Stojąc bokiem z 1 ręką na kołnierzu): Gdy rywal stoi zgięty w pół i wypina biodra do tyłu – wciśnij kołnierz i zaatakuj jego przednią stopę Kouchi-gari! Gdy cofnie tę nogę, natychmiast wejdź w Uchi-matę lub Seoi-nage!",
       "Szybko cofnij atakowaną stopę po łuku w tył!",
-      "KOMBINACJA / KONTRA: Gdy rywal cofa nogę przed Kouchi-gari, jego głowa leci w przód – natychmiast wejdź w Uchi-matę, Ippon-seoi-nage albo zablokuj drugą nogę przez Sasae!"),
+      "SASAE / UCHI-MATA: Gdy cofniesz nogę przed Kouchi, rywal leci za nią w przód – rzuć go przez Sasae lub Uchi-matę!"),
     T("t5_kosotogari", 5, "ashi", 2, "Ko-soto-gari (Małe zewnętrzne podcięcie pięty od tyłu)", "Ko-soto-gari Kodokan Judo", "sweep",
-      "LEWA dłoń wpięta w kołnierz, PRAWA na rękawie.",
-      "Ściągnij rękaw i kołnierz ostro w dół na tylną piętę rywala (osadź go na pięcie!).",
-      "Zrób krok w bok poza linię stóp rywala, ugnij kolana i podeszwą LEWEJ stopy wytnij jego piętę od tyłu do przodu (jakbyś zagarniał ją łyżką po macie)!",
+      "ZASADA LUSTRA: Zrób krok PRAWĄ stopą w lewo poza linię rywala, ugnij kolana i podeszwą swojej LEWEJ stopy zagarnij od tyłu piętę PRAWEJ nogi rywala!",
+      "PRAWA STRONA: Krok LEWĄ stopą w prawo i podeszwą PRAWEJ stopy wytnij od tyłu piętę LEWEJ nogi rywala!",
+      "Ściągnij rękaw i kołnierz ostro w dół na tylną piętę rywala!",
+      "Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "Na zawodach: najlepsza kontra, gdy wyższy pas wejdzie słabo w Seoi-nage lub Uchi-matę – obejdź go z boku i wytnij mu pięty od tyłu!",
       "Wyrwij atakowaną nogę w przód i unieś kolano!",
       "UCHI-MATA: Obróć się plecami do stojącego z boku rywala i wyrzuć go Uchi-matą!"),
     T("t5_osotootoshi", 5, "ashi", 1, "O-soto-otoshi (Duże zewnętrzne wbicie nogi z góry za piętą)", "O-soto-otoshi Kodokan Judo", "osoto",
-      "LEWA dłoń wysoko wpięta w kołnierz, PRAWA ściąga rękaw do brzucha.",
+      "ZASADA LUSTRA: Postaw PRAWĄ stopę na zewnątrz obok PRAWEJ stopy rywala, unieś LEWĄ nogę wysoko za jego prawe udo i wbij stopę z góry prosto w matę za jego piętą (jak stempel!)!",
+      "PRAWA STRONA: Postaw LEWĄ stopę na zewnątrz obok LEWEJ stopy rywala i wbij PRAWĄ stopę z góry za jego lewą piętą!",
       "Mocne wciśnięcie barku rywala w dół-tył na jedną piętę!",
-      "Krok PRAWĄ stopą na zewnątrz obok stopy rywala, unieś LEWĄ nogę wysoko za jego udo i wbij stopę z góry prosto w matę za jego piętą (jak stempel!), jadąc klatką w przód!",
+      "Lewa dłoń wysoko wpięta w kołnierz, prawa ściąga rękaw do brzucha.",
+      "Na zawodach: bezpieczniejsze niż zwykłe O-soto-gari, bo po wbiciu stopy w matę stoisz na dwóch nogach i rywalowi trudniej Cię skontrować!",
       "Niskie Jigotai i zejście z linii ataku!",
       "O-SOTO-GAESHI: Przejęcie inicjatywy i wycięcie nogi podporowej!"),
-    T("t5_ipponseoi", 5, "te", 2, "Ippon-seoi-nage (Rzut przez plecy jednorącz – Twój rzut z filmu 0:05!)", "Ippon-seoi-nage Kodokan Judo", "rot2",
-      "PRAWA ręka trzyma rękaw przy łokciu, a LEWA ręka puszcza kołnierz i wbija przedramię głęboko od dołu pod LEWĄ pachę rywala (dłoń zaciska się na jego barku)!",
-      "Najpierw PRAWĄ ręką wyrwij rękaw wysoko w przód-górę (otwierasz przestrzeń pod pachą!), a w ułamku sekundy wbij LEWY łokieć pod pachę!",
-      "1. LEWA stopa wchodzi w czubek trójkąta (▲) ➔ 2. PRAWA stopa dokręca obrót o 180° W PRAWO – stoisz na DWÓCH mocno ugiętych kolanach ➔ 3. Wyprost kolan i skłon głowy do podłogi!",
+    T("t5_ipponseoi", 5, "te", 2, "Ippon-seoi-nage (Rzut przez plecy jednorącz – Rzut z filmu 0:05!)", "Ippon-seoi-nage Kodokan Judo", "rot2",
+      "1. LEWA stopa wchodzi w czubek trójkąta (▲) ➔ 2. PRAWA stopa dokręca obrót o 180° W PRAWO – stoisz na DWÓCH mocno ugiętych kolanach ➔ 3. Wyprost kolan i skłon głowy!",
+      "PRAWA stopa w czubek trójkąta, obrót o 180° W LEWO na dwóch ugiętych kolanach i wyprost nóg!",
+      "Najpierw wyrwij rękaw wysoko w przód-górę (otwierasz przestrzeń pod pachą!), a w ułamku sekundy wbij drugą rękę pod pachę!",
+      "Prawa ręka trzyma rękaw przy łokciu, a lewa wbija przedramię głęboko od dołu pod lewą pachę rywala (dłoń zaciska się na barku)!",
+      "🏆 HIT NA ZAWODACH (Katate-seoi z 1 ręki oraz obrona na chwyt za kark!): Gdy trzymasz tylko jedną ręką kołnierz (albo gdy rywal wiesza Ci się na karku) – szarpnij go w dół i wbij wolną rękę pod jego pachę po tej samej stronie!",
       "Ugnij kolana niżej niż rywal i wbij dłonie w jego pas!",
       "KO-SOTO-GARI / TANI-OTOSHI: Obejdź zablokowanego rywala z boku od strony pleców i wytnij go w tył!"),
     T("t5_moroteseoi", 5, "te", 3, "Morote-seoi-nage (Rzut przez plecy oburącz z wkręceniem kołnierza – Film 0:15 i 0:31!)", "Morote-seoi-nage Kodokan Judo", "rot2",
-      "LEWA dłoń wpina się w kołnierz przy obojczyku (luźny nadgarstek – 3 dolne palce!), PRAWA dłoń trzyma rękaw przy łokciu.",
-      "PRAWA ręka ciągnie rękaw wysoko w przód-górę, a LEWY łokieć zgina się i wkręca głęboko pod lewą pachę rywala BEZ PUSZCZANIA wpiętego kołnierza!",
       "Skoro trzymasz rękaw PRAWĄ ręką, obracasz się W PRAWO i wskakujesz w trójkąt (▲) na DWA mocno ugięte kolana, a następnie prostujesz nogi ze skłonem!",
+      "Obrót W LEWO na dwa mocno ugięte kolana w trójkącie i wyprost nóg!",
+      "Ręka z rękawem ciągnie wysoko w przód-górę, a łokieć ręki na kołnierzu zgina się i wkręca głęboko pod pachę rywala BEZ PUSZCZANIA wpiętego kołnierza!",
+      "Lewa dłoń wpina się w kołnierz przy obojczyku (luźny nadgarstek – 3 dolne palce!), prawa dłoń trzyma rękaw przy łokciu.",
+      "Na zawodach: po udawanym Kouchi-gari rywal cofa nogę i pochyla się w przód – w tym ułamku sekundy wkręć łokieć pod pachę i wejdź w Morote-seoi-nage!",
       "Dociśnij bark obracającego się rywala w dół i cofnij biodra!",
       "Obejście za plecy (Tani-otoshi) lub natychmiastowe obracanie Żółwia w parterze!"),
     T("t5_taiotoshi", 5, "te", 2, "Tai-otoshi (Obniżenie tułowia z szeroką zaporą nogą na palcach)", "Tai-otoshi Kodokan Judo", "rot2",
-      "LEWA dłoń wpięta w kołnierz, PRAWA na rękawie.",
-      "PRAWA ręka ciągnie rękaw daleko po łuku w przód-dół, a LEWA wypycha wpięty kołnierz jak tłok w przód (rzucasz samymi rękoma przez niską zaporę z nogi, bez ładowania rywala na biodro!).",
-      "Po obrocie o 180° wystaw LEWĄ nogę szeroko w poprzek przed lewą kostką rywala (WAŻNE: stopa stoi na palcach, pięta w górze, kolano skierowane w dół!).",
+      "ZASADA LUSTRA: Po obrocie o 180° W PRAWO wystaw swoją LEWĄ nogę szeroko na zewnątrz przed PRAWĄ kostką rywala (stopa stoi na palcach, pięta w górze, kolano w dół!).",
+      "PRAWA STRONA: Po obrocie W LEWO wystaw swoją PRAWĄ nogę szeroko przed LEWĄ kostką rywala na palcach!",
+      "Ręka z rękawem ciągnie daleko po łuku w przód-dół, a ręka na kołnierzu wypycha jak tłok (rzucasz samymi rękoma przez niską zaporę z nogi, bez ładowania na biodro!).",
+      "Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "Na zawodach: najlepszy rzut na przeciwnika, który ma sztywne ręce i nie daje Ci podejść biodrem blisko brzucha – w Tai-otoshi rzucasz z dystansu przez wystawioną nogę!",
       "Przeskocz atakowaną nogą nad zastawiającą nogą rywala!",
       "KOUCHI-GARI: Po przeskoczeniu nad jego nogą blokującą natychmiast wytnij jego przednią stopę Kouchi-gari!"),
     T("t5_koshiguruma", 5, "koshi", 1, "Koshi-guruma (Koło wokół biodra z objęciem szyi)", "Koshi-guruma Kodokan Judo", "rot2",
-      "PRAWA dłoń trzyma rękaw, a LEWA ręka obejmuje głowę/szyję rywala głęboko pod pachą.",
-      "Pociągnij rękaw i szyję rywala wysoko w przód-górę!",
       "Wskocz w trójkąt (▲) na dwóch ugiętych kolanach, wystaw głęboko lewe biodro w bok poza linię rywala i przekręć mocno barki!",
+      "Wskok na dwóch nogach, wystawienie prawego biodra i skręt barków w lewo!",
+      "Pociągnij rękaw i szyję rywala wysoko w przód-górę!",
+      "Jedna dłoń trzyma rękaw, a druga obejmuje szyję rywala z góry.",
+      "UWAGA PRZEPISY ZAWODÓW DZIECI: W młodszych kategoriach sędziowie często przerywają walkę (Mate!), jeśli obejmiesz samą szyję bez ręki rywala – dlatego zawsze kontroluj jednocześnie jego rękaw!",
       "Zejdź nisko na kolanach i wysuń własne biodro przed biodro rywala!",
       "USHIRO-GOSHI / TANI-OTOSHI: Złap biodra rywala z tyłu i wynieś go lub rzuć w tył!"),
     T("t5_tsurikomigoshi", 5, "koshi", 2, "Tsuri-komi-goshi (Rzut biodrowy z wyciągnięciem za wpięty kołnierz)", "Tsuri-komi-goshi Kodokan Judo", "rot2",
-      "LEWA dłoń wpina się wysoko w kołnierz, PRAWA dłoń trzyma rękaw.",
-      "Wyciągnij rękaw i wpięty kołnierz wysoko w górę-przód (windujesz rywala na palce stóp!), a sam zejdź bardzo nisko na kolanach!",
       "Głęboki przysiad na dwóch nogach w trójkącie (▲) (Twoje biodra muszą zejść niżej niż pas rywala!) ➔ wyprost kolan i skłon!",
+      "Symetryczny niski przysiad na dwóch nogach i wyprost kolan!",
+      "Wyciągnij rękaw i wpięty kołnierz wysoko w górę-przód (windujesz rywala na palce stóp!), a sam zejdź bardzo nisko na kolanach!",
+      "Lewa dłoń wpina się wysoko w kołnierz, prawa dłoń trzyma rękaw.",
+      "Na zawodach: idealny dla niższego zawodnika przeciwko wyższemu rywalowi!",
       "Ugnij kolana niżej niż rywal i zablokuj jego pas dłonią!",
       "USHIRO-GOSHI / TANI-OTOSHI: Przejście za biodro rywala i kontra w tył!"),
     T("t5_yokoshiho", 5, "ne", 1, "Yoko-shiho-gatame (Trzymanie boczne pod kątem prostym) ⇄ Wyjście", "Yoko-shiho-gatame Kodokan Judo", "newaza",
-      "Klęcząc/leżąc z boku rywala pod kątem 90°: jedna ręka przechodzi pod jego głową i wpina się w kołnierz, a druga przechodzi między jego udami i łapie pas!",
-      "Ściągaj oba łokcie ciasno do siebie i dociskaj klatką piersiową żebra rywala.",
       "Jedno kolano wbij ciasno w biodro rywala (blokujesz mu ucieczkę w Krewetkę!), a drugie kolano wbij pod jego pachę!",
+      "Symetryczna praca kolan z drugiej strony.",
+      "Ściągaj oba łokcie ciasno do siebie i dociskaj klatką piersiową żebra rywala.",
+      "Klęcząc z boku rywala pod kątem 90°: jedna ręka przechodzi pod jego głową i wpina się w kołnierz, a druga przechodzi między jego udami i łapie pas!",
+      "Na zawodach: najpewniejsze trzymanie po obróceniu Żółwia za dalszy łokieć!",
       "Trzymaj kolana wysoko przed brzuchem ('Tarcza z Kolan') zanim rywal obejdzie Twoją gardę!",
-      "WYJŚCIE: Schowaj łokcie do żeber ➔ zrób Most (Upa) w stronę rywala ➔ od razu ucieknij biodrami w tył (Krewetka Ebi) i wsuń bliższe kolano pod jego brzuch!"),
+      "WYJŚCIE: Schowaj łokcie do żeber ➔ zrób Most (Upa) w stronę rywala ➔ ucieknij biodrami w tył (Krewetka Ebi) i wsuń bliższe kolano pod jego brzuch!"),
     T("t5_kamishiho", 5, "ne", 2, "Kami-shiho-gatame & Kuzure-kami-shiho (Trzymanie od strony głowy) ⇄ Wyjścia", "Kami-shiho-gatame Kodokan Judo", "newaza",
-      "Leżąc na brzuchu za głową rywala, wsuń obie ręce pod jego barkami/pachami i złap mocno jego pas z obu stron!",
-      "Ściśnij przedramionami jego barki do środka, przyklej klatkę i ściągaj go za pas w stronę swojej głowy.",
       "Kolana ugięte przy uszach rywala lub nogi szeroko rozstawione na palcach stóp.",
+      "Szeroka baza nóg za głową rywala.",
+      "Ściśnij przedramionami jego barki do środka, przyklej klatkę i ściągaj go za pas w stronę swojej głowy.",
+      "Leżąc na brzuchu za głową rywala, wsuń obie ręce pod jego ramiona i złap mocno jego pas z obu stron!",
+      "Na zawodach: rywal nie może złapać Twoich nóg w kleszcze, bo jesteś za jego głową!",
       "Wbij podbródek i nie pozwól złapać swojego pasa z obu stron!",
-      "WYJŚCIE: Wsuń przedramiona pod pachy/podbródek rywala ➔ zrób wysoki Most ze skrętem na jeden bark i zarzuć nogi w przód!"),
+      "WYJŚCIE: Wsuń przedramiona pod pachy rywala ➔ zrób wysoki Most ze skrętem na jeden bark i zarzuć nogi w przód!"),
 
-    // ==================== 4.5 KYU (ŻÓŁTO-POMARAŃCZOWY PAS – CEL TYMKA: 6 NOWYCH TECHNIK, RAZEM 26) ====================
+    // ==================== 4.5 KYU (CEL TYMKA – 6 TECHNIK, RAZEM 26) ====================
     T("t45_sasae", 4.5, "ashi", 2, "Sasae-tsuri-komi-ashi (Blokada stopy przyciąganego rywala)", "Sasae-tsuri-komi-ashi Kodokan Judo", "sweep",
-      "LEWA dłoń wpięta twardo w kołnierz przy obojczyku, PRAWA na rękawie.",
-      "Wyciągnij rywala wysoko w przód (aby chciał zrobić krok na Ciebie) i przekręć ręce jak kierownicę roweru!",
-      "Zrób krok PRAWĄ stopą w bok z lekkim otwarciem bioder i przyłóż podeszwę LEWEJ stopy do przedniej części kostki/piszczela rywala (jak próg zwalniający!).",
+      "ZASADA LUSTRA: Zrób krok PRAWĄ stopą w bok z lekkim otwarciem bioder i przyłóż podeszwę swojej LEWEJ stopy do przedniej części PRAWEJ kostki/piszczela rywala (jak próg zwalniający!).",
+      "PRAWA STRONA: Krok LEWĄ stopą w bok i przyłożenie podeszwy PRAWEJ stopy do LEWEJ kostki rywala!",
+      "Wyciągnij rywala wysoko w przód (aby zrobił krok na Ciebie) i przekręć ręce jak kierownicę roweru!",
+      "Lewa dłoń wpięta twardo w kołnierz przy obojczyku, prawa na rękawie.",
+      "🏆 BROŃ NA TARANA NA ZAWODACH: Gdy przeciwnik pcha Cię na oślep do przodu – nie opieraj się siłowo, tylko zrób krok w bok, podstaw podeszwę stopy pod jego kostkę i przekręć kierownicą rąk!",
       "Ugnij kolana i przestaw blokowaną stopę ponad stopą rywala!",
       "KOUCHI-GARI / TSUBAME-GAESHI: Przeskocz nad blokującą stopą i wytnij rywala od środka!"),
     T("t45_kosotogake", 4.5, "ashi", 2, "Ko-soto-gake (Zewnętrzne zahaczenie nogi hakiem z wejściem klatką)", "Ko-soto-gake Kodokan Judo", "osoto",
-      "Głębokie wpięcie LEWĄ ręką w kołnierz/na karku i PRAWĄ za rękaw.",
+      "ZASADA LUSTRA: Krok PRAWĄ nogą podporową blisko rywala, a swoją LEWĄ nogą (zgiętą w kolanie i kostce jak hak!) zahacz od zewnątrz PRAWĄ łydkę rywala i pojedź klatką w przód!",
+      "PRAWA STRONA: Krok LEWĄ nogą i zahaczenie PRAWĄ nogą od zewnątrz LEWEJ łydki rywala!",
       "Ściągnij rywala ostro w dół na jedną piętę i przyklej klatkę ciasno do jego klatki!",
-      "Krok PRAWĄ nogą na zewnątrz, a LEWĄ nogą (zgiętą w kolanie i kostce jak hak!) zahacz łydkę rywala od zewnątrz i pojedź na nodze podporowej całym ciężarem w przód!",
+      "Głębokie wpięcie w kołnierz/na karku i mocny chwyt za rękaw.",
+      "🏆 ANTY-CHAOS NA ZAWODACH: Gdy rywal wpada w Ciebie w zwarciu brzuch w brzuch (bez techniki) – obniż biodra, zahacz jego bliższą łydkę hakiem od zewnątrz i przewróć go całym ciężarem ciała!",
       "Rozluźnij zahaczoną nogę, wyjmij kolano i oprzyj ciężar na rękach!",
       "UCHI-MATA: Wyrzuć zahaczającego z boku rywala wysoką Uchi-matą!"),
     T("t45_seoiotoshi", 4.5, "te", 2, "Seoi-otoshi (Rzut przez plecy z niskim zejściem na kolano)", "Seoi-otoshi Kodokan Judo", "rot2",
-      "LEWA dłoń wpięta w kołnierz (wkręca łokieć pod pachę!), PRAWA dłoń na rękawie.",
+      "Po obrocie o 180° schodzisz nisko na jedno (lub oba) kolana z szeroko rozstawionymi stopami (WAŻNE: palce stóp wbite w matę jak sprężyny, nie leż na podbiciach!) i ściągasz rywala przez bark!",
+      "Symetryczny obrót w drugą stronę z niskim zejściem na kolano!",
       "Wyciągnięcie rękawa w górę, a następnie gwałtowne pociągnięcie rękawa i kołnierza ostro w przód-dół do samej maty!",
-      "Po obrocie o 180° schodzisz nisko na jedno (lub oba) kolana z szeroko rozstawionymi stopami (palce stóp wbite w matę!) i ściągasz rywala przez bark!",
+      "Lewa dłoń wpięta w kołnierz (wkręca łokieć pod pachę!), prawa dłoń na rękawie.",
+      "🏆 NA ZAWODACH (Kontra na ściąganie za kark!): Gdy wyższy lub silniejszy rywal wiesza Ci się na karku i pcha głowę w dół – wykorzystaj jego pchanie w dół, wkręć się pod jego pachę i wejdź w Seoi-otoshi!",
       "Cofnięcie bioder i wbicie dłoni w plecy/pas rywala!",
-      "ATAK NA ŻÓŁWIA: Gdy rywal rzuci się na kolana za daleko bez wychylenia, natychmiast wchodzisz na jego plecy i obracasz Żółwia!"),
-    T("t45_haraigoshi", 4.5, "koshi", 2, "Harai-goshi (Zamiatający rzut biodrowy – Bliźniak Uchi-maty po zewnętrznej stronie uda!)", "Harai-goshi Kodokan Judo", "rot1",
-      "LEWA ręka wpięta wysoko w kołnierz za szyją/łopatką, PRAWA ręka mocno na rękawie.",
-      "PRAWA ręka ciągnie rękaw wysoko do PRAWEGO ucha ('spójrz na zegarek'), przyklejając klatkę rywala do Twoich pleców!",
-      "1. LEWA stopa w czubek trójkąta (▲) ➔ 2. PRAWA stopa staje w środku jako OŚ OBROTU ➔ 3. Głowa w dół do kolana, a prosta LEWA noga zamiata po ZEWNĘTRZNEJ stronie prawego uda/łydki rywala w tył-górę!",
+      "ATAK NA ŻÓŁWIA: Gdy rywal rzuci się na kolana za daleko bez wychylenia, natychmiast wchodzisz na jego plecy i obracasz Żółwia za dalszy łokieć!"),
+    T("t45_haraigoshi", 4.5, "koshi", 2, "Harai-goshi (Zamiatający rzut biodrowy po zewnętrznej stronie uda!)", "Harai-goshi Kodokan Judo", "rot1",
+      "ZASADA LUSTRA: 1. LEWA stopa w czubek trójkąta (▲) ➔ 2. PRAWA stopa staje w środku jako OŚ OBROTU ➔ 3. Głowa w dół do kolana, a prosta LEWA noga zamiata po ZEWNĘTRZNEJ stronie PRAWEGO uda/łydki rywala w tył-górę!",
+      "PRAWA STRONA: Stoisz na LEWEJ nodze podporowej, a prosta PRAWA noga zamiata po zewnętrznej stronie LEWEGO uda rywala!",
+      "Ręka z rękawem ciągnie wysoko do ucha ('spójrz na zegarek'), przyklejając klatkę rywala do Twoich pleców!",
+      "Jedna ręka wpięta wysoko w kołnierz za szyją/łopatką, druga mocno na rękawie.",
+      "🏆 NA ZAWODACH (Wariant Tymka stojąc bokiem z 1 ręką na kołnierzu): Jeśli rywal zablokuje wejście nogi między uda do Uchi-maty – przesuń nogę na zewnątrz jego uda i zamieć go przez Harai-goshi!",
       "Zablokuj biodro dłonią, ugnij kolana i cofnij atakowaną nogę!",
       "UTSURI-GOSHI / TANI-OTOSHI: Przejście za biodro rywala i rzut kontrujący w tył!"),
     T("t45_tateshiho", 4.5, "ne", 1, "Tate-shiho-gatame & Kuzure-tate-shiho (Trzymanie dosiadem z góry) ⇄ Wyjście Kleszczami!", "Tate-shiho-gatame Kodokan Judo", "newaza",
-      "Siedzisz okrakiem na brzuchu rywala (dosiad w parterze!) i zamykasz jego głowę oraz ramię w trójkąt swoimi rękoma!",
-      "Rozpłaszcz klatkę piersiową nisko, oprzyj policzek o głowę rywala i zabierz mu przestrzeń pod łokciem.",
       "Twoje kolana ściskają boki rywala przy żebrach, a stopy są zahaczone ciasno pod jego udami/pośladkami!",
+      "Symetryczny dosiad w parterze.",
+      "Rozpłaszcz klatkę piersiową nisko, oprzyj policzek o głowę rywala i zabierz mu przestrzeń pod łokciem.",
+      "Siedzisz okrakiem na brzuchu rywala (dosiad w parterze!) i zamykasz jego głowę oraz ramię w trójkąt swoimi rękoma!",
+      "Na zawodach: najtrudniejsze trzymanie do ucieczki dla przeciwnika, jeśli trzymasz stopy zahaczone pod jego udami!",
       "Chroń przestrzeń między swoimi kolanami a łokciami – nie wpuść rywala do dosiadu!",
-      "WYJŚCIE Z TATE-SHIHO (KROK PO KROKU):\n1. Złap swoimi dwiema stopami jedną nogę rywala i zamknij ją w kleszcze!\n2. Zablokuj obiema dłońmi jego ramię po tej samej stronie.\n3. Zrób potężny Most przez bark dokładnie w stronę zablokowanej ręki i nogi!"),
+      "WYJŚCIE Z TATE-SHIHO: 1. Złap swoimi dwiema stopami jedną nogę rywala i zamknij ją w kleszcze! 2. Zablokuj dłońmi jego ramię po tej samej stronie. 3. Zrób Most dokładnie w stronę zablokowanej ręki i nogi!"),
     T("t45_turtle1", 4.5, "ne", 1, "Obracanie Żółwia #1 (Metoda za dalszy łokieć z boku) ⇄ Obrona w Żółwiu", "Judo turtle turnover elbow Kodokan", "newaza",
-      "Klęcząc z boku skulonego w Żółwiu rywala: wsuń jedną rękę pod jego bliższą pachę i złap jego DALSZY ŁOKIEĆ od zewnątrz; drugą dłonią złap pas na plecach!",
-      "Ciągnij jego dalszy łokieć po macie do siebie (wciągasz mu rękę pod brzuch – zabierasz podporę!), a klatką pchaj jego bok!",
       "Wbij swoje kolano jak klin w szczelinę między łokciem a kolanem Żółwia i obróć go prosto do trzymania bocznego!",
+      "Symetryczna praca z obu boków Żółwia.",
+      "Ciągnij jego dalszy łokieć po macie do siebie (wciągasz mu rękę pod brzuch – zabierasz podporę!), a klatką pchaj jego bok!",
+      "Klęcząc z boku skulonego w Żółwiu rywala: wsuń jedną rękę pod jego bliższą pachę i złap jego DALSZY ŁOKIEĆ od zewnątrz; drugą dłonią złap pas na plecach!",
+      "🏆 ZŁOTA ZASADA ZAWODÓW: Sędzia daje tylko 3–5 sekund w parterze! Gdy rywal upadnie na brzuch/w Żółwia, nie czekaj – w 1 sekundzie sięgnij pod jego pachę po dalszy łokieć i przekręć go na plecy!",
       "OBRONA W ŻÓŁWIU: Wbij oba łokcie głęboko w dołki swoich kolan, a dłońmi chroń kołnierz – zero szpary pod pachą!",
       "KONTRA Z ŻÓŁWIA: Gdy rywal włoży rękę za głęboko pod Twoją pachę, zaciśnij ją mocno swoim łokciem i zroluj go pod siebie!"),
 
-    // ==================== 4 KYU (POMARAŃCZOWY PAS – 5 NOWYCH TECHNIK, RAZEM 31) ====================
+    // ==================== 4 KYU (5 TECHNIK, RAZEM 31) ====================
     T("t4_osotoguruma", 4, "ashi", 2, "O-soto-guruma (Duże koło przez obie nogi rywala)", "O-soto-guruma Kodokan Judo", "osoto",
-      "LEWA ręka wysoko wpięta w kołnierz, PRAWA ściąga rękaw do brzucha.",
+      "ZASADA LUSTRA: Krok PRAWĄ nogą na zewnątrz obok PRAWEJ stopy rywala, a prosta LEWA noga przechodzi za OBIE nogi rywala jak długi szlaban i wycina je razem!",
+      "PRAWA STRONA: Krok LEWĄ nogą obok LEWEJ stopy rywala i wycięcie obu nóg PRAWĄ nogą!",
       "Wbicie rywala w dół-tył na obie pięty!",
-      "Krok PRAWĄ nogą na zewnątrz obok stopy rywala, a prosta LEWA noga przechodzi za OBIE nogi rywala jak długi szlaban i wycina je razem!",
+      "Wysokie wpięcie w kołnierz i ściągnięcie rękawa do brzucha.",
+      "Na zawodach: gdy rywal cofa wycinaną nogę w O-soto-gari – przedłuż ruch swojej nogi za jego drugą nogę i wytnij obie przez O-soto-guruma!",
       "Zejście nisko w Jigotai i wypchnięcie bioder do przodu!",
       "O-SOTO-GAESHI: Skontrowanie tym samym rzutem!"),
     T("t4_okuriashi", 4, "ashi", 3, "Okuri-ashi-barai (Podcięcie obu stóp w ruchu bocznym)", "Okuri-ashi-barai Kodokan Judo", "sweep",
-      "LEWA dłoń wpięta w kołnierz, PRAWA na rękawie.",
-      "Poruszaj się z rywalem krokiem odstawno-dostawnym (Tsugi-ashi) w bok i w momencie wycięcia poderwij rękoma jego barki jak falę!",
-      "Dokładnie w ułamku sekundy, gdy rywal dostawia stopę do stopy, Twoja LEWA stopa (skręcona podeszwą!) uderza w jego kostkę i zmiata obie stopy naraz!",
+      "ZASADA LUSTRA: Gdy rywal porusza się w bok i dostawia stopę do stopy, Twoja LEWA stopa (skręcona podeszwą!) uderza w jego PRAWĄ kostkę i zmiata obie stopy naraz!",
+      "PRAWA STRONA: Twoja PRAWA stopa uderza w LEWĄ kostkę rywala w momencie łączenia stóp!",
+      "Poruszaj się z rywalem krokiem Tsugi-ashi w bok i w momencie wycięcia poderwij rękoma jego barki jak falę!",
+      "Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "🛡️ JAK OBRONIĆ SIĘ PRZED ZIELONYM PASEM NA ZAWODACH: Wyższe pasy polują na ten rzut, gdy podskakujesz! Nigdy nie łącz stóp w powietrzu – chodź nisko na ugiętych kolanach i zmieniaj kierunek!",
       "Nigdy nie łącz stóp w podskoku! Zmień rytm kroków i ugnij kolana!",
       "TSUBAME-GAESHI: Przepuść wycinającą stopę pod uniesioną nogą i natychmiast wytnij w drugą stronę!"),
     T("t4_haraitsurikomi", 4, "ashi", 3, "Harai-tsuri-komi-ashi (Zamiatanie cofającej się stopy)", "Harai-tsuri-komi-ashi Kodokan Judo", "sweep",
-      "LEWA dłoń wpięta w kołnierz, PRAWA na rękawie.",
+      "ZASADA LUSTRA: Gdy rywal cofa PRAWĄ nogę, Twoja LEWA stopa (skręcona w łyżeczkę) zamiata jego cofającą się kostkę jeszcze głębiej w tył!",
+      "PRAWA STRONA: Twoja PRAWA stopa zamiata cofającą się LEWĄ kostkę rywala w tył!",
       "Pchnij rywala, aby zaczął cofać nogę, a wtedy wyciągnij jego barki rękoma w przód-górę!",
-      "Twoja LEWA stopa (skręcona w łyżeczkę) zamiata cofającą się kostkę rywala jeszcze głębiej w tył!",
+      "Lewa dłoń wpięta w kołnierz, prawa na rękawie.",
+      "Na zawodach: działa idealnie na rywala, który cały czas ucieka do tyłu przed Twoim chwytem!",
       "Unieś cofającą się stopę i obniż biodra!",
       "O-UCHI-GARI: Wykorzystaj pęd idącego na Ciebie rywala i wejdź w O-uchi-gari!"),
     T("t4_ukiotoshi", 4, "te", 2, "Uki-otoshi (Rzut ręczny przez pociągnięcie w przód-bok)", "Uki-otoshi Kodokan Judo", "sweep",
-      "LEWA dłoń na kołnierzu, PRAWA na rękawie.",
-      "Wykorzystaj krok rywala w przód i ściągnij go obiema rękoma szerokim łukiem do maty!",
       "Wycofaj jedną nogę w tył-bok (lub przyklęknij na jedno kolano) i rzuć samą pracą rąk i skrętem tułowia!",
+      "Symetryczne wycofanie nogi i rzut kierownicą rąk w drugą stronę!",
+      "Wykorzystaj krok rywala w przód i ściągnij go obiema rękoma szerokim łukiem do maty!",
+      "Lewa dłoń na kołnierzu, prawa na rękawie.",
+      "🏆 ANTY-TARAN NA ZAWODACH: Gdy cięższy rywal biegnie na Ciebie i pcha jak buldożer – zejdź mu z drogi o 45 stopni w bok i ściągnij go za rękaw i kołnierz prosto na matę!",
       "Obniżenie środka ciężkości i krok wyprzedzający!",
       "TAI-OTOSHI / KOUCHI-GARI: Wejście w rzut w kierunku ciągnięcia!"),
     T("t4_turtle2", 4, "ne", 2, "Obracanie Żółwia #2 (Metoda od głowy 'Buldożer' oraz za Rękaw i Pas)", "Judo turtle turnover front Kodokan", "newaza",
-      "Stojąc od strony głowy Żółwia: wsuń obie dłonie pod jego pachy i złap jego łokcie/kołnierz (lub z boku: złap pas i rękaw)!",
+      "Idź na palcach stóp z niskimi biodrami, przewracając rywala po przekątnej prosto w Kami-shiho-gatame!",
+      "Symetryczna praca od strony głowy Żółwia.",
       "Ściągnij oba łokcie Żółwia do środka pod jego brzuch i napieraj klatką po przekątnej!",
-      "Idź na palcach stóp z niskimi biodrami, przewracając rywala prosto w Kami-shiho-gatame!",
+      "Stojąc od strony głowy Żółwia: wsuń obie dłonie pod jego pachy i złap jego łokcie/kołnierz (lub z boku: złap pas i rękaw)!",
+      "Na zawodach: jeśli rywal schował łokcie przy kolanach i nie daje się obrócić z boku – przejdź przed jego głowę, wyjmij mu łokcie do środka i przetocz jak beczkę!",
       "Schowaj brodę, skul barki i wstań dynamicznie lub wsuń kolano do gardy!",
       "Zamiast czekać w Żółwiu, wsuń jedno kolano do środka i zamknij rywala w gardzie!"),
 
-    // ==================== 3.5 KYU (POMARAŃCZOWO-ZIELONY PAS – 6 NOWYCH TECHNIK, RAZEM 37) ====================
-    T("t35_uchimata", 3.5, "ashi", 3, "🔥 UCHI-MATA (Wewnętrzne podcięcie udem – Koronny Rzut Tymka + Wariant z Sali 0:05!)", "Uchi-mata Kodokan Judo", "rot1",
-      "WARIANT GŁÓWNY (LEWY): 1. PRAWA dłoń łapie rękaw przy łokciu ➔ 2. LEWA dłoń wpina się w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!).\n💡 WARIANT Z SALI (0:05): Gdy trzymasz lewy kołnierz i kręcisz się w lewo na PRAWĄ nogę – LEWA ręka z kołnierzem ciągnie do LEWEGO ucha, a PRAWA wchodzi pod pachę!",
-      "Zanim obrócisz stopy, PRAWA ręka ciągnie rękaw wysoko po łuku do PRAWEGO ucha ('spójrz na zegarek'!), a LEWA ręka podbija wpięty kołnierz w górę!",
-      "1. LEWA stopa wchodzi w czubek trójkąta (▲) ➔ 2. PRAWA stopa staje w środku trójkąta na ugiętym kolanie jako OŚ OBROTU ➔ 3. Zasada Huśtawki: głowa nurkuje nisko do kolana, a prosta LEWA noga strzela między udami rywala pod sufit!",
-      "Natychmiast ugnij kolana (zejdź niżej niż pas rywala!), wbij dłoń w jego biodro i zejdź biodrem w bok z linii jego unoszonej nogi!",
-      "UCHI-MATA-SUKASHI / TE-GURUMA: Zejdź biodrem w bok, przepuść jego nogę w powietrzu i przekręć go rękoma na matę!"),
+    // ==================== 3.5 KYU (6 TECHNIK, RAZEM 37) ====================
+    T("t35_uchimata", 3.5, "ashi", 3, "🔥 UCHI-MATA (Wewnętrzne podcięcie udem – Koronny Rzut Tymka + Wariant z Zawodów!)", "Uchi-mata Kodokan Judo", "rot1",
+      "KLASYCZNA LEWA: 1. LEWA stopa wchodzi w czubek trójkąta (▲) ➔ 2. PRAWA stopa staje w środku na ugiętym kolanie jako OŚ OBROTU (obrót w prawo) ➔ 3. Głowa nurkuje do kolana, a prosta LEWA noga strzela między udami rywala pod sufit!",
+      "KLASYCZNA PRAWA: 1. PRAWA stopa w czubek trójkąta ➔ 2. LEWA stopa staje jako OŚ OBROTU (obrót w lewo) ➔ 3. Głowa do kolana, a PRAWA noga strzela w sufit!",
+      "Zanim obrócisz stopy, ręka z rękawem ciągnie wysoko po łuku do ucha ('spójrz na zegarek'!), a ręka na kołnierzu podbija w górę!",
+      "1. Prawa dłoń łapie rękaw przy łokciu ➔ 2. Lewa dłoń wpina się w kołnierz przy obojczyku (3 dolne palce, łokieć w dół!).",
+      "🏆 WARIANT TYMKA Z ZAWODÓW (Stojąc lewym bokiem z 1 ręką na lewym kołnierzu – jak na filmie z sali 0:05 i 1:08!): Ponieważ stoisz już lewym bokiem z przodu, pociągnij LEWĄ ręką z kołnierzem do LEWEGO ucha, wolną PRAWĄ ręką uderz pod prawą pachę/w plecy rywala, stań na LEWEJ nodze i wystrzel PRAWĄ nogę w górę!",
+      "🛡️ OBRONA PRZED ZIELONYM PASEM: Natychmiast ugnij kolana (zejdź niżej niż pas rywala!), wbij dłoń w jego biodro i zejdź biodrem o pół kroku w bok z linii jego unoszonej nogi!",
+      "⚡ KONTRA NA ZIELONY PAS (UCHI-MATA-SUKASHI / TE-GURUMA / KO-SOTO-GARI): Przepuść jego nogę w powietrzu i przekręć go kierownicą rąk (Sukashi) albo wytnij mu nogę podporową od tyłu!"),
     T("t35_tsubame", 3.5, "ashi", 2, "Tsubame-gaeshi (Jaskółczy Zwrot – Błyskawiczna kontra stopą na podcięcie!)", "Tsubame-gaeshi Kodokan Judo", "sweep",
-      "Stabilnie wpięty kołnierz i rękaw trzymane jak kierownica.",
-      "Gdy rywal wycina Twoją stopę, przekręć kierownicę rąk w przeciwną stronę!",
       "1. Unieś atakowaną stopę o 5 cm nad matę (przepuść podcięcie rywala pod swoją stopą!) ➔ 2. Natychmiast wytnij jego nogę atakującą podeszwą swojej stopy w drugą stronę!",
+      "Symetryczny unik stopą w górę i wycięcie powrotne!",
+      "Gdy rywal wycina Twoją stopę, przekręć kierownicę rąk w przeciwną stronę!",
+      "Stabilnie wpięty kołnierz i rękaw trzymane jak kierownica.",
+      "🏆 KONTRA NA ZAWODACH: Kiedy wyższy pas próbuje Cię podciąć przez De-ashi-barai lub Okuri-ashi-barai – podnieś stopę i oddaj mu w tej samej sekundzie przez Tsubame-gaeshi!",
       "Nigdy nie podcinaj z daleka bez wcześniejszego wciśnięcia rękawa w dół!",
-      "Najpiękniejsza kontra z grupy Ashi-waza na De-ashi-barai i Okuri-ashi-barai!"),
+      "Najpiękniejsza kontra z grupy Ashi-waza!"),
     T("t35_ouchigaeshi", 3.5, "ashi", 2, "O-uchi-gaeshi & O-soto-gaeshi (Kontry na duże podcięcia)", "O-uchi-gaeshi Kodokan Judo", "ouchi",
-      "Mocny chwyt kołnierza i rękawa.",
-      "W O-uchi-gaeshi skręcasz kierownicą rąk w stronę uniesionej nogi rywala; w O-soto-gaeshi wciskasz go w dół-tył na jego nogę podporową!",
       "Cofnij podcinaną nogę, obniż biodra w Jigotai i wytnij nogę rywala!",
+      "Symetryczna obrona biodrem i przejęcie podcięcia.",
+      "W O-uchi-gaeshi skręcasz kierownicą rąk w stronę uniesionej nogi rywala; w O-soto-gaeshi wciskasz go w dół-tył na jego nogę podporową!",
+      "Mocny chwyt kołnierza i rękawa.",
+      "🏆 NA ZAWODACH: Gdy rywal wchodzi w O-soto-gari lub O-uchi-gari na prostych nogach bez wychylenia – ugnij kolana i skontruj go jego własnym rzutem!",
       "Zawsze wchodź w podcięcia z pełnym wychyleniem rękoma!",
       "Obowiązkowe kontry na egzamin i zawody!"),
     T("t35_kouchigaeshi", 3.5, "te", 2, "Kouchi-gaeshi & Uchi-mata-sukashi (Ręczne kontry przez unik i kierownicę)", "Uchi-mata-sukashi Kodokan Judo", "sweep",
-      "Mocny uchwyt na kołnierzu i rękawie.",
-      "Gdy rywal wchodzi w rzut bez wychylenia, przekręć gwałtownie rękoma jak kierownicą w kierunku jego lotu!",
       "Cofnij atakowaną nogę lub zejdź biodrem w bok, przepuszczając nogę rywala w pustkę!",
+      "Symetryczny unik biodrem i stopą.",
+      "Gdy rywal wchodzi w rzut bez wychylenia, przekręć gwałtownie rękoma jak kierownicą w kierunku jego lotu!",
+      "Mocny uchwyt na kołnierzu i rękawie.",
+      "🏆 KONTRA NA ZIELONY PAS: Kiedy zielony pas wchodzi z daleka w Uchi-matę – przesuń biodro w bok i pociągnij go rękawem w dół (poleci sam w powietrze na Ippon!).",
       "Timing i niska pozycja na ugiętych nogach!",
       "Czysty Ippon samymi rękoma i unikiem!"),
-    T("t35_sukuinage", 3.5, "te", 2, "Sukui-nage / Te-guruma (Zagarnięcie bioder rękoma z przysiadu jako kontra)", "Sukui-nage Kodokan Judo", "rot2",
-      "Jedna ręka kontroluje rękaw/kołnierz, a druga obejmuje z boku biodra lub udo wchodzącego rywala!",
-      "Zatrzymaj obrót rywala swoim biodrem i wynieś go z ugiętych kolan w górę-tył!",
+    T("t35_sukuinage", 3.5, "te", 2, "Sukui-nage / Te-guruma (Zagarnięcie bioder z przysiadu jako kontra)", "Sukui-nage Kodokan Judo", "rot2",
       "Zejdź bardzo nisko na ugiętych kolanach (Jigotai) z boku rywala i wybij się z nóg w górę!",
+      "Niski przysiad obronny z boku i wybicie biodrem w górę.",
+      "Zatrzymaj obrót rywala swoim biodrem i wynieś go z ugiętych kolan w górę-tył!",
+      "Jedna ręka kontroluje rękaw/kołnierz, a druga obejmuje z boku biodra wchodzącego rywala (UWAGA: na zawodach łap za PAS/BIODRA powyżej linii spodni, bo chwyt bezpośrednio za nogawke spodni w stójce jest zakazany!).",
+      "🏆 PRZEPISY IJF NA ZAWODACH: Pamiętaj, aby na zawodach obejmować ręką PAS i BIODRO rywala (nie łap dłonią poniżej pasa za spodnie!), wynieś go brzuchem i rzuć!",
       "Nie wchodź w rzuty obrotowe z daleka na prostych nogach!",
       "Najgroźniejsza kontra na słabe wejście w Uchi-matę, Harai-goshi lub O-goshi!"),
     T("t35_ushirokesa", 3.5, "ne", 2, "Ushiro-kesa-gatame (Odwrotne trzymanie opasaniem twarzą do nóg) ⇄ Wyjścia", "Ushiro-kesa-gatame Kodokan Judo", "newaza",
-      "Siedzisz przy barku rywala odwrócony twarzą w stronę jego nóg, trzymając jego ramię pod pachą i chwytając pas!",
-      "Mocny docisk barku rywala do maty i kontrola jego bioder.",
       "Szeroka baza nóg jak cyrkiel i chód pająka stopami po macie!",
+      "Symetryczna praca nóg po macie.",
+      "Mocny docisk barku rywala do maty i kontrola jego bioder.",
+      "Siedzisz przy barku rywala odwrócony twarzą w stronę jego nóg, trzymając jego ramię pod pachą i chwytając pas!",
+      "Na zawodach: naturalne trzymanie zaraz po rzucie kontrującym w tył (np. Tani-otoshi lub Ko-soto-gari)!",
       "Chroń kołnierz i nie daj zamknąć swojego łokcia!",
       "WYJŚCIE: Most (Upa) ze skrętem przez bark w stronę głowy rywala i wyrwanie uwięzionego łokcia!"),
 
-    // ==================== 3 KYU (ZIELONY PAS – 5 NOWYCH TECHNIK, RAZEM 42) ====================
+    // ==================== 3 KYU (ZIELONY PAS – 5 TECHNIK, RAZEM 42) ====================
     T("t3_ashiguruma", 3, "ashi", 3, "Ashi-guruma (Koło wokół długiej wyprostowanej nogi)", "Ashi-guruma Kodokan Judo", "rot1",
-      "LEWA ręka wysoko wpięta w kołnierz, PRAWA na rękawie.",
+      "ZASADA LUSTRA: Obrót na PRAWEJ nodze podporowej i wystawienie długiej, wyprostowanej LEWEJ nogi w poprzek przed PRAWYM kolanem rywala jako osi obrotu!",
+      "PRAWA STRONA: Obrót na LEWEJ nodze i wystawienie długiej PRAWEJ nogi przed LEWYM kolanem rywala!",
       "Dalekie wyciągnięcie rękawa i kołnierza po kole w przód!",
-      "Obrót na nodze podporowej i wystawienie długiej, wyprostowanej LEWEJ nogi w poprzek przed prawym kolanem rywala jako osi obrotu!",
+      "Wysokie wpięcie w kołnierz i mocny chwyt rękawa.",
+      "🛡️ JAK OBRONIĆ SIĘ PRZED ZIELONYM PASEM: Gdy zielony pas wystawia długą nogę do Ashi-gurumy – ugnij kolana, ściągnij go w dół i przeskocz przednią nogą nad jego zaporą!",
       "Ugnij kolana i przeskocz nad wystawioną nogą rywala!",
       "O-SOTO-GARI / UTSURI-GOSHI: Kontra po zablokowaniu obrotu!"),
     T("t3_kouchimaki", 3, "ashi", 3, "Ko-uchi-makikomi / Ko-uchi-gake (Podcięcie wewnętrzne z wejściem całym ciałem)", "Kouchi-makikomi Judo", "ouchi",
-      "Zarzuć LEWE ramię głęboko jak w Ippon-seoi-nage i trzymaj ciasno rękaw!",
+      "ZASADA LUSTRA: Zarzuć LEWE ramię jak do Ippon-seoi-nage i jednocześnie zahacz swoją LEWĄ nogą od wewnątrz piętę/łydkę LEWEJ nogi rywala, jadąc całym ciężarem w dół-tył!",
+      "PRAWA STRONA: Zarzuć PRAWE ramię i zahacz PRAWĄ nogą od wewnątrz PRAWĄ łydkę rywala!",
       "Wbij ciężar swojego ciała w klatkę/bark rywala w dół-tył!",
-      "Jednocześnie z wejściem ramienia zahacz LEWĄ nogą od wewnątrz piętę/łydkę tej samej nogi rywala!",
-      "Wyrwanie zahaczanej nogi i zejście w bok!",
-      "Obejście za plecy do parteru!"),
+      "Głębokie zarzucenie ramienia pod pachę i zamknięcie rękawa przy swoim brzuchu.",
+      "🏆 HIT TURNIEJOWY (Z 1 ręki i przeciwko zielonym pasom!): Możesz wykonać ten rzut trzymając tylko jeden rękaw lub kołnierz! A jeśli zielony pas atakuje Cię tym rzutem – cofnij przednią nogę o pół kroku i ściągnij go twarzą w dół na matę!",
+      "Wyrwanie zahaczanej nogi w tył i zejście w bok!",
+      "Obejście za plecy do parteru i obrócenie Żółwia!"),
     T("t3_sumiotoshi", 3, "te", 3, "Sumi-otoshi (Rzut rękoma w tylny narożnik równowagi)", "Sumi-otoshi Kodokan Judo", "sweep",
-      "LEWA dłoń na kołnierzu, PRAWA na rękawie.",
+      "Zejście krokiem po łuku z linii ataku i obniżenie tułowia!",
+      "Symetryczne zejście po łuku w drugą stronę.",
       "Wbicie ciężaru rywala rękoma prosto w jego tylny narożnik (za jego piętę)!",
-      "Zejście krokiem po łuku z linii i obniżenie tułowia!",
+      "Lewa dłoń na kołnierzu, prawa na rękawie.",
+      "🏆 NA ZAWODACH: Świetna kontra ręczna, gdy przeciwnik nie trafia rzutem i stoi niestabilnie na jednej pięcie!",
       "Krok podporowy w tył!",
       "O-UCHI-GARI / TAI-OTOSHI: Wykorzystanie pchnięcia do wejścia w rzut przedni!"),
-    T("t3_sodetsurikomi", 3, "koshi", 3, "Sode-tsuri-komi-goshi (Rzut biodrowy trzymając za OBA RĘKAWY – Super Broń!)", "Sode-tsuri-komi-goshi Kodokan Judo", "rot2",
-      "Obie Twoje dłonie trzymają DWA RĘKAWY rywala (przy łokciach/mankietach)! Rzut działa symetrycznie w obie strony!",
-      "Jedna ręka wypycha rękaw rywala wysoko nad jego głowę (jakbyś zakładał mu czapkę!), a druga ciągnie drugi rękaw w przód-dół!",
+    T("t3_sodetsurikomi", 3, "koshi", 3, "Sode-tsuri-komi-goshi (Rzut biodrowy trzymając za OBA RĘKAWY – Broń Zielonych Pasów!)", "Sode-tsuri-komi-goshi Kodokan Judo", "rot2",
       "Wskok w trójkąt (▲) na dwa mocno ugięte kolana tyłem do rywala ➔ wyprost nóg i skłon głowy!",
+      "Rzut działa symetrycznie w lewą i prawą stronę bez zmiany chwytu!",
+      "Jedna ręka wypycha rękaw rywala wysoko nad jego głowę (jakbyś zakładał mu czapkę!), a druga ciągnie drugi rękaw w przód-dół!",
+      "Obie Twoje dłonie trzymają DWA RĘKAWY rywala (przy łokciach/mankietach)!",
+      "🛡️ JAK OBRONIĆ SIĘ, GDY ZIELONY PAS ŁAPIE CIĘ ZA OBA RĘKAWY: Natychmiast ugnij kolana (niskie Jigotai!), przyklej łokcie do własnych żeber, zakręć ręką do środka (w stronę kciuka), żeby wyrwać rękaw, i od razu wepnij lewy kołnierz!",
       "Ugnij kolana i wyrwij rękaw wypychany do góry, schodząc biodrem w dół!",
-      "TANI-OTOSHI / KO-SOTO-GAKE: Zejście na bok za plecy rywala!"),
+      "TANI-OTOSHI / KO-SOTO-GAKE: Gdy rywal obróci się plecami trzymając same rękawy – zejdź na bok za jego plecy i rzuć go w tył!"),
     T("t3_hanegoshi", 3, "koshi", 3, "Hane-goshi & Utsuri-goshi (Sprężynujący rzut biodrowo-nożny i kontra biodrowa)", "Hane-goshi Kodokan Judo", "rot1",
-      "LEWA ręka wpięta w kołnierz/plecy, PRAWA na rękawie.",
+      "Stoisz na PRAWEJ nodze podporowej w trójkącie, a LEWA noga ugięta w kolanie sprężynuje bokiem uda/piszczela pod PRAWĄ nogą rywala w górę!",
+      "Stoisz na LEWEJ nodze podporowej, a PRAWA noga ugięta w kolanie sprężynuje w górę!",
       "Przyklej rywala ciasno do swojego biodra i wyciągnij rękaw wysoko do ucha!",
-      "Stoisz na nodze podporowej w trójkącie, a druga noga ugięta w kolanie sprężynuje bokiem uda/piszczela pod nogą rywala w górę!",
+      "Lewa ręka wpięta w kołnierz/plecy, prawa na rękawie.",
+      "🏆 KONTRA UTSURI-GOSHI NA ZAWODACH: Gdy wyższy pas wejdzie w rzut biodrowy – ugnij kolana, zatrzymaj go biodrem, wynieś w górę, przesuń swoje biodro przed niego i rzuć!",
       "Obniżenie bioder i blok dłonią w pas!",
-      "UTSURI-GOSHI / USHIRO-GOSHI: Wynieś zablokowanego rywala biodrem w górę, przesuń biodro przed niego i rzuć!")
+      "UTSURI-GOSHI / USHIRO-GOSHI: Wynieś zablokowanego rywala biodrem w górę i rzuć!")
   ];
 
   let filteredTechList = [];
@@ -1190,17 +1283,16 @@
     if (detailCard) detailCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // NOWA KOLEJNOŚĆ ZAKŁADEK W KAŻDEJ TECHNICE: 1. NOGI -> 2. WYCHYLENIE -> 3. UCHWYT -> 4. TRENING SOLO -> 5. BLOK -> 6. KONTRA
   function renderKodokanMasterCard(tabIdx = 0, simStep = 1) {
     currentAnatomyTab = tabIdx;
     currentSimStep = simStep;
     const tech = filteredTechList[selectedTechIdx] || KODOKAN_CURRICULUM[0];
 
     const anatomyTabs = [
-      { title: "🦵 1. Nogi i Stopy (Podstawa!)", text: `${tech.details.feet()}\n\n${tech.soloStations.st1_legs}` },
+      { title: "🦵 1. Nogi i Stopy (Lustro!)", text: `${tech.details.feet()}\n\n${tech.soloStations.st1_legs}` },
       { title: "🟡 2. Wychylenie (Kuzushi)", text: `${tech.details.kuzushi()}\n\n${tech.soloStations.st2_kuzushi}` },
       { title: "🖐️ 3. Wpięcie Kołnierza", text: tech.details.grip() },
-      { title: "🌪️ 4. Całe Ćwiczenie w Domu", text: `${tech.soloStations.st3_combo}\n\n${tech.soloStations.st4_mob}` },
+      { title: "🏆 4. Wariant na Zawody (Bokiem)", text: `${tech.details.tourney()}\n\n${tech.soloStations.st3_combo}` },
       { title: "🛡️ 5. Blokowanie (Obrona)", text: tech.details.block() },
       { title: "⚡ 6. Kontra / Wyjście!", text: tech.details.counter() }
     ];
@@ -1229,7 +1321,7 @@
         ${anatomyTabs.map((tab, i) => `<button class="cam-btn ${i === tabIdx ? 'active' : ''}" onclick="renderKodokanMasterCard(${i}, ${currentSimStep})">${tab.title}</button>`).join('')}
       </div>
 
-      <div style="background:rgba(16,185,129,0.12); border:2px solid var(--green); border-radius:12px; padding:12px; margin:9px 0; white-space:pre-line; font-size:0.84rem;">
+      <div style="background:rgba(16,185,129,0.12); border:2px solid var(--green); border-radius:12px; padding:12px; margin:9px 0; white-space:pre-line; font-size:0.83rem;">
         ${activeAnatomy.text}
       </div>
 
@@ -1237,7 +1329,7 @@
 
       <div style="background:#0a1122; border:2px solid var(--gold); border-radius:14px; padding:12px; margin-top:12px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <strong style="color:var(--gold); font-size:0.9rem;">🏠 4 KROKI TRENINGU W DOMU DLA: ${tech.name}</strong>
+          <strong style="color:var(--gold); font-size:0.88rem;">🏠 4 KROKI TRENINGU W DOMU (1. NOGI ➔ 2. WYCHYLENIE ➔ 3. POŁĄCZENIE & ZAWODY)</strong>
           <button class="btn btn-gold" onclick="addTechniqueToMyPlan('${tech.id}')">➕ DODAJ DO PLANU TYGODNIA</button>
         </div>
         <div class="station-grid">
@@ -1250,7 +1342,7 @@
             <button class="btn btn-blue" style="width:100%;" onclick="incrementMastery('kuzushi', 1)">✅ Zaliczyłem Wychylenie (+35 EXP)</button>
           </div>
           <div class="station-card" style="border-top-color:var(--gold);">
-            <div><h4>3️⃣ KROK 3: Połączenie w Cały Ruch</h4><p>${tech.soloStations.st3_combo}</p></div>
+            <div><h4>3️⃣ KROK 3: Połączenie + Wariant z Zawodów</h4><p>${tech.soloStations.st3_combo}</p></div>
             <button class="btn btn-gold" style="width:100%;" onclick="incrementMastery('uchimata', 1)">✅ Zaliczyłem Cały Ruch (+35 EXP)</button>
           </div>
           <div class="station-card" style="border-top-color:var(--purple);">
@@ -1269,56 +1361,143 @@
   }
 
   /*************************************************************************
-   * 4. PLAN TYGODNIA Z DOKŁADNYMI WYJAŚNIENIAMI KROK PO KROKU DLA TYMKA
+   * 4. NOWY DZIAŁ: WALKA NA ZAWODACH, ANTY-CHAOS & ANTY-ZIELONY PAS (12 SCENARIUSZY)
+   *************************************************************************/
+  const TOURNAMENT_TACTICS_DB = [
+    {
+      cat: 'green', techLink: 't3_sodetsurikomi',
+      title: "🟢 ANTY-ZIELONY PAS #1: Rywal łapie za OBA RĘKAWY (Sode-tsuri-komi-goshi)!",
+      desc: "CO ROBI WYŻSZY PAS: Chwyta oba Twoje rękawy i próbuje wypchnąć jeden rękaw nad Twoją głowę.\n🛡️ OBRONA W 1 SEKUNDZIE: Natychmiast ugnij kolana (niskie Jigotai!), przyklej łokcie do własnych żeber i zakręć przedramieniem do środka (w stronę kciuka), wyrywając rękaw!\n⚡ KONTRA TYMKA: Gdy rywal obróci się plecami trzymając same rękawy – zejdź krokiem w bok za jego plecy i wytnij go w tył (Ko-soto-gari / Tani-otoshi)!"
+    },
+    {
+      cat: 'green', techLink: 't35_kouchigaeshi',
+      title: "🟢 ANTY-ZIELONY PAS #2: Obrona i Kontra na wysoką Uchi-matę / Harai-goshi!",
+      desc: "CO ROBI WYŻSZY PAS: Wchodzi głębokim obrotem na jednej nodze między Twoje uda lub po zewnętrznej stronie uda.\n🛡️ OBRONA: Ugnij kolana niżej niż jego pas, wbij dłoń twardo w jego biodro i przesuń swoje biodra o pół kroku w bok!\n⚡ 3 KONTRY TYMKA:\n1. Uchi-mata-sukashi: Przepuść jego nogę w powietrzu i przekręć go kierownicą rąk.\n2. Te-guruma: Obejmij jego pas z boku i wynieś z ugiętych kolan.\n3. Ko-soto-gari: Wytnij mu tę jedną nogę podporową, na której stoi!"
+    },
+    {
+      cat: 'green', techLink: 't45_turtle1',
+      title: "🟢 ANTY-ZIELONY PAS #3: Rywal rzuca się nisko na kolana (Drop Seoi-nage)!",
+      desc: "CO ROBI WYŻSZY PAS: Nagle spada na oba kolana między Twoje stopy i ciągnie Cię za rękaw/kołnierz.\n🛡️ OBRONA: Nie daj ściągnąć głowy w dół! Wyrzuć biodra w tył i oprzyj przedramię ciężko na jego karku/plecach (spłaszcz go do maty!).\n⚡ NATYCHMIASTOWA KONTRA: Skoro rywal sam upadł na kolana przed Tobą – w 1 sekundzie wbij kolano w jego bok, sięgnij pod pachę po jego DALSZY ŁOKIEĆ i obróć go prosto do trzymania Yoko-shiho-gatame!"
+    },
+    {
+      cat: 'green', techLink: 't3_kouchimaki',
+      title: "🟢 ANTY-ZIELONY PAS #4: Rywal wchodzi całym ciałem w Ko-uchi-makikomi!",
+      desc: "CO ROBI WYŻSZY PAS: Zarzuca ramię jak do Ippon-seoi-nage i jednocześnie zahacza nogą od środka Twoją przednią stopę.\n🛡️ OBRONA: Gdy widzisz zarzucane ramię bez pełnego obrotu plecami – cofnij przednią stopę o pół kroku w tył!\n⚡ KONTRA TYMKA: Jego noga trafi w powietrze, a on poleci twarzą w przód – ściągnij go wtedy po łuku rękoma (Sumi-otoshi) prosto na matę i wejdź na plecy!"
+    },
+    {
+      cat: 'green', techLink: 't35_tsubame',
+      title: "🟢 ANTY-ZIELONY PAS #5: Rywal poluje na wycięcie obu stóp (Okuri-ashi-barai)!",
+      desc: "CO ROBI WYŻSZY PAS: Skacze z Tobą do boku i czeka, aż złączysz stopy.\n🛡️ ZASADA PRACY NÓG: Nigdy nie podskakuj z łączeniem stóp! Chodź nisko krokiem ślizgowym i nagle zmieniaj kierunek.\n⚡ KONTRA (JASKÓŁCZY ZWROT): Gdy machnie nogą do podcięcia – unieś stopę o 5 cm w górę i w tej samej sekundzie wytnij jego nogę w drugą stronę (Tsubame-gaeshi)!"
+    },
+    {
+      cat: 'green', techLink: 't6_ogoshi',
+      title: "🟢 ANTY-ZIELONY PAS #6: Wyższy rywal sięga z góry za kark / plecy!",
+      desc: "CO ROBI WYŻSZY PAS: Próbuje złapać Cię z góry za kark lub pas na plecach, żeby zgiąć Cię w pół.\n🛡️ TARCZA TYMKA: Wbij jako pierwszy lewą dłoń w jego kołnierz przy obojczyku i postaw ciężki łokieć na jego mostku – nie dosięgnie Twojego karku!\n⚡ KONTRA: W momencie, gdy rywal podnosi rękę wysoko nad Twoim barkiem, odsłania całą swoją pachę – zanurkuj pod jego rękę w O-goshi, Ippon-seoi-nage lub Uchi-matę!"
+    },
+    {
+      cat: 'chaos', techLink: 't45_seoiotoshi',
+      title: "🦍 ANTY-CHAOS #1: Przeciwnik łapie oburącz za kark i wiesza się w dół!",
+      desc: "BŁĄD DZIECI: Cofanie się z pochyloną głową (grozi wycięciem albo karą Shido!).\n⚡ ROZWIĄZANIE A (Rzut): Skoro rywal sam pcha Twój kark w dół – wykorzystaj to! Wbij rękę pod jego pachę i wejdź nisko na kolano w Seoi-otoshi / Ippon-seoi-nage (sam przeleci nad Tobą!).\n⚡ ROZWIĄZANIE B (Wycieraczka): Zerwij jego rękę oburącz w dół ze skrętem barku, wepnij lewy kołnierz i od razu wytnij Kouchi-gari!"
+    },
+    {
+      cat: 'chaos', techLink: 't45_sasae',
+      title: "🐂 ANTY-CHAOS #2: Przeciwnik pcha na oślep na sztywnych rękach jak taran!",
+      desc: "ZASADA JUDO: Nigdy nie pchaj się z silniejszym rywalem przód w przód!\n⚡ ROZWIĄZANIE TYMKA: Zbij jego sztywny łokieć do środka, zejdź krokiem o 45° w bok, przyłóż podeszwę stopy do jego kostki (Sasae-tsuri-komi-ashi) lub wystaw nogę do Tai-otoshi i przekręć kierownicą rąk – jego własna siła rzuci go na plecy!"
+    },
+    {
+      cat: 'chaos', techLink: 't5_kouchi',
+      title: "🦐 ANTY-CHAOS #3: Przeciwnik wypina tyłek daleko w tył i tylko blokuje!",
+      desc: "UWAGA: Gdy rywal stoi zgięty w pół z biodrami z tyłu, NIE wchodź od razu w Uchi-matę ani O-goshi!\n⚡ KLUCZ OTWIERAJĄCY: Jego głowa i przednia noga są blisko Ciebie! Wciśnij kołnierz w dół i zaatakuj ostro jego przednią piętę przez Kouchi-gari lub De-ashi-barai. Gdy cofnie nogę i się wyprostuje – dopiero wtedy odpalasz Uchi-matę!"
+    },
+    {
+      cat: 'chaos', techLink: 't45_kosotogake',
+      title: "🤼 ANTY-CHAOS #4: Chaotyczne zwarcie brzuch w brzuch (bez techniki)!",
+      desc: "Gdy rywal wpada w Ciebie bez uchwytu i próbuje objąć Cię jak niedźwiedź:\n⚡ ROZWIĄZANIE: Natychmiast ugnij kolana (zejdź niżej niż on!), wbij przedramię pod jego brodę/obojczyk, a swoją nogą od zewnątrz zahacz jego łydkę hakiem (Ko-soto-gake) i pojedź klatką w przód!"
+    },
+    {
+      cat: 'side', techLink: 't35_uchimata',
+      title: "🤺 WALKA BOKIEM (1 RĘKA) #1: Styl Tymka z Zawodów (Katate-gumi)!",
+      desc: "Stoisz lewym bokiem z przodu i trzymasz LEWĄ ręką kołnierz rywala:\n1. ATAK W TYŁ (0.5 sekundy): Twoja lewa noga jest już przy jego stopie – wciśnij lewy kołnierz w dół i od razu przednią (lewą) nogą wytnij Kouchi-gari lub O-uchi-gari!\n2. ATAK W PRZÓD (Z filmu na sali 0:05): Pociągnij lewą ręką kołnierz do LEWEGO ucha, wolną prawą rękę wbij pod prawą pachę rywala i wejdź w Uchi-matę / Harai-goshi na prawą nogę!"
+    },
+    {
+      cat: 'side', techLink: 't5_moroteseoi',
+      title: "⚡ 4 ZŁOTE KOMBINACJE TURNIEJOWE (Renraku-waza – Podwójny Atak)!",
+      desc: "Na zawodach pierwszy atak otwiera obronę, a drugi rzuca na Ippon:\n1. Kouchi-gari (rywal cofa stopę) ➔ natychmiastowy obrót w Uchi-matę lub Morote-seoi-nage!\n2. Ippon-seoi-nage (rywal zapiera się w tył) ➔ natychmiastowy powrót w Kouchi-gari lub O-uchi-gari!\n3. De-ashi-barai (rywal unosi nogę) ➔ O-soto-gari lub Tai-otoshi!\n4. Seoi-otoshi ➔ błyskawiczne obracanie Żółwia za dalszy łokieć!"
+    }
+  ];
+
+  function renderTournamentCards(filterCat = 'all') {
+    ['all', 'green', 'chaos', 'side'].forEach(c => {
+      const btn = document.getElementById('tourneyFilter_' + c);
+      if (btn) btn.classList.toggle('active', c === filterCat);
+    });
+    const list = filterCat === 'all' ? TOURNAMENT_TACTICS_DB : TOURNAMENT_TACTICS_DB.filter(x => x.cat === filterCat);
+    const box = document.getElementById('tournamentCardsContainer');
+    box.innerHTML = list.map(item => `
+      <div class="station-card" style="border-top-color:${item.cat === 'green' ? 'var(--green)' : (item.cat === 'chaos' ? 'var(--orange)' : 'var(--gold)')};">
+        <div>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="btn btn-blue" style="flex:1;" onclick="speakInstruction('${item.title}. ${item.desc.replace(/\n/g, ' ').replace(/'/g, '')}')">🔊 Czytaj</button>
+          <button class="btn btn-green" style="flex:1;" onclick="addTechniqueToMyPlan('${item.techLink}')">➕ Do Planu Dnia</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /*************************************************************************
+   * 5. PLAN TYGODNIA KROK PO KROKU
    *************************************************************************/
   const WEEKLY_KUMIKATA_SCHEDULE = {
     1: {
       dayName: "Poniedziałek",
       gripTitle: "🖐️ PONIEDZIAŁEK – TRIK #1: „Dwuklik: 1. Rękaw ➔ 2. Wpięcie Kołnierza (3x 15 powt.)”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Stań przed gumami (lub z Tatą) z rękami podniesionymi w gardzie.\n2. RUCH 1: PRAWĄ dłonią złap najpierw rękaw przy łokciu.\n3. RUCH 2: Ułamek sekundy później wstrzel LEWĄ dłoń prosto od dołu i wepnij ją w kołnierz przy obojczyku (zaciśnij 3 dolne palce, a łokieć opuść ciężko w dół na mostek!).",
-      bossTxt: "Pokaż Tacie:\n1. 10 szybkich 'Dwuklików' (najpierw rękaw, potem wpięcie kołnierza).\n2. Pracę stóp 'Łyżwą' przy klapkach oraz wciśnięcie kierownicy w dół w De-ashi-barai i Sasae!",
+      gripDesc: "1. PRAWĄ dłonią złap najpierw rękaw przy łokciu.\n2. Ułamek sekundy później wstrzel LEWĄ dłoń od dołu i wepnij ją w kołnierz przy obojczyku (3 dolne palce, łokieć w dół na mostek!).",
+      bossTxt: "Pokaż Tacie: 10 szybkich 'Dwuklików' + pracę stóp 'Łyżwą' i kierownicę w dół w De-ashi-barai, Sasae oraz Kouchi-gari!",
       defaultTechIds: ["t6_deashi", "t45_sasae", "t5_kouchi"]
     },
     2: {
       dayName: "Wtorek",
-      gripTitle: "🖐️ WTOREK – TRIK #2: „Wyrwanie Rękawa w Górę + Wkręcenie Łokcia pod Pachę (3x 12 powt.)”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Wepnij lewą dłoń w kołnierz (trzymaj luźny nadgarstek!), a prawą złap rękaw.\n2. PRAWĄ ręką pociągnij rękaw wysoko w górę przed czoło (otwierasz okno pod pachą rywala!).\n3. W tym samym ułamku sekundy zegnij LEWY łokieć i wkręć go głęboko pod swoją pachę (bez puszczania kołnierza!) z niskim przysiadem na 2 nogach!",
-      bossTxt: "Pokaż Tacie:\n1. 10 wkręceń łokcia pod pachę bez puszczania kołnierza.\n2. Wejścia w trójkąt na 2 ugiętych kolanach w Seoi-otoshi i Morote-seoi-nage oraz zamach nogą w Harai-goshi!",
+      gripTitle: "🖐️ WTOREK – TRIK #2: „Otwarcie Rękawa w Górę + Łokieć pod Pachę (3x 12 powt.)”",
+      gripDesc: "1. Wepnij lewą dłoń w kołnierz (luźny nadgarstek!), prawą złap rękaw.\n2. PRAWĄ ręką pociągnij rękaw wysoko w górę i wkręć LEWY łokieć głęboko pod pachę z niskim przysiadem na 2 ugiętych nogach!",
+      bossTxt: "Pokaż Tacie: 10 wkręceń łokcia pod pachę oraz wejścia w Seoi-otoshi, Morote-seoi-nage i Harai-goshi!",
       defaultTechIds: ["t45_seoiotoshi", "t5_moroteseoi", "t45_haraigoshi"]
     },
     3: {
       dayName: "Środa",
-      gripTitle: "🖐️ ŚRODA – TRIK #3: „Wycieraczka (Zerwanie Kołnierza Oburącz w Dół) + Parter na Dywanie”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Wyobraź sobie, że rywal pierwszy złapał Twój kołnierz.\n2. Złap OBURĄCZ (obiema dłońmi) jego rękaw przy swoim obojczyku, zrób pół kroku w tył ze skrętem barku i zerwij jego rękę ostro w dół (jak wycieraczka!).\n3. Od razu wepnij swój lewy kołnierz! Po tym ćwiczeniu kładziemy poduszkę na dywanie i przechodzimy do Parteru!",
-      bossTxt: "Pokaż Tacie na dywanie:\n1. Obrócenie Żółwia przez wciągnięcie dalszego łokcia pod brzuch.\n2. Wyjście z dosiadu (Tate-shiho-gatame) przez złapanie nogi swoimi stopami w kleszcze i Most!",
+      gripTitle: "🖐️ ŚRODA – TRIK #3: „Wycieraczka (Zerwanie Kołnierza) + Parter na Dywanie”",
+      gripDesc: "1. Złap oburącz rękaw rywala przy swoim obojczyku i zerwij go ostro w dół ('Wycieraczka').\n2. Od razu wepnij swój lewy kołnierz, a następnie przejdź na dywan z poduszką do trzymań i obracania Żółwia!",
+      bossTxt: "Pokaż Tacie na dywanie: obrócenie Żółwia za dalszy łokieć i wyjście z dosiadu (Tate-shiho) przez kleszcze nogami!",
       defaultTechIds: ["t45_tateshiho", "t45_turtle1", "t5_yokoshiho"]
     },
     4: {
       dayName: "Czwartek",
-      gripTitle: "🖐️ CZWARTEK – TRIK #4: „Ciężki Łokieć na Mostku + Wciśnięcie Rywala na Pięty (3x 15 powt.)”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Wepnij lewą dłoń w kołnierz i opuść lewy łokieć ciężko w dół na mostek rywala.\n2. Zamiast ciągnąć gumę do siebie, wciśnij kołnierz i rękaw ostro w dół-tył (osadzasz rywala na piętach!).\n3. Połącz to z krokiem dostawnym (Tsugi-ashi) i szerokim półkolem stopy po dywanie w O-uchi-gari!",
-      bossTxt: "Pokaż Tacie:\n1. Krok dostawny bez krzyżowania nóg + wielkie półkole stopą w O-uchi-gari.\n2. Unik stopą w górę i kontrę Tsubame-gaeshi!",
+      gripTitle: "🖐️ CZWARTEK – TRIK #4: „Ciężki Łokieć na Mostku + Anty-Zielony Pas (Obrona Sode & Uchi-mata)”",
+      gripDesc: "1. Wepnij lewą dłoń w kołnierz i opuść łokieć ciężko na mostek rywala.\n2. Przećwicz wciśnięcie rywala na pięty w O-uchi-gari oraz obronę przed chwytem za oba rękawy (Sode)!",
+      bossTxt: "Pokaż Tacie: krok dostawny i półkole w O-uchi-gari, unik Tsubame-gaeshi oraz wyrwanie rękawa przed Sode!",
       defaultTechIds: ["t6_ouchi", "t45_kosotogake", "t35_tsubame"]
     },
     5: {
       dayName: "Piątek",
-      gripTitle: "🖐️ PIĄTEK – TRIK #5: „Zegarek do Prawego Ucha pod Koronną Uchi-matę i O-soto-gari!”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Wepnij lewy kołnierz i prawy rękaw.\n2. W Uchi-macie: wyrwij rękaw PRAWĄ ręką wysoko do PRAWEGO ucha ('spójrz na zegarek'), stań na PRAWEJ nodze w trójkącie, opuść głowę do kolana i wystrzel LEWĄ nogę w sufit!\n3. W O-soto-gari: postaw PRAWĄ stopę NA ZEWNĄTRZ obok klapka, ściągnij rękaw do brzucha i wytnij LEWĄ nogą w tył!",
-      bossTxt: "Pokaż Tacie różnicę pracy nóg:\n1. W Uchi-macie: wejście w trójkąt + huśtawka na 1 nodze.\n2. W O-soto-gari: krok NA ZEWNĄTRZ obok klapka (bez trójkąta!) i wahadło nogą w tył!",
+      gripTitle: "🖐️ PIĄTEK – TRIK #5: „Zegarek do Ucha pod Uchi-matę i Lustrzane O-soto-gari!”",
+      gripDesc: "1. W Uchi-macie: wyrwij rękaw do ucha ('Zegarek'), stań na nodze podporowej w trójkącie, opuść głowę do kolana i wystrzel nogę w sufit!\n2. W O-soto-gari: postaw PRAWĄ stopę na zewnątrz obok PRAWEJ stopy rywala i wytnij LEWĄ nogą w tył!",
+      bossTxt: "Pokaż Tacie: kombinację Kouchi-gari ➔ Uchi-mata oraz poprawne postawienie nogi podporowej obok klapka w O-soto-gari!",
       defaultTechIds: ["t35_uchimata", "t6_osoto", "t5_ipponseoi"]
     },
     6: {
       dayName: "Sobota",
-      gripTitle: "🖐️ SOBOTA – SPRAWDZIAN TYGODNIA: „20s Pompka Szybkich Palców + Egzamin na 4.5 Kyu z Tatą!”",
-      gripDesc: "JAK TO ZROBIĆ KROK PO KROKU:\n1. Włącz Zegar Dojo na 20 sekund i zrób jak najwięcej głośnych wpięć w kołnierz i rękaw (zaciskając 3 dolne palce!).\n2. Następnie zaprezentuj Tacie po 5 czystych wejść z każdej techniki na pas Żółto-Pomarańczowy (4.5 Kyu)!",
-      bossTxt: "Sobota Boss Fight z Tatą: 20s Pompka Wpięć + pokaz rzutów i wyjść z trzymań (+100 EXP)!",
+      gripTitle: "🖐️ SOBOTA – SPRAWDZIAN TYGODNIA: „20s Pompka Szybkich Palców + Symulacja Zawodów z Tatą!”",
+      gripDesc: "1. 20 sekund szybkich wpięć w kołnierz i rękaw na czas.\n2. Symulacja walki na zawodach: wyjścia z szarpania, obrona przed zielonym pasem i rzuty na 4.5 Kyu!",
+      bossTxt: "Sobota Boss Fight z Tatą: 20s Pompka Wpięć + 3 rzuty + 2 kontry turniejowe (+100 EXP)!",
       defaultTechIds: ["t45_sasae", "t45_haraigoshi", "t35_uchimata", "t6_kesa"]
     },
     0: {
       dayName: "Niedziela",
       gripTitle: "🧘‍♂️ NIEDZIELA – REGENERACJA: „8 Minut Rozciągania Bioder i Dwugłowych Uda + Pady Ukemi”",
-      gripDesc: "Dzień na spokojne rozciągnięcie mięśni, żeby noga w Uchi-macie i Harai-goshi latała wysoko, oraz powtórzenie bezpiecznych padów Ukemi z brodą przyklejoną do mostka.",
-      bossTxt: "Wykonaj spokojnie sesję rozciągania i 10 czystych padów Ukemi (+100 EXP)!",
+      gripDesc: "Spokojne rozciągnięcie mięśni pod wysoki wymach nogi w Uchi-macie oraz powtórzenie bezpiecznych padów Ukemi z brodą przy mostku.",
+      bossTxt: "Wykonaj sesję rozciągania i 10 czystych padów Ukemi (+100 EXP)!",
       defaultTechIds: ["t6_ukemi", "t6_ogoshi"]
     }
   };
@@ -1326,7 +1505,7 @@
   let activePlanDay = new Date().getDay();
 
   function getWeeklyStateMap() {
-    const raw = localStorage.getItem('tymon_weekly_plan_v230');
+    const raw = localStorage.getItem('tymon_weekly_plan_v240');
     if (raw) { try { return JSON.parse(raw); } catch (e) {} }
     const initMap = {};
     [1, 2, 3, 4, 5, 6, 0].forEach(d => {
@@ -1335,12 +1514,12 @@
         items: WEEKLY_KUMIKATA_SCHEDULE[d].defaultTechIds.map(id => ({ techId: id, doneDry: false, doneBands: false, doneFloor: false }))
       };
     });
-    localStorage.setItem('tymon_weekly_plan_v230', JSON.stringify(initMap));
+    localStorage.setItem('tymon_weekly_plan_v240', JSON.stringify(initMap));
     return initMap;
   }
 
   function saveWeeklyStateMap(map) {
-    localStorage.setItem('tymon_weekly_plan_v230', JSON.stringify(map));
+    localStorage.setItem('tymon_weekly_plan_v240', JSON.stringify(map));
     const curList = (map[activePlanDay] && map[activePlanDay].items) ? map[activePlanDay].items : [];
     document.getElementById('planCounterTop').innerText = curList.length;
     autoSyncCloudSilent();
@@ -1375,7 +1554,7 @@
     }
     renderWeeklyPlanView();
     addExp(25);
-    alert(`✅ Dodano technikę z pełnym wyjaśnieniem (1. Nogi ➔ 2. Wychylenie ➔ 3. Połączenie) do dnia: ${WEEKLY_KUMIKATA_SCHEDULE[activePlanDay].dayName}!`);
+    alert(`✅ Dodano technikę z pełną instrukcją (1. Nogi ➔ 2. Wychylenie ➔ 3. Rzut & Zawody) do dnia: ${WEEKLY_KUMIKATA_SCHEDULE[activePlanDay].dayName}!`);
   }
 
   function removeTechFromPlan(idx) {
@@ -1407,19 +1586,19 @@
     document.getElementById('weekDaysBar').innerHTML = [1, 2, 3, 4, 5, 6, 0].map(d => {
       const cfg = WEEKLY_KUMIKATA_SCHEDULE[d];
       const st = map[d] || { items: [] };
-      return `<button class="day-pill-btn ${d === activePlanDay ? 'active' : ''}" onclick="selectPlanDay(${d})">📅 ${cfg.dayName}<br><span style="font-size:0.65rem;">(${st.items.length} techn.)</span></button>`;
+      return `<button class="day-pill-btn ${d === activePlanDay ? 'active' : ''}" onclick="selectPlanDay(${d})">📅 ${cfg.dayName}<br><span style="font-size:0.64rem;">(${st.items.length} techn.)</span></button>`;
     }).join('');
 
     const gripVoice = `${dayCfg.gripTitle}. ${dayCfg.gripDesc}`.replace(/'/g, "").replace(/\n/g, " ");
     document.getElementById('dailyKumiKataCard').innerHTML = `
       <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; flex-wrap:wrap;">
         <div style="flex:1;">
-          <span style="background:rgba(249,115,22,0.22); color:var(--orange); padding:2px 7px; border-radius:6px; font-size:0.7rem; font-weight:900;">🔥 ZADANIE #0 NA START (3 MINUTY – NAUKA UCHWYTU)</span>
+          <span style="background:rgba(249,115,22,0.22); color:var(--orange); padding:2px 7px; border-radius:6px; font-size:0.69rem; font-weight:900;">🔥 ZADANIE #0 NA START (3 MINUTY – NAUKA UCHWYTU)</span>
           <h2 style="margin-top:5px; color:var(--gold);">${dayCfg.gripTitle}</h2>
-          <p style="font-size:0.81rem; color:var(--txt); white-space:pre-line; margin-top:4px;">${dayCfg.gripDesc}</p>
+          <p style="font-size:0.8rem; color:var(--txt); white-space:pre-line; margin-top:4px;">${dayCfg.gripDesc}</p>
         </div>
         <div style="display:flex; gap:6px; align-items:center;">
-          <button class="btn btn-blue" style="padding:5px 9px; font-size:0.72rem;" onclick="speakInstruction('${gripVoice}')">🔊 Czytaj</button>
+          <button class="btn btn-blue" style="padding:5px 9px; font-size:0.71rem;" onclick="speakInstruction('${gripVoice}')">🔊 Czytaj</button>
           <input type="checkbox" style="width:24px; height:24px; cursor:pointer;" ${dayState.gripDone ? 'checked' : ''} onchange="toggleDailyGripTrick(this.checked)">
         </div>
       </div>
@@ -1436,22 +1615,22 @@
         return `
           <div class="quest-item" style="border-left-color:${allDone ? 'var(--green)' : 'var(--gold)'};">
             <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:5px;">
-              <strong style="font-size:0.9rem; color:var(--gold);">🎯 #${idx + 1}: ${tech.name}</strong>
+              <strong style="font-size:0.88rem; color:var(--gold);">🎯 #${idx + 1}: ${tech.name}</strong>
               <button class="btn btn-ghost" style="padding:3px 8px; font-size:0.7rem;" onclick="removeTechFromPlan(${idx})">✕ Usuń</button>
             </div>
 
             <div class="plan-sub-task ${item.doneDry ? 'done' : ''}">
-              <div style="flex:1;"><strong style="color:var(--green); font-size:0.81rem;">1️⃣ KROK 1 – Najpierw Praca Nóg i Stóp na Sucho:</strong><br><span style="font-size:0.77rem; white-space:pre-line;">${tech.soloStations.st1_legs}</span></div>
+              <div style="flex:1;"><strong style="color:var(--green); font-size:0.8rem;">1️⃣ KROK 1 – Najpierw Praca Nóg i Stóp na Sucho (Zasada Lustra):</strong><br><span style="font-size:0.76rem; white-space:pre-line;">${tech.soloStations.st1_legs}</span></div>
               <input type="checkbox" style="width:22px; height:22px;" ${item.doneDry ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneDry', this.checked)">
             </div>
 
             <div class="plan-sub-task ${item.doneBands ? 'done' : ''}">
-              <div style="flex:1;"><strong style="color:var(--orange); font-size:0.81rem;">2️⃣ KROK 2 – Dokładne Wychylenie (Kuzushi) & Połączenie Ruchu:</strong><br><span style="font-size:0.77rem; white-space:pre-line;">${tech.soloStations.st2_kuzushi}\n\n${tech.soloStations.st3_combo}</span></div>
+              <div style="flex:1;"><strong style="color:var(--orange); font-size:0.8rem;">2️⃣ KROK 2 – Dokładne Wychylenie (Kuzushi) & Wariant z Zawodów:</strong><br><span style="font-size:0.76rem; white-space:pre-line;">${tech.soloStations.st2_kuzushi}\n\n${tech.soloStations.st3_combo}</span></div>
               <input type="checkbox" style="width:22px; height:22px;" ${item.doneBands ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneBands', this.checked)">
             </div>
 
             <div class="plan-sub-task ${item.doneFloor ? 'done' : ''}">
-              <div style="flex:1;"><strong style="color:var(--purple); font-size:0.81rem;">3️⃣ KROK 3 – Obrona (Blokowanie), Kontra & Mobilność:</strong><br><span style="font-size:0.77rem; white-space:pre-line;">${tech.details.block()}\n${tech.details.counter()}\n${tech.soloStations.st4_mob}</span></div>
+              <div style="flex:1;"><strong style="color:var(--purple); font-size:0.8rem;">3️⃣ KROK 3 – Obrona (Blokowanie), Kontra & Mobilność:</strong><br><span style="font-size:0.76rem; white-space:pre-line;">${tech.details.block()}\n${tech.details.counter()}\n${tech.soloStations.st4_mob}</span></div>
               <input type="checkbox" style="width:22px; height:22px;" ${item.doneFloor ? 'checked' : ''} onchange="togglePlanSubTask(${idx}, 'doneFloor', this.checked)">
             </div>
           </div>
@@ -1461,15 +1640,15 @@
   }
 
   /*************************************************************************
-   * 5. MOBILNOŚĆ & ROZCIĄGANIE POD JUDO (Z DOKŁADNYM OPanowaniem)
+   * 6. MOBILNOŚĆ & ROZCIĄGANIE POD JUDO
    *************************************************************************/
   const JUDO_MOBILITY_DRILLS = [
-    { title: "🚀 1. „Jaskółka przy Ścianie & Siad Płotkarski” (Pod Uchi-matę i Harai-goshi)", desc: "JAK WYKONAĆ:\n1. Stań bokiem przy ścianie, oprzyj dłoń. Pochylaj głowę nisko w dół i jednocześnie wyrzucaj prostą nogę w tył-górę (15x lewa, 15x prawa).\n2. Usiądź na dywanie z jedną nogą wyprostowaną, a drugą zgiętą do boku i przytrzymaj skłon do stopy przez 30s." },
-    { title: "🐸 2. „Przekładanie Kolan 90/90 & Żabka” (Pod O-uchi-gari i Parter)", desc: "JAK WYKONAĆ:\n1. Usiądź na dywanie, ugnij obie nogi pod kątem 90 stopni.\n2. Bez odrywania pięt od podłogi przekładaj oba kolana z lewej strony na prawą (12 razy), dotykając kolanami dywanu." },
-    { title: "🏋️‍♂️ 3. „Głęboki Przysiad Słowiański + Przekładanie Gumy nad Głową” (Pod Seoi-nage)", desc: "JAK WYKONAĆ:\n1. Zejdź w głęboki przysiad na całych stopach (pięty przyklejone do podłogi!) i rozpychaj kolana na boki swoimi łokciami przez 45s.\n2. Złap gumę szeroko oburącz i przełóż ją 15 razy na prostych rękach nad głową do tyłu." },
-    { title: "🛞 4. „Most Zapaśniczy (Upa) & Pług Judocki za Głowę” (Ucieczki z Trzymań)", desc: "JAK WYKONAĆ:\n1. Leżąc na plecach wbij pięty pod pośladki i wypchnij biodra 10 razy wysoko w górę, skręcając się na przemian przez lewy i prawy bark.\n2. Zrób 10 kołysek w tył, dotykając palcami stóp dywanu za swoją głową." },
-    { title: "🦶 5. „Kierownica Stopą & Szybkie Palce” (Pod De-ashi-barai i Sasae)", desc: "JAK WYKONAĆ:\n1. Siedząc lub stojąc kręć stopą tak, aby mały palec szorował po podłodze, a podeszwa patrzyła w bok (ustawienie 'łyżwy').\n2. Rozciągnij nadgarstki na kolanach przez 30 sekund." },
-    { title: "💪 6. „Kółko Ab Wheel do Ściany (70 cm) & Pompki na Paraletkach” (Siła Centrum)", desc: "JAK WYKONAĆ:\n1. Uklęknij 70 cm przed ścianą i zrób 3 serie po 8 kontrolowanych wyjazdów kółkiem z napinanym brzuchem.\n2. Zrób 3 serie po 10 głębokich pompek na paraletkach." }
+    { title: "🚀 1. „Jaskółka przy Ścianie & Siad Płotkarski” (Pod Uchi-matę i Harai-goshi)", desc: "1. Stań bokiem przy ścianie, oprzyj dłoń. Pochylaj głowę nisko w dół i jednocześnie wyrzucaj prostą nogę w tył-górę (15x lewa, 15x prawa).\n2. Usiądź w siadzie płotkarskim i przytrzymaj skłon do prostej nogi przez 30s." },
+    { title: "🐸 2. „Przekładanie Kolan 90/90 & Żabka” (Pod O-uchi-gari i Parter)", desc: "1. Usiądź na dywanie, ugnij obie nogi pod kątem 90 stopni.\n2. Bez odrywania pięt od podłogi przekładaj kolana z lewej strony na prawą (12 razy)." },
+    { title: "🏋️‍♂️ 3. „Głęboki Przysiad Słowiański + Gumy nad Głową” (Pod Seoi-nage)", desc: "1. Zejdź w głęboki przysiad na całych stopach i rozpychaj kolana na boki łokciami przez 45s.\n2. Złap gumę szeroko oburącz i przełóż ją 15 razy na prostych rękach nad głową do tyłu." },
+    { title: "🛞 4. „Most Zapaśniczy (Upa) & Pług Judocki za Głowę” (Ucieczki z Trzymań)", desc: "1. Leżąc na plecach wbij pięty pod pośladki i wypchnij biodra 10 razy wysoko w górę przez bark.\n2. Zrób 10 kołysek w tył, dotykając palcami stóp dywanu za swoją głową." },
+    { title: "🦶 5. „Kierownica Stopą & Szybkie Palce” (Pod De-ashi-barai i Sasae)", desc: "1. Kręć stopą tak, aby mały palec szorował po podłodze, a podeszwa patrzyła w bok (ustawienie 'łyżwy').\n2. Rozciągnij nadgarstki na kolanach przez 30 sekund." },
+    { title: "💪 6. „Kółko Ab Wheel do Ściany (70 cm) & Pompki na Paraletkach” (Siła Centrum)", desc: "1. Uklęknij 70 cm przed ścianą i zrób 3 serie po 8 kontrolowanych wyjazdów kółkiem.\n2. Zrób 3 serie po 10 głębokich pompek na paraletkach." }
   ];
 
   function renderMobilityGrid() {
@@ -1484,7 +1663,7 @@
   function addAllMobilityToPlan() { addTechniqueToMyPlan('t6_ukemi'); switchTabById('pane-plan'); }
 
   /*************************************************************************
-   * 6. INTEGRACJA Z GEMINI 2.5 API (AUTO-DETEKCJA MODELU + 4 KLATKI WIDEO)
+   * 7. INTEGRACJA Z GEMINI 2.5 API (AUTO-DETEKCJA MODELU + 4 KLATKI WIDEO)
    *************************************************************************/
   function loadFightVideo(e) {
     const file = e.target.files[0]; if (!file) return;
@@ -1610,7 +1789,7 @@
       const frames = await extractFourFrameSequence();
       if (!apiKey) { out.innerText = `✅ Wycięto 4 klatki ruchu! Wklej klucz Gemini API w ⚙️ na górze, aby uruchomić analizę AI.`; return; }
       btn.innerText = "⏳ AI Sensei analizuje 4 klatki...";
-      const promptText = `Jesteś trenerem Kodokan Judo analizującym 4 klatki poklatkowe 11-letniego judoki Tymona. Oceń precyzyjnie po polsku: 1. Ustawienie stóp i nogi podporowej, 2. Wychylenie Kuzushi i chwyt kołnierza, 3. Pracę bioder i głowy, 4. Konkretne ćwiczenie naprawcze krok po kroku. Pytanie: ${q}`;
+      const promptText = `Jesteś trenerem Kodokan Judo analizującym 4 klatki poklatkowe 11-letniego judoki Tymona. Oceń precyzyjnie po polsku: 1. Ustawienie stóp i nogi podporowej (geometria lustrzana), 2. Wychylenie Kuzushi i chwyt kołnierza, 3. Pracę bioder i głowy, 4. Konkretne ćwiczenie naprawcze krok po kroku. Pytanie: ${q}`;
       const parts = [{ text: promptText }];
       frames.forEach(f => parts.push({ inline_data: { mime_type: "image/jpeg", data: f.base64 } }));
       const result = await callGeminiWithFallback(parts, apiKey);
@@ -1621,13 +1800,13 @@
   }
 
   /*************************************************************************
-   * 7. PASKI MASTER (START OD 0%) + RESET DO LVL 1 (0 EXP)
+   * 8. PASKI MASTER (START OD 0%) + KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW
    *************************************************************************/
   function getCleanMasteryGoals() {
     return [
       { id: 'ashiwaza', title: '🦵 1. Master Pracy Nóg i Stóp na Sucho', current: 0, target: 20, unit: 'sesji' },
       { id: 'kuzushi', title: '🟡 2. Master Wychyleń (Kuzushi) & Wpięć w Kołnierz', current: 0, target: 20, unit: 'sesji' },
-      { id: 'uchimata', title: '🔥 3. Master Pełnych Rzutów (Uchi-mata, Seoi, O-soto)', current: 0, target: 20, unit: 'sesji' },
+      { id: 'uchimata', title: '🔥 3. Master Rzutów & Kontr Turniejowych', current: 0, target: 20, unit: 'sesji' },
       { id: 'newaza', title: '🔒 4. Master Parteru (Trzymania, Wyjścia, Żółw)', current: 0, target: 15, unit: 'sesji' },
       { id: 'core', title: '🧘‍♂️ 5. Master Mobilności, Rozciągania & Siły', current: 0, target: 15, unit: 'sesji' }
     ];
@@ -1649,7 +1828,7 @@
     localStorage.setItem('tymon_judo_exp_v221', '0');
     masteryGoals = getCleanMasteryGoals();
     localStorage.setItem('tymon_mastery_goals_v221', JSON.stringify(masteryGoals));
-    localStorage.removeItem('tymon_weekly_plan_v230');
+    localStorage.removeItem('tymon_weekly_plan_v240');
     mealLog = [];
     localStorage.setItem('tymon_only_meals', JSON.stringify(mealLog));
     updateHud(); renderMasteryGoals(); renderWeeklyPlanView(); renderMealLog();
@@ -1664,11 +1843,11 @@
         <div class="mastery-card">
           <h4><span>${g.title}</span> <span>${pct}%</span></h4>
           <div class="mastery-bar-bg"><div class="mastery-bar-fill" style="width:${pct}%"></div></div>
-          <div style="font-size:0.68rem; color:var(--dim); display:flex; justify-content:space-between;">
+          <div style="font-size:0.67rem; color:var(--dim); display:flex; justify-content:space-between;">
             <span>${g.current}/${g.target} ${g.unit}</span>
             <strong style="color:${left === 0 ? 'var(--green)' : 'var(--gold)'};">${left === 0 ? '🏆 MASTER!' : 'Zostało: ' + left}</strong>
           </div>
-          <button class="btn btn-blue" style="width:100%; margin-top:4px; padding:4px; font-size:0.7rem;" onclick="incrementMastery('${g.id}', 1)">➕ Zaliczyłem (+35 EXP)</button>
+          <button class="btn btn-blue" style="width:100%; margin-top:4px; padding:4px; font-size:0.69rem;" onclick="incrementMastery('${g.id}', 1)">➕ Zaliczyłem (+35 EXP)</button>
         </div>
       `;
     }).join('');
@@ -1685,9 +1864,6 @@
 
   function completeBossPresentation() { addExp(100); incrementMastery('kuzushi', 1); }
 
-  /*************************************************************************
-   * 8. KALKULATOR NAJPOPULARNIEJSZYCH PRODUKTÓW FUNKCJONALNYCH
-   *************************************************************************/
   const POPULAR_FUNCTIONAL_FOODS_DB = [
     { name: "🥛 Skyr naturalny Piątnica / Zott (Nr 1 High-Protein – 12g B / 0% T)", kcal: 64, p: 12.0, c: 4.1, f: 0.0 },
     { name: "🥤 Skyr pitny owocowy/naturalny (Szybka regeneracja po macie)", kcal: 63, p: 11.0, c: 4.2, f: 0.2 },
@@ -1930,7 +2106,7 @@
 
   function exportSaveFile() {
     const blob = new Blob([JSON.stringify(collectFullGameState(), null, 2)], { type: 'application/json' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v23.json'; a.click();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tymon-judo-save-v24.json'; a.click();
   }
 
   function importSaveFile(e) {
@@ -2005,6 +2181,7 @@
     renderTopKumiKataModal();
     renderMasteryGoals();
     populateKodokanTechList();
+    renderTournamentCards('all');
     renderWeeklyPlanView();
     renderMobilityGrid();
     initFoodSelect();
